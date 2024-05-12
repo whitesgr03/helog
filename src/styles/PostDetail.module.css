@@ -1,0 +1,16 @@
+.postDetail {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--light-scheme-main-bgc);
+}
+
+.item {
+	display: flex;
+	flex-direction: column;
+	row-gap: 15px;
+	padding: 15px;
+}
+
+.dateTime {
+	color: var(--light-scheme-highlight);
+}

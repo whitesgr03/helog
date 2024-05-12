@@ -4,6 +4,7 @@ import App from "./components/App";
 import Error from "./components/Error";
 import Home from "./components/Home";
 import Posts from "./components/Posts";
+import PostDetail from "./components/PostDetail";
 
 const router = () => (
 	<RouterProvider
@@ -20,6 +21,10 @@ const router = () => (
 					{
 						path: "posts",
 						element: <Posts />,
+					},
+					{
+						path: "posts/:postId",
+						element: <PostDetail />,
 					},
 				],
 			},
