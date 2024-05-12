@@ -1,0 +1,23 @@
+.home {
+	background-color: var(--light-scheme-main-bgc);
+	display: flex;
+	flex-direction: column;
+	row-gap: 30px;
+	padding: 15px;
+	height: 100%;
+}
+
+.title {
+	color: var(--light-scheme-highlight);
+	font-size: 2rem;
+}
+
+.link {
+	display: flex;
+	column-gap: 5px;
+	border: 2px solid var(--light-scheme-color);
+	border-radius: 20px;
+	align-self: flex-start;
+	padding: 10px;
+	color: var(--light-scheme-color);
+}
