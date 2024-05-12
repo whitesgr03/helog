@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Home component > should be rendered Home component 1`] = `
+<DocumentFragment>
+  <div
+    class="_home_b140de"
+  >
+    <h2
+      class="_title_b140de"
+    >
+      A Daily Story for Reader.
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio, veniam voluptatem veritatis maxime iste rerum quo blanditiis cum ea nulla officiis neque molestiae voluptate qui adipisci velit magnam consequatur. Quo. Quia voluptas consequuntur assumenda ut totam quaerat explicabo eum nemo? Eveniet iste neque eligendi eius provident doloremque magnam maiores culpa repudiandae ipsam. Repudiandae illum facilis, omnis qui expedita debitis ea.
+    </p>
+    <a
+      class="_link_b140de"
+      href="/"
+    >
+      Latest Posts
+      <svg
+        height="20"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m5.36 19l5.763-5.763a1.738 1.738 0 0 0 0-2.474L5.36 5m7 14l5.763-5.763a1.738 1.738 0 0 0 0-2.474L12.36 5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+      </svg>
+    </a>
+  </div>
+</DocumentFragment>
+`;
