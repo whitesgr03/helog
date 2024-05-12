@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./components/App";
+import Error from "./components/Error";
 import Home from "./components/Home";
 
 const router = () => (
@@ -9,6 +10,7 @@ const router = () => (
 			{
 				path: "/",
 				element: <App />,
+				errorElement: <Error />,
 				children: [
 					{
 						index: true,
