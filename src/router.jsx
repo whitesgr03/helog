@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from "./component/App";
+import App from "./components/App";
+import Home from "./components/Home";
 
 const router = () => (
 	<RouterProvider
@@ -8,6 +9,12 @@ const router = () => (
 			{
 				path: "/",
 				element: <App />,
+				children: [
+					{
+						index: true,
+						element: <Home />,
+					},
+				],
 			},
 		])}
 	/>
