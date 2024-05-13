@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import PostDetail from "../components/PostDetail";
 
 describe("PostDetail component", () => {
-	it("should render date time form post", () => {
+	it("should render date time from props", () => {
 		const mockPost = {
 			id: "1",
 			url: "#",
@@ -23,7 +23,7 @@ describe("PostDetail component", () => {
 
 		expect(actual).not.equal(null);
 	});
-	it("should render title", () => {
+	it("should render title from props", () => {
 		const mockPost = {
 			id: "1",
 			url: "#",
@@ -38,7 +38,7 @@ describe("PostDetail component", () => {
 
 		expect(actual).not.equal(null);
 	});
-	it("should render image alt and url", () => {
+	it("should render image alt and url from props", () => {
 		const mockPost = {
 			id: "1",
 			url: "#",
@@ -53,7 +53,7 @@ describe("PostDetail component", () => {
 
 		expect(actual).toHaveAttribute("src", mockPost.url);
 	});
-	it("should render content", () => {
+	it("should render content from props", () => {
 		const mockPost = {
 			id: "1",
 			url: "#",
