@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./components/App";
 import Error from "./components/Error";
 import Home from "./components/Home";
-import Posts from "./components/Posts";
+import PostList from "./components/PostList";
 import PostDetail from "./components/PostDetail";
 
 const router = () => (
@@ -20,7 +20,7 @@ const router = () => (
 					},
 					{
 						path: "posts",
-						element: <Posts />,
+						element: <PostList />,
 					},
 					{
 						path: "posts/:postId",
