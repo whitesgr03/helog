@@ -1,46 +1,71 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { format } from "date-fns";
+// import { BrowserRouter } from "react-router-dom";
 
 import PostDetail from "../components/PostDetail";
 
 describe("PostDetail component", () => {
-	it("should be rendered date time", () => {
-		render(<PostDetail />, { wrapper: BrowserRouter });
+	it("should render date time form post", () => {
+		const mockPost = {
+			id: "1",
+			url: "#",
+			title: "This is title",
+			content: "This is content",
+			createdAt: new Date("2024/5/1"),
+		};
 
-		const dataTime = "Post Date Time";
+		render(<PostDetail post={mockPost} />);
 
-		const actual = screen.getByText(dataTime);
+		const actual = screen.queryByText(
+			format(mockPost.createdAt, "MMMM d, y")
+		);
 
-		expect(actual).toHaveTextContent(dataTime);
+		expect(actual).not.equal(null);
 	});
-	it("should be rendered title", () => {
-		render(<PostDetail />, { wrapper: BrowserRouter });
+	it("should render title", () => {
+		const mockPost = {
+			id: "1",
+			url: "#",
+			title: "This is title",
+			content: "This is content",
+			createdAt: new Date("2024/5/1"),
+		};
 
-		const title = "Post Title";
+		render(<PostDetail post={mockPost} />);
 
-		const actual = screen.getByRole("heading", { name: title });
+		const actual = screen.getByRole("heading", { name: mockPost.title });
 
-		expect(actual).toHaveTextContent(title);
+		expect(actual).not.equal(null);
 	});
-	it("should be rendered image", () => {
-		render(<PostDetail />, { wrapper: BrowserRouter });
+	it("should render image alt and url", () => {
+		const mockPost = {
+			id: "1",
+			url: "#",
+			title: "This is title",
+			content: "This is content",
+			createdAt: new Date("2024/5/1"),
+		};
 
-		const imageUrl = "#";
-		const imageAlt = "Post Title";
+		render(<PostDetail post={mockPost} />);
 
-		const actual = screen.getByAltText(imageAlt);
+		const actual = screen.getByAltText(mockPost.title);
 
-		expect(actual).toHaveAttribute("src", imageUrl);
-		expect(actual).toHaveAttribute("alt", imageAlt);
+		expect(actual).toHaveAttribute("src", mockPost.url);
 	});
-	it("should be rendered content", () => {
-		render(<PostDetail />, { wrapper: BrowserRouter });
+	it("should render content", () => {
+		const mockPost = {
+			id: "1",
+			url: "#",
+			title: "This is title",
+			content: "This is content",
+			createdAt: new Date("2024/5/1"),
+		};
 
-		const content = "Post Content";
+		render(<PostDetail post={mockPost} />);
 
-		const actual = screen.getByText(content);
+		const actual = screen.getByText(mockPost.content);
 
-		expect(actual).toHaveTextContent(content);
+		expect(actual).not.equal(null);
 	});
 });
