@@ -16,13 +16,13 @@ const Alert = ({ width, height }) => (
 	</svg>
 );
 
-const Error = () => (
+const Error = ({ error }) => (
 	<div className={style.error}>
 		<Alert width={80} height={80} />
-		<h1 className={style.title}>404 Not Found</h1>
+		<h1 className={style.title}>{error.title}</h1>
 		<div className={style.message}>
 			<p>Our apologies, there has been an error.</p>
-			<p>The page you are looking for cannot be found.</p>
+			<p>{error.message}</p>
 		</div>
 	</div>
 );
@@ -30,6 +30,10 @@ const Error = () => (
 Alert.propTypes = {
 	height: PropTypes.number,
 	width: PropTypes.number,
+};
+
+Error.propTypes = {
+	error: PropTypes.object,
 };
 
 export default Error;
