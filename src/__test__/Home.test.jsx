@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import Home from "../components/Home";
 
 describe("Home component", () => {
-	it("should be rendered Home component", () => {
+	it("should render Home component", () => {
 		const { asFragment } = render(<Home />, { wrapper: BrowserRouter });
 
 		const actual = asFragment();

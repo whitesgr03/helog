@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import PostList from "../components/PostList";
 
 describe("PostList component", () => {
-	it("should be rendered correct data length", () => {
+	it("should render correct data length", () => {
 		const mockPosts = [
 			{
 				id: "1",
@@ -37,7 +37,7 @@ describe("PostList component", () => {
 
 		expect(actual.length).equal(3);
 	});
-	it("should be rendered image alt and url from props", () => {
+	it("should render image alt and url from props", () => {
 		const mockPosts = [
 			{
 				id: "1",
@@ -54,7 +54,7 @@ describe("PostList component", () => {
 
 		expect(actual).toHaveAttribute("src", mockPosts.url);
 	});
-	it("should be rendered createdAt from props", () => {
+	it("should render createdAt from props", () => {
 		const mockPosts = [
 			{
 				id: "1",
@@ -72,7 +72,7 @@ describe("PostList component", () => {
 
 		expect(actual).not.equal(null);
 	});
-	it("should be rendered title from props", () => {
+	it("should render title from props", () => {
 		const mockPosts = [
 			{
 				id: "1",
@@ -90,7 +90,7 @@ describe("PostList component", () => {
 
 		expect(actual).not.equal(null);
 	});
-	it("should be rendered content from props", () => {
+	it("should render content from props", () => {
 		const mockPosts = [
 			{
 				id: "1",

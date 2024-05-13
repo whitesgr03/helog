@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 import Error from "../components/Error";
 
 describe("Error component", () => {
-	it("should be rendered  title", () => {
+	it("should render  title", () => {
 		const mockError = {
 			title: "404 Not Found",
 			message: "The page you are looking for cannot be found.",
@@ -18,7 +18,7 @@ describe("Error component", () => {
 
 		expect(actual).not.equal(null);
 	});
-	it("should be rendered message", () => {
+	it("should render message", () => {
 		const mockError = {
 			title: "404 Not Found",
 			message: "The page you are looking for cannot be found.",
@@ -29,7 +29,7 @@ describe("Error component", () => {
 
 		expect(actual).not.equal(null);
 	});
-	it("should be rendered default message", () => {
+	it("should render default message", () => {
 		const mockError = {
 			title: "404 Not Found",
 			message: "The page you are looking for cannot be found.",
