@@ -1,35 +1,45 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+// import { BrowserRouter } from "react-router-dom";
 
 import Error from "../components/Error";
 
 describe("Error component", () => {
-	it("should be rendered title", () => {
-		render(<Error />, { wrapper: BrowserRouter });
+	it("should be rendered  title", () => {
+		const mockError = {
+			title: "404 Not Found",
+			message: "The page you are looking for cannot be found.",
+		};
+		render(<Error error={mockError} />);
 
-		const title = "404 Not Found";
+		const actual = screen.queryByRole("heading", {
+			name: mockError.title,
+		});
 
-		const actual = screen.getByRole("heading", { name: title });
-
-		expect(actual).toHaveTextContent(title);
+		expect(actual).not.equal(null);
 	});
 	it("should be rendered message", () => {
-		render(<Error />, { wrapper: BrowserRouter });
+		const mockError = {
+			title: "404 Not Found",
+			message: "The page you are looking for cannot be found.",
+		};
+		render(<Error error={mockError} />);
 
+		const actual = screen.queryByText(mockError.message);
+
+		expect(actual).not.equal(null);
+	});
+	it("should be rendered default message", () => {
+		const mockError = {
+			title: "404 Not Found",
+			message: "The page you are looking for cannot be found.",
+		};
 		const message = "Our apologies, there has been an error.";
 
-		const actual = screen.getByText(message);
+		render(<Error error={mockError} />);
 
-		expect(actual).toHaveTextContent(message);
-	});
-	it("should be rendered message", () => {
-		render(<Error />, { wrapper: BrowserRouter });
+		const actual = screen.queryByText(message);
 
-		const message = "The page you are looking for cannot be found.";
-
-		const actual = screen.getByText(message);
-
-		expect(actual).toHaveTextContent(message);
+		expect(actual).not.equal(null);
 	});
 });
