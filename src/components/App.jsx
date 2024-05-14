@@ -32,8 +32,8 @@ const App = () => {
 	return (
 		<div className={style.app}>
 			<Header />
-			<div className={style.content}>
-				<Outlet context={{ posts }} />
+			<div className={style.container}>
+					<Outlet context={{ posts }} />
 			</div>
 		</div>
 	);
