@@ -11,7 +11,9 @@ const PostDetail = ({ post }) => {
 					{format(post.createdAt, "MMMM d, y")}
 				</strong>
 				<h2>{post.title}</h2>
-				<img src={post.url} alt={post.title} />
+				<div className={style.imageWrap}>
+					<img src={post.url} alt={post.title} />
+				</div>
 				<strong>
 					{`${format(post.createdAt, "MMMM d, y")} edited by author`}
 				</strong>
