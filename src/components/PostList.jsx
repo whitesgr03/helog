@@ -10,7 +10,9 @@ const PostList = () => {
 
 	const list = posts.map(post => (
 		<li key={post.id} className={style.item}>
-			<img src={post.url} alt={post.title} />
+			<div className={style.imageWrap}>
+				<img src={post.url} alt={post.title} />
+			</div>
 			<strong className={style.dateTime}>
 				{format(post.createdAt, "MMMM d, y")}
 			</strong>
