@@ -8,6 +8,7 @@
 	row-gap: 15px;
 	padding: 15px;
 	align-items: center;
+	border-top: 1px solid var(--light-scheme-color);
 }
 
 .link {
