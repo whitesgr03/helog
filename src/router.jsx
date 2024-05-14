@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import PostList from "./components/PostList";
 import PostDetail from "./components/PostDetail";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 const router = () => (
 	<RouterProvider
@@ -32,6 +33,10 @@ const router = () => (
 					{
 						path: "users/login",
 						element: <Login />,
+					},
+					{
+						path: "users/register",
+						element: <Register />,
 					},
 				],
 			},
