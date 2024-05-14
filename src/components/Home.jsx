@@ -14,7 +14,7 @@ const Home = () => (
 			provident doloremque magnam maiores culpa repudiandae ipsam.
 			Repudiandae illum facilis, omnis qui expedita debitis ea.
 		</p>
-		<Link to={`/`} className={style.link}>
+		<Link to={`/posts`} className={style.link}>
 			Latest Posts
 			<span className={`icon ${style.doubleArrowRight}`} />
 		</Link>

@@ -19,7 +19,7 @@ const Login = () => {
 				</form>
 				<div className={style.linkWrap}>
 					<p>New to HeLog?</p>
-					<Link className={style.link} to="/user/register">
+					<Link to="/users/register" className={style.link}>
 						Create an account
 					</Link>
 				</div>
