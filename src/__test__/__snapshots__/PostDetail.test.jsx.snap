@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PostDetail component > should render correctly 1`] = `
+<DocumentFragment>
+  <ul
+    class="_postDetail_30e276"
+  >
+    <li
+      class="_item_30e276"
+    >
+      <strong
+        class="_dateTime_30e276"
+      >
+        May 1, 2024
+      </strong>
+      <h2>
+        This is title A
+      </h2>
+      <div
+        class="_imageWrap_30e276"
+      >
+        <img
+          alt="This is title A"
+          src="#"
+        />
+      </div>
+      <strong>
+        May 1, 2024 edited by author
+      </strong>
+      <p>
+        This is content A
+      </p>
+    </li>
+  </ul>
+</DocumentFragment>
+`;
