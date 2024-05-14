@@ -17,3 +17,7 @@
 	flex: 1 1 100%;
 	background-color: var(--light-scheme-main-bgc);
 }
+
+.main > * {
+	flex: 1 1 100%;
+}
