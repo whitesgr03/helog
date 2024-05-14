@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Home component > should be rendered Home component 1`] = `
+exports[`Home component > should render correctly 1`] = `
 <DocumentFragment>
   <div
     class="_home_b140de"
