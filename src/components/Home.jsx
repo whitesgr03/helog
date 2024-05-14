@@ -1,26 +1,6 @@
-import { Link } from "react-router-dom";
-
 import style from "../styles/Home.module.css";
 
-import PropTypes from "prop-types";
-
-const DoubleArrowRight = ({ width, height }) => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width={width}
-		height={height}
-		viewBox="0 0 24 24"
-	>
-		<path
-			fill="none"
-			stroke="currentColor"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-			strokeWidth={1.5}
-			d="m5.36 19l5.763-5.763a1.738 1.738 0 0 0 0-2.474L5.36 5m7 14l5.763-5.763a1.738 1.738 0 0 0 0-2.474L12.36 5"
-		></path>
-	</svg>
-);
+import { Link } from "react-router-dom";
 
 const Home = () => (
 	<div className={style.home}>
@@ -36,14 +16,9 @@ const Home = () => (
 		</p>
 		<Link to={`/`} className={style.link}>
 			Latest Posts
-			<DoubleArrowRight height={20} width={20} />
+			<span className={style.doubleArrowRight}></span>
 		</Link>
 	</div>
 );
-
-DoubleArrowRight.propTypes = {
-	height: PropTypes.number,
-	width: PropTypes.number,
-};
 
 export default Home;
