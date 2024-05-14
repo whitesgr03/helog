@@ -1,3 +1,5 @@
+import style from "../styles/App.module.css";
+
 import { Outlet } from "react-router-dom";
 
 const posts = [
@@ -26,9 +28,11 @@ const posts = [
 
 const App = () => {
 	return (
-		<>
-			<Outlet context={{ posts }} />
-		</>
+		<div className={style.app}>
+			<div className={style.content}>
+				<Outlet context={{ posts }} />
+			</div>
+		</div>
 	);
 };
 
