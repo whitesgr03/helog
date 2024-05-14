@@ -16,7 +16,7 @@ const Home = () => (
 		</p>
 		<Link to={`/`} className={style.link}>
 			Latest Posts
-			<span className={style.doubleArrowRight}></span>
+			<span className={`icon ${style.doubleArrowRight}`} />
 		</Link>
 	</div>
 );
