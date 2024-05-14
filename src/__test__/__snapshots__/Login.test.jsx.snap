@@ -6,40 +6,36 @@ exports[`Login component > should render correctly 1`] = `
     class="_login_b06c4f"
   >
     <h3
-      class="_title_b06c4f"
+      class="title"
     >
-      Login
+      Sign In
     </h3>
     <div
-      class="_formWrap_b06c4f"
+      class="formWrap"
     >
-      <form
-        class="_form_b06c4f"
-      >
+      <form>
         <label
-          class="_label_b06c4f"
-          for="loginEmail"
+          for="email"
         >
           Email
         </label>
         <input
-          class="_input_b06c4f"
-          id="loginEmail"
-          type="text"
+          id="email"
+          name="email"
+          type="email"
         />
         <label
-          class="_label_b06c4f"
-          for="loginPassword"
+          for="password"
         >
           Password
         </label>
         <input
-          class="_input_b06c4f"
-          id="loginPassword"
-          type="text"
+          id="password"
+          name="password"
+          type="password"
         />
         <button
-          class="_submitBtn_b06c4f"
+          class="submitBtn"
           type="submit"
         >
           Login
