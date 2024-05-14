@@ -49,7 +49,7 @@ exports[`Login component > should render correctly 1`] = `
         </p>
         <a
           class="_link_b06c4f"
-          href="/user/register"
+          href="/users/register"
         >
           Create an account
         </a>

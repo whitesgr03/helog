@@ -15,24 +15,12 @@ exports[`Home component > should render correctly 1`] = `
     </p>
     <a
       class="_link_b140de"
-      href="/"
+      href="/posts"
     >
       Latest Posts
-      <svg
-        height="20"
-        viewBox="0 0 24 24"
-        width="20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m5.36 19l5.763-5.763a1.738 1.738 0 0 0 0-2.474L5.36 5m7 14l5.763-5.763a1.738 1.738 0 0 0 0-2.474L12.36 5"
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
-        />
-      </svg>
+      <span
+        class="icon _doubleArrowRight_b140de"
+      />
     </a>
   </div>
 </DocumentFragment>
