@@ -2,43 +2,6 @@
 	padding: 15px;
 }
 
-.title {
-	margin-bottom: 10px;
-}
-
-.formWrap {
-	border: 1px solid var(--light-scheme-color);
-	border-radius: 5px;
-}
-
-.form {
-	display: flex;
-	flex-direction: column;
-	padding: 15px;
-	border-bottom: 1px solid var(--light-scheme-color);
-}
-
-.label {
-	margin-bottom: 5px;
-}
-
-.input {
-	border: 1px solid var(--light-scheme-color);
-	background-color: var(--light-scheme-layout-bgc);
-	border-radius: 5px;
-	padding: 10px;
-	margin-bottom: 20px;
-}
-
-.submitBtn {
-	margin-top: 40px;
-	border-radius: 5px;
-	border: 2px solid var(--light-scheme-color);
-	background-color: var(--light-scheme-success);
-	padding: 10px;
-	color: var(--dark-scheme-color);
-}
-
 .linkWrap {
 	display: flex;
 	flex-direction: column;
