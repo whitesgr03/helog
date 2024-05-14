@@ -33,7 +33,9 @@ const App = () => {
 		<div className={style.app}>
 			<Header />
 			<div className={style.container}>
+				<main className={style.main}>
 					<Outlet context={{ posts }} />
+				</main>
 			</div>
 		</div>
 	);
