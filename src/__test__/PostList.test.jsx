@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-// import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { format } from "date-fns";
 
 import PostList from "../components/PostList";
@@ -31,7 +31,15 @@ describe("PostList component", () => {
 			},
 		];
 
-		render(<PostList posts={mockPosts} />);
+		render(
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Outlet context={{ posts: mockPosts }} />}>
+						<Route index element={<PostList />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		);
 
 		const actual = screen.getAllByRole("listitem");
 
@@ -48,7 +56,15 @@ describe("PostList component", () => {
 			},
 		];
 
-		render(<PostList posts={mockPosts} />);
+		render(
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Outlet context={{ posts: mockPosts }} />}>
+						<Route index element={<PostList />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		);
 
 		const actual = screen.getByAltText(mockPosts[0].title);
 
@@ -64,7 +80,15 @@ describe("PostList component", () => {
 				createdAt: new Date("2024/5/1"),
 			},
 		];
-		render(<PostList posts={mockPosts} />);
+		render(
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Outlet context={{ posts: mockPosts }} />}>
+						<Route index element={<PostList />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		);
 
 		const actual = screen.queryByText(
 			format(mockPosts[0].createdAt, "MMMM d, y")
@@ -82,7 +106,15 @@ describe("PostList component", () => {
 				createdAt: new Date("2024/5/1"),
 			},
 		];
-		render(<PostList posts={mockPosts} />);
+		render(
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Outlet context={{ posts: mockPosts }} />}>
+						<Route index element={<PostList />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		);
 
 		const actual = screen.queryByRole("heading", {
 			name: mockPosts[0].title,
@@ -100,7 +132,15 @@ describe("PostList component", () => {
 				createdAt: new Date("2024/5/1"),
 			},
 		];
-		render(<PostList posts={mockPosts} />);
+		render(
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Outlet context={{ posts: mockPosts }} />}>
+						<Route index element={<PostList />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		);
 
 		const actual = screen.queryByText(mockPosts[0].content);
 
