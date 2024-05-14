@@ -1,4 +1,6 @@
 .app {
+	height: 100vh;
+	overflow: auto;
 	display: flex;
 	flex-direction: column;
 }
