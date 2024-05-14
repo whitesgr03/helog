@@ -3,7 +3,15 @@ import style from "../styles/PostDetail.module.css";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 
-const PostDetail = ({ post }) => {
+const post = {
+	id: "1",
+	url: "#",
+	title: "This is title A",
+	content: "This is content A",
+	createdAt: new Date("2024/5/1"),
+};
+
+const PostDetail = () => {
 	return (
 		<ul className={style.postDetail}>
 			<li className={style.item}>
