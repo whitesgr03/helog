@@ -1,30 +1,19 @@
 import style from "../styles/Login.module.css";
+import "../styles/form.css";
 
 import { Link } from "react-router-dom";
 
 const Login = () => {
 	return (
 		<div className={style.login}>
-			<h3 className={style.title}>Login</h3>
-			<div className={style.formWrap}>
-				<form className={style.form}>
-					<label className={style.label} htmlFor="loginEmail">
-						Email
-					</label>
-					<input
-						className={style.input}
-						type="text"
-						id="loginEmail"
-					/>
-					<label className={style.label} htmlFor="loginPassword">
-						Password
-					</label>
-					<input
-						className={style.input}
-						type="text"
-						id="loginPassword"
-					/>
-					<button className={style.submitBtn} type="submit">
+			<h3 className="title">Sign In</h3>
+			<div className="formWrap">
+				<form>
+					<label htmlFor="email">Email</label>
+					<input type="email" id="email" name="email" />
+					<label htmlFor="password">Password</label>
+					<input type="password" id="password" name="password" />
+					<button className="submitBtn" type="submit">
 						Login
 					</button>
 				</form>
