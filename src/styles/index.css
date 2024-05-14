@@ -93,17 +93,6 @@ textarea {
 	resize: none;
 }
 
-img {
-	width: 100%;
-	height: auto;
-	vertical-align: middle;
-}
-
-svg {
-	pointer-events: none;
-	vertical-align: middle;
-}
-
 .icon {
 	display: inline-block;
 	background-color: currentColor;
@@ -195,4 +184,9 @@ svg {
 	main > * {
 		max-width: 600px;
 	}
+} */
+
+/* svg {
+	pointer-events: none;
+	vertical-align: middle;
 } */
