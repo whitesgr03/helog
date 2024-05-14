@@ -3,6 +3,7 @@ import style from "../styles/App.module.css";
 import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
 const posts = [
 	{
@@ -36,6 +37,7 @@ const App = () => {
 				<main className={style.main}>
 					<Outlet context={{ posts }} />
 				</main>
+				<Footer />
 			</div>
 		</div>
 	);
