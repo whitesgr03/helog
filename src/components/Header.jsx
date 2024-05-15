@@ -1,6 +1,7 @@
 import style from "../styles/Header.module.css";
 
 import { Link } from "react-router-dom";
+import Dropdown from "./Dropdown";
 
 const Header = () => {
 	return (
@@ -26,6 +27,7 @@ const Header = () => {
 					</li>
 				</ul>
 			</nav>
+			<Dropdown />
 		</header>
 	);
 };
