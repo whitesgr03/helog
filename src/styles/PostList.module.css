@@ -6,7 +6,7 @@
 	background-color: var(--light-scheme-main-bgc);
 }
 
-.item {
+.item > * {
 	display: flex;
 	flex-direction: column;
 	row-gap: 15px;
