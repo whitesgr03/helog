@@ -6,11 +6,9 @@ import Dropdown from "./Dropdown";
 const Header = () => {
 	return (
 		<header className={style.header}>
-			<h1>
-				<Link to="/" className={style.logo}>
-					HeLog
-				</Link>
-			</h1>
+			<Link to="/" className={style.logo}>
+				<h1>HeLog</h1>
+			</Link>
 			<nav>
 				<ul className={style.list}>
 					<li>
