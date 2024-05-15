@@ -3,9 +3,7 @@ import style from "../styles/Header.module.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const Header = ({
-	isAdmin,
-}) => {
+const Header = ({ isAdmin, children }) => {
 	return (
 		<header className={style.header}>
 			<Link to="/" className={style.logo}>
@@ -29,12 +27,13 @@ const Header = ({
 					</li>
 				</ul>
 			</nav>
-			<Dropdown />
+			{children}
 		</header>
 	);
 };
 Header.propTypes = {
 	isAdmin: PropTypes.bool,
+	children: PropTypes.node.isRequired,
 };
 
 export default Header;
