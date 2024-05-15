@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Header = ({ isAdmin, children }) => {
+	// const darkTheme = useContext(themContext)
 	const active = false;
 	return (
+		// <header className={`${darkTheme ? style.dark : ""} ${style.header} `}>
 		<header className={style.header}>
 			<Link to="/" className={style.logo}>
 				<h1>HeLog</h1>
