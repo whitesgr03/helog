@@ -36,17 +36,19 @@
 	font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
 		Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
 		"Segoe UI Symbol";
-	font-weight: 500;
-	margin: 0;
-	padding: 0;
 }
-
 [hidden] {
 	display: none !important;
 }
 
 body {
 	overflow: hidden;
+}
+
+body * {
+	font-weight: 500;
+	margin: 0;
+	padding: 0;
 }
 
 #root {
