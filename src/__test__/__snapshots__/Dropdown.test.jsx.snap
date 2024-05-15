@@ -2,45 +2,38 @@
 
 exports[`Dropdown component > should render correctly 1`] = `
 <DocumentFragment>
-  <header
-    class="_header_a9d33c"
+  <div
+    class="_dropdown_341ed5"
   >
-    <a
-      class="_logo_a9d33c"
-      href="/"
-    >
-      <h1>
-        HeLog
-      </h1>
-    </a>
-    <nav>
-      <ul
-        class="_list_a9d33c"
-      >
-        <li>
-          <a
-            class="_link_a9d33c"
-            href="/"
+    <ul>
+      <li>
+        <div
+          class="_colorThemeToggle_341ed5"
+        >
+          <span
+            class="icon _sun_341ed5"
+          />
+          Light mode
+          <button
+            class="_switchWrap_341ed5"
           >
-            <span
-              class="icon _pencil_a9d33c"
+            <div
+              class="_switch_341ed5"
             />
-            Write
-          </a>
-        </li>
-        <li>
-          <a
-            class="_link_a9d33c"
-            href="/users/login"
-          >
-            <span
-              class="icon _account_a9d33c"
-            />
-            Account
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+          </button>
+        </div>
+      </li>
+      <li>
+        <a
+          href="/users/login"
+        >
+          <span
+            class="icon _login_341ed5"
+          />
+          Login
+        </a>
+      </li>
+    </ul>
+  </div>
 </DocumentFragment>
 `;
