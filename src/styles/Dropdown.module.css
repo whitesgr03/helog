@@ -101,3 +101,12 @@
 	height: var(--icon-size-mobile);
 	width: var(--icon-size-mobile);
 }
+
+.dark .switch {
+	transform: translateX(
+		calc(
+			100% - calc(var(--toggle-padding) * 2) + var(--toggle-slide) -
+				calc(var(--toggle-border) * 2)
+		)
+	);
+}
