@@ -30,9 +30,14 @@ const posts = [
 ];
 
 const App = () => {
+	const user = {
+		name: "Name",
+		isAdmin: true,
+	};
+
 	return (
 		<div className={style.app}>
-			<Header />
+			<Header isAdmin={user.isAdmin} />
 			<div className={style.container}>
 				<main className={style.main}>
 					<Outlet context={{ posts }} />
