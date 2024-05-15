@@ -39,7 +39,7 @@ const App = () => {
 	return (
 		<div className={style.app}>
 			<Header isAdmin={user.isAdmin}>
-				<Dropdown />;
+				<Dropdown isLogin={user ? true : false} userName={user.name} />
 			</Header>
 			<div className={style.container}>
 				<main className={style.main}>
