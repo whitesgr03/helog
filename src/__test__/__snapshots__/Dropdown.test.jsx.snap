@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dropdown component > should render correctly 1`] = `
+<DocumentFragment>
+  <header
+    class="_header_a9d33c"
+  >
+    <a
+      class="_logo_a9d33c"
+      href="/"
+    >
+      <h1>
+        HeLog
+      </h1>
+    </a>
+    <nav>
+      <ul
+        class="_list_a9d33c"
+      >
+        <li>
+          <a
+            class="_link_a9d33c"
+            href="/"
+          >
+            <span
+              class="icon _pencil_a9d33c"
+            />
+            Write
+          </a>
+        </li>
+        <li>
+          <a
+            class="_link_a9d33c"
+            href="/users/login"
+          >
+            <span
+              class="icon _account_a9d33c"
+            />
+            Account
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
