@@ -47,18 +47,18 @@ const Dropdown = () => {
 
 				{isLogin && (
 					<li>
-						<div>
+						<button>
 							<span className={`icon ${style.settings}`} />
 							Settings
-						</div>
+						</button>
 					</li>
 				)}
 				<li>
 					{isLogin ? (
-						<div>
+						<button>
 							<span className={`icon ${style.logout}`} />
 							Logout
-						</div>
+						</button>
 					) : (
 						<Link to="/users/login">
 							<span className={`icon ${style.login}`} />
