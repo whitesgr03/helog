@@ -1,9 +1,11 @@
 import style from "../styles/Header.module.css";
 
 import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown";
+import PropTypes from "prop-types";
 
-const Header = () => {
+const Header = ({
+	isAdmin,
+}) => {
 	return (
 		<header className={style.header}>
 			<Link to="/" className={style.logo}>
@@ -11,12 +13,14 @@ const Header = () => {
 			</Link>
 			<nav>
 				<ul className={style.list}>
-					<li>
-						<Link to="/" className={style.link}>
-							<span className={`icon ${style.pencil}`} />
-							Write
-						</Link>
-					</li>
+					{isAdmin && (
+						<li>
+							<Link to="/" className={style.link}>
+								<span className={`icon ${style.pencil}`} />
+								Write
+							</Link>
+						</li>
+					)}
 					<li>
 						<button className={style.button}>
 							<span className={`icon ${style.account}`} />
@@ -28,6 +32,9 @@ const Header = () => {
 			<Dropdown />
 		</header>
 	);
+};
+Header.propTypes = {
+	isAdmin: PropTypes.bool,
 };
 
 export default Header;
