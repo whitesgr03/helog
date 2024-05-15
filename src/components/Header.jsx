@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Header = ({ isAdmin, children }) => {
+	const active = false;
 	return (
 		<header className={style.header}>
 			<Link to="/" className={style.logo}>
@@ -27,7 +28,7 @@ const Header = ({ isAdmin, children }) => {
 					</li>
 				</ul>
 			</nav>
-			{children}
+			{active && children}
 		</header>
 	);
 };
