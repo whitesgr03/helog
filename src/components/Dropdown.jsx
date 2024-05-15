@@ -1,50 +1,42 @@
 import style from "../styles/Dropdown.module.css";
 
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const Dropdown = () => {
-	const isLogin = false;
+import Settings from "./Settings";
 
-	const user = {
-		name: "Name",
-	};
-
-	const darkMode = false;
-
+const Dropdown = ({ isLogin, userName }) => {
+	// const darkTheme = useContext(themeContext)
+	const active = false;
 	return (
 		<div className={style.dropdown}>
 			{isLogin && (
 				<div className={style.profile}>
 					<div className={style.avatar}>
-						{user.name.charAt(0).toUpperCase()}
+						{userName && userName.charAt(0).toUpperCase()}
 					</div>
-					{user.name}
+					{userName}
 				</div>
 			)}
 			<ul>
 				<li>
 					<div className={style.colorThemeToggle}>
-						{darkMode ? (
+						{/* {darkTheme ? (
 							<>
 								<span className={`icon ${style.moon}`} />
 								Dark mode
 							</>
-						) : (
-							<>
-								<span className={`icon ${style.sun}`} />
-								Light mode
-							</>
-						)}
+						) : ( */}
+						<>
+							<span className={`icon ${style.sun}`} />
+							Light mode
+						</>
+						{/* )} */}
 						<button className={style.switchWrap}>
-							<div
-								className={`${style.switch} ${
-									darkMode ? style.switchActive : ""
-								}`}
-							/>
+							<div className={style.switch} />
 						</button>
 					</div>
 				</li>
-
 				{isLogin && (
 					<li>
 						<button>
@@ -67,8 +59,15 @@ const Dropdown = () => {
 					)}
 				</li>
 			</ul>
+			{active && <Settings />}
 		</div>
 	);
+};
+
+Dropdown.propTypes = {
+	isLogin: PropTypes.bool,
+	darkMode: PropTypes.bool,
+	userName: PropTypes.string,
 };
 
 export default Dropdown;
