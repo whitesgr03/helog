@@ -5,14 +5,14 @@ exports[`Header component > should render correctly 1`] = `
   <header
     class="_header_a9d33c"
   >
-    <h1>
-      <a
-        class="_logo_a9d33c"
-        href="/"
-      >
+    <a
+      class="_logo_a9d33c"
+      href="/"
+    >
+      <h1>
         HeLog
-      </a>
-    </h1>
+      </h1>
+    </a>
     <nav>
       <ul
         class="_list_a9d33c"

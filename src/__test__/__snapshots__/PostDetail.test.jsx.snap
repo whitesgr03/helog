@@ -8,14 +8,14 @@ exports[`PostDetail component > should render correctly 1`] = `
     <li
       class="_item_30e276"
     >
-      <strong
-        class="_dateTime_30e276"
-      >
-        May 1, 2024
-      </strong>
       <h2>
         This is title A
       </h2>
+      <strong
+        class="_dateTime_30e276"
+      >
+        Published in May 1, 2024
+      </strong>
       <div
         class="_imageWrap_30e276"
       >
@@ -24,9 +24,6 @@ exports[`PostDetail component > should render correctly 1`] = `
           src="#"
         />
       </div>
-      <strong>
-        May 1, 2024 edited by author
-      </strong>
       <p>
         This is content A
       </p>
