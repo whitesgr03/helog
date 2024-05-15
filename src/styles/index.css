@@ -27,8 +27,8 @@
 	--dark-scheme-error: #ec7474;
 
 	/* icon */
-	--icon-mobile-size: 45px;
-	--icon-desktop-size: 30px;
+	--icon-size-mobile: 45px;
+	--icon-size-desktop: 30px;
 }
 
 * {
