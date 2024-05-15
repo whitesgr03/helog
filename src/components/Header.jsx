@@ -18,10 +18,10 @@ const Header = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to="/users/login" className={style.link}>
+						<button className={style.button}>
 							<span className={`icon ${style.account}`} />
 							Account
-						</Link>
+						</button>
 					</li>
 				</ul>
 			</nav>
