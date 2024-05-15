@@ -18,26 +18,14 @@ exports[`Header component > should render correctly 1`] = `
         class="_list_a9d33c"
       >
         <li>
-          <a
-            class="_link_a9d33c"
-            href="/"
-          >
-            <span
-              class="icon _pencil_a9d33c"
-            />
-            Write
-          </a>
-        </li>
-        <li>
-          <a
-            class="_link_a9d33c"
-            href="/users/login"
+          <button
+            class="_button_a9d33c"
           >
             <span
               class="icon _account_a9d33c"
             />
             Account
-          </a>
+          </button>
         </li>
       </ul>
     </nav>
