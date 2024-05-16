@@ -13,7 +13,7 @@ describe("Dropdown component", () => {
 			wrapper: BrowserRouter,
 		});
 
-		const actual = screen.queryByText("Jeff");
+		const actual = screen.queryByText(mockUserName);
 
 		expect(actual).not.toEqual(null);
 	});
