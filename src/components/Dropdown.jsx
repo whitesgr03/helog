@@ -3,18 +3,20 @@ import style from "../styles/Dropdown.module.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const Dropdown = ({ isLogin, userName, children }) => {
+import Settings from "./Settings";
 
+const Dropdown = ({ user }) => {
 	// const darkTheme = useContext(themeContext)
+	// const user = useContext(userContext);
 	const active = false;
 	return (
 		<div className={style.dropdown}>
-			{isLogin && (
+			{user && (
 				<div className={style.profile}>
 					<div className={style.avatar}>
-						{userName && userName.charAt(0).toUpperCase()}
+						{user.name && user.name.charAt(0).toUpperCase()}
 					</div>
-					{userName}
+					{user.name}
 				</div>
 			)}
 			<ul>
@@ -36,7 +38,7 @@ const Dropdown = ({ isLogin, userName, children }) => {
 						</button>
 					</div>
 				</li>
-				{isLogin && (
+				{user && (
 					<li>
 						<button>
 							<span className={`icon ${style.settings}`} />
@@ -45,7 +47,7 @@ const Dropdown = ({ isLogin, userName, children }) => {
 					</li>
 				)}
 				<li>
-					{isLogin ? (
+					{user ? (
 						<button>
 							<span className={`icon ${style.logout}`} />
 							Logout
@@ -58,15 +60,13 @@ const Dropdown = ({ isLogin, userName, children }) => {
 					)}
 				</li>
 			</ul>
-			{active && children}
+			{active && <Settings user={user} />}
 		</div>
 	);
 };
 
 Dropdown.propTypes = {
-	isLogin: PropTypes.bool,
-	userName: PropTypes.string,
-	children: PropTypes.node.isRequired,
+	user: PropTypes.object,
 };
 
 export default Dropdown;
