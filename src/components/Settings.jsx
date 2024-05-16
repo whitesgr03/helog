@@ -3,10 +3,12 @@ import { blur } from "../styles/model.module.css";
 
 import PropTypes from "prop-types";
 
+import ChangeNameModel from "./ChangeNameModel";
+
 const Settings = ({ user }) => {
 	// const user = useContext(userContext);
 	const activeChangeName = false;
-	const activeDeleteAccount = false;
+	// const activeDeleteAccount = false;
 	return (
 		<div className={blur}>
 			<div className={style.settings}>
@@ -37,6 +39,7 @@ const Settings = ({ user }) => {
 						<button>Delete account</button>
 					</div>
 				</div>
+				{activeChangeName && <ChangeNameModel user={user} />}
 			</div>
 		</div>
 	);
