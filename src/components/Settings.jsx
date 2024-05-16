@@ -1,4 +1,5 @@
 import style from "../styles/Settings.module.css";
+import { blur } from "../styles/model.module.css";
 
 import PropTypes from "prop-types";
 
@@ -7,7 +8,7 @@ const Settings = ({ user }) => {
 	const activeChangeName = false;
 	const activeDeleteAccount = false;
 	return (
-		<div className={model}>
+		<div className={blur}>
 			<div className={style.settings}>
 				<button className={`icon ${style.closeBtn}`} />
 				<div className={style.header}>
