@@ -3,8 +3,11 @@ import style from "../styles/Header.module.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const Header = ({ isAdmin, children }) => {
+import Dropdown from "./Dropdown";
+
+const Header = ({ user }) => {
 	// const darkTheme = useContext(themContext)
+	// const user = useContext(userContext);
 	const active = false;
 	return (
 		// <header className={`${darkTheme ? style.dark : ""} ${style.header} `}>
@@ -14,7 +17,7 @@ const Header = ({ isAdmin, children }) => {
 			</Link>
 			<nav>
 				<ul className={style.list}>
-					{isAdmin && (
+					{user.isAdmin && (
 						<li>
 							<Link to="/" className={style.link}>
 								<span className={`icon ${style.pencil}`} />
@@ -30,13 +33,12 @@ const Header = ({ isAdmin, children }) => {
 					</li>
 				</ul>
 			</nav>
-			{active && children}
+			{active && <Dropdown user={user} />}
 		</header>
 	);
 };
 Header.propTypes = {
-	isAdmin: PropTypes.bool,
-	children: PropTypes.node.isRequired,
+	user: PropTypes.object,
 };
 
 export default Header;
