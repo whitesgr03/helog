@@ -30,14 +30,13 @@ const posts = [
 		createdAt: new Date("2024/5/1"),
 	},
 ];
+const user = {
+	name: "Name",
+	isAdmin: true,
+	email: "Admin@gmail.com",
+};
 
 const App = () => {
-	const user = {
-		name: "Name",
-		isAdmin: true,
-		email: "Admin@gmail.com",
-	};
-
 	return (
 		<div className={style.app}>
 			<Header isAdmin={user.isAdmin}>
