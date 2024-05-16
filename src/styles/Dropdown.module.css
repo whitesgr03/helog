@@ -13,7 +13,7 @@
 	flex-direction: column;
 }
 
-.dropdown ul li > * {
+.dropdown > ul li > * {
 	display: flex;
 	align-items: center;
 	column-gap: 10px;
