@@ -3,9 +3,8 @@ import style from "../styles/Dropdown.module.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import Settings from "./Settings";
+const Dropdown = ({ isLogin, userName, children }) => {
 
-const Dropdown = ({ isLogin, userName }) => {
 	// const darkTheme = useContext(themeContext)
 	const active = false;
 	return (
@@ -59,15 +58,15 @@ const Dropdown = ({ isLogin, userName }) => {
 					)}
 				</li>
 			</ul>
-			{active && <Settings />}
+			{active && children}
 		</div>
 	);
 };
 
 Dropdown.propTypes = {
 	isLogin: PropTypes.bool,
-	darkMode: PropTypes.bool,
 	userName: PropTypes.string,
+	children: PropTypes.node.isRequired,
 };
 
 export default Dropdown;
