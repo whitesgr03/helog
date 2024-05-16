@@ -34,6 +34,7 @@ const App = () => {
 	const user = {
 		name: "Name",
 		isAdmin: true,
+		email: "Admin@gmail.com",
 	};
 
 	return (
