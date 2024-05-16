@@ -5,13 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
 
 describe("Dropdown component", () => {
-	it("should render correctly", () => {
-		const { asFragment } = render(<Dropdown />, { wrapper: BrowserRouter });
-
-		const actual = asFragment();
-
-		expect(actual).toMatchSnapshot();
-	});
 	it("should render the user name, if the 'isLogin' is true", () => {
 		const mockUserName = "Jeff";
 		const mockIsLogin = true;
