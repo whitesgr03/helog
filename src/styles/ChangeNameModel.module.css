@@ -1,0 +1,24 @@
+.form {
+	composes: settings from "./Settings.module.css";
+	composes: container from "./form.module.css";
+	display: flex;
+	flex-direction: column;
+	row-gap: 15px;
+	padding: 15px;
+}
+
+.header {
+	composes: header from "./Settings.module.css";
+}
+
+.closeBtn {
+	composes: closeBtn from "./Settings.module.css";
+}
+
+.form input {
+	background-color: var(--light-scheme-main-bgc);
+}
+
+.form button[type="submit"] {
+	align-self: self-end;
+}
