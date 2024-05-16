@@ -37,6 +37,7 @@
 	border-radius: 100%;
 	background-color: var(--light-scheme-color);
 	color: var(--dark-scheme-color);
+	font-size: calc(var(--icon-size-mobile) / 2);
 }
 
 .colorThemeToggle {
