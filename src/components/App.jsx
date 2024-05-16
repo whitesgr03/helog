@@ -4,8 +4,6 @@ import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
 import Footer from "./Footer";
-import Dropdown from "./Dropdown";
-import Settings from "./Settings";
 
 const posts = [
 	{
@@ -39,15 +37,7 @@ const user = {
 const App = () => {
 	return (
 		<div className={style.app}>
-			<Header isAdmin={user.isAdmin}>
-				<Dropdown isLogin={user ? true : false} userName={user.name}>
-					<Settings
-						userId={user.id}
-						userName={user.name}
-						userEmail={user.email}
-					/>
-				</Dropdown>
-			</Header>
+			<Header user={user} />
 			<div className={style.container}>
 				<main className={style.main}>
 					<Outlet context={{ posts }} />
