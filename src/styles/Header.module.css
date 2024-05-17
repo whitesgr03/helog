@@ -38,3 +38,15 @@
 	height: var(--icon-size-desktop);
 	width: var(--icon-size-desktop);
 }
+
+@media (min-width: 450px) {
+	.list li:nth-child(2) {
+		display: block;
+	}
+
+	.pencil,
+	.account {
+		height: var(--icon-size-mobile);
+		width: var(--icon-size-mobile);
+	}
+}

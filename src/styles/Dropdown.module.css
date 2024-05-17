@@ -111,3 +111,47 @@
 		)
 	);
 }
+
+@media (min-width: 450px) {
+	.dropdown {
+		min-width: 40%;
+	}
+
+	.dropdown > ul li:first-of-type {
+		display: none;
+	}
+
+	.avatar {
+		width: calc(var(--icon-size-mobile) * 1.33);
+		height: calc(var(--icon-size-mobile) * 1.33);
+	}
+
+	.colorThemeToggle {
+		--toggle-width: 45px;
+	}
+
+	.colorThemeToggle button {
+		margin: 0;
+	}
+
+	.sun {
+		height: var(--icon-size-mobile);
+		width: var(--icon-size-mobile);
+	}
+	.moon {
+		height: var(--icon-size-mobile);
+		width: var(--icon-size-mobile);
+	}
+	.settings {
+		height: var(--icon-size-mobile);
+		width: var(--icon-size-mobile);
+	}
+	.login {
+		height: var(--icon-size-mobile);
+		width: var(--icon-size-mobile);
+	}
+	.logout {
+		height: var(--icon-size-mobile);
+		width: var(--icon-size-mobile);
+	}
+}

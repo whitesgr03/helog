@@ -24,3 +24,10 @@
 	height: var(--icon-size-mobile);
 	width: var(--icon-size-mobile);
 }
+
+@media (min-width: 450px) {
+	.button {
+		width: 50%;
+		margin: 0 auto;
+	}
+}
