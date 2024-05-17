@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import Contact from "../components/Contact";
 
 const posts = [
 	{
@@ -42,6 +43,7 @@ const App = () => {
 				<main>
 					<Outlet context={{ posts }} />
 				</main>
+				<Contact />
 				<Footer />
 			</div>
 		</div>
