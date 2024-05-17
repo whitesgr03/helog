@@ -34,8 +34,8 @@ const Dropdown = ({ user }) => {
 							Light mode
 						</>
 						{/* )} */}
-						<button className={style.switchWrap}>
-							<div className={style.switch} />
+						<button>
+							<div/>
 						</button>
 					</div>
 				</li>
