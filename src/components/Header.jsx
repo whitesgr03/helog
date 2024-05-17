@@ -1,5 +1,6 @@
 import style from "../styles/Header.module.css";
 import { icon } from "../styles/image.module.css";
+import { colorThemeToggle, sun, moon } from "../styles/Dropdown.module.css";
 
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -27,7 +28,22 @@ const Header = ({ user }) => {
 						</li>
 					)}
 					<li>
-						<button className={style.button}>
+						<div className={style.switch}>
+							<div className={colorThemeToggle}>
+								{/* {darkTheme ? ( */}
+								{/* <span className={`${icon} ${moon}`} /> */}
+								{/* ) : ( */}
+								<span className={`${icon} ${sun}`} />
+								{/* )} */}
+								<button>
+									<div />
+								</button>
+							</div>
+							<span>Light mode</span>
+						</div>
+					</li>
+					<li>
+						<button>
 							<span className={`${icon} ${style.account}`} />
 							Account
 						</button>
