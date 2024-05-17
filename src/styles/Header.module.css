@@ -18,13 +18,16 @@
 	column-gap: 15px;
 }
 
-.link,
-.button {
+.list li > * {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	row-gap: 5px;
-	width: 60px;
+	min-width: 60px;
+}
+
+.list li:nth-child(2) {
+	display: none;
 }
 
 .pencil {
