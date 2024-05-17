@@ -1,4 +1,5 @@
 import style from "../styles/PostDetail.module.css";
+import { imageWrap } from "../styles/image.module.css";
 
 import PropTypes from "prop-types";
 import { format } from "date-fns";
@@ -15,7 +16,7 @@ const post = {
 const PostDetail = () => {
 	return (
 		<ul className={style.postDetail}>
-			<li className={style.item}>
+			<li>
 				<h2>{post.title}</h2>
 				<strong className={style.dateTime}>
 					Published in {format(post.createdAt, "MMMM d, y")}
@@ -23,7 +24,7 @@ const PostDetail = () => {
 				{post.createdAt.getTime() !== post.lastModified.getTime() && (
 					<em>Edited in {format(post.lastModified, "MMMM d, y")}</em>
 				)}
-				<div className={style.imageWrap}>
+				<div className={imageWrap}>
 					<img src={post.url} alt={post.title} />
 				</div>
 				<p>{post.content}</p>

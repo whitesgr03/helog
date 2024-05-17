@@ -1,4 +1,5 @@
 import style from "../styles/PostList.module.css";
+import { imageWrap } from "../styles/image.module.css";
 
 import PropTypes from "prop-types";
 import { format } from "date-fns";
@@ -9,9 +10,9 @@ const PostList = () => {
 	const { posts } = useOutletContext();
 
 	const list = posts.map(post => (
-		<li key={post.id} className={style.item}>
+		<li key={post.id}>
 			<Link to={`/posts/${post.id}`}>
-				<div className={style.imageWrap}>
+				<div className={imageWrap}>
 					<img src={post.url} alt={post.title} />
 				</div>
 				<strong className={style.dateTime}>
