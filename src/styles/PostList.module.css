@@ -8,11 +8,11 @@
 	display: flex;
 	flex-direction: column;
 	row-gap: 15px;
-	padding: 15px;
+	padding: 5%;
 }
 
-.postList li:not(:first-child) {
-	border-top: 1px solid var(--light-scheme-color);
+.postList li:not(:last-child) {
+	border-bottom: 1px solid var(--light-scheme-color);
 }
 
 .dateTime {
