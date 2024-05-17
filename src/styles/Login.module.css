@@ -2,6 +2,28 @@
 	padding: 15px;
 }
 
+.title {
+	margin-bottom: 15px;
+}
+
+.formWrap {
+	border: 1px solid var(--light-scheme-color);
+	border-radius: 5px;
+}
+
+.formWrap form {
+	padding: 15px;
+}
+
+.formWrap input {
+	margin-bottom: 20px;
+	background-color: var(--light-scheme-layout-bgc);
+}
+
+.formWrap button[type="submit"] {
+	margin-top: 40px;
+}
+
 .linkWrap {
 	display: flex;
 	flex-direction: column;
