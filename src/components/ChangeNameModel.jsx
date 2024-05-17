@@ -1,7 +1,8 @@
 import style from "../styles/ChangeNameModel.module.css";
-import { settings, closeBtn } from "../styles/Settings.module.css";
+import { settings } from "../styles/Settings.module.css";
 import { form } from "../styles/form.module.css";
 import { blur } from "../styles/blur.module.css";
+import { successBtn, closeBtn } from "../styles/button.module.css";
 import { icon } from "../styles/image.module.css";
 
 const ChangeNameModel = () => {

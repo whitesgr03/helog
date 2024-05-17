@@ -1,5 +1,7 @@
 import style from "../styles/DeleteAccountModel.module.css";
 import { blur } from "../styles/blur.module.css";
+import { button, errorBtn, closeBtn } from "../styles/button.module.css";
+import { settings } from "../styles/Settings.module.css";
 import { icon } from "../styles/image.module.css";
 
 const DeleteAccountModel = () => {
