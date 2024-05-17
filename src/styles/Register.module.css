@@ -1,3 +1,22 @@
 .register {
 	padding: 15px;
 }
+
+.title {
+	margin-bottom: 15px;
+}
+
+.register form {
+	border: 1px solid var(--light-scheme-color);
+	border-radius: 5px;
+	padding: 15px;
+}
+
+.register form input {
+	margin-bottom: 20px;
+	background-color: var(--light-scheme-layout-bgc);
+}
+
+.register form button[type="submit"] {
+	margin-top: 40px;
+}
