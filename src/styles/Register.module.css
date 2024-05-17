@@ -1,5 +1,5 @@
 .register {
-	padding: 15px;
+	padding: 5%;
 }
 
 .title {
@@ -24,6 +24,6 @@
 
 @media (min-width: 400px) {
 	.register {
-		padding: 10%;
+		padding: 20px 10%;
 	}
 }
