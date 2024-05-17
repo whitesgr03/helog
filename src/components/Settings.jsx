@@ -4,11 +4,12 @@ import { blur } from "../styles/blur.module.css";
 import PropTypes from "prop-types";
 
 import ChangeNameModel from "./ChangeNameModel";
+import DeleteAccountModel from "./DeleteAccountModel";
 
 const Settings = ({ user }) => {
 	// const user = useContext(userContext);
 	const activeChangeName = false;
-	// const activeDeleteAccount = false;
+	const activeDeleteAccount = false;
 	return (
 		<div className={blur}>
 			<div className={style.settings}>
@@ -40,6 +41,7 @@ const Settings = ({ user }) => {
 					</div>
 				</div>
 				{activeChangeName && <ChangeNameModel user={user} />}
+				{activeDeleteAccount && <DeleteAccountModel user={user} />}
 			</div>
 		</div>
 	);
