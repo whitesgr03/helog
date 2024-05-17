@@ -1,4 +1,5 @@
 import style from "../styles/Home.module.css";
+import { icon } from "../styles/image.module.css";
 
 import { Link } from "react-router-dom";
 
@@ -16,7 +17,7 @@ const Home = () => (
 		</p>
 		<Link to={`/posts`} className={style.link}>
 			Latest Posts
-			<span className={`icon ${style.doubleArrowRight}`} />
+			<span className={`${icon} ${style.doubleArrowRight}`} />
 		</Link>
 	</div>
 );

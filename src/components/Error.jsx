@@ -1,4 +1,5 @@
 import style from "../styles/Error.module.css";
+import { icon } from "../styles/image.module.css";
 
 import PropTypes from "prop-types";
 
@@ -9,7 +10,7 @@ const Error = ({
 	},
 }) => (
 	<div className={style.error}>
-		<span className={`icon ${style.alert}`} />
+		<span className={`${icon} ${style.alert}`} />
 		<h1 className={style.title}>{error.title}</h1>
 		<div className={style.message}>
 			<p>Our apologies, there has been an error.</p>

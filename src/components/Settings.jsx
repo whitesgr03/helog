@@ -1,5 +1,6 @@
 import style from "../styles/Settings.module.css";
 import { blur } from "../styles/blur.module.css";
+import { icon } from "../styles/image.module.css";
 
 import PropTypes from "prop-types";
 
@@ -13,7 +14,7 @@ const Settings = ({ user }) => {
 	return (
 		<div className={blur}>
 			<div className={style.settings}>
-				<button className={`icon ${style.closeBtn}`} />
+				<button className={`${icon} ${closeBtn}`} />
 				<div className={style.header}>
 					<span>Settings</span>
 				</div>

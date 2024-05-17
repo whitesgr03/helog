@@ -1,4 +1,5 @@
 import style from "../styles/Dropdown.module.css";
+import { icon } from "../styles/image.module.css";
 
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -24,12 +25,12 @@ const Dropdown = ({ user }) => {
 					<div className={style.colorThemeToggle}>
 						{/* {darkTheme ? (
 							<>
-								<span className={`icon ${style.moon}`} />
+								<span className={`${icon} ${style.moon}`} />
 								Dark mode
 							</>
 						) : ( */}
 						<>
-							<span className={`icon ${style.sun}`} />
+							<span className={`${icon} ${style.sun}`} />
 							Light mode
 						</>
 						{/* )} */}
@@ -41,7 +42,7 @@ const Dropdown = ({ user }) => {
 				{user && (
 					<li>
 						<button>
-							<span className={`icon ${style.settings}`} />
+							<span className={`${icon} ${style.settings}`} />
 							Settings
 						</button>
 					</li>
@@ -49,12 +50,12 @@ const Dropdown = ({ user }) => {
 				<li>
 					{user ? (
 						<button>
-							<span className={`icon ${style.logout}`} />
+							<span className={`${icon} ${style.logout}`} />
 							Logout
 						</button>
 					) : (
 						<Link to="/users/login">
-							<span className={`icon ${style.login}`} />
+							<span className={`${icon} ${style.login}`} />
 							Login
 						</Link>
 					)}
