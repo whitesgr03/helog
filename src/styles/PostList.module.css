@@ -1,5 +1,3 @@
-@import "./image.css";
-
 .postList {
 	display: flex;
 	flex-direction: column;
