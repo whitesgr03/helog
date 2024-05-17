@@ -7,15 +7,7 @@
 	padding: 15px;
 }
 
-.header {
-	composes: header from "./Settings.module.css";
-}
-
-.closeBtn {
-	composes: closeBtn from "./Settings.module.css";
-}
-
-.form input {
+.model form input {
 	background-color: var(--light-scheme-main-bgc);
 }
 
