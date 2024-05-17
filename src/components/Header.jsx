@@ -20,7 +20,7 @@ const Header = ({ user }) => {
 				<ul className={style.list}>
 					{user.isAdmin && (
 						<li>
-							<Link to="/" className={style.link}>
+							<Link to="/">
 								<span className={`${icon} ${style.pencil}`} />
 								Write
 							</Link>
