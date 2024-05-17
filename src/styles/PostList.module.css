@@ -4,14 +4,14 @@
 	background-color: var(--light-scheme-main-bgc);
 }
 
-.item > * {
+.postList li a {
 	display: flex;
 	flex-direction: column;
 	row-gap: 15px;
 	padding: 15px;
 }
 
-.item:not(:first-child) {
+.postList li:not(:first-child) {
 	border-top: 1px solid var(--light-scheme-color);
 }
 
