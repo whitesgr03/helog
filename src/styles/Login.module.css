@@ -33,7 +33,7 @@
 	border-top: 1px solid var(--light-scheme-color);
 }
 
-.link {
+.linkWrap a {
 	color: var(--light-scheme-highlight);
 	text-decoration: underline dotted var(--light-scheme-highlight) 2px;
 	text-underline-offset: 3px;
