@@ -39,7 +39,7 @@ const App = () => {
 		<div className={style.app}>
 			<Header user={user} />
 			<div className={style.container}>
-				<main className={style.main}>
+				<main>
 					<Outlet context={{ posts }} />
 				</main>
 				<Footer />
