@@ -26,3 +26,10 @@
 	width: var(--icon-size-desktop);
 	height: var(--icon-size-desktop);
 }
+
+@media (min-width: 400px) {
+	.home {
+		justify-content: space-evenly;
+		padding: 20px 10%;
+	}
+}

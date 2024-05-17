@@ -18,3 +18,9 @@
 .dateTime {
 	color: var(--light-scheme-highlight);
 }
+
+@media (min-width: 400px) {
+	.postList li a {
+		padding: 10%;
+	}
+}

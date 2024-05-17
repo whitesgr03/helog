@@ -38,3 +38,9 @@
 	text-decoration: underline dotted var(--light-scheme-highlight) 2px;
 	text-underline-offset: 3px;
 }
+
+@media (min-width: 400px) {
+	.login {
+		padding: 10%;
+	}
+}

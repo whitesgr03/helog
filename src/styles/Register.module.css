@@ -20,3 +20,10 @@
 .register form button[type="submit"] {
 	margin-top: 40px;
 }
+
+
+@media (min-width: 400px) {
+	.register {
+		padding: 10%;
+	}
+}

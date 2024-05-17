@@ -14,3 +14,9 @@
 .dateTime {
 	color: var(--light-scheme-highlight);
 }
+
+@media (min-width: 400px) {
+	.postDetail li {
+		padding: 10%;
+	}
+}
