@@ -1,5 +1,5 @@
 import style from "../styles/Settings.module.css";
-import { blur } from "../styles/model.module.css";
+import { blur } from "../styles/blur.module.css";
 
 import PropTypes from "prop-types";
 
