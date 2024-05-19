@@ -18,3 +18,14 @@
 	background-color: var(--light-scheme-main-bgc);
 	color: var(--light-scheme-color);
 }
+
+@media (min-width: 700px) {
+	.model {
+		row-gap: 40px;
+	}
+}
+@media (min-width: 1000px) {
+	.model {
+		padding: 20px;
+	}
+}

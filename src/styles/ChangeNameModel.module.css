@@ -12,3 +12,20 @@
 .model form button[type="submit"] {
 	align-self: self-end;
 }
+
+@media (min-width: 450px) {
+	.model form input {
+		margin: 0 10%;
+	}
+}
+@media (min-width: 700px) {
+	.model form {
+		row-gap: 30px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.model form {
+		padding: 20px;
+	}
+}

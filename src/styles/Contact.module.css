@@ -34,3 +34,29 @@
 		height: var(--icon-size-mobile);
 	}
 }
+
+@media (min-width: 450px) {
+	.contact {
+		padding: 5% 10%;
+		padding-top: 0;
+	}
+}
+
+@media (min-width: 700px) {
+	.contact {
+		padding: 5% 15%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.contact {
+		padding: 5% 10%;
+		padding-top: 0;
+	}
+}
+
+@media (min-width: 1300px) {
+	.contact {
+		display: none;
+	}
+}

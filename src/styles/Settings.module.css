@@ -63,3 +63,52 @@
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
+
+@media (min-width: 600px) {
+	.settings {
+		width: 60%;
+	}
+}
+
+@media (min-width: 700px) {
+	.settings {
+		width: 50%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.header {
+		padding: 20px;
+	}
+
+	.container {
+		display: flex;
+	}
+
+	.avatarWrap {
+		padding: 20px 30px;
+		align-items: flex-start;
+		border-right: 1px solid var(--light-scheme-color);
+	}
+
+	.list {
+		flex: 1 1 100%;
+	}
+
+	.list li {
+		flex: 1 1 100%;
+		padding: 30px;
+		row-gap: 20px;
+	}
+
+	.delete {
+		padding: 40px 30px;
+		row-gap: 20px;
+	}
+}
+
+@media (min-width: 1300px) {
+	.settings {
+		width: 30%;
+	}
+}

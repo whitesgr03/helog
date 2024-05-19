@@ -16,7 +16,27 @@
 }
 
 @media (min-width: 400px) {
-	.postDetail li {
-		padding: 10%;
+	.postDetail {
+		padding: 5% 10%;
+	}
+}
+
+@media (min-width: 700px) {
+	.postDetail {
+		row-gap: 40px;
+		padding: 5% 15%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.postDetail {
+		padding: 5% 10%;
+		row-gap: 30px;
+	}
+}
+
+@media (min-width: 1600px) {
+	.postDetail {
+		padding: 5% 0;
 	}
 }

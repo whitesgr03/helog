@@ -53,3 +53,23 @@
 		width: var(--icon-size-mobile);
 	}
 }
+@media (min-width: 700px) {
+	.list {
+		column-gap: 40px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.header {
+		padding: 20px;
+	}
+	.list {
+		column-gap: 60px;
+	}
+}
+
+@media (min-width: 1300px) {
+	.header {
+		padding: 20px 5%;
+	}
+}

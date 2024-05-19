@@ -160,3 +160,21 @@
 		width: var(--icon-size-mobile);
 	}
 }
+
+@media (min-width: 700px) {
+	.dropdown {
+		min-width: 30%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.dropdown {
+		min-width: 25%;
+	}
+}
+
+@media (min-width: 1300px) {
+	.dropdown {
+		min-width: 20%;
+	}
+}

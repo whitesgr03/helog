@@ -41,6 +41,54 @@
 
 @media (min-width: 400px) {
 	.login {
-		padding: 20px 10%;
+		padding: 5% 10%;
+	}
+}
+
+@media (min-width: 700px) {
+	.login {
+		padding: 5% 20%;
+	}
+
+	.title {
+		margin-bottom: 5%;
+	}
+
+	.formWrap {
+		border-radius: 15px;
+	}
+
+	.formWrap form {
+		padding: 5% 10%;
+	}
+
+	.formWrap input {
+		margin-bottom: 40px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.login {
+		padding: 5% 30%;
+	}
+}
+
+@media (min-width: 1300px) {
+	.login {
+		padding: 5% 20%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.formWrap {
+		width: 100%;
+	}
+
+	.linkWrap {
+		width: 100%;
+		flex: 1 1 100%;
+		display: flex;
+		align-items: center;
 	}
 }
