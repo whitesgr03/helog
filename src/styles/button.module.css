@@ -27,7 +27,13 @@
 
 @media (min-width: 450px) {
 	.button {
-		width: 50%;
+		width: 30%;
 		margin: 0 auto;
+	}
+}
+
+@media (min-width: 700px) {
+	.button {
+		width: 40%;
 	}
 }
