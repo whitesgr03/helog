@@ -6,24 +6,26 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Contact from "../components/Contact";
 
+import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
+
 const posts = [
 	{
 		id: "1",
-		url: "#",
+		url,
 		title: "This is title A",
 		content: "This is content A",
 		createdAt: new Date("2024/5/1"),
 	},
 	{
 		id: "2",
-		url: "#",
+		url,
 		title: "This is title B",
 		content: "This is content B",
 		createdAt: new Date("2024/5/1"),
 	},
 	{
 		id: "3",
-		url: "#",
+		url,
 		title: "This is title C",
 		content: "This is content C",
 		createdAt: new Date("2024/5/1"),

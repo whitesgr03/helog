@@ -4,9 +4,11 @@ import { imageWrap } from "../styles/image.module.css";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 
+import url from '../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg'
+
 const post = {
 	id: "1",
-	url: "#",
+	url,
 	title: "This is title A",
 	content: "This is content A",
 	createdAt: new Date("2024/5/1"),
