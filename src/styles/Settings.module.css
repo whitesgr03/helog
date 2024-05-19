@@ -53,15 +53,7 @@
 	text-underline-offset: 3px;
 }
 
-.delete {
-	padding: 15px 30px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	row-gap: 15px;
-}
-
-.delete button {
+.deleteBtn {
 	color: var(--light-scheme-error);
 	text-decoration: underline;
 	text-underline-offset: 3px;
