@@ -17,21 +17,19 @@ const post = {
 
 const PostDetail = () => {
 	return (
-		<ul className={style.postDetail}>
-			<li>
-				<h2>{post.title}</h2>
-				<strong className={style.dateTime}>
-					Published in {format(post.createdAt, "MMMM d, y")}
-				</strong>
-				{post.createdAt.getTime() !== post.lastModified.getTime() && (
-					<em>Edited in {format(post.lastModified, "MMMM d, y")}</em>
-				)}
-				<div className={imageWrap}>
-					<img src={post.url} alt={post.title} />
-				</div>
-				<p>{post.content}</p>
-			</li>
-		</ul>
+		<div className={style.postDetail}>
+			<h2>{post.title}</h2>
+			<strong className={style.dateTime}>
+				Published in {format(post.createdAt, "MMMM d, y")}
+			</strong>
+			{post.createdAt.getTime() !== post.lastModified.getTime() && (
+				<em>Edited in {format(post.lastModified, "MMMM d, y")}</em>
+			)}
+			<div className={imageWrap}>
+				<img src={post.url} alt={post.title} />
+			</div>
+			<p>{post.content}</p>
+		</div>
 	);
 };
 
