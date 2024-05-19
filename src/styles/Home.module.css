@@ -1,9 +1,21 @@
 .home {
+	padding: 5%;
+}
+
+.container {
+	height: 100%;
+}
+
+.wrap {
+	display: none;
+}
+
+.content {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-evenly;
 	row-gap: 30px;
-	padding: 5%;
 }
 
 .title {
@@ -19,6 +31,14 @@
 	align-self: flex-start;
 	align-items: center;
 	padding: 10px;
+}
+
+.link span:nth-child(2) {
+	display: none;
+}
+
+.latestPosts {
+	display: none;
 }
 
 .doubleArrowRight {
