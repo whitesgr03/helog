@@ -2,11 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	background-color: var(--light-scheme-main-bgc);
-}
-
-.postDetail li {
-	display: flex;
-	flex-direction: column;
 	row-gap: 15px;
 	padding: 5%;
 }
