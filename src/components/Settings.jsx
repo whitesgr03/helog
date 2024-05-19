@@ -16,10 +16,8 @@ const Settings = ({ user }) => {
 		<div className={blur}>
 			<div className={style.settings}>
 				<button className={`${icon} ${closeBtn}`} />
-				<div className={style.header}>
-					<span>Settings</span>
-				</div>
-				<div>
+				<div className={style.header}>Settings</div>
+				<div className={style.container}>
 					<div className={style.avatarWrap}>
 						<div className={style.avatar}>
 							{user.name && user.name.charAt(0).toUpperCase()}
