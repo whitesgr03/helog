@@ -34,11 +34,13 @@ const Settings = ({ user }) => {
 							<strong className={style.title}>Email</strong>
 							<span>{user.email}</span>
 						</li>
+						<li>
+							<strong className={style.title}>Delete</strong>
+							<button className={style.deleteBtn}>
+								Delete account
+							</button>
+						</li>
 					</ul>
-					<div className={style.delete}>
-						<strong className={style.title}>Delete</strong>
-						<button>Delete account</button>
-					</div>
 				</div>
 				{activeChangeName && <ChangeNameModel user={user} />}
 				{activeDeleteAccount && <DeleteAccountModel user={user} />}
