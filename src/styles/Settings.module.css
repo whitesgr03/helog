@@ -43,6 +43,10 @@
 	row-gap: 15px;
 }
 
+.list li:last-of-type {
+	border-top: 1px solid var(--light-scheme-color);
+}
+
 .list li button {
 	color: var(--light-scheme-highlight);
 	text-decoration: underline;
