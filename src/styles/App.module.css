@@ -22,6 +22,12 @@ main > * {
 	height: 100%;
 }
 
+/* Dark scheme classes */
+
+.dark.app {
+	background-color: var(--dark-scheme-layout-bgc);
+}
+
 @media (min-width: 1300px) {
 	main > * {
 		max-width: 1300px;

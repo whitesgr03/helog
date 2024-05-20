@@ -9,8 +9,14 @@
 	background-color: var(--light-scheme-main-bgc);
 }
 
-.model form button[type="submit"] {
-	align-self: self-end;
+/* Dark scheme classes */
+.dark.model {
+	color: var(--dark-scheme-color);
+}
+
+.dark.model form input {
+	color: var(--dark-scheme-color);
+	background-color: var(--dark-scheme-link-bgc-hover);
 }
 
 @media (min-width: 450px) {

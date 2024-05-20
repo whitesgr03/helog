@@ -42,6 +42,25 @@
 	width: var(--icon-size-desktop);
 }
 
+/* Dark scheme classes */
+.dark.header {
+	background-color: var(--dark-scheme-layout-bgc);
+	box-shadow: none;
+	border-bottom: 1px solid var(--dark-scheme-color);
+}
+
+.dark .logo {
+	color: var(--dark-scheme-highlight);
+}
+
+.dark .list li > * {
+	color: var(--dark-scheme-color);
+}
+
+.dark .list li:hover {
+	background-color: var(--dark-scheme-link-bgc-hover);
+}
+
 @media (min-width: 450px) {
 	.list li:nth-child(2) {
 		display: block;

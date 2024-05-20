@@ -33,12 +33,14 @@
 		width: var(--icon-size-mobile);
 		height: var(--icon-size-mobile);
 	}
-}
 
-@media (min-width: 450px) {
-	.contact {
-		padding: 5% 10%;
-		padding-top: 0;
+	/* Dark scheme classes */
+	.dark.contact {
+		background-color: var(--dark-scheme-layout-bgc);
+		color: var(--dark-scheme-color);
+	}
+	.dark.contact a {
+		color: var(--dark-scheme-color);
 	}
 }
 

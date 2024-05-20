@@ -15,7 +15,9 @@
 }
 
 .cancelBtn {
-	background-color: var(--light-scheme-main-bgc);
+/* Dark scheme classes */
+.dark .cancelBtn {
+	background-color: var(--dark-scheme-color);
 	color: var(--light-scheme-color);
 }
 

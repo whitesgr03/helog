@@ -21,6 +21,20 @@
 	margin-top: 40px;
 }
 
+/* Dark scheme classes */
+
+.dark.register {
+	color: var(--dark-scheme-color);
+}
+
+.dark.register form {
+	border-color: var(--dark-scheme-color);
+}
+
+.dark.register form input {
+	background-color: var(--dark-scheme-input-bgc);
+}
+
 @media (min-width: 400px) {
 	.register {
 		padding: 5% 10%;

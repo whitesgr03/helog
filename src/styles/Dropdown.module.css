@@ -108,13 +108,26 @@
 	width: var(--icon-size-desktop);
 }
 
-.dark .switch {
-	transform: translateX(
-		calc(
-			100% - calc(var(--toggle-padding) * 2) + var(--toggle-slide) -
-				calc(var(--toggle-border) * 2)
-		)
-	);
+/* Dark scheme classes */
+
+.dark.dropdown {
+	border: 2px solid var(--dark-scheme-color);
+	background-color: var(--dark-scheme-input-bgc);
+	color: var(--dark-scheme-color);
+}
+
+.dark.dropdown > ul li > * {
+	color: var(--dark-scheme-color);
+}
+
+.dark .avatar {
+	background-color: var(--dark-scheme-color);
+	color: var(--light-scheme-color);
+}
+
+.dropdown > ul li:hover {
+	background-color: var(--dark-scheme-link-bgc-hover);
+	cursor: pointer;
 }
 
 @media (min-width: 450px) {

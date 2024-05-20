@@ -39,6 +39,30 @@
 	text-underline-offset: 3px;
 }
 
+/* Dark scheme classes */
+
+.dark.login {
+	color: var(--dark-scheme-color);
+}
+
+.dark .formWrap {
+	border-color: var(--dark-scheme-color);
+}
+
+.dark .formWrap input {
+	color: var(--dark-scheme-color);
+	background-color: var(--dark-scheme-input-bgc);
+}
+
+.dark .linkWrap {
+	border-top-color: var(--dark-scheme-color);
+}
+
+.dark .linkWrap a {
+	color: var(--dark-scheme-highlight);
+	text-decoration-color: var(--dark-scheme-highlight);
+}
+
 @media (min-width: 400px) {
 	.login {
 		padding: 5% 10%;

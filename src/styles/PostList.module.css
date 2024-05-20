@@ -19,6 +19,20 @@
 	color: var(--light-scheme-highlight);
 }
 
+/* Dark scheme classes */
+.dark.postList li:not(:last-child) {
+	border-color: var(--dark-scheme-color);
+}
+.dark .dateTime {
+	color: var(--dark-scheme-highlight);
+}
+.dark .title {
+	color: var(--dark-scheme-color);
+}
+.dark li {
+	color: var(--dark-scheme-color);
+}
+
 @media (min-width: 400px) {
 	.postList li a {
 		padding: 5% 10%;

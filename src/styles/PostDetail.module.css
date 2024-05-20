@@ -10,6 +10,14 @@
 	color: var(--light-scheme-highlight);
 }
 
+/* Dark scheme classes */
+.dark.postDetail {
+	color: var(--dark-scheme-color);
+}
+.dark .dateTime {
+	color: var(--dark-scheme-highlight);
+}
+
 @media (min-width: 400px) {
 	.postDetail {
 		padding: 5% 10%;

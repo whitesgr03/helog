@@ -14,6 +14,17 @@
 	height: var(--icon-size-mobile);
 }
 
+/* Dark scheme classes */
+.dark.footer {
+	background-color: var(--dark-scheme-layout-bgc);
+	box-shadow: none;
+	border-top: 1px solid var(--dark-scheme-color);
+	color: var(--dark-scheme-color);
+}
+.dark a {
+	color: var(--dark-scheme-color);
+}
+
 @media (min-width: 450px) {
 	.address {
 		display: none;

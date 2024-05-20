@@ -28,3 +28,9 @@
 	width: var(--size);
 	height: var(--size);
 }
+
+/* Dark scheme classes */
+.dark.error {
+	background-color: var(--dark-scheme-layout-bgc);
+	color: var(--dark-scheme-color);
+}
