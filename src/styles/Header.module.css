@@ -16,6 +16,7 @@
 
 .logo {
 	color: var(--light-scheme-highlight);
+	padding: 10px;
 }
 
 .list {
