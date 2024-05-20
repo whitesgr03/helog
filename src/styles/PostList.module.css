@@ -19,6 +19,14 @@
 	color: var(--light-scheme-highlight);
 }
 
+/* Pseudo classes */
+.postList li a:hover .title {
+	text-decoration: underline;
+}
+.postList li a img:hover {
+	opacity: 0.8;
+}
+
 /* Dark scheme classes */
 .dark.postList li:not(:last-child) {
 	border-color: var(--dark-scheme-color);

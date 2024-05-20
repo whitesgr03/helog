@@ -47,6 +47,12 @@
 	height: var(--icon-size-desktop);
 }
 
+/* Pseudo classes */
+.link:hover {
+	background-color: var(--light-scheme-color);
+	color: var(--dark-scheme-color);
+}
+
 /* Dark scheme classes */
 .dark .content {
 	color: var(--dark-scheme-color);
@@ -194,6 +200,14 @@
 		padding: 0;
 		padding-top: 5%;
 	}
+
+	/* Pseudo classes */
+	.link:hover {
+		color: var(--light-scheme-color);
+		border: 2px solid var(--light-scheme-color);
+		background-color: transparent;
+	}
+
 	/* Dark scheme classes */
 	.dark .content {
 		background-color: rgba(0, 0, 0, 0.4);

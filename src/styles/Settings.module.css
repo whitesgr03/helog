@@ -59,6 +59,15 @@
 	text-underline-offset: 3px;
 }
 
+/* Pseudo classes */
+
+.changeBtn:hover,
+.deleteBtn:hover {
+	font-weight: 700;
+	font-style: italic;
+	text-decoration-thickness: 2px;
+}
+
 /* Dark scheme classes */
 
 .dark.settings {

@@ -108,6 +108,12 @@
 	width: var(--icon-size-desktop);
 }
 
+/* Pseudo classes */
+.dropdown > ul li:hover {
+	background-color: var(--light-scheme-link-bgc-hover);
+	cursor: pointer;
+}
+
 /* Dark scheme classes */
 
 .dark.dropdown {

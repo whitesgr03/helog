@@ -42,6 +42,11 @@
 	width: var(--icon-size-desktop);
 }
 
+/* Pseudo classes */
+.list li:hover {
+	background-color: var(--light-scheme-link-bgc-hover);
+}
+
 /* Dark scheme classes */
 .dark.header {
 	background-color: var(--dark-scheme-layout-bgc);
