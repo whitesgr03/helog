@@ -1,0 +1,63 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+
+.content label {
+	row-gap: 5px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+}
+
+.content label input {
+	border: 2px solid transparent;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.content label + span {
+	color: var(--light-scheme-error);
+	opacity: 0;
+	visibility: hidden;
+}
+
+.content label.error > * {
+	border-color: var(--light-scheme-error);
+}
+.content label.error + span {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Pseudo classes */
+.content label:focus-within,
+.content label:hover {
+	color: var(--light-scheme-highlight);
+}
+.content input:focus,
+.content input:hover {
+	border: 2px solid var(--light-scheme-highlight);
+}
+
+/* Dark scheme classes */
+.dark.content label + span {
+	color: var(--dark-scheme-error);
+}
+
+.dark.content label.error {
+	color: var(--darl-scheme-error);
+}
+.dark.content label.error > * {
+	border-color: var(--dark-scheme-error);
+}
+
+.dark.content label:focus-within,
+.dark.content label:hover {
+	color: var(--dark-scheme-highlight);
+}
+.dark.content input:focus,
+.dark.content input:hover {
+	border: 2px solid var(--dark-scheme-highlight);
+}
