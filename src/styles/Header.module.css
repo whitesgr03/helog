@@ -21,7 +21,10 @@
 
 .list {
 	display: flex;
-	column-gap: 15px;
+}
+
+.list li {
+	min-width: 80px;
 }
 
 .list li > * {
