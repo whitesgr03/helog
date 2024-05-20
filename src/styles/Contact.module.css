@@ -24,8 +24,8 @@
 	.contact {
 		display: flex;
 		flex-direction: column;
-		row-gap: 20px;
-		padding: 10%;
+		row-gap: 15px;
+		padding: 5% 10%;
 		background-color: var(--light-scheme-main-bgc);
 	}
 
