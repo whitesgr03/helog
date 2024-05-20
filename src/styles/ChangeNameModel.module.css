@@ -6,6 +6,7 @@
 }
 
 .model form input {
+	margin-top: 20px;
 	background-color: var(--light-scheme-main-bgc);
 }
 
