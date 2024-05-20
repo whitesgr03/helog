@@ -1,7 +1,6 @@
 .postDetail {
 	display: flex;
 	flex-direction: column;
-	background-color: var(--light-scheme-main-bgc);
 	row-gap: 15px;
 	padding: 5%;
 }
