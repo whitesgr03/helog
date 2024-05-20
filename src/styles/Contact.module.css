@@ -54,6 +54,7 @@
 	.contact {
 		padding: 5% 10%;
 		padding-top: 0;
+		row-gap: 20px;
 	}
 }
 
