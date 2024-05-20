@@ -13,8 +13,10 @@
 	justify-content: space-around;
 	column-gap: 15px;
 }
-
 .cancelBtn {
+	background-color: var(--light-scheme-color);
+}
+
 /* Dark scheme classes */
 .dark .cancelBtn {
 	background-color: var(--dark-scheme-color);
