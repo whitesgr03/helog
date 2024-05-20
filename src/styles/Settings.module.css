@@ -47,7 +47,7 @@
 	border-top: 1px solid var(--light-scheme-color);
 }
 
-.list li button {
+.changeBtn {
 	color: var(--light-scheme-highlight);
 	text-decoration: underline;
 	text-underline-offset: 3px;
