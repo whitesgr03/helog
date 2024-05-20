@@ -8,6 +8,12 @@
 	position: relative;
 }
 
+.header > a {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
 .logo {
 	color: var(--light-scheme-highlight);
 }
