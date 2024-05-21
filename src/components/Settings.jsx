@@ -52,8 +52,8 @@ const Settings = ({ user }) => {
 						</li>
 					</ul>
 				</div>
-				{activeChangeName && <ChangeNameModel user={user} />}
-				{activeDeleteAccount && <DeleteAccountModel user={user} />}
+				{activeChangeName && <ChangeNameModel username={user.name} />}
+				{activeDeleteAccount && <DeleteAccountModel userId={user.id} />}
 			</div>
 		</div>
 	);
