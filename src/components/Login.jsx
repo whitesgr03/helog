@@ -1,20 +1,50 @@
 import style from "../styles/Login.module.css";
-import { form } from "../styles/form.module.css";
-import { successBtn } from "../styles/button.module.css";
+
+import form from "../styles/utils/form.module.css";
+import button from "../styles/utils/button.module.css";
 
 import { Link } from "react-router-dom";
 
 const Login = () => {
+	const darkTheme = true;
+	const inputError = true;
 	return (
-		<div className={style.login}>
+		<div className={`${darkTheme ? style.dark : ""} ${style.login}`}>
 			<h3 className={style.title}>Sign In</h3>
 			<div className={style.formWrap}>
-				<form className={form}>
-					<label htmlFor="email">Email</label>
-					<input type="email" id="email" name="email" />
-					<label htmlFor="password">Password</label>
-					<input type="password" id="password" name="password" />
-					<button type="submit" className={successBtn}>
+				<form
+					className={`${darkTheme ? form.dark : ""} ${form.content}`}
+				>
+					<div>
+						<label
+							htmlFor="loginEmail"
+							className={`${inputError ? form.error : ""}`}
+						>
+							Email
+							<input type="email" id="loginEmail" name="email" />
+						</label>
+						<span>This is a placeholder</span>
+					</div>
+					<div>
+						<label
+							htmlFor="loginPassword"
+							className={`${inputError ? form.error : ""}`}
+						>
+							Password
+							<input
+								type="password"
+								id="loginPassword"
+								name="password"
+							/>
+						</label>
+						<span>This is a placeholder</span>
+					</div>
+					<button
+						type="submit"
+						className={`${darkTheme ? button.dark : ""} ${
+							button.success
+						}`}
+					>
 						Login
 					</button>
 				</form>
