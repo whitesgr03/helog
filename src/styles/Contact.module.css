@@ -25,6 +25,12 @@
 	height: var(--icon-size-desktop);
 }
 
+/* Pseudo classes */
+.container a:hover {
+	color: var(--light-scheme-highlight);
+}
+
+
 @media (min-width: 450px) {
 	.contact {
 		display: flex;
