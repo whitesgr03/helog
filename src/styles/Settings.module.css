@@ -135,7 +135,7 @@
 	}
 
 	/* Dark scheme classes */
-	.avatarWrap {
+	.dark .avatarWrap {
 		border-right-color: var(--dark-scheme-color);
 	}
 }
