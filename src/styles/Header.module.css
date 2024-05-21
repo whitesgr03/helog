@@ -18,6 +18,10 @@
 	padding: 10px;
 }
 
+.logo h1 {
+	color: var(--light-scheme-highlight);
+}
+
 .list {
 	display: flex;
 }
@@ -68,7 +72,7 @@
 	border-bottom: 1px solid var(--dark-scheme-color);
 }
 
-.dark .logo {
+.dark .logo h1 {
 	color: var(--dark-scheme-highlight);
 }
 
@@ -84,7 +88,6 @@
 	.list li:nth-child(2) {
 		display: block;
 	}
-
 	.pencil,
 	.account {
 		height: var(--icon-size-mobile);
