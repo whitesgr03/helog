@@ -1,6 +1,7 @@
 import style from "../styles/Home.module.css";
-import { icon } from "../styles/image.module.css";
-import { imageWrap } from "../styles/image.module.css";
+import image from "../styles/utils/image.module.css";
+
+import { dark as postListDark, item } from "../styles/PostList.module.css";
 
 import { useOutletContext, Link } from "react-router-dom";
 
@@ -9,19 +10,24 @@ import { Post } from "../components/PostList";
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Home = () => {
+	const darkTheme = true;
 	const { posts } = useOutletContext();
 
-	const latestPosts = posts.slice(0, 3).map(post => (
-		<li key={post.id}>
-			<Post post={post} />
+	const latestPosts = posts.slice(0, 4).map(post => (
+		<li key={post.id} className={item}>
+			<Post post={post} darkTheme={darkTheme} />
 		</li>
 	));
 
 	return (
-		<div className={style.home}>
+		<div className={`${darkTheme ? style.dark : ""} ${style.home}`}>
 			<div className={style.container}>
 				<div className={style.wrap}>
-					<div className={imageWrap}>
+					<div
+						className={`${darkTheme ? image.dark : ""} ${
+							image.content
+						}`}
+					>
 						<img src={url} />
 					</div>
 				</div>
@@ -41,13 +47,19 @@ const Home = () => {
 					<Link to={`/posts`} className={style.link}>
 						<span>Latest </span>
 						<span>All </span>Posts
-						<span className={`${icon} ${style.doubleArrowRight}`} />
+						<span
+							className={`${image.icon} ${style.doubleArrowRight}`}
+						/>
 					</Link>
 				</div>
 			</div>
 			<div className={style.latestPosts}>
 				<h2>Latest Posts</h2>
-				<div className={style.list}>{latestPosts}</div>
+				<div
+					className={`${darkTheme ? postListDark : ""} ${style.list}`}
+				>
+					{latestPosts}
+				</div>
 			</div>
 		</div>
 	);
