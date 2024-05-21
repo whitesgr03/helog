@@ -54,7 +54,6 @@
 }
 @media (min-width: 700px) {
 	.postList li {
-		row-gap: 40px;
 		padding: 5% 15%;
 	}
 	.postList li .content {
