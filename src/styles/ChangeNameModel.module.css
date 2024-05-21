@@ -30,8 +30,8 @@
 }
 
 @media (min-width: 450px) {
-	.model form input {
-		margin: 0 10%;
+	.model form {
+		padding: 20px;
 	}
 }
 @media (min-width: 700px) {
