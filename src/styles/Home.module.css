@@ -129,6 +129,11 @@
 		flex-direction: column;
 		row-gap: 15px;
 	}
+
+	/* Dark scheme classes */
+	.latestPosts {
+		color: var(--dark-scheme-color);
+	}
 }
 
 @media (min-width: 1000px) {
@@ -155,6 +160,14 @@
 
 	.latestPosts {
 		padding: 5% 10%;
+	}
+
+	.list {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+
+	.list li{
+		row-gap: 10px;
 	}
 
 	/* Dark scheme classes */
