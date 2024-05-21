@@ -20,8 +20,8 @@
 	row-gap: 15px;
 }
 
-.postList li:not(:last-child) {
-	border-bottom: 1px solid var(--light-scheme-color);
+.item .title {
+	color: var(--light-scheme-highlight);
 }
 
 .dateTime {
@@ -29,25 +29,22 @@
 }
 
 /* Pseudo classes */
-.postList li a:hover .title {
-	text-decoration: underline;
-}
-.postList li a img:hover {
+.item a img:hover {
 	opacity: 0.8;
+}
+.item .title:hover {
+	text-decoration: underline;
 }
 
 /* Dark scheme classes */
 .dark.postList li:not(:last-child) {
 	border-color: var(--dark-scheme-color);
 }
-.dark .dateTime {
+.dark .item {
+	color: var(--dark-scheme-color);
+}
+.dark .item .title {
 	color: var(--dark-scheme-highlight);
-}
-.dark .title {
-	color: var(--dark-scheme-color);
-}
-.dark li {
-	color: var(--dark-scheme-color);
 }
 
 @media (min-width: 400px) {
