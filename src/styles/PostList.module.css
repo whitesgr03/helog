@@ -3,11 +3,21 @@
 	flex-direction: column;
 }
 
+.postList li:not(:last-child) {
+	border-bottom: 1px solid var(--light-scheme-color);
+}
+
 .postList li {
+	row-gap: 5px;
+	padding: 5%;
+	display: flex;
+	flex-direction: column;
+}
+
+.postList li .content {
 	display: flex;
 	flex-direction: column;
 	row-gap: 15px;
-	padding: 5%;
 }
 
 .postList li:not(:last-child) {
@@ -50,6 +60,9 @@
 		row-gap: 40px;
 		padding: 5% 15%;
 	}
+	.postList li .content {
+		row-gap: 30px;
+	}
 }
 
 @media (min-width: 1000px) {
@@ -67,7 +80,10 @@
 
 	.postList li {
 		padding: 0;
-		row-gap: 30px;
+	}
+
+	.postList li .content {
+		row-gap: 20px;
 	}
 }
 
