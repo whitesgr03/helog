@@ -1,17 +1,18 @@
 import style from "../styles/Dropdown.module.css";
-import { icon } from "../styles/image.module.css";
+import Settings from "./Settings";
+
+import button from "../styles/utils/button.module.css";
+import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import Settings from "./Settings";
-
 const Dropdown = ({ user }) => {
-	// const darkTheme = useContext(themeContext)
+	const darkTheme = true;
 	// const user = useContext(userContext);
-	const active = false;
+	const active = true;
 	return (
-		<div className={style.dropdown}>
+		<div className={`${darkTheme ? style.dark : ""} ${style.dropdown}`}>
 			{user && (
 				<div className={style.profile}>
 					<div className={style.avatar}>
@@ -22,27 +23,28 @@ const Dropdown = ({ user }) => {
 			)}
 			<ul>
 				<li>
-					<div className={style.colorThemeToggle}>
-						{/* {darkTheme ? (
-							<>
-								<span className={`${icon} ${style.moon}`} />
-								Dark mode
-							</>
-						) : ( */}
-						<>
-							<span className={`${icon} ${style.sun}`} />
-							Light mode
-						</>
-						{/* )} */}
-						<button>
-							<div/>
-						</button>
-					</div>
+					<button
+						className={`${darkTheme ? button.dark : ""} ${
+							button.theme
+						}`}
+					>
+						<span
+							className={`${image.icon} ${
+								darkTheme ? style.moon : style.sun
+							}`}
+						/>
+						{darkTheme ? "Dark" : "Light"} mode
+						<div>
+							<div />
+						</div>
+					</button>
 				</li>
 				{user && (
 					<li>
 						<button>
-							<span className={`${icon} ${style.settings}`} />
+							<span
+								className={`${image.icon} ${style.settings}`}
+							/>
 							Settings
 						</button>
 					</li>
@@ -50,12 +52,12 @@ const Dropdown = ({ user }) => {
 				<li>
 					{user ? (
 						<button>
-							<span className={`${icon} ${style.logout}`} />
+							<span className={`${image.icon} ${style.logout}`} />
 							Logout
 						</button>
 					) : (
 						<Link to="/users/login">
-							<span className={`${icon} ${style.login}`} />
+							<span className={`${image.icon} ${style.login}`} />
 							Login
 						</Link>
 					)}
