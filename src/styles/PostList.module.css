@@ -25,7 +25,7 @@
 }
 
 .dateTime {
-	color: var(--light-scheme-highlight);
+	font-style: italic;
 }
 
 /* Pseudo classes */
