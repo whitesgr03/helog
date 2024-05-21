@@ -14,6 +14,11 @@
 	background-color: var(--light-scheme-main-bgc);
 }
 
+.model form button {
+	width: 50%;
+	align-self: center;
+}
+
 /* Dark scheme classes */
 .dark.model {
 	color: var(--dark-scheme-color);
