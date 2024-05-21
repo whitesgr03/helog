@@ -15,8 +15,9 @@
 
 .buttonWrap {
 	display: flex;
-	justify-content: space-around;
-	column-gap: 15px;
+	justify-content: space-evenly;
+}
+
 }
 .cancelBtn {
 	background-color: var(--light-scheme-color);
