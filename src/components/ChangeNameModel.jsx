@@ -1,21 +1,49 @@
 import style from "../styles/ChangeNameModel.module.css";
-import { settings } from "../styles/Settings.module.css";
-import { form } from "../styles/form.module.css";
-import { blur } from "../styles/blur.module.css";
-import { successBtn, closeBtn } from "../styles/button.module.css";
-import { icon } from "../styles/image.module.css";
+import { dark as settingsDark, settings } from "../styles/Settings.module.css";
+
+import form from "../styles/utils/form.module.css";
+import blur from "../styles/utils/blur.module.css";
+import button from "../styles/utils/button.module.css";
+import image from "../styles/utils/image.module.css";
 
 const ChangeNameModel = () => {
-	// const darkTheme = useContext(themContext)
+	const darkTheme = true;
+	const inputError = false;
 	// const user = useContext(userContext)
 	return (
-		<div className={blur}>
-			<div className={`${settings} ${style.model}`}>
-				<form className={form}>
-					<button type="button" className={`${icon} ${closeBtn}`} />
-					<label htmlFor="changeName">Change Name</label>
-					<input id="changeName" type="text" name="name" />
-					<button className={successBtn} type="submit">
+		<div className={blur.bgc}>
+			<div
+				className={`${
+					darkTheme ? `${style.dark} ${settingsDark}` : ""
+				} ${settings} ${style.model}`}
+			>
+				<button
+					type="button"
+					className={`${darkTheme ? button.dark : ""} ${
+						button.closeBtn
+					}`}
+				>
+					<span className={`${image.icon} ${button.close}`}></span>
+				</button>
+				<form
+					className={`${darkTheme ? form.dark : ""} ${form.content}`}
+				>
+					<div>
+						<label
+							htmlFor="changeName"
+							className={`${inputError ? form.error : ""}`}
+						>
+							Change Name
+							<input id="changeName" type="text" name="name" />
+						</label>
+						<span>This is a placeholder</span>
+					</div>
+					<button
+						className={`${darkTheme ? button.dark : ""} ${
+							button.success
+						}`}
+						type="submit"
+					>
 						Save
 					</button>
 				</form>
