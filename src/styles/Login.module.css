@@ -76,6 +76,13 @@
 	}
 }
 
+@media (min-width: 600px) {
+	.formWrap button[type="submit"] {
+		width: 50%;
+		align-self: center;
+	}
+}
+
 @media (min-width: 700px) {
 	.login {
 		padding: 5% 20%;
