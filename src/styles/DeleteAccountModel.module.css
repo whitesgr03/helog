@@ -4,6 +4,11 @@
 	flex-direction: column;
 	row-gap: 20px;
 }
+
+.title {
+	font-weight: 700;
+}
+
 .content {
 	align-self: center;
 }
