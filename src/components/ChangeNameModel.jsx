@@ -6,10 +6,11 @@ import blur from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-const ChangeNameModel = () => {
+import PropTypes from "prop-types";
+
+const ChangeNameModel = ({ username }) => {
 	const darkTheme = true;
 	const inputError = false;
-	// const user = useContext(userContext)
 	return (
 		<div className={blur.bgc}>
 			<div
@@ -50,6 +51,10 @@ const ChangeNameModel = () => {
 			</div>
 		</div>
 	);
+};
+
+ChangeNameModel.propTypes = {
+	username: PropTypes.string,
 };
 
 export default ChangeNameModel;

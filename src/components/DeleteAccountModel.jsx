@@ -5,9 +5,10 @@ import blur from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-const DeleteAccountModel = () => {
+import PropTypes from "prop-types";
+
+const DeleteAccountModel = ({ userId }) => {
 	const darkTheme = true;
-	// const user = useContext(userContext)
 	return (
 		<div className={blur.bgc}>
 			<div
@@ -46,6 +47,10 @@ const DeleteAccountModel = () => {
 			</div>
 		</div>
 	);
+};
+
+DeleteAccountModel.propTypes = {
+	userId: PropTypes.string,
 };
 
 export default DeleteAccountModel;
