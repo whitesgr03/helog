@@ -1,39 +1,51 @@
 import style from "../styles/PostList.module.css";
-import { imageWrap } from "../styles/image.module.css";
+
+import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 
 import { useOutletContext, Link } from "react-router-dom";
 
-const Post = ({ post }) => (
-	<Link to={`/posts/${post.id}`}>
-		<div className={imageWrap}>
-			<img src={post.url} alt={post.title} />
+const Post = ({ post, darkTheme }) => (
+	<>
+		<Link to={`/posts/${post.id}`}>
+			<div className={`${darkTheme ? image.dark : ""} ${image.content}`}>
+				<img src={post.url} alt={post.title} />
+			</div>
+		</Link>
+		<div className={style.content}>
+			<strong className={style.dateTime}>
+				{format(post.createdAt, "MMMM d, y")}
+			</strong>
+			<Link to={`/posts/${post.id}`} className={style.title}>
+				<h3>{post.title}</h3>
+			</Link>
+			<p>{post.content}</p>
 		</div>
-		<strong className={style.dateTime}>
-			{format(post.createdAt, "MMMM d, y")}
-		</strong>
-		<h3>{post.title}</h3>
-
-		<p>{post.content}</p>
-	</Link>
+	</>
 );
 
 const PostList = () => {
+	const darkTheme = true;
 	const { posts } = useOutletContext();
 
-	const list = posts.map(post => (
-		<li key={post.id}>
+	const items = posts.map(post => (
+		<li key={post.id} className={style.item}>
 			<Post post={post} />
 		</li>
 	));
 
-	return <ul className={style.postList}>{list}</ul>;
+	return (
+		<ul className={`${darkTheme ? style.dark : ""}  ${style.postList}`}>
+			{items}
+		</ul>
+	);
 };
 
 Post.propTypes = {
 	post: PropTypes.object,
+	darkTheme: PropTypes.bool,
 };
 
 PostList.propTypes = {
