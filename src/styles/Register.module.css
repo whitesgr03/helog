@@ -40,6 +40,13 @@
 	}
 }
 
+@media (min-width: 600) {
+	.register form button[type="submit"] {
+		width: 50%;
+		align-self: center;
+	}
+}
+
 @media (min-width: 700px) {
 	.register {
 		padding: 5% 20%;
