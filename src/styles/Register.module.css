@@ -60,8 +60,8 @@
 		border-radius: 15px;
 	}
 
-	.register form input {
-		margin-bottom: 40px;
+	.register form button[type="submit"] {
+		width: 100%;
 	}
 }
 
