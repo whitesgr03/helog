@@ -11,6 +11,8 @@
 	--light-scheme-layout-shadow: #bbbdc3;
 	--light-scheme-main-bgc: #f5f8fe;
 
+	--light-scheme-link-bgc-hover: rgba(0, 0, 0, 0.2);
+
 	--light-scheme-highlight: #175073;
 	--light-scheme-success: #0b563d;
 	--light-scheme-error: #911d1d;
@@ -20,7 +22,10 @@
 
 	--dark-scheme-layout-bgc: #0a1324;
 	--dark-scheme-layout-border-shadow: #cacdd4;
-	--dark-scheme-main-bgc: #f5f8fe;
+
+	--dark-scheme-link-bgc-hover: rgba(209, 209, 209, 0.2);
+	--dark-scheme-input-bgc: #483b2e;
+	--dark-scheme-switch-bgc: #573614;
 
 	--dark-scheme-highlight: #f2a145;
 	--dark-scheme-success: #5cb297;
