@@ -1,10 +1,11 @@
 import style from "../styles/PostDetail.module.css";
-import { imageWrap } from "../styles/image.module.css";
+
+import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 
-import url from '../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg'
+import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const post = {
 	id: "1",
@@ -16,8 +17,9 @@ const post = {
 };
 
 const PostDetail = () => {
+	const darkTheme = true;
 	return (
-		<div className={style.postDetail}>
+		<div className={`${darkTheme ? style.dark : ""} ${style.postDetail}`}>
 			<h2>{post.title}</h2>
 			<strong className={style.dateTime}>
 				Published in {format(post.createdAt, "MMMM d, y")}
@@ -25,7 +27,7 @@ const PostDetail = () => {
 			{post.createdAt.getTime() !== post.lastModified.getTime() && (
 				<em>Edited in {format(post.lastModified, "MMMM d, y")}</em>
 			)}
-			<div className={imageWrap}>
+			<div className={`${darkTheme ? image.dark : ""} ${image.content}`}>
 				<img src={post.url} alt={post.title} />
 			</div>
 			<p>{post.content}</p>
