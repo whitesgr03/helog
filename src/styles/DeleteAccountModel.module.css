@@ -18,7 +18,10 @@
 	justify-content: space-evenly;
 }
 
+.buttonWrap button {
+	width: 40%;
 }
+
 .cancelBtn {
 	background-color: var(--light-scheme-color);
 }
