@@ -32,11 +32,13 @@
 	color: var(--light-scheme-color);
 }
 
-@media (min-width: 700px) {
+@media (min-width: 450px) {
 	.model {
+		padding: 20px;
 		row-gap: 40px;
 	}
 }
+
 @media (min-width: 1000px) {
 	.model {
 		padding: 20px;
