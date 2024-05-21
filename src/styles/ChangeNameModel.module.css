@@ -42,6 +42,7 @@
 
 @media (min-width: 1000px) {
 	.model form {
-		padding: 20px;
+		padding: 30px 40px;
+		row-gap: 30px;
 	}
 }
