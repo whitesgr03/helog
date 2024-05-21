@@ -5,6 +5,10 @@
 	padding: 15px;
 }
 
+.model form label {
+	font-weight: 700;
+}
+
 .model form input {
 	margin-top: 20px;
 	background-color: var(--light-scheme-main-bgc);
