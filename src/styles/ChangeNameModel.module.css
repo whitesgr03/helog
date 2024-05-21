@@ -36,7 +36,7 @@
 }
 @media (min-width: 700px) {
 	.model form {
-		row-gap: 30px;
+		row-gap: 20px;
 	}
 }
 
