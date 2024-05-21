@@ -100,8 +100,8 @@
 		padding: 5% 10%;
 	}
 
-	.formWrap input {
-		margin-bottom: 40px;
+	.formWrap button[type="submit"] {
+		width: 100%;
 	}
 }
 
