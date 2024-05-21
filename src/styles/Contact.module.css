@@ -30,6 +30,10 @@
 	color: var(--light-scheme-highlight);
 }
 
+/* Dark scheme classes */
+.dark .container a:hover  {
+	color: var(--dark-scheme-highlight);
+}
 
 @media (min-width: 450px) {
 	.contact {
