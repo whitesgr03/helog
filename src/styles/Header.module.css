@@ -95,6 +95,9 @@
 	}
 }
 @media (min-width: 700px) {
+	.header {
+		padding: 0 15px;
+	}
 	.list {
 		column-gap: 40px;
 	}
