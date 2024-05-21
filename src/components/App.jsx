@@ -73,8 +73,9 @@ const user = {
 };
 
 const App = () => {
+	const darkTheme = true;
 	return (
-		<div className={style.app}>
+		<div className={`${darkTheme ? style.dark : ""} ${style.app}`}>
 			<Header user={user} />
 			<div className={style.container}>
 				<main>
