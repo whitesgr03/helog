@@ -99,21 +99,24 @@
 		padding: 0 15px;
 	}
 	.list {
-		column-gap: 40px;
+		column-gap: 30px;
 	}
 }
 
 @media (min-width: 1000px) {
 	.header {
-		padding: 20px;
+		padding: 0 40px;
 	}
 	.list {
-		column-gap: 60px;
+		column-gap: 40px;
 	}
 }
 
 @media (min-width: 1300px) {
 	.header {
-		padding: 20px 5%;
+		padding: 0 50px;
+	}
+	.list {
+		column-gap: 50px;
 	}
 }
