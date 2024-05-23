@@ -1,3 +1,4 @@
+import { useState } from "react";
 import style from "../styles/Header.module.css";
 import { sun, moon } from "../styles/Dropdown.module.css";
 
@@ -10,9 +11,9 @@ import PropTypes from "prop-types";
 import Dropdown from "./Dropdown";
 
 const Header = ({ user }) => {
-	const darkTheme = true;
+	const [activeDropdown, setActiveDropdown] = useState(false);
+	const darkTheme = false;
 	// const user = useContext(userContext);
-	const active = true;
 	return (
 		<header className={`${darkTheme ? style.dark : ""} ${style.header} `}>
 			<Link to="/" className={style.logo}>
@@ -59,7 +60,7 @@ const Header = ({ user }) => {
 					</li>
 				</ul>
 			</nav>
-			{active && <Dropdown user={user} />}
+			{activeDropdown && <Dropdown user={user} />}
 		</header>
 	);
 };
