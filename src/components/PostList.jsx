@@ -14,14 +14,14 @@ const Post = ({ post, darkTheme }) => (
 				<img src={post.url} alt={post.title} />
 			</div>
 		</Link>
-		<div className={style.content}>
+		<div className={style.container}>
 			<strong className={style.dateTime}>
 				{format(post.createdAt, "MMMM d, y")}
 			</strong>
-			<Link to={`/posts/${post.id}`} className={style.title}>
-				<h3>{post.title}</h3>
+			<Link to={`/posts/${post.id}`}>
+				<h3 className={style.title}>{post.title}</h3>
 			</Link>
-			<p>{post.content}</p>
+			<p className={style.content}>{post.content}</p>
 		</div>
 	</>
 );
