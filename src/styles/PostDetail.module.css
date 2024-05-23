@@ -14,6 +14,9 @@
 	flex-direction: column;
 	row-gap: 10px;
 }
+
+.dateTime.createdAt strong,
+.dateTime.lastModified em {
 	color: var(--light-scheme-highlight);
 }
 
@@ -21,7 +24,9 @@
 .dark.postDetail {
 	color: var(--dark-scheme-color);
 }
-.dark .dateTime {
+
+.dark .dateTime.createdAt strong,
+.dark .dateTime.lastModified em {
 	color: var(--dark-scheme-highlight);
 }
 
