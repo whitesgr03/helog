@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { useOutletContext, Link } from "react-router-dom";
 
 const Post = ({ post, darkTheme }) => (
-	<>
+	<li className={style.item}>
 		<Link to={`/posts/${post.id}`}>
 			<div className={`${darkTheme ? image.dark : ""} ${image.content}`}>
 				<img src={post.url} alt={post.title} />
@@ -23,7 +23,7 @@ const Post = ({ post, darkTheme }) => (
 			</Link>
 			<p className={style.content}>{post.content}</p>
 		</div>
-	</>
+	</li>
 );
 
 const PostList = () => {
