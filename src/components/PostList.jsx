@@ -31,6 +31,7 @@ const PostList = () => {
 	const { posts } = useOutletContext();
 
 	const published = posts.filter(post => post.publish);
+	const items = published.map(post => <Post key={post.id} post={post} />);
 
 	return (
 		<ul className={`${darkTheme ? style.dark : ""}  ${style.postList}`}>
