@@ -103,22 +103,22 @@ const CommentList = ({ postAuthor }) => {
 
 	const parentComments = comments.filter(comment => !comment?.reply);
 	const replyComments = comments.filter(comment => comment.reply);
-			comment.reply.length > 0 &&
-			comment.reply.map(reply => (
-				<li key={reply.id}>
-					<Comment
-						comment={reply}
-						postAuthor={postAuthor}
-						user={user}
-					/>
-				</li>
-			));
+
+	const items = parentComments.map(comment => {
+		const replyList = [...replyComments].filter(
+			rComment =>
+				rComment.reply === comment.id &&
+				replyComments.splice(
+					replyComments.findIndex(reply => reply.id === rComment.id),
+					1
+				)
+		);
 
 		return (
 			<li key={comment.id}>
 				<Comment postAuthor={postAuthor} user={user} comment={comment}>
 					<div className={style.buttonWrap}>
-						{reply && (
+						{replyList.length > 0 && (
 							<button className={style.commentBtn}>
 								<span
 									className={`${image.icon} ${
@@ -129,14 +129,30 @@ const CommentList = ({ postAuthor }) => {
 											: ""
 									}`}
 								></span>
-								{comment.reply.length}
+								{replyList.length}
 							</button>
 						)}
 						<button className={style.replyBtn}>Reply</button>
 					</div>
 				</Comment>
-				{reply && activeCommentIds.includes(comment.id) && (
-					<ul className={style.reply}>{reply}</ul>
+				{replyList.length > 0 && (
+					<ul
+						className={`${style.reply} ${
+							activeCommentIds.includes(comment.id)
+								? style.active
+								: ""
+						}`}
+					>
+						{replyList.map(reply => (
+							<li key={reply.id}>
+								<Comment
+									comment={reply}
+									postAuthor={postAuthor}
+									user={user}
+								/>
+							</li>
+						))}
+					</ul>
 				)}
 			</li>
 		);
