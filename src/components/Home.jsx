@@ -1,7 +1,7 @@
 import style from "../styles/Home.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { dark as postListDark, item } from "../styles/PostList.module.css";
+import { dark as postListDark } from "../styles/PostList.module.css";
 
 import { useOutletContext, Link } from "react-router-dom";
 
@@ -13,11 +13,9 @@ const Home = () => {
 	const darkTheme = true;
 	const { posts } = useOutletContext();
 
-	const latestPosts = posts.slice(0, 4).map(post => (
-		<li key={post.id} className={item}>
-			<Post post={post} darkTheme={darkTheme} />
-		</li>
-	));
+	const latestPosts = posts
+		.slice(0, 4)
+		.map(post => <Post key={post.id} post={post} darkTheme={darkTheme} />);
 
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.home}`}>
