@@ -85,7 +85,7 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 		} ${style.container}`}
 	>
 		<div className={style.info}>
-			{postAuthor === comment.name && <strong>POST AUTHOR</strong>}
+			{postAuthor === comment.author && <strong>POST AUTHOR</strong>}
 			<h3>{comment.name === user.name ? "Me" : comment.name}</h3>
 			<span>{format(comment.createdAt, "MMMM d, y")}</span>
 		</div>
