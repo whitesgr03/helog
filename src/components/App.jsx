@@ -34,6 +34,7 @@ The key features of interfaces in SudoLang include:
 State: This represents the data associated with the interface.
 Constraints: These are rules or requirements defined in natural language that the AI maintains automatically.
 /Commands and methods: These are operations that can be performed on or by the interface.`,
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -59,6 +60,7 @@ SudoLang addresses this issue again through its interface composition design. Si
 Duplication by Necessity: In traditional OOP languages, sometimes you are forced to duplicate code in order to avoid the problems mentioned above. For instance, to avoid the Fragile Base Class problem, you might decide not to use inheritance, resulting in code duplication. Or if you want the banana, but the gorilla really won’t do, you’ll copy and paste the banana.
 
 SudoLang’s interface composition design addresses this issue, too. Since interfaces can be composed, you can define a common functionality once in an interface, and then compose that interface wherever you need that functionality. This allows you to keep your code DRY (Don’t Repeat Yourself) without the need for inheritance.`,
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -66,6 +68,7 @@ SudoLang’s interface composition design addresses this issue, too. Since inter
 		url,
 		title: "This is title C",
 		content: "This is content C",
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -73,6 +76,7 @@ SudoLang’s interface composition design addresses this issue, too. Since inter
 		url,
 		title: "This is title C",
 		content: "This is content C",
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -80,6 +84,7 @@ SudoLang’s interface composition design addresses this issue, too. Since inter
 		url,
 		title: "This is title C",
 		content: "This is content C",
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -87,6 +92,7 @@ SudoLang’s interface composition design addresses this issue, too. Since inter
 		url,
 		title: "This is title C",
 		content: "This is content C",
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -94,6 +100,7 @@ SudoLang’s interface composition design addresses this issue, too. Since inter
 		url,
 		title: "This is title C",
 		content: "This is content C",
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 	{
@@ -101,6 +108,7 @@ SudoLang’s interface composition design addresses this issue, too. Since inter
 		url,
 		title: "This is title C",
 		content: "This is content C",
+		publish: true,
 		createdAt: new Date("2024/5/1"),
 	},
 ];
