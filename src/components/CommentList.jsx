@@ -101,8 +101,8 @@ const CommentList = ({ postAuthor }) => {
 	};
 	const activeCommentIds = [1];
 
-	const items = comments.map(comment => {
-		const reply =
+	const parentComments = comments.filter(comment => !comment?.reply);
+	const replyComments = comments.filter(comment => comment.reply);
 			comment.reply.length > 0 &&
 			comment.reply.map(reply => (
 				<li key={reply.id}>
