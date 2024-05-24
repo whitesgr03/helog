@@ -80,8 +80,8 @@ Thanks in advance.`,
 
 const Comment = ({ comment, postAuthor, user, children }) => (
 	<div
-		className={`${postAuthor === comment.name ? style.author : ""} ${
-			user.name === comment.name ? style.user : ""
+		className={`${postAuthor === comment.author ? style.author : ""} ${
+			user.author === comment.author ? style.user : ""
 		} ${style.container}`}
 	>
 		<div className={style.info}>
