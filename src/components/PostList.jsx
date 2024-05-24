@@ -30,11 +30,7 @@ const PostList = () => {
 	const darkTheme = true;
 	const { posts } = useOutletContext();
 
-	const items = posts.map(post => (
-		<li key={post.id} className={style.item}>
-			<Post post={post} />
-		</li>
-	));
+	const published = posts.filter(post => post.publish);
 
 	return (
 		<ul className={`${darkTheme ? style.dark : ""}  ${style.postList}`}>
