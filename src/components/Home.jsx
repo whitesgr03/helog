@@ -53,11 +53,11 @@ const Home = () => {
 			</div>
 			<div className={style.latestPosts}>
 				<h2>Latest Posts</h2>
-				<div
+				<ul
 					className={`${darkTheme ? postListDark : ""} ${style.list}`}
 				>
 					{latestPosts}
-				</div>
+				</ul>
 			</div>
 		</div>
 	);
