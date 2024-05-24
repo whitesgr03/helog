@@ -45,8 +45,4 @@ Post.propTypes = {
 	darkTheme: PropTypes.bool,
 };
 
-PostList.propTypes = {
-	posts: PropTypes.array,
-};
-
 export { PostList as default, Post };
