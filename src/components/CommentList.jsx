@@ -86,7 +86,7 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 	>
 		<div className={style.info}>
 			{postAuthor === comment.author && <strong>POST AUTHOR</strong>}
-			<h3>{comment.name === user.name ? "Me" : comment.name}</h3>
+			<h3>{comment.author === user.author ? "Me" : comment.author}</h3>
 			<span>{format(comment.createdAt, "MMMM d, y")}</span>
 		</div>
 		<p className={style.content}>{comment.content}</p>
