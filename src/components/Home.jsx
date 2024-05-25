@@ -10,7 +10,7 @@ import { Post } from "../components/PostList";
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Home = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	const { posts } = useOutletContext();
 
 	const latestPosts = posts

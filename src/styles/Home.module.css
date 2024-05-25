@@ -166,7 +166,7 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 
-	.list li{
+	.list li {
 		row-gap: 10px;
 	}
 

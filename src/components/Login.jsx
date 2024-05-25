@@ -6,7 +6,7 @@ import button from "../styles/utils/button.module.css";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	const inputError = true;
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.login}`}>

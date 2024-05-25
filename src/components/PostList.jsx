@@ -27,7 +27,7 @@ const Post = ({ post, darkTheme }) => (
 );
 
 const PostList = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	const { posts } = useOutletContext();
 
 	const published = posts.filter(post => post.publish);

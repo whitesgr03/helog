@@ -6,7 +6,7 @@ import image from "../styles/utils/image.module.css";
 import { Address } from "../components/Contact";
 
 const Footer = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	return (
 		<footer
 			className={`${darkTheme ? `${style.dark} ${contactDark}` : ""}  ${

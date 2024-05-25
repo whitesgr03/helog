@@ -9,7 +9,7 @@ const Error = ({
 		message: "The page you are looking for can't be found.",
 	},
 }) => {
-	const darkTheme = true;
+	const darkTheme = false;
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.error}`}>
 			<span className={`${image.icon} ${style.alert}`} />

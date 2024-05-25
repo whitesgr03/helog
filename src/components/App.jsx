@@ -119,7 +119,7 @@ const user = {
 };
 
 const App = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.app}`}>
 			<Header user={user} />

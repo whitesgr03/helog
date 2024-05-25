@@ -10,7 +10,7 @@ import ChangeNameModel from "./ChangeNameModel";
 import DeleteAccountModel from "./DeleteAccountModel";
 
 const Settings = ({ user }) => {
-	const darkTheme = true;
+	const darkTheme = false;
 	// const user = useContext(userContext);
 	const activeChangeName = false;
 	const activeDeleteAccount = false;

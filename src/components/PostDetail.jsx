@@ -40,7 +40,7 @@ Constraints: These are rules or requirements defined in natural language that th
 };
 
 const PostDetail = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	return (
 		<div>
 			<div

@@ -9,7 +9,7 @@ import image from "../styles/utils/image.module.css";
 import PropTypes from "prop-types";
 
 const ChangeNameModel = ({ username }) => {
-	const darkTheme = true;
+	const darkTheme = false;
 	const inputError = false;
 	return (
 		<div className={blur.bgc}>

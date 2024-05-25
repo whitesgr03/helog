@@ -8,7 +8,7 @@ import image from "../styles/utils/image.module.css";
 import PropTypes from "prop-types";
 
 const DeleteAccountModel = ({ userId }) => {
-	const darkTheme = true;
+	const darkTheme = false;
 	return (
 		<div className={blur.bgc}>
 			<div

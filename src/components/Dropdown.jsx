@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Dropdown = ({ user }) => {
-	const darkTheme = true;
+	const darkTheme = false;
 	// const user = useContext(userContext);
 	const active = true;
 	return (

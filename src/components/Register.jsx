@@ -4,7 +4,7 @@ import form from "../styles/utils/form.module.css";
 import button from "../styles/utils/button.module.css";
 
 const Register = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	const inputError = true;
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.register}`}>

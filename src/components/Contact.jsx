@@ -14,7 +14,7 @@ const Address = () => {
 };
 
 const Contact = () => {
-	const darkTheme = true;
+	const darkTheme = false;
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.contact}`}>
 			<h2>Contact</h2>

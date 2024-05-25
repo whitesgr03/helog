@@ -95,7 +95,7 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 );
 
 const CommentList = ({ postAuthor }) => {
-	const darkTheme = true;
+	const darkTheme = false;
 	const user = {
 		name: "JJJ",
 	};
