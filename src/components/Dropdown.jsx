@@ -1,3 +1,4 @@
+import { useState } from "react";
 import style from "../styles/Dropdown.module.css";
 import Settings from "./Settings";
 
@@ -8,6 +9,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Dropdown = ({ user }) => {
+	const [activeSettings, setActiveSettings] = useState(false);
+
 	const darkTheme = false;
 	// const user = useContext(userContext);
 	const active = true;
@@ -63,7 +66,10 @@ const Dropdown = ({ user }) => {
 					)}
 				</li>
 			</ul>
-			{active && <Settings user={user} />}
+			{activeSettings && (
+				<Settings user={user}
+				/>
+			)}
 		</div>
 	);
 };
