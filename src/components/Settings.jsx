@@ -1,3 +1,4 @@
+import { useState } from "react";
 import style from "../styles/Settings.module.css";
 
 import blur from "../styles/utils/blur.module.css";
@@ -9,11 +10,14 @@ import PropTypes from "prop-types";
 import ChangeNameModel from "./ChangeNameModel";
 import DeleteAccountModel from "./DeleteAccountModel";
 
-const Settings = ({ user }) => {
+const defaultModel = {
+	changeName: false,
+	deleteAccount: false,
+};
 	const darkTheme = false;
-	// const user = useContext(userContext);
-	const activeChangeName = false;
-	const activeDeleteAccount = false;
+
+	const [model, setModel] = useState(defaultModel);
+
 	return (
 		<div className={blur.bgc}>
 			<div className={`${darkTheme ? style.dark : ""} ${style.settings}`}>
