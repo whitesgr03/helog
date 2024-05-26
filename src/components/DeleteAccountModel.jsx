@@ -26,7 +26,7 @@ const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 					}`}
 					data-close
 				>
-					<span className={`${image.icon} ${button.close}`}></span>
+					<span className={`${image.icon} ${button.close}`} />
 				</button>
 				<span className={style.title}>Delete Account</span>
 				<span className={style.content}>
