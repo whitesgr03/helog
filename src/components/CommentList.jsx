@@ -129,7 +129,10 @@ const CommentList = ({ postAuthor }) => {
 				<Comment postAuthor={postAuthor} user={user} comment={comment}>
 					<div className={style.buttonWrap}>
 						{replyList.length > 0 && (
-							<button className={style.commentBtn}>
+							<button
+								className={style.commentBtn}
+								data-id={comment.id}
+							>
 								<span
 									className={`${image.icon} ${
 										style.comment
