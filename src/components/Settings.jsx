@@ -14,6 +14,7 @@ const defaultModel = {
 	changeName: false,
 	deleteAccount: false,
 };
+const Settings = ({ user, handleCloseSetting }) => {
 	const darkTheme = false;
 
 	const [model, setModel] = useState(defaultModel);
@@ -29,6 +30,7 @@ const defaultModel = {
 
 	return (
 		<div className={blur}
+			onClick={handleCloseSetting}
 		>
 			<div
 				className={`${darkTheme ? style.dark : ""} ${style.settings}`}
@@ -89,6 +91,7 @@ const defaultModel = {
 
 Settings.propTypes = {
 	user: PropTypes.object,
+	handleCloseSetting: PropTypes.func,
 };
 
 export default Settings;
