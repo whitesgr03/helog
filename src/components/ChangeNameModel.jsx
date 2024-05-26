@@ -11,6 +11,19 @@ import PropTypes from "prop-types";
 const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 	const darkTheme = false;
 	const inputError = false;
+
+	const handelSubmit = e => {
+		e.preventDefault();
+		const isVerify = false;
+		const formData = new FormData(e.target);
+		const formProps = Object.fromEntries(formData);
+
+		console.log(formProps);
+
+		isVerify && console.log("Post request", JSON.stringify(formProps));
+		isVerify && e.target.reset();
+	};
+
 	return (
 		<div className={blur}
 			onClick={handleCloseModel}
@@ -30,6 +43,7 @@ const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 				</button>
 				<form
 					className={`${darkTheme ? form.dark : ""} ${form.content}`}
+					onSubmit={handelSubmit}
 				>
 					<div>
 						<label
