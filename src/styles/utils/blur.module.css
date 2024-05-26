@@ -7,8 +7,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	backdrop-filter: blur(4px);
+}
+
+.blur {
+	composes: bgc;
 	background-color: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px);
+}
+
 .transparent {
 	composes: bgc;
 	background-color: transparent;
