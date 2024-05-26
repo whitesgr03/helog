@@ -102,7 +102,14 @@ const CommentList = ({ postAuthor }) => {
 	const [commentIds, setCommentIds] = useState({});
 
 	const darkTheme = false;
+
 	const { user } = useOutletContext();
+
+	const handleShowComment = e => {
+		const { id } = e.target.dataset;
+		const { [id]: existsId, ...rest } = commentIds;
+		id && setCommentIds(existsId ? { ...rest } : { ...rest, [id]: id });
+	};
 
 	const parentComments = comments.filter(comment => !comment?.reply);
 	const replyComments = comments.filter(comment => comment.reply);
@@ -162,7 +169,7 @@ const CommentList = ({ postAuthor }) => {
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.commentList}`}>
 			<h3>Comments</h3>
-			<ul>{items}</ul>
+			<ul onClick={handleShowComment}>{items}</ul>
 		</div>
 	);
 };
