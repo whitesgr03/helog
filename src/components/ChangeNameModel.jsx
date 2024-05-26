@@ -2,7 +2,7 @@ import style from "../styles/ChangeNameModel.module.css";
 import { dark as settingsDark, settings } from "../styles/Settings.module.css";
 
 import form from "../styles/utils/form.module.css";
-import blur from "../styles/utils/blur.module.css";
+import { blur } from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
@@ -12,7 +12,8 @@ const ChangeNameModel = ({ username }) => {
 	const darkTheme = false;
 	const inputError = false;
 	return (
-		<div className={blur.bgc}>
+		<div className={blur}
+		>
 			<div
 				className={`${
 					darkTheme ? `${style.dark} ${settingsDark}` : ""
