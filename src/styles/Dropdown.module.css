@@ -12,14 +12,12 @@
 	flex-direction: column;
 }
 
-.dropdown > ul li {
-	padding: 10px;
-}
-
 .dropdown > ul li > * {
 	display: flex;
 	align-items: center;
 	column-gap: 10px;
+	padding: 10px;
+	width: 100%;
 	color: var(--light-scheme-color);
 }
 
