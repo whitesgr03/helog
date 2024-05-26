@@ -12,6 +12,7 @@ const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 	return (
 		<div className={blur}
 			onClick={handleCloseModel}
+			data-close
 		>
 			<div
 				className={`${
@@ -23,6 +24,7 @@ const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 					className={`${darkTheme ? button.dark : ""} ${
 						button.closeBtn
 					}`}
+					data-close
 				>
 					<span className={`${image.icon} ${button.close}`}></span>
 				</button>
@@ -35,6 +37,7 @@ const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 						className={`${darkTheme ? button.dark : ""} ${
 							button.content
 						} ${style.cancelBtn}`}
+						data-close
 					>
 						Cancel
 					</button>
