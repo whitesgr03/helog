@@ -7,10 +7,11 @@ import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 
-const DeleteAccountModel = ({ userId }) => {
+const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 	const darkTheme = false;
 	return (
 		<div className={blur}
+			onClick={handleCloseModel}
 		>
 			<div
 				className={`${
@@ -52,6 +53,7 @@ const DeleteAccountModel = ({ userId }) => {
 
 DeleteAccountModel.propTypes = {
 	userId: PropTypes.string,
+	handleCloseModel: PropTypes.func,
 };
 
 export default DeleteAccountModel;
