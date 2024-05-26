@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/index.css";
 
 import App from "./components/App";
-import Error from "./components/Error";
+import NotFound from "./components/NotFound";
 import Home from "./components/Home";
 import PostList from "./components/PostList";
 import PostDetail from "./components/PostDetail";
@@ -16,7 +16,7 @@ const router = () => (
 			{
 				path: "/",
 				element: <App />,
-				errorElement: <Error />,
+				errorElement: <NotFound />,
 				children: [
 					{
 						index: true,
