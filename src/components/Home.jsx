@@ -5,7 +5,7 @@ import { dark as postListDark } from "../styles/PostList.module.css";
 
 import { useOutletContext, Link } from "react-router-dom";
 
-import { Post } from "../components/PostList";
+import { Post } from "./PostList";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
