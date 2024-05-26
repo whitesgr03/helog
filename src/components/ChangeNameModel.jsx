@@ -27,6 +27,7 @@ const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 	return (
 		<div className={blur}
 			onClick={handleCloseModel}
+			data-close
 		>
 			<div
 				className={`${
@@ -38,8 +39,9 @@ const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 					className={`${darkTheme ? button.dark : ""} ${
 						button.closeBtn
 					}`}
+					data-close
 				>
-					<span className={`${image.icon} ${button.close}`}></span>
+					<span className={`${image.icon} ${button.close}`} />
 				</button>
 				<form
 					className={`${darkTheme ? form.dark : ""} ${form.content}`}
