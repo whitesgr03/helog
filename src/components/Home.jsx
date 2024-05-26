@@ -13,7 +13,8 @@ const Home = () => {
 	const darkTheme = false;
 	const { posts } = useOutletContext();
 
-	const latestPosts = posts
+	const published = posts.filter(post => post.publish);
+	const latestPosts = published
 		.slice(0, 4)
 		.map(post => <Post key={post.id} post={post} darkTheme={darkTheme} />);
 
