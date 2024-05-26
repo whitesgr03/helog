@@ -8,11 +8,12 @@ import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 
-const ChangeNameModel = ({ username }) => {
+const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 	const darkTheme = false;
 	const inputError = false;
 	return (
 		<div className={blur}
+			onClick={handleCloseModel}
 		>
 			<div
 				className={`${
@@ -56,6 +57,8 @@ const ChangeNameModel = ({ username }) => {
 
 ChangeNameModel.propTypes = {
 	username: PropTypes.string,
+	userId: PropTypes.string,
+	handleCloseModel: PropTypes.func,
 };
 
 export default ChangeNameModel;
