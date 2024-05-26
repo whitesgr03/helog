@@ -5,6 +5,8 @@ import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 
+import { useOutletContext } from "react-router-dom";
+
 const comments = [
 	{
 		id: "1",
@@ -96,10 +98,7 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 
 const CommentList = ({ postAuthor }) => {
 	const darkTheme = false;
-	const user = {
-		name: "JJJ",
-	};
-	const activeCommentIds = [1];
+	const { user } = useOutletContext();
 
 	const parentComments = comments.filter(comment => !comment?.reply);
 	const replyComments = comments.filter(comment => comment.reply);
