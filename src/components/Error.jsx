@@ -3,12 +3,12 @@ import image from "../styles/utils/image.module.css";
 
 import PropTypes from "prop-types";
 
-const Error = ({
-	error = {
-		title: "404 Not Found",
-		message: "The page you are looking for can't be found.",
-	},
-}) => {
+const error = {
+	title: "404 Not Found",
+	message: "The page you are looking for can't be found.",
+};
+
+const Error = () => {
 	const darkTheme = false;
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.error}`}>
