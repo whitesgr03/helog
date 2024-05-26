@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import style from "../styles/CommentList.module.css";
 import { format } from "date-fns";
 
@@ -97,6 +99,8 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 );
 
 const CommentList = ({ postAuthor }) => {
+	const [commentIds, setCommentIds] = useState({});
+
 	const darkTheme = false;
 	const { user } = useOutletContext();
 
@@ -123,7 +127,7 @@ const CommentList = ({ postAuthor }) => {
 									className={`${image.icon} ${
 										style.comment
 									} ${
-										activeCommentIds.includes(comment.id)
+										commentIds[comment.id]
 											? style.active
 											: ""
 									}`}
@@ -137,9 +141,7 @@ const CommentList = ({ postAuthor }) => {
 				{replyList.length > 0 && (
 					<ul
 						className={`${style.reply} ${
-							activeCommentIds.includes(comment.id)
-								? style.active
-								: ""
+							commentIds[comment.id] ? style.active : ""
 						}`}
 					>
 						{replyList.map(reply => (
