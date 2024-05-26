@@ -31,15 +31,18 @@ const Settings = ({ user, handleCloseSetting }) => {
 	return (
 		<div className={blur}
 			onClick={handleCloseSetting}
+			data-close-setting
 		>
 			<div
 				className={`${darkTheme ? style.dark : ""} ${style.settings}`}
 				onClick={handleActiveModel}
 			>
 				<button
+					type="button"
 					className={`${darkTheme ? button.dark : ""} ${
 						button.closeBtn
 					}`}
+					data-close-setting
 				>
 					<span className={`${image.icon} ${button.close}`} />
 				</button>
@@ -55,7 +58,10 @@ const Settings = ({ user, handleCloseSetting }) => {
 							<strong className={style.title}>Name</strong>
 
 							<span>{user.name}</span>
-							<button className={style.changeBtn}>
+							<button
+								className={style.changeBtn}
+								data-active="changeName"
+							>
 								Change name
 							</button>
 						</li>
@@ -65,7 +71,10 @@ const Settings = ({ user, handleCloseSetting }) => {
 						</li>
 						<li>
 							<strong className={style.title}>Delete</strong>
-							<button className={style.deleteBtn}>
+							<button
+								className={style.deleteBtn}
+								data-active="deleteAccount"
+							>
 								Delete account
 							</button>
 						</li>
