@@ -18,9 +18,20 @@ const defaultModel = {
 
 	const [model, setModel] = useState(defaultModel);
 
+	const handleActiveModel = e => {
+		const { active } = e.target.dataset;
+		active && setModel({ ...model, [active]: true });
+	};
+
+	const handleCloseModel = e => {
+		e.target.dataset.close && setModel(defaultModel);
+	};
+
 	return (
-		<div className={blur.bgc}>
-			<div className={`${darkTheme ? style.dark : ""} ${style.settings}`}>
+			<div
+				className={`${darkTheme ? style.dark : ""} ${style.settings}`}
+				onClick={handleActiveModel}
+			>
 				<button
 					className={`${darkTheme ? button.dark : ""} ${
 						button.closeBtn
@@ -56,8 +67,19 @@ const defaultModel = {
 						</li>
 					</ul>
 				</div>
-				{activeChangeName && <ChangeNameModel username={user.name} />}
-				{activeDeleteAccount && <DeleteAccountModel userId={user.id} />}
+				{model.changeName && (
+					<ChangeNameModel
+						username={user.name}
+						userId={user.id}
+						handleCloseModel={handleCloseModel}
+					/>
+				)}
+				{model.deleteAccount && (
+					<DeleteAccountModel
+						userId={user.id}
+						handleCloseModel={handleCloseModel}
+					/>
+				)}
 			</div>
 		</div>
 	);
