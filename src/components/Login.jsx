@@ -7,13 +7,27 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
 	const darkTheme = false;
-	const inputError = true;
+	const inputError = false;
+
+	const handelSubmit = e => {
+		e.preventDefault();
+		const isVerify = false;
+		const formData = new FormData(e.target);
+		const formProps = Object.fromEntries(formData);
+
+		console.log(formProps);
+
+		isVerify && console.log("Post request", JSON.stringify(formProps));
+		isVerify && e.target.reset();
+	};
+
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.login}`}>
 			<h3 className={style.title}>Sign In</h3>
 			<div className={style.formWrap}>
 				<form
 					className={`${darkTheme ? form.dark : ""} ${form.content}`}
+					onSubmit={handelSubmit}
 				>
 					<div>
 						<label

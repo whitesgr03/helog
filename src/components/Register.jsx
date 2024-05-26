@@ -6,10 +6,25 @@ import button from "../styles/utils/button.module.css";
 const Register = () => {
 	const darkTheme = false;
 	const inputError = true;
+
+	const handelSubmit = e => {
+		e.preventDefault();
+		const isVerify = false;
+		const formData = new FormData(e.target);
+		const formProps = Object.fromEntries(formData);
+
+		console.log(formProps);
+
+		isVerify && console.log("Post request", JSON.stringify(formProps));
+		isVerify && e.target.reset();
+	};
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.register}`}>
 			<h3 className={style.title}>Sign Up</h3>
-			<form className={`${darkTheme ? form.dark : ""} ${form.content}`}>
+			<form
+				className={`${darkTheme ? form.dark : ""} ${form.content}`}
+				onSubmit={handelSubmit}
+			>
 				<div>
 					<label
 						htmlFor="registerEmail"
