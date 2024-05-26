@@ -39,7 +39,7 @@
 	color: var(--light-scheme-color);
 }
 
-.list li:nth-child(2) {
+.list li.toggleBtn {
 	display: none;
 }
 
@@ -85,7 +85,7 @@
 }
 
 @media (min-width: 450px) {
-	.list li:nth-child(2) {
+	.list li.toggleBtn {
 		display: block;
 	}
 	.pencil,
