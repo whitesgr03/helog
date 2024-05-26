@@ -12,8 +12,14 @@ const Dropdown = ({ user }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
 
 	const darkTheme = false;
-	// const user = useContext(userContext);
-	const active = true;
+
+	const handleActiveSetting = () => {
+		setActiveSettings(true);
+	};
+	const handleCloseSetting = e => {
+		e.target.dataset.closeSetting && setActiveSettings(false);
+	};
+
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.dropdown}`}>
 			{user && (
@@ -44,7 +50,7 @@ const Dropdown = ({ user }) => {
 				</li>
 				{user && (
 					<li>
-						<button>
+						<button onClick={handleActiveSetting}>
 							<span
 								className={`${image.icon} ${style.settings}`}
 							/>
@@ -68,6 +74,7 @@ const Dropdown = ({ user }) => {
 			</ul>
 			{activeSettings && (
 				<Settings user={user}
+					handleCloseSetting={handleCloseSetting}
 				/>
 			)}
 		</div>
