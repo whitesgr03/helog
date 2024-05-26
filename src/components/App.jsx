@@ -125,7 +125,7 @@ const App = () => {
 			<Header user={user} />
 			<div className={style.container}>
 				<main>
-					<Outlet context={{ posts }} />
+					<Outlet context={{ posts, user }} />
 				</main>
 				<Contact />
 				<Footer />
