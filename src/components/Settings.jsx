@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "../styles/Settings.module.css";
 
-import blur from "../styles/utils/blur.module.css";
+import { blur } from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
@@ -28,6 +28,8 @@ const defaultModel = {
 	};
 
 	return (
+		<div className={blur}
+		>
 			<div
 				className={`${darkTheme ? style.dark : ""} ${style.settings}`}
 				onClick={handleActiveModel}
