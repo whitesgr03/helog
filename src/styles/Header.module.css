@@ -5,7 +5,10 @@
 	background-color: var(--light-scheme-layout-bgc);
 	box-shadow: 0px 5px 5px 1px var(--light-scheme-layout-shadow);
 	z-index: 1;
-	position: relative;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 
 .header > a {
