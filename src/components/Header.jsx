@@ -50,6 +50,7 @@ const Header = ({ user }) => {
 								className={`${darkTheme ? button.dark : ""} ${
 									button.theme
 								}`}
+								onClick={handleThemeColor}
 							>
 								<div className={style.switch}>
 									<span

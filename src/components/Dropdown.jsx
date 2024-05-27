@@ -37,6 +37,7 @@ const Dropdown = ({ user }) => {
 						className={`${darkTheme ? button.dark : ""} ${
 							button.theme
 						}`}
+						onClick={handleThemeColor}
 					>
 						<span
 							className={`${image.icon} ${
@@ -74,9 +75,7 @@ const Dropdown = ({ user }) => {
 				</li>
 			</ul>
 			{activeSettings && (
-				<Settings user={user}
-					handleCloseSetting={handleCloseSetting}
-				/>
+				<Settings user={user} handleCloseSetting={handleCloseSetting} />
 			)}
 		</div>
 	);
