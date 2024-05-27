@@ -131,7 +131,7 @@
 	}
 
 	/* Dark scheme classes */
-	.latestPosts {
+	.dark .latestPosts {
 		color: var(--dark-scheme-color);
 	}
 }
