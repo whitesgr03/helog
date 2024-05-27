@@ -1,16 +1,17 @@
-import style from "../styles/Home.module.css";
-import image from "../styles/utils/image.module.css";
-
-import { dark as postListDark } from "../styles/PostList.module.css";
-
+import { useContext } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
+import style from "../styles/Home.module.css";
+import image from "../styles/utils/image.module.css";
+import { dark as postListDark } from "../styles/PostList.module.css";
+
 import { Post } from "./PostList";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Home = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	const { posts } = useOutletContext();
 
 	const published = posts.filter(post => post.publish);

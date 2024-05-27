@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import style from "../styles/Header.module.css";
 import { sun, moon } from "../styles/Dropdown.module.css";
-
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 import { transparent } from "../styles/utils/blur.module.css";
 
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-
 import Dropdown from "./Dropdown";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const Header = ({ user }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
-	const darkTheme = false;
+	const [darkTheme, handleThemeColor] = useContext(DarkThemeContext);
 
 	const handleActiveDropdown = () => {
 		setActiveDropdown(!activeDropdown);

@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
 import style from "../styles/Dropdown.module.css";
 import Settings from "./Settings";
-
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const Dropdown = ({ user }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
 
-	const darkTheme = false;
+	const [darkTheme, handleThemeColor] = useContext(DarkThemeContext);
 
 	const handleActiveSetting = () => {
 		setActiveSettings(true);

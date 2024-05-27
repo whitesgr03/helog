@@ -1,10 +1,12 @@
-import style from "../styles/App.module.css";
-
+import { useContext } from "react";
 import { Outlet } from "react-router-dom";
+
+import style from "../styles/App.module.css";
 
 import Header from "./Header";
 import Footer from "./Footer";
-import Contact from "../components/Contact";
+
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
@@ -119,7 +121,8 @@ const user = {
 };
 
 const App = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
+
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.app}`}>
 			<Header user={user} />

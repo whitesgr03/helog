@@ -1,11 +1,12 @@
-import style from "../styles/PostDetail.module.css";
-
-import image from "../styles/utils/image.module.css";
-
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 
+import style from "../styles/PostDetail.module.css";
+import image from "../styles/utils/image.module.css";
+
 import CommentList from "./CommentList";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
@@ -40,7 +41,7 @@ Constraints: These are rules or requirements defined in natural language that th
 };
 
 const PostDetail = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	return (
 		<div>
 			<div

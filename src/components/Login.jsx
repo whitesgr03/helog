@@ -1,12 +1,14 @@
-import style from "../styles/Login.module.css";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
+import style from "../styles/Login.module.css";
 import form from "../styles/utils/form.module.css";
 import button from "../styles/utils/button.module.css";
 
-import { Link } from "react-router-dom";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const Login = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	const inputError = false;
 
 	const handelSubmit = e => {

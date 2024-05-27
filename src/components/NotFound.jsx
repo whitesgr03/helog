@@ -1,8 +1,12 @@
+import { useContext } from "react";
+
 import style from "../styles/Error.module.css";
 import image from "../styles/utils/image.module.css";
 
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
+
 const NotFound = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.error}`}>
 			<span className={`${image.icon} ${style.alert}`} />

@@ -1,10 +1,13 @@
-import style from "../styles/Register.module.css";
+import { useContext } from "react";
 
+import style from "../styles/Register.module.css";
 import form from "../styles/utils/form.module.css";
 import button from "../styles/utils/button.module.css";
 
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
+
 const Register = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	const inputError = true;
 
 	const handelSubmit = e => {

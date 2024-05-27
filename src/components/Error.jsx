@@ -1,7 +1,10 @@
+import { useContext } from "react";
+import PropTypes from "prop-types";
+
 import style from "../styles/Error.module.css";
 import image from "../styles/utils/image.module.css";
 
-import PropTypes from "prop-types";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const error = {
 	title: "404 Not Found",
@@ -9,7 +12,7 @@ const error = {
 };
 
 const Error = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.error}`}>
 			<span className={`${image.icon} ${style.alert}`} />

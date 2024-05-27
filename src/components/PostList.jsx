@@ -1,11 +1,12 @@
-import style from "../styles/PostList.module.css";
+import { useContext } from "react";
+import { format } from "date-fns";
+import { useOutletContext, Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
+import style from "../styles/PostList.module.css";
 import image from "../styles/utils/image.module.css";
 
-import PropTypes from "prop-types";
-import { format } from "date-fns";
-
-import { useOutletContext, Link } from "react-router-dom";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const Post = ({ post, darkTheme }) => (
 	<li className={style.item}>
@@ -27,7 +28,7 @@ const Post = ({ post, darkTheme }) => (
 );
 
 const PostList = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	const { posts } = useOutletContext();
 
 	const published = posts.filter(post => post.publish);

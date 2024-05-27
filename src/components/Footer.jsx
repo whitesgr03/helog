@@ -1,12 +1,14 @@
+import { useContext } from "react";
+
 import style from "../styles/Footer.module.css";
 import { dark as contactDark, container } from "../styles/Contact.module.css";
-
 import image from "../styles/utils/image.module.css";
 
 import { Address } from "../components/Contact";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const Footer = () => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	return (
 		<footer
 			className={`${darkTheme ? `${style.dark} ${contactDark}` : ""}  ${

@@ -1,15 +1,17 @@
+import { useContext } from "react";
+import PropTypes from "prop-types";
+
 import style from "../styles/ChangeNameModel.module.css";
 import { dark as settingsDark, settings } from "../styles/Settings.module.css";
-
 import form from "../styles/utils/form.module.css";
 import { blur } from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-import PropTypes from "prop-types";
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 	const inputError = false;
 
 	const handelSubmit = e => {
@@ -25,10 +27,7 @@ const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 	};
 
 	return (
-		<div className={blur}
-			onClick={handleCloseModel}
-			data-close
-		>
+		<div className={blur} onClick={handleCloseModel} data-close>
 			<div
 				className={`${
 					darkTheme ? `${style.dark} ${settingsDark}` : ""

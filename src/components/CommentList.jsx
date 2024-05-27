@@ -1,13 +1,12 @@
-import { useState } from "react";
-
-import style from "../styles/CommentList.module.css";
+import { useState, useContext } from "react";
+import { useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
-
-import image from "../styles/utils/image.module.css";
-
 import PropTypes from "prop-types";
 
-import { useOutletContext } from "react-router-dom";
+import style from "../styles/CommentList.module.css";
+import image from "../styles/utils/image.module.css";
+
+import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const comments = [
 	{
@@ -101,7 +100,7 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 const CommentList = ({ postAuthor }) => {
 	const [commentIds, setCommentIds] = useState({});
 
-	const darkTheme = false;
+	const [darkTheme] = useContext(DarkThemeContext);
 
 	const { user } = useOutletContext();
 
