@@ -38,7 +38,17 @@
 		padding: 20px;
 	}
 }
+
+@media (min-width: 600px) {
+	.model {
+		width: 55%;
+	}
+}
+
 @media (min-width: 700px) {
+	.model {
+		width: 45%;
+	}
 	.model form {
 		row-gap: 20px;
 	}
@@ -48,5 +58,11 @@
 	.model form {
 		padding: 30px 40px;
 		row-gap: 30px;
+	}
+}
+
+@media (min-width: 1300px) {
+	.model {
+		width: 35%;
 	}
 }
