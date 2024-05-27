@@ -10,12 +10,18 @@ import PostDetail from "./components/PostDetail";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
+import { DarkThemeProvider } from "./contexts/DarkThemeContext";
+
 const router = () => (
 	<RouterProvider
 		router={createBrowserRouter([
 			{
 				path: "/",
-				element: <App />,
+				element: (
+					<DarkThemeProvider>
+						<App />
+					</DarkThemeProvider>
+				),
 				errorElement: <NotFound />,
 				children: [
 					{
