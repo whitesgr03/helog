@@ -5,6 +5,7 @@ import style from "../styles/App.module.css";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import Contact from "./Contact";
 
 import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
