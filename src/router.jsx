@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/index.css";
 
 import App from "./components/App";
+import Layout from "./components/Layout";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
 import PostList from "./components/PostList";
@@ -17,35 +18,41 @@ const router = () => (
 		router={createBrowserRouter([
 			{
 				path: "/",
-				element: (
-					<DarkThemeProvider>
-						<App />
-					</DarkThemeProvider>
-				),
+				element: <App />,
 				children: [
 					{
-						path: "*",
-						element: <NotFound />,
-					},
-					{
-						index: true,
-						element: <Home />,
-					},
-					{
-						path: "posts",
-						element: <PostList />,
-					},
-					{
-						path: "posts/:postId",
-						element: <PostDetail />,
-					},
-					{
-						path: "users/login",
-						element: <Login />,
-					},
-					{
-						path: "users/register",
-						element: <Register />,
+						path: "/",
+						element: (
+							<DarkThemeProvider>
+								<Layout />
+							</DarkThemeProvider>
+						),
+						children: [
+							{
+								path: "*",
+								element: <NotFound />,
+							},
+							{
+								index: true,
+								element: <Home />,
+							},
+							{
+								path: "posts",
+								element: <PostList />,
+							},
+							{
+								path: "posts/:postId",
+								element: <PostDetail />,
+							},
+							{
+								path: "users/login",
+								element: <Login />,
+							},
+							{
+								path: "users/register",
+								element: <Register />,
+							},
+						],
 					},
 				],
 			},
