@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 
-const handleFetch = async (url, signal = null) => {
-	const response = await fetch(url, { signal });
-
-	!response.ok &&
-		(() => {
-			throw new Error();
-		})();
-
-	return await response.json();
-};
+import { handleFetch } from "../utils/handleFetch";
 
 const useFetch = url => {
 	const [data, setData] = useState([]);
