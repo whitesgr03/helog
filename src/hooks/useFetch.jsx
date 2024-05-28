@@ -15,7 +15,7 @@ const useFetch = url => {
 			try {
 				setData(await handleFetch(url, { signal }));
 			} catch (err) {
-				!signal.aborted && setError(true);
+				!signal.aborted && setError(err.cause);
 			} finally {
 				setLoading(false);
 			}
