@@ -12,9 +12,13 @@ import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Home = () => {
 	const [darkTheme] = useContext(DarkThemeContext);
-	const { posts } = useOutletContext();
 
-	const published = posts.filter(post => post.publish);
+	const { posts } = useOutletContext();
+	const { data, error, loading } = posts;
+
+	const postsAddUrl = data.map(post => ({ ...post, url })); // <- Temporarily add url
+
+	const published = postsAddUrl.filter(post => post.publish);
 	const latestPosts = published
 		.slice(0, 4)
 		.map(post => <Post key={post.id} post={post} darkTheme={darkTheme} />);
