@@ -5,8 +5,11 @@ import style from "../styles/Home.module.css";
 import image from "../styles/utils/image.module.css";
 import { dark as postListDark } from "../styles/PostList.module.css";
 
-import { Post } from "./PostList";
 import { DarkThemeContext } from "../contexts/DarkThemeContext";
+
+import { Post } from "./PostList";
+import Loading from "./Loading";
+import Error from "./Error";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
@@ -59,11 +62,17 @@ const Home = () => {
 			</div>
 			<div className={style.latestPosts}>
 				<h2>Latest Posts</h2>
-				<ul
-					className={`${darkTheme ? postListDark : ""} ${style.list}`}
-				>
-					{latestPosts}
-				</ul>
+				<div className={`${darkTheme ? postListDark : ""}`}>
+					{loading ? (
+						<Loading />
+					) : !error ? (
+						<Error
+							message={"The latest posts could not be loaded."}
+						/>
+					) : (
+						<ul>{latestPosts}</ul>
+					)}
+				</div>
 			</div>
 		</div>
 	);
