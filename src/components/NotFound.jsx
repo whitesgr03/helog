@@ -13,11 +13,8 @@ const NotFound = () => {
 			<h2>Page Not Found</h2>
 			<div className={style.message}>
 				<p>Our apologies, there has been an error.</p>
-				<p>The page you are looking for cannot be found.</p>
-				<p>
-					Please make sure the URL is correct or surf over to our
-					other pages.
-				</p>
+				<p>The page you are looking for could not be found.</p>
+				<p>You may surf over to our other pages.</p>
 			</div>
 		</div>
 	);
