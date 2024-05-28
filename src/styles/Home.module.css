@@ -75,7 +75,6 @@
 @media (min-width: 450px) {
 	.home {
 		padding: 5% 10%;
-		padding-bottom: 0;
 	}
 	.link {
 		align-self: flex-end;
