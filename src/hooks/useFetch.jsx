@@ -13,8 +13,7 @@ const useFetch = url => {
 
 		(async () => {
 			try {
-				const result = await handleFetch(url, signal);
-				result.success ? setData(result.data) : setError(true);
+				setData(await handleFetch(url, { signal }));
 			} catch (err) {
 				!signal.aborted && setError(true);
 			} finally {
