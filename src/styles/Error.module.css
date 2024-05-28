@@ -12,6 +12,9 @@
 .message {
 	display: flex;
 	flex-direction: column;
+	row-gap: 10px;
+	color: var(--light-scheme-error);
+}
 
 .message p:first-of-type {
 	display: flex;
