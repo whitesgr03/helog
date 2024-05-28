@@ -33,3 +33,7 @@
 	background-color: var(--dark-scheme-layout-bgc);
 	color: var(--dark-scheme-color);
 }
+
+.dark .message {
+	color: var(--dark-scheme-error);
+}
