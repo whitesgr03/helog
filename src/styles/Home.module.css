@@ -111,20 +111,20 @@
 		row-gap: 20px;
 	}
 
-	.list {
+	.latestPosts ul {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-auto-rows: 1fr;
 		gap: 50px;
 	}
 
-	.list li {
+	.latestPosts ul li {
 		display: flex;
 		flex-direction: column;
 		row-gap: 5px;
 	}
 
-	.list li div {
+	.latestPosts ul li div {
 		display: flex;
 		flex-direction: column;
 		row-gap: 15px;
@@ -162,11 +162,11 @@
 		padding: 5% 10%;
 	}
 
-	.list {
+	.latestPosts ul {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 
-	.list li {
+	.latestPosts ul li {
 		row-gap: 10px;
 	}
 
