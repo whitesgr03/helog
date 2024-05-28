@@ -10,10 +10,14 @@ const NotFound = () => {
 	return (
 		<div className={`${darkTheme ? style.dark : ""} ${style.error}`}>
 			<span className={`${image.icon} ${style.alert}`} />
-			<h1 className={style.title}>404 Not Found</h1>
+			<h2>Page Not Found</h2>
 			<div className={style.message}>
 				<p>Our apologies, there has been an error.</p>
 				<p>The page you are looking for cannot be found.</p>
+				<p>
+					Please make sure the URL is correct or surf over to our
+					other pages.
+				</p>
 			</div>
 		</div>
 	);
