@@ -22,8 +22,11 @@ const router = () => (
 						<App />
 					</DarkThemeProvider>
 				),
-				errorElement: <NotFound />,
 				children: [
+					{
+						path: "*",
+						element: <NotFound />,
+					},
 					{
 						index: true,
 						element: <Home />,
