@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -9,11 +9,15 @@ import image from "../styles/utils/image.module.css";
 import { transparent } from "../styles/utils/blur.module.css";
 
 import Dropdown from "./Dropdown";
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
-const Header = ({ user }) => {
+const Header = ({
+	user,
+	setToken,
+	setUser,
+	darkTheme,
+	handleSwitchColorTheme,
+}) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
-	const [darkTheme, handleThemeColor] = useContext(DarkThemeContext);
 
 	const handleActiveDropdown = () => {
 		setActiveDropdown(!activeDropdown);
@@ -23,9 +27,7 @@ const Header = ({ user }) => {
 	};
 	return (
 		<>
-			<header
-				className={`${darkTheme ? style.dark : ""} ${style.header} `}
-			>
+			<header className={style.header}>
 				<Link
 					to="/"
 					className={style.logo}
@@ -35,7 +37,7 @@ const Header = ({ user }) => {
 				</Link>
 				<nav>
 					<ul className={style.list}>
-						{user.isAdmin && (
+						{user?.isAdmin && (
 							<li>
 								<Link to="/">
 									<span
@@ -47,10 +49,8 @@ const Header = ({ user }) => {
 						)}
 						<li className={style.toggleBtn}>
 							<button
-								className={`${darkTheme ? button.dark : ""} ${
-									button.theme
-								}`}
-								onClick={handleThemeColor}
+								className={button.theme}
+								onClick={handleSwitchColorTheme}
 							>
 								<div className={style.switch}>
 									<span
@@ -75,7 +75,16 @@ const Header = ({ user }) => {
 						</li>
 					</ul>
 				</nav>
-				{activeDropdown && <Dropdown user={user} />}
+				{activeDropdown && (
+					<Dropdown
+						user={user}
+						setToken={setToken}
+						setUser={setUser}
+						handleCloseDropdown={handleCloseDropdown}
+						darkTheme={darkTheme}
+						handleSwitchColorTheme={handleSwitchColorTheme}
+					/>
+				)}
 			</header>
 			{activeDropdown && (
 				<div className={transparent} onClick={handleCloseDropdown} />
@@ -85,6 +94,10 @@ const Header = ({ user }) => {
 };
 Header.propTypes = {
 	user: PropTypes.object,
+	setToken: PropTypes.func,
+	setUser: PropTypes.func,
+	darkTheme: PropTypes.bool,
+	handleSwitchColorTheme: PropTypes.func,
 };
 
 export default Header;
