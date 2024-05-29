@@ -1,9 +1,5 @@
-import { useContext } from "react";
-
 import style from "../styles/Contact.module.css";
 import image from "../styles/utils/image.module.css";
-
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const Address = () => {
 	return (
@@ -17,9 +13,8 @@ const Address = () => {
 };
 
 const Contact = () => {
-	const [darkTheme] = useContext(DarkThemeContext);
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.contact}`}>
+		<div className={style.contact}>
 			<h2>Contact</h2>
 			<p>Please contact us, If you have any questions.</p>
 			<div className={style.container}>

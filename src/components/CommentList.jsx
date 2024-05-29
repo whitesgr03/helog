@@ -1,12 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 
 import style from "../styles/CommentList.module.css";
 import image from "../styles/utils/image.module.css";
-
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const comments = [
 	{
@@ -100,8 +98,6 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 const CommentList = ({ postAuthor }) => {
 	const [commentIds, setCommentIds] = useState({});
 
-	const [darkTheme] = useContext(DarkThemeContext);
-
 	const { user } = useOutletContext();
 
 	const handleShowComment = e => {
@@ -169,7 +165,7 @@ const CommentList = ({ postAuthor }) => {
 	});
 
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.commentList}`}>
+		<div className={style.commentList}>
 			<h3>Comments</h3>
 			<ul onClick={handleShowComment}>{items}</ul>
 		</div>

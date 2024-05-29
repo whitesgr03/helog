@@ -1,13 +1,8 @@
-import { useContext } from "react";
-
 import style from "../styles/Register.module.css";
 import form from "../styles/utils/form.module.css";
 import button from "../styles/utils/button.module.css";
 
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
-
 const Register = () => {
-	const [darkTheme] = useContext(DarkThemeContext);
 	const inputError = true;
 
 	const handelSubmit = e => {
@@ -22,12 +17,9 @@ const Register = () => {
 		isVerify && e.target.reset();
 	};
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.register}`}>
+		<div className={style.register}>
 			<h3 className={style.title}>Sign Up</h3>
-			<form
-				className={`${darkTheme ? form.dark : ""} ${form.content}`}
-				onSubmit={handelSubmit}
-			>
+			<form className={form.content} onSubmit={handelSubmit}>
 				<div>
 					<label
 						htmlFor="registerEmail"

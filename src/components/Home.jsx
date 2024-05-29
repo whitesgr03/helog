@@ -1,11 +1,7 @@
-import { useContext } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
 import style from "../styles/Home.module.css";
 import image from "../styles/utils/image.module.css";
-import { dark as postListDark } from "../styles/PostList.module.css";
-
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 import { Post } from "./PostList";
 import Loading from "./Loading";
@@ -14,8 +10,6 @@ import Error from "./Error";
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Home = () => {
-	const [darkTheme] = useContext(DarkThemeContext);
-
 	const { posts } = useOutletContext();
 	const { data, error, loading } = posts;
 
@@ -24,17 +18,13 @@ const Home = () => {
 	const published = postsAddUrl.filter(post => post.publish);
 	const latestPosts = published
 		.slice(0, 4)
-		.map(post => <Post key={post.id} post={post} darkTheme={darkTheme} />);
+		.map(post => <Post key={post._id} post={post} />);
 
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.home}`}>
+		<div className={style.home}>
 			<div className={style.container}>
 				<div className={style.wrap}>
-					<div
-						className={`${darkTheme ? image.dark : ""} ${
-							image.content
-						}`}
-					>
+					<div className={image.content}>
 						<img src={url} />
 					</div>
 				</div>
@@ -62,10 +52,10 @@ const Home = () => {
 			</div>
 			<div className={style.latestPosts}>
 				<h2>Latest Posts</h2>
-				<div className={`${darkTheme ? postListDark : ""}`}>
+				<div>
 					{loading ? (
 						<Loading />
-					) : !error ? (
+					) : error ? (
 						<Error
 							message={"The latest posts could not be loaded."}
 						/>

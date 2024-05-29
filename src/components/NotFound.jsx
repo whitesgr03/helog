@@ -1,14 +1,9 @@
-import { useContext } from "react";
-
 import style from "../styles/Error.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
-
 const NotFound = () => {
-	const [darkTheme] = useContext(DarkThemeContext);
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.error}`}>
+		<div className={style.error}>
 			<span className={`${image.icon} ${style.alert}`} />
 			<h2>Page Not Found</h2>
 			<div className={style.message}>
