@@ -11,8 +11,6 @@ import PostDetail from "./components/PostDetail";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
-import { DarkThemeProvider } from "./contexts/DarkThemeContext";
-
 const router = () => (
 	<RouterProvider
 		router={createBrowserRouter([
@@ -22,11 +20,7 @@ const router = () => (
 				children: [
 					{
 						path: "/",
-						element: (
-							<DarkThemeProvider>
-								<Layout />
-							</DarkThemeProvider>
-						),
+						element: <Layout />,
 						children: [
 							{
 								path: "*",
