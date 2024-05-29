@@ -70,14 +70,14 @@ const Settings = ({ user, handleCloseSetting }) => {
 				</div>
 				{model.changeName && (
 					<ChangeNameModel
-						username={user.name}
-						userId={user.id}
+						username={user?.name}
+						userId={user?.id}
 						handleCloseModel={handleCloseModel}
 					/>
 				)}
 				{model.deleteAccount && (
 					<DeleteAccountModel
-						userId={user.id}
+						userId={user?.id}
 						handleCloseModel={handleCloseModel}
 					/>
 				)}
