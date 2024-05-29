@@ -13,4 +13,4 @@ const handleFetch = async (url, option) => {
 	return result.data;
 };
 
-export { handleFetch };
+export default handleFetch;
