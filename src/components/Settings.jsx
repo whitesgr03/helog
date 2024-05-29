@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 import style from "../styles/Settings.module.css";
@@ -8,15 +8,12 @@ import image from "../styles/utils/image.module.css";
 
 import ChangeNameModel from "./ChangeNameModel";
 import DeleteAccountModel from "./DeleteAccountModel";
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
 
 const defaultModel = {
 	changeName: false,
 	deleteAccount: false,
 };
 const Settings = ({ user, handleCloseSetting }) => {
-	const [darkTheme] = useContext(DarkThemeContext);
-
 	const [model, setModel] = useState(defaultModel);
 
 	const handleActiveModel = e => {
@@ -30,15 +27,10 @@ const Settings = ({ user, handleCloseSetting }) => {
 
 	return (
 		<div className={blur} onClick={handleCloseSetting} data-close-setting>
-			<div
-				className={`${darkTheme ? style.dark : ""} ${style.settings}`}
-				onClick={handleActiveModel}
-			>
+			<div className={style.settings} onClick={handleActiveModel}>
 				<button
 					type="button"
-					className={`${darkTheme ? button.dark : ""} ${
-						button.closeBtn
-					}`}
+					className={button.closeBtn}
 					data-close-setting
 				>
 					<span className={`${image.icon} ${button.close}`} />
