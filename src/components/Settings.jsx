@@ -39,14 +39,13 @@ const Settings = ({ user, handleCloseSetting }) => {
 				<div className={style.container}>
 					<div className={style.avatarWrap}>
 						<div className={style.avatar}>
-							{user.name && user.name.charAt(0).toUpperCase()}
+							{user?.name && user.name.charAt(0).toUpperCase()}
 						</div>
 					</div>
 					<ul className={style.list}>
 						<li>
 							<strong className={style.title}>Name</strong>
-
-							<span>{user.name}</span>
+							{user?.name && <span>{user.name}</span>}
 							<button
 								className={style.changeBtn}
 								data-active="changeName"
@@ -56,7 +55,7 @@ const Settings = ({ user, handleCloseSetting }) => {
 						</li>
 						<li>
 							<strong className={style.title}>Email</strong>
-							<span>{user.email}</span>
+							{user?.email && <span>{user.email}</span>}
 						</li>
 						<li>
 							<strong className={style.title}>Delete</strong>
