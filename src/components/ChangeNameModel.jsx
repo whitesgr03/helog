@@ -1,17 +1,13 @@
-import { useContext } from "react";
 import PropTypes from "prop-types";
 
 import style from "../styles/ChangeNameModel.module.css";
-import { dark as settingsDark, settings } from "../styles/Settings.module.css";
+import { settings } from "../styles/Settings.module.css";
 import form from "../styles/utils/form.module.css";
 import { blur } from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
-
 const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
-	const [darkTheme] = useContext(DarkThemeContext);
 	const inputError = false;
 
 	const handelSubmit = e => {
@@ -28,24 +24,11 @@ const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 
 	return (
 		<div className={blur} onClick={handleCloseModel} data-close>
-			<div
-				className={`${
-					darkTheme ? `${style.dark} ${settingsDark}` : ""
-				} ${settings} ${style.model}`}
-			>
-				<button
-					type="button"
-					className={`${darkTheme ? button.dark : ""} ${
-						button.closeBtn
-					}`}
-					data-close
-				>
+			<div className={`${settings} ${style.model}`}>
+				<button type="button" className={button.closeBtn} data-close>
 					<span className={`${image.icon} ${button.close}`} />
 				</button>
-				<form
-					className={`${darkTheme ? form.dark : ""} ${form.content}`}
-					onSubmit={handelSubmit}
-				>
+				<form className={form.content} onSubmit={handelSubmit}>
 					<div>
 						<label
 							htmlFor="changeName"
@@ -56,12 +39,7 @@ const ChangeNameModel = ({ username, userId, handleCloseModel }) => {
 						</label>
 						<span>This is a placeholder</span>
 					</div>
-					<button
-						className={`${darkTheme ? button.dark : ""} ${
-							button.success
-						}`}
-						type="submit"
-					>
+					<button className={button.success} type="submit">
 						Save
 					</button>
 				</form>
