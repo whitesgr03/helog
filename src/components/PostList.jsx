@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { format } from "date-fns";
 import { useOutletContext, Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -6,16 +5,15 @@ import PropTypes from "prop-types";
 import style from "../styles/PostList.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
 import Loading from "./Loading";
 import Error from "./Error";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
-const Post = ({ post, darkTheme }) => (
+const Post = ({ post }) => (
 	<li className={style.item}>
 		<Link to={`/posts/${post.id}`}>
-			<div className={`${darkTheme ? image.dark : ""} ${image.content}`}>
+			<div className={image.content}>
 				<img src={post.url} alt={post.title} />
 			</div>
 		</Link>
@@ -32,7 +30,6 @@ const Post = ({ post, darkTheme }) => (
 );
 
 const PostList = () => {
-	const [darkTheme] = useContext(DarkThemeContext);
 	const { posts } = useOutletContext();
 	const { data, error, loading } = posts;
 
@@ -41,7 +38,7 @@ const PostList = () => {
 	const items = published.map(post => <Post key={post._id} post={post} />);
 
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.postList}`}>
+		<div className={style.postList}>
 			{loading ? (
 				<Loading />
 			) : error ? (
@@ -55,7 +52,6 @@ const PostList = () => {
 
 Post.propTypes = {
 	post: PropTypes.object,
-	darkTheme: PropTypes.bool,
 };
 
 export { PostList as default, Post };
