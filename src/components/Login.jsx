@@ -1,50 +1,71 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useOutletContext, Link, useNavigate } from "react-router-dom";
 
 import style from "../styles/Login.module.css";
 import form from "../styles/utils/form.module.css";
 import button from "../styles/utils/button.module.css";
 
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
+import handleFetch from "../utils/handleFetch";
+
+const POST_LOGIN_URL = "http://localhost:3000/blog/users/login";
 
 const Login = () => {
-	const [darkTheme] = useContext(DarkThemeContext);
-	const inputError = false;
+	const { setToken } = useOutletContext();
+	const [errors, setErrors] = useState({});
+	const navigate = useNavigate();
 
-	const handelSubmit = e => {
+	const handelSubmit = async e => {
 		e.preventDefault();
-		const isVerify = false;
 		const formData = new FormData(e.target);
 		const formProps = Object.fromEntries(formData);
 
-		console.log(formProps);
+		const fetchOption = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		try {
+			const data = await handleFetch(POST_LOGIN_URL, {
+				...fetchOption,
+				body: JSON.stringify(formProps),
+			});
 
-		isVerify && console.log("Post request", JSON.stringify(formProps));
-		isVerify && e.target.reset();
+			localStorage.setItem("token", JSON.stringify(data));
+			setToken(data.token);
+			navigate("/", { replace: true });
+		} catch (err) {
+			const obj = {};
+			for (const error of err.cause) {
+				obj[error.field] = error.message;
+			}
+			setErrors(obj);
+		}
 	};
 
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.login}`}>
+		<div className={style.login}>
 			<h3 className={style.title}>Sign In</h3>
 			<div className={style.formWrap}>
-				<form
-					className={`${darkTheme ? form.dark : ""} ${form.content}`}
-					onSubmit={handelSubmit}
-				>
+				<form className={form.content} onSubmit={handelSubmit}>
 					<div>
 						<label
 							htmlFor="loginEmail"
-							className={`${inputError ? form.error : ""}`}
+							className={`${errors.email ? form.error : ""}`}
 						>
 							Email
 							<input type="email" id="loginEmail" name="email" />
 						</label>
-						<span>This is a placeholder</span>
+						<span>
+							{errors.email
+								? errors.email
+								: "This is a placeholder"}
+						</span>
 					</div>
 					<div>
 						<label
 							htmlFor="loginPassword"
-							className={`${inputError ? form.error : ""}`}
+							className={`${errors.password ? form.error : ""}`}
 						>
 							Password
 							<input
@@ -53,14 +74,13 @@ const Login = () => {
 								name="password"
 							/>
 						</label>
-						<span>This is a placeholder</span>
+						<span>
+							{errors.password
+								? errors.password
+								: "This is a placeholder"}
+						</span>
 					</div>
-					<button
-						type="submit"
-						className={`${darkTheme ? button.dark : ""} ${
-							button.success
-						}`}
-					>
+					<button type="submit" className={button.success}>
 						Login
 					</button>
 				</form>
