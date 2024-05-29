@@ -69,21 +69,21 @@
 }
 
 /* Dark scheme classes */
-.dark.header {
+:global(.dark) .header {
 	background-color: var(--dark-scheme-layout-bgc);
 	box-shadow: none;
 	border-bottom: 1px solid var(--dark-scheme-color);
 }
 
-.dark .logo h1 {
+:global(.dark) .logo h1 {
 	color: var(--dark-scheme-highlight);
 }
 
-.dark .list li > * {
+:global(.dark) .list li > * {
 	color: var(--dark-scheme-color);
 }
 
-.dark .list li:hover {
+:global(.dark) .list li:hover {
 	background-color: var(--dark-scheme-link-bgc-hover);
 }
 

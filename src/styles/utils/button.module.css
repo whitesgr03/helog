@@ -76,21 +76,21 @@
 }
 
 /* Dark scheme classes */
-.dark.content {
+:global(.dark) .content {
 	border: 2px transparent;
 	color: var(--dark-scheme-color);
 }
 
-.dark.closeBtn .close {
+:global(.dark) .closeBtn .close {
 	color: var(--dark-scheme-color);
 }
 
-.dark.theme span + div {
+:global(.dark) .theme span + div {
 	background-color: var(--dark-scheme-switch-bgc);
 	border-color: var(--dark-scheme-color);
 }
 
-.dark.theme span + div > div {
+:global(.dark) .theme span + div > div {
 	border: 2px solid var(--dark-scheme-color);
 	background-color: var(--dark-scheme-layout-bgc);
 	transform: translateX(

@@ -24,11 +24,11 @@
 }
 
 /* Dark scheme classes */
-.dark.model {
+:global(.dark) model {
 	color: var(--dark-scheme-color);
 }
 
-.dark.model form input {
+:global(.dark) model form input {
 	color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-link-bgc-hover);
 }

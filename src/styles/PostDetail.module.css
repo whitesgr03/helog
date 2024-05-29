@@ -21,12 +21,12 @@
 }
 
 /* Dark scheme classes */
-.dark.postDetail {
+:global(.dark) .postDetail {
 	color: var(--dark-scheme-color);
 }
 
-.dark .dateTime.createdAt strong,
-.dark .dateTime.lastModified em {
+:global(.dark) .dateTime.createdAt strong,
+:global(.dark) .dateTime.lastModified em {
 	color: var(--dark-scheme-highlight);
 }
 

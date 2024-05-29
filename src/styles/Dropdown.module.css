@@ -79,22 +79,22 @@
 
 /* Dark scheme classes */
 
-.dark.dropdown {
+:global(.dark) .dropdown {
 	border: 2px solid var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);
 	color: var(--dark-scheme-color);
 }
 
-.dark.dropdown > ul li > * {
+:global(.dark) .dropdown > ul li > * {
 	color: var(--dark-scheme-color);
 }
 
-.dark .avatar {
+:global(.dark) .avatar {
 	background-color: var(--dark-scheme-color);
 	color: var(--light-scheme-color);
 }
 
-.dark .dropdown > ul li:hover {
+:global(.dark) .dropdown > ul li:hover {
 	background-color: var(--dark-scheme-link-bgc-hover);
 	cursor: pointer;
 }

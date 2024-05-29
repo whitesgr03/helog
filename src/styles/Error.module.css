@@ -30,10 +30,10 @@
 }
 
 /* Dark scheme classes */
-.dark.error {
+:global(.dark) .error {
 	color: var(--dark-scheme-color);
 }
 
-.dark .message {
+:global(.dark) .message {
 	color: var(--dark-scheme-error);
 }

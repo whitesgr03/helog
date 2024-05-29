@@ -57,13 +57,13 @@
 }
 
 /* Dark scheme classes */
-.dark.postList li:not(:last-child) {
+:global(.dark) .postList li:not(:last-child) {
 	border-color: var(--dark-scheme-color);
 }
-.dark .item {
+:global(.dark) .item {
 	color: var(--dark-scheme-color);
 }
-.dark .item .title {
+:global(.dark) .item .title {
 	color: var(--dark-scheme-highlight);
 }
 

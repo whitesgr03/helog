@@ -28,7 +28,7 @@
 }
 
 /* Dark scheme classes */
-.dark .cancelBtn {
+:global(.dark) .cancelBtn {
 	background-color: var(--dark-scheme-color);
 	color: var(--light-scheme-color);
 }

@@ -42,23 +42,23 @@
 }
 
 /* Dark scheme classes */
-.dark.content label + span {
+:global(.dark) .content label + span {
 	color: var(--dark-scheme-error);
 }
 
-.dark.content label.error {
+:global(.dark) .content label.error {
 	color: var(--darl-scheme-error);
 }
-.dark.content label.error > * {
+:global(.dark) .content label.error > * {
 	border-color: var(--dark-scheme-error);
 }
 
-.dark.content label:focus-within,
-.dark.content label:hover {
+:global(.dark) .content label:focus-within,
+:global(.dark) .content label:hover {
 	color: var(--dark-scheme-highlight);
 }
-.dark.content input:focus,
-.dark.content input:hover {
+:global(.dark) .content input:focus,
+:global(.dark) .content input:hover {
 	border: 2px solid var(--dark-scheme-highlight);
 }
 

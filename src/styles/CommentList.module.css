@@ -105,46 +105,46 @@
 
 /* Dark scheme classes */
 
-.dark.commentList {
+:global(.dark) .commentList {
 	color: var(--dark-scheme-color);
 }
 
-.dark .commentBtn {
+:global(.dark) .commentBtn {
 	font-weight: 500;
 }
 
-.dark .container {
+:global(.dark) .container {
 	border-left: 2px solid var(--dark-scheme-color);
 }
 
-.dark .container.user {
+:global(.dark) .container.user {
 	border-color: var(--dark-scheme-success);
 }
 
-.dark .container.author {
+:global(.dark) .container.author {
 	border-color: var(--dark-scheme-error);
 }
-.dark .info strong {
+:global(.dark) .info strong {
 	color: var(--dark-scheme-highlight);
 }
 
-.dark .content {
+:global(.dark) .content {
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-.dark .commentBtn {
+:global(.dark) .commentBtn {
 	color: var(--dark-scheme-color);
 }
-.dark .replyBtn {
+:global(.dark) .replyBtn {
 	color: var(--dark-scheme-highlight);
 }
 
 /* Pseudo classes */
-.dark .commentBtn:hover {
+:global(.dark) .commentBtn:hover {
 	color: var(--dark-scheme-highlight);
 }
 
-.dark .replyBtn:hover {
+:global(.dark) .replyBtn:hover {
 	border-bottom-color: var(--dark-scheme-highlight);
 }
 

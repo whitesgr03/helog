@@ -24,16 +24,16 @@
 }
 
 /* Dark scheme classes */
-.dark.footer {
+:global(.dark) .footer {
 	background-color: var(--dark-scheme-layout-bgc);
 	box-shadow: none;
 	border-top: 1px solid var(--dark-scheme-color);
 	color: var(--dark-scheme-color);
 }
-.dark a {
+:global(.dark) a {
 	color: var(--dark-scheme-color);
 }
-.dark .link:hover {
+:global(.dark) .link:hover {
 	border-color: var(--dark-scheme-highlight);
 }
 

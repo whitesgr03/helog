@@ -31,7 +31,7 @@
 }
 
 /* Dark scheme classes */
-.dark .container a:hover {
+:global(.dark) .container a:hover {
 	color: var(--dark-scheme-highlight);
 }
 
@@ -50,11 +50,11 @@
 	}
 
 	/* Dark scheme classes */
-	.dark.contact {
+	:global(.dark) .contact {
 		background-color: var(--dark-scheme-layout-bgc);
 		color: var(--dark-scheme-color);
 	}
-	.dark.contact a {
+	:global(.dark) .contact a {
 		color: var(--dark-scheme-color);
 	}
 }

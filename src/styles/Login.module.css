@@ -48,24 +48,24 @@
 
 /* Dark scheme classes */
 
-.dark.login {
+:global(.dark) .login {
 	color: var(--dark-scheme-color);
 }
 
-.dark .formWrap {
+:global(.dark) .formWrap {
 	border-color: var(--dark-scheme-color);
 }
 
-.dark .formWrap input {
+:global(.dark) .formWrap input {
 	color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-.dark .linkWrap {
+:global(.dark) .linkWrap {
 	border-top-color: var(--dark-scheme-color);
 }
 
-.dark .linkWrap a {
+:global(.dark) .linkWrap a {
 	color: var(--dark-scheme-highlight);
 	text-decoration-color: var(--dark-scheme-highlight);
 }
