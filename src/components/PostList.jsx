@@ -12,7 +12,7 @@ import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Post = ({ post }) => (
 	<li className={style.item}>
-		<Link to={`/posts/${post.id}`}>
+		<Link to={`/posts/${post._id}`}>
 			<div className={image.content}>
 				<img src={post.url} alt={post.title} />
 			</div>
@@ -21,7 +21,7 @@ const Post = ({ post }) => (
 			<strong className={style.dateTime}>
 				{format(post.createdAt, "MMMM d, y")}
 			</strong>
-			<Link to={`/posts/${post.id}`}>
+			<Link to={`/posts/${post._id}`}>
 				<h3 className={style.title}>{post.title}</h3>
 			</Link>
 			<p className={style.content}>{post.content}</p>
