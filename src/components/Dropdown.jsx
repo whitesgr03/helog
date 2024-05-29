@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -7,12 +7,22 @@ import Settings from "./Settings";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { DarkThemeContext } from "../contexts/DarkThemeContext";
-
-const Dropdown = ({ user }) => {
+const Dropdown = ({
+	user,
+	setToken,
+	setUser,
+	handleCloseDropdown,
+	darkTheme,
+	handleSwitchColorTheme,
+}) => {
 	const [activeSettings, setActiveSettings] = useState(false);
 
-	const [darkTheme, handleThemeColor] = useContext(DarkThemeContext);
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		setToken(null);
+		setUser(null);
+		handleCloseDropdown();
+	};
 
 	const handleActiveSetting = () => {
 		setActiveSettings(true);
@@ -22,7 +32,7 @@ const Dropdown = ({ user }) => {
 	};
 
 	return (
-		<div className={`${darkTheme ? style.dark : ""} ${style.dropdown}`}>
+		<div className={style.dropdown}>
 			{user && (
 				<div className={style.profile}>
 					<div className={style.avatar}>
@@ -34,10 +44,8 @@ const Dropdown = ({ user }) => {
 			<ul>
 				<li>
 					<button
-						className={`${darkTheme ? button.dark : ""} ${
-							button.theme
-						}`}
-						onClick={handleThemeColor}
+						className={button.theme}
+						onClick={handleSwitchColorTheme}
 					>
 						<span
 							className={`${image.icon} ${
@@ -62,12 +70,12 @@ const Dropdown = ({ user }) => {
 				)}
 				<li>
 					{user ? (
-						<button>
+						<button onClick={handleLogout}>
 							<span className={`${image.icon} ${style.logout}`} />
 							Logout
 						</button>
 					) : (
-						<Link to="/users/login">
+						<Link to="/users/login" onClick={handleCloseDropdown}>
 							<span className={`${image.icon} ${style.login}`} />
 							Login
 						</Link>
@@ -83,6 +91,11 @@ const Dropdown = ({ user }) => {
 
 Dropdown.propTypes = {
 	user: PropTypes.object,
+	setToken: PropTypes.func,
+	setUser: PropTypes.func,
+	handleCloseDropdown: PropTypes.func,
+	darkTheme: PropTypes.bool,
+	handleSwitchColorTheme: PropTypes.func,
 };
 
 export default Dropdown;
