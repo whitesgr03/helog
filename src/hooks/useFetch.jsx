@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { handleFetch } from "../utils/handleFetch";
+import handleFetch from "../utils/handleFetch";
 
 const useFetch = url => {
 	const [data, setData] = useState([]);
