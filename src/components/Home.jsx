@@ -13,7 +13,7 @@ const Home = () => {
 	const { posts } = useOutletContext();
 	const { data, error, loading } = posts;
 
-	const postsAddUrl = data.map(post => ({ ...post, url })); // <- Temporarily add url
+	const postsAddUrl = data ? data.map(post => ({ ...post, url })) : []; // <- Temporarily add url
 
 	const published = postsAddUrl.filter(post => post.publish);
 	const latestPosts = published
