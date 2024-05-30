@@ -52,7 +52,7 @@ const Home = () => {
 			</div>
 			<div className={style.latestPosts}>
 				<h2>Latest Posts</h2>
-				<div>
+				<>
 					{loading ? (
 						<Loading />
 					) : error ? (
@@ -60,9 +60,15 @@ const Home = () => {
 							message={"The latest posts could not be loaded."}
 						/>
 					) : (
-						<ul>{latestPosts}</ul>
+						<>
+							{latestPosts.length > 0 ? (
+								<ul>{latestPosts}</ul>
+							) : (
+								<p>There are not latest posts.</p>
+							)}
+						</>
 					)}
-				</div>
+				</>
 			</div>
 		</div>
 	);
