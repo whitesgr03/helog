@@ -4,6 +4,7 @@
 	justify-content: center;
 	flex-direction: column;
 	row-gap: 10px;
+	padding: 5% 0;
 	color: var(--light-scheme-highlight);
 }
 
