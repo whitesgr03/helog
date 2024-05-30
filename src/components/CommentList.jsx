@@ -6,78 +6,12 @@ import PropTypes from "prop-types";
 import style from "../styles/CommentList.module.css";
 import image from "../styles/utils/image.module.css";
 
-const comments = [
-	{
-		id: "1",
-		author: "DD",
-		content:
-			"I cannot get this to work for the life of me, I’m following the example perfectly though… Anyone have any ideas?",
-		lastModified: new Date("2024/5/2"),
-		createdAt: new Date("2024/5/1"),
-	},
-	{
-		id: "2",
-		author: "JJJ",
-		content: `I got the second method working on my site, but I also tried to get the nav container to follow the page by adding it it the code like this
-$(‘html,body,#nav’)So I just added #nav to the selectors here. But it don’t work. The page still scrolls, but the nav container doesn’t follow. Any ideas?`,
-		lastModified: new Date("2024/5/2"),
-		createdAt: new Date("2024/5/1"),
-	},
-	{
-		id: "3",
-		author: "JJJXX",
-		content: `Hi Chris and co.
+import useFetch from "../hooks/useFetch";
 
-When I use this method #2, my Firefox Developer Toolbar shows a js error as follows:
+import Loading from "./Loading";
+import Error from "./Error";
 
-Expected identifier or string value in attribute selector but found “#”.
-
-What am I missing..?
-
-To help, I am using jquery-1.4.2.min.js, and I’m linking to h2’s with id’s, like so:
-
-Go to 01
-This is Link 01
-
-Thanks in advance.`,
-		lastModified: new Date("2024/5/2"),
-		createdAt: new Date("2024/5/1"),
-	},
-	{
-		id: "4",
-		author: "JIOJIFD",
-		content:
-			"I’m following the example perfectly though… Anyone have any ideas?",
-		lastModified: new Date("2024/5/5"),
-		createdAt: new Date("2024/5/5"),
-		reply: "2",
-	},
-	{
-		id: "5",
-		author: "dmefoeps",
-		content: "Anyone have any ideas?",
-		lastModified: new Date("2024/5/7"),
-		createdAt: new Date("2024/5/6"),
-		reply: "1",
-	},
-	{
-		id: "6",
-		author: "TT",
-		content:
-			"I’m following the example perfectly though… Anyone have any ideas?",
-		lastModified: new Date("2024/5/5"),
-		createdAt: new Date("2024/5/5"),
-		reply: "2",
-	},
-	{
-		id: "7",
-		author: "QQ",
-		content: "Anyone have any ideas?",
-		lastModified: new Date("2024/5/7"),
-		createdAt: new Date("2024/5/6"),
-		reply: "2",
-	},
-];
+const getPostsUrl = "http://localhost:3000/blog/posts";
 
 const Comment = ({ comment, postAuthor, user, children }) => (
 	<div
@@ -95,16 +29,15 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 	</div>
 );
 
-const CommentList = ({ postAuthor }) => {
+const CommentList = ({ postAuthor, postId }) => {
 	const [commentIds, setCommentIds] = useState({});
-
 	const { user } = useOutletContext();
 
-	const handleShowComment = e => {
-		const { id } = e.target.dataset;
-		const { [id]: existsId, ...rest } = commentIds;
-		id && setCommentIds(existsId ? { ...rest } : { ...rest, [id]: id });
-	};
+	const { data, error, loading } = useFetch(
+		`${getPostsUrl}/${postId}/comments`
+	);
+
+	const comments = data ?? [];
 
 	const parentComments = comments.filter(comment => !comment?.reply);
 	const replyComments = comments.filter(comment => comment.reply);
@@ -164,16 +97,35 @@ const CommentList = ({ postAuthor }) => {
 		);
 	});
 
+	const handleShowComment = e => {
+		const { id } = e.target.dataset;
+		const { [id]: existsId, ...rest } = commentIds;
+		id && setCommentIds(existsId ? { ...rest } : { ...rest, [id]: id });
+	};
+
 	return (
 		<div className={style.commentList}>
 			<h3>Comments</h3>
-			<ul onClick={handleShowComment}>{items}</ul>
+			{loading ? (
+				<Loading />
+			) : error ? (
+				<Error message={"The comments could not be loaded."} />
+			) : (
+				<>
+					{items.length > 0 ? (
+						<ul onClick={handleShowComment}>{items}</ul>
+					) : (
+						<p>There are not comments.</p>
+					)}
+				</>
+			)}
 		</div>
 	);
 };
 
 CommentList.propTypes = {
 	postAuthor: PropTypes.string,
+	postId: PropTypes.string,
 };
 
 Comment.propTypes = {
