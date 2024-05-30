@@ -14,10 +14,10 @@ const useFetch = url => {
 		(async () => {
 			try {
 				setData(await handleFetch(url, { signal }));
+				setLoading(false);
 			} catch (err) {
 				!signal.aborted && setError(err.cause);
-			} finally {
-				setLoading(false);
+				!signal.aborted && setLoading(false);
 			}
 		})();
 		return () => controller.abort();
