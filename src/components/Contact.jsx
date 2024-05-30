@@ -15,7 +15,7 @@ const Address = () => {
 const Contact = () => {
 	return (
 		<div className={style.contact}>
-			<h2>Contact</h2>
+			<h3>Contact</h3>
 			<p>Please contact us, If you have any questions.</p>
 			<div className={style.container}>
 				<Address />
