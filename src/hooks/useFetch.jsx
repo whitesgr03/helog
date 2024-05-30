@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import handleFetch from "../utils/handleFetch";
 
 const useFetch = url => {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState(null);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(true);
 
