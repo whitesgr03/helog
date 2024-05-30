@@ -14,7 +14,7 @@
 
 .layout main {
 	height: 100%;
-	flex: 1 1 100%;
+	width: 100%;
 }
 
 .layout main > * {
@@ -29,7 +29,7 @@
 }
 
 @media (min-width: 1300px) {
-	.layout > * {
+	.layout main {
 		max-width: 1300px;
 		margin: 0 auto;
 	}
