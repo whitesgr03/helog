@@ -38,15 +38,21 @@ const PostList = () => {
 	const items = published.map(post => <Post key={post._id} post={post} />);
 
 	return (
-		<div className={style.postList}>
+		<>
 			{loading ? (
 				<Loading />
 			) : error ? (
 				<Error message={"The posts could not be loaded."} />
 			) : (
-				<ul>{items}</ul>
+				<div className={style.postList}>
+					{items.length > 0 ? (
+						<ul>{items}</ul>
+					) : (
+						<p>There are not posts.</p>
+					)}
+				</div>
 			)}
-		</div>
+		</>
 	);
 };
 
