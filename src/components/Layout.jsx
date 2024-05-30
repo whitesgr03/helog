@@ -10,7 +10,7 @@ import Contact from "./Contact";
 import handleFetch from "../utils/handleFetch";
 import handleColorScheme from "../utils/handleColorScheme";
 
-const getUserDetailUrl = "http://localhost:3000/blog/user/";
+const getUserUrl = "http://localhost:3000/blog/user/";
 
 const Main = () => {
 	const { posts } = useOutletContext();
@@ -42,7 +42,7 @@ const Main = () => {
 		token &&
 			(async () => {
 				try {
-					const data = await handleFetch(getUserDetailUrl, {
+					const data = await handleFetch(getUserUrl, {
 						signal,
 						headers: { Authorization: `Bearer ${token}` },
 					});
