@@ -8,16 +8,13 @@ import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 import { transparent } from "../styles/utils/blur.module.css";
 
+import { UserContext } from "../contexts/UserContext";
+
 import Dropdown from "./Dropdown";
 
-const Header = ({
-	user,
-	setToken,
-	setUser,
-	darkTheme,
-	handleSwitchColorTheme,
-}) => {
+const Header = ({ darkTheme, handleSwitchColorTheme }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
+	const { user } = UserContext();
 
 	const handleActiveDropdown = () => {
 		setActiveDropdown(!activeDropdown);
@@ -77,12 +74,9 @@ const Header = ({
 				</nav>
 				{activeDropdown && (
 					<Dropdown
-						user={user}
-						setToken={setToken}
-						setUser={setUser}
-						handleCloseDropdown={handleCloseDropdown}
 						darkTheme={darkTheme}
 						handleSwitchColorTheme={handleSwitchColorTheme}
+						handleCloseDropdown={handleCloseDropdown}
 					/>
 				)}
 			</header>
@@ -93,9 +87,6 @@ const Header = ({
 	);
 };
 Header.propTypes = {
-	user: PropTypes.object,
-	setToken: PropTypes.func,
-	setUser: PropTypes.func,
 	darkTheme: PropTypes.bool,
 	handleSwitchColorTheme: PropTypes.func,
 };
