@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { useOutletContext, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import style from "../styles/PostList.module.css";
@@ -8,7 +8,11 @@ import image from "../styles/utils/image.module.css";
 import Loading from "./Loading";
 import Error from "./Error";
 
+import useFetch from "../hooks/useFetch";
+
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
+
+const GET_POSTS_URL = "http://localhost:3000/blog/posts";
 
 const Post = ({ post }) => (
 	<li className={style.item}>
@@ -30,12 +34,10 @@ const Post = ({ post }) => (
 );
 
 const PostList = () => {
-	const { posts } = useOutletContext();
-	const { data, error, loading } = posts;
+	const { data, error, loading } = useFetch(GET_POSTS_URL);
 
 	const postsAddUrl = data ? data.map(post => ({ ...post, url })) : []; // <- Temporarily add url
-	const published = postsAddUrl.filter(post => post.publish);
-	const items = published.map(post => <Post key={post._id} post={post} />);
+	const items = postsAddUrl.map(post => <Post key={post._id} post={post} />);
 
 	return (
 		<>
