@@ -9,12 +9,15 @@ import image from "../styles/utils/image.module.css";
 import ChangeNameModel from "./ChangeNameModel";
 import DeleteAccountModel from "./DeleteAccountModel";
 
+import { UserContext } from "../contexts/UserContext";
+
 const defaultModel = {
 	changeName: false,
 	deleteAccount: false,
 };
-const Settings = ({ user, handleCloseSetting }) => {
+const Settings = ({ handleCloseSetting }) => {
 	const [model, setModel] = useState(defaultModel);
+	const { user } = UserContext();
 
 	const handleActiveModel = e => {
 		const { active } = e.target.dataset;
@@ -22,7 +25,9 @@ const Settings = ({ user, handleCloseSetting }) => {
 	};
 
 	const handleCloseModel = e => {
-		e.target.dataset.close && setModel(defaultModel);
+		!e
+			? setModel(defaultModel)
+			: e.target.dataset.close && setModel(defaultModel);
 	};
 
 	return (
@@ -69,16 +74,12 @@ const Settings = ({ user, handleCloseSetting }) => {
 					</ul>
 				</div>
 				{model.changeName && (
-					<ChangeNameModel
-						username={user?.name}
-						userId={user?.id}
-						handleCloseModel={handleCloseModel}
-					/>
+					<ChangeNameModel handleCloseModel={handleCloseModel} />
 				)}
 				{model.deleteAccount && (
 					<DeleteAccountModel
-						userId={user?.id}
 						handleCloseModel={handleCloseModel}
+						handleCloseSetting={handleCloseSetting}
 					/>
 				)}
 			</div>
@@ -87,7 +88,6 @@ const Settings = ({ user, handleCloseSetting }) => {
 };
 
 Settings.propTypes = {
-	user: PropTypes.object,
 	handleCloseSetting: PropTypes.func,
 };
 
