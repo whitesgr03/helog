@@ -31,6 +31,7 @@
 }
 
 :global(.dark) .register form input {
+	color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);
 }
 
