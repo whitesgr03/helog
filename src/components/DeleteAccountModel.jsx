@@ -6,7 +6,36 @@ import { blur } from "../styles/utils/blur.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-const DeleteAccountModel = ({ userId, handleCloseModel }) => {
+import { UserContext } from "../contexts/UserContext";
+
+import handleFetch from "../utils/handleFetch";
+
+const DELETE_USER_URL = "http://localhost:3000/blog/users";
+
+const DeleteAccountModel = ({ handleCloseModel, handleCloseSetting }) => {
+	const { user, token, setToken } = UserContext();
+
+	const handleDelete = async () => {
+		const fetchOption = {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		try {
+			await handleFetch(`${DELETE_USER_URL}/${user._id}`, {
+				...fetchOption,
+			});
+			localStorage.removeItem("token");
+			setToken(null);
+			handleCloseSetting();
+		} catch (err) {
+			console.error(err.cause);
+		} finally {
+			handleCloseModel();
+		}
+	};
+
 	return (
 		<div className={blur} onClick={handleCloseModel} data-close>
 			<div className={`${settings} ${style.model}`}>
@@ -24,7 +53,9 @@ const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 					>
 						Cancel
 					</button>
-					<button className={button.error}>Delete</button>
+					<button className={button.error} onClick={handleDelete}>
+						Delete
+					</button>
 				</div>
 			</div>
 		</div>
@@ -32,8 +63,8 @@ const DeleteAccountModel = ({ userId, handleCloseModel }) => {
 };
 
 DeleteAccountModel.propTypes = {
-	userId: PropTypes.string,
 	handleCloseModel: PropTypes.func,
+	handleCloseSetting: PropTypes.func,
 };
 
 export default DeleteAccountModel;
