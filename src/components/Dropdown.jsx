@@ -7,20 +7,19 @@ import Settings from "./Settings";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
+import { UserContext } from "../contexts/UserContext";
+
 const Dropdown = ({
-	user,
-	setToken,
-	setUser,
 	handleCloseDropdown,
 	darkTheme,
 	handleSwitchColorTheme,
 }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
+	const { user, setToken } = UserContext();
 
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		setToken(null);
-		setUser(null);
 		handleCloseDropdown();
 	};
 
@@ -28,7 +27,9 @@ const Dropdown = ({
 		setActiveSettings(true);
 	};
 	const handleCloseSetting = e => {
-		e.target.dataset.closeSetting && setActiveSettings(false);
+		!e
+			? setActiveSettings(false)
+			: e.target.dataset.closeSetting && setActiveSettings(false);
 	};
 
 	return (
@@ -83,14 +84,13 @@ const Dropdown = ({
 				</li>
 			</ul>
 			{activeSettings && (
-				<Settings user={user} handleCloseSetting={handleCloseSetting} />
+				<Settings handleCloseSetting={handleCloseSetting} />
 			)}
 		</div>
 	);
 };
 
 Dropdown.propTypes = {
-	user: PropTypes.object,
 	setToken: PropTypes.func,
 	setUser: PropTypes.func,
 	handleCloseDropdown: PropTypes.func,
