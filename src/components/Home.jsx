@@ -1,4 +1,4 @@
-import { useOutletContext, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import style from "../styles/Home.module.css";
 import image from "../styles/utils/image.module.css";
@@ -7,18 +7,19 @@ import { Post } from "./PostList";
 import Loading from "./Loading";
 import Error from "./Error";
 
+import useFetch from "../hooks/useFetch";
+
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
+const GET_POSTS_URL = "http://localhost:3000/blog/posts?limit=4";
+
 const Home = () => {
-	const { posts } = useOutletContext();
-	const { data, error, loading } = posts;
+	const { data, error, loading } = useFetch(GET_POSTS_URL);
 
 	const postsAddUrl = data ? data.map(post => ({ ...post, url })) : []; // <- Temporarily add url
-
-	const published = postsAddUrl.filter(post => post.publish);
-	const latestPosts = published
-		.slice(0, 4)
-		.map(post => <Post key={post._id} post={post} />);
+	const latestPosts = postsAddUrl.map(post => (
+		<Post key={post._id} post={post} />
+	));
 
 	return (
 		<div className={style.home}>
