@@ -7,6 +7,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Contact from "./Contact";
 
+import { UserProvider } from "../contexts/UserContext";
 
 import handleFetch from "../utils/handleFetch";
 import handleColorScheme from "../utils/handleColorScheme";
@@ -52,10 +53,18 @@ const App = () => {
 
 	return (
 		<div className={` ${darkTheme ? "dark" : ""} ${style.app}`}>
+			<UserProvider
+				user={user}
+				setToken={setToken}
+				setUser={setUser}
+				token={token}
+				handleGetUser={handleGetUser}
+			>
 				<Header
 					darkTheme={darkTheme}
 					handleSwitchColorTheme={handleSwitchColorTheme}
 				/>
+			</UserProvider>
 			<div className={style.container}>
 				<main>
 					<Outlet context={{ setToken }} />
