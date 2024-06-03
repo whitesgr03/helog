@@ -20,8 +20,12 @@ const Comment = ({ comment, postAuthor, user, children }) => (
 		} ${style.container}`}
 	>
 		<div className={style.info}>
-			{postAuthor === comment.author && <strong>POST AUTHOR</strong>}
-			<h3>{comment.author === user.author ? "Me" : comment.author}</h3>
+			{postAuthor === comment.author.name && <strong>POST AUTHOR</strong>}
+			<h3>
+				{comment.author.name === user.author
+					? "Me"
+					: comment.author.name}
+			</h3>
 			<span>{format(comment.createdAt, "MMMM d, y")}</span>
 		</div>
 		<p className={style.content}>{comment.content}</p>
@@ -45,27 +49,29 @@ const CommentList = ({ postAuthor, postId }) => {
 	const items = parentComments.map(comment => {
 		const replyList = [...replyComments].filter(
 			rComment =>
-				rComment.reply === comment.id &&
+				rComment.reply === comment._id &&
 				replyComments.splice(
-					replyComments.findIndex(reply => reply.id === rComment.id),
+					replyComments.findIndex(
+						reply => reply._id === rComment._id
+					),
 					1
 				)
 		);
 
 		return (
-			<li key={comment.id}>
+			<li key={comment._id}>
 				<Comment postAuthor={postAuthor} user={user} comment={comment}>
 					<div className={style.buttonWrap}>
 						{replyList.length > 0 && (
 							<button
 								className={style.commentBtn}
-								data-id={comment.id}
+								data-id={comment._id}
 							>
 								<span
 									className={`${image.icon} ${
 										style.comment
 									} ${
-										commentIds[comment.id]
+										commentIds[comment._id]
 											? style.active
 											: ""
 									}`}
@@ -79,11 +85,11 @@ const CommentList = ({ postAuthor, postId }) => {
 				{replyList.length > 0 && (
 					<ul
 						className={`${style.reply} ${
-							commentIds[comment.id] ? style.active : ""
+							commentIds[comment._id] ? style.active : ""
 						}`}
 					>
 						{replyList.map(reply => (
-							<li key={reply.id}>
+							<li key={reply._id}>
 								<Comment
 									comment={reply}
 									postAuthor={postAuthor}
