@@ -17,13 +17,21 @@
 	padding: 10px;
 }
 
-.content label + span {
+.content label + div {
+	position: relative;
+	margin-left: 30px;
 	color: var(--light-scheme-error);
 	opacity: 0;
 	visibility: hidden;
 }
 
-.content label.error > * {
+.content label + div span:first-of-type {
+	position: absolute;
+	right: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-right: 5px;
+}
 	border-color: var(--light-scheme-error);
 }
 .content label.error + span {
@@ -42,7 +50,7 @@
 }
 
 /* Dark scheme classes */
-:global(.dark) .content label + span {
+:global(.dark) .content label + div {
 	color: var(--dark-scheme-error);
 }
 
