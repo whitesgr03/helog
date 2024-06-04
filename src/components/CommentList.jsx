@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
@@ -6,44 +6,47 @@ import PropTypes from "prop-types";
 import style from "../styles/CommentList.module.css";
 import image from "../styles/utils/image.module.css";
 
-import useFetch from "../hooks/useFetch";
+import handleFetch from "../utils/handleFetch";
 
 import Loading from "./Loading";
 import Error from "./Error";
 
 const getPostsUrl = "http://localhost:3000/blog/posts";
 
-const Comment = ({ comment, postAuthor, user, children }) => (
-	<div
-		className={`${postAuthor === comment.author ? style.author : ""} ${
-			user.author === comment.author ? style.user : ""
-		} ${style.container}`}
-	>
-		<div className={style.info}>
-			{postAuthor === comment.author.name && <strong>POST AUTHOR</strong>}
-			<h3>
-				{comment.author.name === user.author
-					? "Me"
-					: comment.author.name}
-			</h3>
-			<span>{format(comment.createdAt, "MMMM d, y")}</span>
+const Comment = ({ comment, postAuthor, children }) => {
+	const { user } = useOutletContext();
+	return (
+		<div
+			className={`${
+				postAuthor === comment.author.name ? style.author : ""
+			} ${user?.author.name === comment.author.name ? style.user : ""} ${
+				style.container
+			}`}
+		>
+			<div className={style.info}>
+				{postAuthor === comment.author.name && (
+					<strong>POST AUTHOR</strong>
+				)}
+				<h3>
+					{comment.author.name === user?.author.name
+						? "Me"
+						: comment.author.name}
+				</h3>
+				<span>{format(comment.createdAt, "MMMM d, y")}</span>
+			</div>
+			<p className={style.content}>{comment.content}</p>
+			{children}
 		</div>
-		<p className={style.content}>{comment.content}</p>
-		{children}
-	</div>
-);
+	);
+};
 
 const CommentList = ({ postAuthor, postId }) => {
 	const [commentIds, setCommentIds] = useState({});
-	const { user } = useOutletContext();
+	const [comments, setComments] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-	const { data, error, loading } = useFetch(
-		`${getPostsUrl}/${postId}/comments`
-	);
-
-	const comments = data ?? [];
-
-	const parentComments = comments.filter(comment => !comment?.reply);
+	const parentComments = comments.filter(comment => !comment.reply);
 	const replyComments = comments.filter(comment => comment.reply);
 
 	const items = parentComments.map(comment => {
@@ -57,10 +60,9 @@ const CommentList = ({ postAuthor, postId }) => {
 					1
 				)
 		);
-
 		return (
 			<li key={comment._id}>
-				<Comment postAuthor={postAuthor} user={user} comment={comment}>
+				<Comment postAuthor={postAuthor} comment={comment}>
 					<div className={style.buttonWrap}>
 						{replyList.length > 0 && (
 							<button
@@ -93,7 +95,6 @@ const CommentList = ({ postAuthor, postId }) => {
 								<Comment
 									comment={reply}
 									postAuthor={postAuthor}
-									user={user}
 								/>
 							</li>
 						))}
@@ -108,6 +109,25 @@ const CommentList = ({ postAuthor, postId }) => {
 		const { [id]: existsId, ...rest } = commentIds;
 		id && setCommentIds(existsId ? { ...rest } : { ...rest, [id]: id });
 	};
+
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+		const handleGetComments = async () => {
+			try {
+				const data = await handleFetch(
+					`${getPostsUrl}/${postId}/comments`
+				);
+				setComments(data);
+				setLoading(false);
+			} catch (err) {
+				!signal.aborted && setError(err.cause);
+				!signal.aborted && setLoading(false);
+			}
+		};
+		handleGetComments();
+		return () => controller.abort();
+	}, [postId]);
 
 	return (
 		<div className={style.commentList}>
