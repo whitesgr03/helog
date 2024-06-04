@@ -58,7 +58,10 @@ const PostDetail = () => {
 						</div>
 						<p>{post.content}</p>
 					</div>
-					<CommentList postAuthor={post.author} postId={postId} />
+					<CommentList
+						postAuthor={post.author.name}
+						postId={postId}
+					/>
 				</div>
 			)}
 		</>
