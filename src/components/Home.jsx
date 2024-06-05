@@ -3,24 +3,11 @@ import { Link } from "react-router-dom";
 import style from "../styles/Home.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { Post } from "./PostList";
-import Loading from "./Loading";
-import Error from "./Error";
-
-import useFetch from "../hooks/useFetch";
+import Posts from "./Posts";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
-const GET_POSTS_URL = "http://localhost:3000/blog/posts?limit=4";
-
 const Home = () => {
-	const { data, error, loading } = useFetch(GET_POSTS_URL);
-
-	const postsAddUrl = data ? data.map(post => ({ ...post, url })) : []; // <- Temporarily add url
-	const latestPosts = postsAddUrl.map(post => (
-		<Post key={post._id} post={post} />
-	));
-
 	return (
 		<div className={style.home}>
 			<div className={style.container}>
@@ -53,23 +40,7 @@ const Home = () => {
 			</div>
 			<div className={style.latestPosts}>
 				<h2>Latest Posts</h2>
-				<>
-					{loading ? (
-						<Loading />
-					) : error ? (
-						<Error
-							message={"The latest posts could not be loaded."}
-						/>
-					) : (
-						<>
-							{latestPosts.length > 0 ? (
-								<ul>{latestPosts}</ul>
-							) : (
-								<p>There are not latest posts.</p>
-							)}
-						</>
-					)}
-				</>
+				<Posts limit={4} />
 			</div>
 		</div>
 	);
