@@ -136,7 +136,7 @@ const Register = () => {
 					<div>
 						<span className={`${image.icon} ${form.alert}`} />
 						<span className={form.placeholder}>
-							{errors?.name ?? "This is a placeholder"}
+							{errors?.name ?? "Error message placeholder"}
 						</span>
 					</div>
 				</div>
@@ -157,7 +157,7 @@ const Register = () => {
 					<div>
 						<span className={`${image.icon} ${form.alert}`} />
 						<span className={form.placeholder}>
-							{errors?.email ?? "This is a placeholder"}
+							{errors?.email ?? "Error message placeholder"}
 						</span>
 					</div>
 				</div>
@@ -178,7 +178,7 @@ const Register = () => {
 					<div>
 						<span className={`${image.icon} ${form.alert}`} />
 						<span className={form.placeholder}>
-							{errors?.password ?? "This is a placeholder"}
+							{errors?.password ?? "Error message placeholder"}
 						</span>
 					</div>
 				</div>
@@ -201,7 +201,8 @@ const Register = () => {
 					<div>
 						<span className={`${image.icon} ${form.alert}`} />
 						<span className={form.placeholder}>
-							{errors?.confirmPassword ?? "This is a placeholder"}
+							{errors?.confirmPassword ??
+								"Error message placeholder"}
 						</span>
 					</div>
 				</div>

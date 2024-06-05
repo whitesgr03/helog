@@ -121,7 +121,7 @@ const Login = () => {
 						<div>
 							<span className={`${image.icon} ${form.alert}`} />
 							<span className={form.placeholder}>
-								{errors?.email ?? "This is a placeholder"}
+								{errors?.email ?? "Error message placeholder"}
 							</span>
 						</div>
 					</div>
@@ -142,7 +142,8 @@ const Login = () => {
 						<div>
 							<span className={`${image.icon} ${form.alert}`} />
 							<span className={form.placeholder}>
-								{errors?.password ?? "This is a placeholder"}
+								{errors?.password ??
+									"Error message placeholder"}
 							</span>
 						</div>
 					</div>
