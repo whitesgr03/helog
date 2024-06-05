@@ -5,29 +5,20 @@ exports[`Footer component > should render correctly 1`] = `
   <footer
     class="_footer_4d8704"
   >
-    <address
-      class="_contact_4d8704"
-    >
+    <div>
       <a
         alt="github"
+        class="_link_4d8704"
         href="#git"
       >
         <span
-          class="icon _github_4d8704"
+          class="_icon_7e06e0 _github_4d8704"
         />
       </a>
-      <a
-        class="_link_4d8704"
-        href="mailto@whitesgr03@gmail.com"
-      >
-        <span
-          class="icon _email_4d8704"
-        />
-        <em>
-          whitesgr03@gmail.com
-        </em>
-      </a>
-    </address>
+      <div
+        class="_address_4d8704"
+      />
+    </div>
     <p>
       © 2024 Designed & coded by Weiss Bai
     </p>
