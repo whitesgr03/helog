@@ -2,7 +2,7 @@ import style from "../styles/Footer.module.css";
 import { container } from "../styles/Contact.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { Address } from "../components/Contact";
+import Address from "../components/Address";
 
 const Footer = () => {
 	return (
