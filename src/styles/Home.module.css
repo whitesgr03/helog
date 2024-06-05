@@ -113,19 +113,6 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-auto-rows: 1fr;
-		gap: 50px;
-	}
-
-	.latestPosts ul li {
-		display: flex;
-		flex-direction: column;
-		row-gap: 5px;
-	}
-
-	.latestPosts ul li div {
-		display: flex;
-		flex-direction: column;
-		row-gap: 15px;
 	}
 
 	/* Dark scheme classes */
@@ -162,10 +149,7 @@
 
 	.latestPosts ul {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-	}
-
-	.latestPosts ul li {
-		row-gap: 10px;
+		gap: 50px;
 	}
 
 	/* Dark scheme classes */
