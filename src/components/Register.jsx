@@ -72,34 +72,32 @@ const Register = () => {
 		}
 	};
 
+	const handleRegister = async () => {
+		const fetchOption = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(formFields),
+		};
+		try {
+			const data = await handleFetch(POST_REGISTER_URL, fetchOption);
+			localStorage.setItem("token", JSON.stringify(data));
+			setToken(data.token);
+			navigate("/", { replace: true });
+		} catch (err) {
+			console.log(err);
+			const obj = {};
+			for (const error of err.cause) {
+				obj[error.field] = error.message;
+			}
+			setErrors(obj);
+		}
+	};
+
 	const handleSubmit = async e => {
 		e.preventDefault();
-		const isValid = await handleValidFields(formFields);
-
-		const handleLogin = async () => {
-			const fetchOption = {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(formFields),
-			};
-			try {
-				const data = await handleFetch(POST_REGISTER_URL, fetchOption);
-				localStorage.setItem("token", JSON.stringify(data));
-				setToken(data.token);
-				navigate("/", { replace: true });
-			} catch (err) {
-				console.log(err);
-				const obj = {};
-				for (const error of err.cause) {
-					obj[error.field] = error.message;
-				}
-				setErrors(obj);
-			}
-		};
-
-		isValid && (await handleLogin());
+		(await handleValidFields(formFields)) && handleRegister();
 	};
 
 	const handleChange = e => {
