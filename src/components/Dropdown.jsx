@@ -7,37 +7,31 @@ import Settings from "./Settings";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
-import { UserContext } from "../contexts/UserContext";
+import { AppContext } from "../contexts/AppContext";
 
 const Dropdown = ({
-	handleCloseDropdown,
+	user,
 	darkTheme,
+	handleCloseDropdown,
 	handleSwitchColorTheme,
 }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
-	const { user, setToken } = UserContext();
+	const { setToken } = AppContext();
 
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		setToken(null);
 		handleCloseDropdown();
 	};
+	const handleActiveSettings = () => setActiveSettings(true);
 
-	const handleActiveSetting = () => {
-		setActiveSettings(true);
-	};
-	const handleCloseSetting = e => {
-		!e
-			? setActiveSettings(false)
-			: e.target.dataset.closeSetting && setActiveSettings(false);
-	};
-
+	const handleCloseSettings = () => setActiveSettings(false);
 	return (
 		<div className={style.dropdown}>
-			{user && (
+			{user?.name && (
 				<div className={style.profile}>
 					<div className={style.avatar}>
-						{user.name && user.name.charAt(0).toUpperCase()}
+						{user.name.charAt(0).toUpperCase()}
 					</div>
 					{user.name}
 				</div>
@@ -61,7 +55,7 @@ const Dropdown = ({
 				</li>
 				{user && (
 					<li>
-						<button onClick={handleActiveSetting}>
+						<button onClick={handleActiveSettings}>
 							<span
 								className={`${image.icon} ${style.settings}`}
 							/>
@@ -84,17 +78,19 @@ const Dropdown = ({
 				</li>
 			</ul>
 			{activeSettings && (
-				<Settings handleCloseSetting={handleCloseSetting} />
+				<Settings
+					user={user}
+					handleCloseSettings={handleCloseSettings}
+				/>
 			)}
 		</div>
 	);
 };
 
 Dropdown.propTypes = {
-	setToken: PropTypes.func,
-	setUser: PropTypes.func,
-	handleCloseDropdown: PropTypes.func,
+	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
+	handleCloseDropdown: PropTypes.func,
 	handleSwitchColorTheme: PropTypes.func,
 };
 
