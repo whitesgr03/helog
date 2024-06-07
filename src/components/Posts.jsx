@@ -44,7 +44,7 @@ const Posts = ({ limit = 0 }) => {
 			{loading ? (
 				<Loading />
 			) : error ? (
-				<Error message={"The posts could not be loaded."} />
+				<Error message={error} />
 			) : (
 				<>
 					{items.length > 0 ? (
