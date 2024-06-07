@@ -9,6 +9,7 @@ import PostList from "./components/PostList";
 import PostDetail from "./components/PostDetail";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import AuthGuard from "./components/AuthGuard";
 
 const router = () => (
 	<RouterProvider
@@ -35,11 +36,19 @@ const router = () => (
 					},
 					{
 						path: "users/login",
-						element: <Login />,
+						element: (
+							<AuthGuard>
+								<Login />
+							</AuthGuard>
+						),
 					},
 					{
 						path: "users/register",
-						element: <Register />,
+						element: (
+							<AuthGuard>
+								<Register />
+							</AuthGuard>
+						),
 					},
 				],
 			},
