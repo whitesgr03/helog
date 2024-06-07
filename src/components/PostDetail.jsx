@@ -7,7 +7,7 @@ import image from "../styles/utils/image.module.css";
 
 import Loading from "./Loading";
 import Error from "./Error";
-import CommentList from "./CommentList";
+import Comments from "./Comments";
 
 import useFetch from "../hooks/useFetch";
 
@@ -20,21 +20,24 @@ const PostDetail = () => {
 
 	const { data: post, error, loading } = useFetch(`${getPostsUrl}/${postId}`);
 
+	const createdAt = post?.createdAt && new Date(post.createdAt).getTime();
+	const lastModified =
+		post?.lastModified && new Date(post.lastModified).getTime();
+
 	return (
 		<>
 			{loading ? (
 				<Loading />
 			) : error ? (
-				<Error message={"The post could not be loaded."} />
+				<Error message={error} />
 			) : (
 				<div>
 					<div className={style.postDetail}>
 						<h2 className={style.title}>{post.title}</h2>
 						<div
-							className={`${style.dateTime} 
+							className={`${style.dateTime}
 							${
-								new Date(post.createdAt).getTime() !==
-								new Date(post.lastModified).getTime()
+								lastModified && createdAt !== lastModified
 									? style.lastModified
 									: style.createdAt
 							}
@@ -44,8 +47,7 @@ const PostDetail = () => {
 								Published in{" "}
 								{format(post.createdAt, "MMMM d, y")}
 							</strong>
-							{new Date(post.createdAt).getTime() !==
-								new Date(post.lastModified).getTime() && (
+							{lastModified && createdAt !== lastModified && (
 								<em>
 									Edited in{" "}
 									{format(post.lastModified, "MMMM d, y")}
@@ -58,10 +60,7 @@ const PostDetail = () => {
 						</div>
 						<p>{post.content}</p>
 					</div>
-					<CommentList
-						postAuthor={post.author.name}
-						postId={postId}
-					/>
+					<Comments postAuthor={post?.author.name} postId={postId} />
 				</div>
 			)}
 		</>
