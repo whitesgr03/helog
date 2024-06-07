@@ -8,13 +8,10 @@ import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 import { transparent } from "../styles/utils/blur.module.css";
 
-import { UserContext } from "../contexts/UserContext";
-
 import Dropdown from "./Dropdown";
 
-const Header = ({ darkTheme, handleSwitchColorTheme }) => {
+const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
-	const { user } = UserContext();
 
 	const handleActiveDropdown = () => {
 		setActiveDropdown(!activeDropdown);
@@ -51,6 +48,7 @@ const Header = ({ darkTheme, handleSwitchColorTheme }) => {
 							>
 								<div className={style.switch}>
 									<span
+										data-testid={"icon"}
 										className={`${image.icon} ${
 											darkTheme ? moon : sun
 										}`}
@@ -74,6 +72,7 @@ const Header = ({ darkTheme, handleSwitchColorTheme }) => {
 				</nav>
 				{activeDropdown && (
 					<Dropdown
+						user={user}
 						darkTheme={darkTheme}
 						handleSwitchColorTheme={handleSwitchColorTheme}
 						handleCloseDropdown={handleCloseDropdown}
@@ -81,12 +80,17 @@ const Header = ({ darkTheme, handleSwitchColorTheme }) => {
 				)}
 			</header>
 			{activeDropdown && (
-				<div className={transparent} onClick={handleCloseDropdown} />
+				<div
+					className={transparent}
+					onClick={handleCloseDropdown}
+					data-testid="transparentBgc"
+				/>
 			)}
 		</>
 	);
 };
 Header.propTypes = {
+	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
 	handleSwitchColorTheme: PropTypes.func,
 };
