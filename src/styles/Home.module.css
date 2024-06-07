@@ -113,6 +113,10 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-auto-rows: 1fr;
+		gap: 30px;
+	}
+	.latestPosts ul li {
+		padding: 0;
 	}
 
 	/* Dark scheme classes */
@@ -149,7 +153,6 @@
 
 	.latestPosts ul {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-		gap: 50px;
 	}
 
 	/* Dark scheme classes */
