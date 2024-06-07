@@ -6,8 +6,9 @@ import style from "../styles/App.module.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Contact from "./Contact";
+import Loading from "./Loading";
 
-import { UserProvider } from "../contexts/UserContext";
+import { AppProvider } from "../contexts/AppContext";
 
 import handleFetch from "../utils/handleFetch";
 import handleColorScheme from "../utils/handleColorScheme";
@@ -16,6 +17,7 @@ const GET_USER_URL = "http://localhost:3000/blog/users/user";
 
 const App = () => {
 	const [token, setToken] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(
 		JSON.parse(localStorage.getItem("darkTheme")) ?? handleColorScheme
@@ -28,23 +30,34 @@ const App = () => {
 
 	const handleGetUser = useCallback(async () => {
 		try {
-			const data = await handleFetch(GET_USER_URL, {
+			const result = await handleFetch(GET_USER_URL, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			setUser(data);
+
+			result.success
+				? setUser(result.data)
+				: console.error(result.message);
 		} catch (err) {
-			console.error(err.cause);
+			console.error(err);
+		} finally {
+			setLoading(false);
 		}
 	}, [token]);
 
 	useEffect(() => {
 		const data = JSON.parse(localStorage.getItem("token"));
-		const getToken = () =>
-			Date.now() > data.exp
-				? localStorage.removeItem("token")
-				: setToken(data.token);
 
-		data && getToken();
+		const handleRemoveToken = () => {
+			localStorage.removeItem("token");
+			setLoading(false);
+		};
+
+		const handleCheckToken = () => {
+			const isExpired = Date.now() > data.exp;
+			isExpired ? handleRemoveToken() : setToken(data.token);
+		};
+
+		data ? handleCheckToken() : setLoading(false);
 	}, []);
 
 	useEffect(() => {
@@ -52,27 +65,36 @@ const App = () => {
 	}, [token, handleGetUser]);
 
 	return (
-		<div className={` ${darkTheme ? "dark" : ""} ${style.app}`}>
-			<UserProvider
-				user={user}
-				setToken={setToken}
-				setUser={setUser}
-				token={token}
-				handleGetUser={handleGetUser}
-			>
-				<Header
-					darkTheme={darkTheme}
-					handleSwitchColorTheme={handleSwitchColorTheme}
-				/>
-			</UserProvider>
-			<div className={style.container}>
-				<main>
-					<Outlet context={{ setToken }} />
-				</main>
-				<Contact />
-				<Footer />
-			</div>
-		</div>
+		<>
+			{loading ? (
+				<Loading />
+			) : (
+				<div
+					className={` ${darkTheme ? "dark" : ""} ${style.app}`}
+					data-testid="app"
+				>
+					<AppProvider
+						setToken={setToken}
+						setUser={setUser}
+						token={token}
+						handleGetUser={handleGetUser}
+					>
+						<Header
+							user={user}
+							darkTheme={darkTheme}
+							handleSwitchColorTheme={handleSwitchColorTheme}
+						/>
+					</AppProvider>
+					<div className={style.container}>
+						<main>
+							<Outlet context={{ setToken, user }} />
+						</main>
+						<Contact />
+						<Footer />
+					</div>
+				</div>
+			)}
+		</>
 	);
 };
 
