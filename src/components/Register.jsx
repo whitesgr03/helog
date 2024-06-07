@@ -8,6 +8,7 @@ import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
 import handleFetch from "../utils/handleFetch";
+import Error from "./Error";
 
 const POST_REGISTER_URL = "http://localhost:3000/blog/users";
 
@@ -15,7 +16,8 @@ const defaultForm = { name: "", email: "", password: "", confirmPassword: "" };
 
 const Register = () => {
 	const [formFields, setFormFields] = useState(defaultForm);
-	const [errors, setErrors] = useState(null);
+	const [error, setError] = useState(null);
+	const [inputErrors, setInputErrors] = useState(null);
 	const timer = useRef(null);
 
 	const { setToken } = useOutletContext();
@@ -59,7 +61,7 @@ const Register = () => {
 				abortEarly: false,
 			});
 
-			setErrors({});
+			setInputErrors({});
 			isValid = true;
 			return isValid;
 		} catch (err) {
@@ -67,7 +69,7 @@ const Register = () => {
 			for (const error of err.inner) {
 				obj[error.path] ?? (obj[error.path] = error.message);
 			}
-			setErrors(obj);
+			setInputErrors(obj);
 			return isValid;
 		}
 	};
@@ -81,17 +83,28 @@ const Register = () => {
 			body: JSON.stringify(formFields),
 		};
 		try {
-			const data = await handleFetch(POST_REGISTER_URL, fetchOption);
-			localStorage.setItem("token", JSON.stringify(data));
-			setToken(data.token);
-			navigate("/", { replace: true });
+			const result = await handleFetch(POST_REGISTER_URL, fetchOption);
+
+			const handleSetToken = () => {
+				localStorage.setItem("token", JSON.stringify(result.data));
+				setToken(result.data.token);
+				navigate("/", { replace: true });
+			};
+
+			const handleSetInputErrors = () => {
+				const obj = {};
+				for (const error of result.errors) {
+					obj[error.field] = error.message;
+				}
+				setInputErrors(obj);
+			};
+			result.success
+				? handleSetToken()
+				: result?.errors
+				? handleSetInputErrors()
+				: setError(result.message);
 		} catch (err) {
-			console.log(err);
-			const obj = {};
-			for (const error of err.cause) {
-				obj[error.field] = error.message;
-			}
-			setErrors(obj);
+			setError(err);
 		}
 	};
 
@@ -108,107 +121,131 @@ const Register = () => {
 		};
 		setFormFields(fields);
 
-		errors && timer.current && clearTimeout(timer.current);
-		errors &&
+		inputErrors && timer.current && clearTimeout(timer.current);
+		inputErrors &&
 			(timer.current = setTimeout(() => handleValidFields(fields), 500));
 	};
 
 	return (
-		<div className={style.register}>
-			<h3 className={style.title}>Sign Up</h3>
-			<form className={form.content} onSubmit={handleSubmit}>
-				<div>
-					<label
-						htmlFor="name"
-						className={`${errors?.name ? form.error : ""}`}
-					>
-						Name
-						<input
-							id="name"
-							type="text"
-							name="name"
-							value={formFields.name}
-							onChange={handleChange}
-						/>
-					</label>
-					<div>
-						<span className={`${image.icon} ${form.alert}`} />
-						<span className={form.placeholder}>
-							{errors?.name ?? "Error message placeholder"}
-						</span>
-					</div>
+		<>
+			{error ? (
+				<Error message={error} />
+			) : (
+				<div className={style.register}>
+					<h3 className={style.title}>Sign Up</h3>
+					<form className={form.content} onSubmit={handleSubmit}>
+						<div>
+							<label
+								htmlFor="name"
+								className={`${
+									inputErrors?.name ? form.error : ""
+								}`}
+							>
+								Name
+								<input
+									id="name"
+									type="text"
+									name="name"
+									value={formFields.name}
+									onChange={handleChange}
+								/>
+							</label>
+							<div>
+								<span
+									className={`${image.icon} ${form.alert}`}
+								/>
+								<span className={form.placeholder}>
+									{inputErrors?.name ?? "Message placeholder"}
+								</span>
+							</div>
+						</div>
+						<div>
+							<label
+								htmlFor="email"
+								className={`${
+									inputErrors?.email ? form.error : ""
+								}`}
+							>
+								Email
+								<input
+									id="email"
+									type="email"
+									name="email"
+									value={formFields.email}
+									onChange={handleChange}
+								/>
+							</label>
+							<div>
+								<span
+									className={`${image.icon} ${form.alert}`}
+								/>
+								<span className={form.placeholder}>
+									{inputErrors?.email ??
+										"Message placeholder"}
+								</span>
+							</div>
+						</div>
+						<div>
+							<label
+								htmlFor="password"
+								className={`${
+									inputErrors?.password ? form.error : ""
+								}`}
+							>
+								Password
+								<input
+									id="password"
+									type="password"
+									name="password"
+									value={formFields.password}
+									onChange={handleChange}
+								/>
+							</label>
+							<div>
+								<span
+									className={`${image.icon} ${form.alert}`}
+								/>
+								<span className={form.placeholder}>
+									{inputErrors?.password ??
+										"Message placeholder"}
+								</span>
+							</div>
+						</div>
+						<div>
+							<label
+								htmlFor="confirmPassword"
+								className={`${
+									inputErrors?.confirmPassword
+										? form.error
+										: ""
+								}`}
+							>
+								Confirm Password
+								<input
+									id="confirmPassword"
+									type="password"
+									name="confirmPassword"
+									value={formFields.confirmPassword}
+									onChange={handleChange}
+								/>
+							</label>
+							<div>
+								<span
+									className={`${image.icon} ${form.alert}`}
+								/>
+								<span className={form.placeholder}>
+									{inputErrors?.confirmPassword ??
+										"Message placeholder"}
+								</span>
+							</div>
+						</div>
+						<button type="submit" className={button.success}>
+							Register
+						</button>
+					</form>
 				</div>
-				<div>
-					<label
-						htmlFor="email"
-						className={`${errors?.email ? form.error : ""}`}
-					>
-						Email
-						<input
-							id="email"
-							type="email"
-							name="email"
-							value={formFields.email}
-							onChange={handleChange}
-						/>
-					</label>
-					<div>
-						<span className={`${image.icon} ${form.alert}`} />
-						<span className={form.placeholder}>
-							{errors?.email ?? "Error message placeholder"}
-						</span>
-					</div>
-				</div>
-				<div>
-					<label
-						htmlFor="password"
-						className={`${errors?.password ? form.error : ""}`}
-					>
-						Password
-						<input
-							id="password"
-							type="password"
-							name="password"
-							value={formFields.password}
-							onChange={handleChange}
-						/>
-					</label>
-					<div>
-						<span className={`${image.icon} ${form.alert}`} />
-						<span className={form.placeholder}>
-							{errors?.password ?? "Error message placeholder"}
-						</span>
-					</div>
-				</div>
-				<div>
-					<label
-						htmlFor="confirmPassword"
-						className={`${
-							errors?.confirmPassword ? form.error : ""
-						}`}
-					>
-						Confirm Password
-						<input
-							id="confirmPassword"
-							type="password"
-							name="confirmPassword"
-							value={formFields.confirmPassword}
-							onChange={handleChange}
-						/>
-					</label>
-					<div>
-						<span className={`${image.icon} ${form.alert}`} />
-						<span className={form.placeholder}>
-							{errors?.confirmPassword ??
-								"Error message placeholder"}
-						</span>
-					</div>
-				</div>
-				<button type="submit" className={button.success}>
-					Register
-				</button>
-			</form>
-		</div>
+			)}
+		</>
 	);
 };
 
