@@ -7,6 +7,7 @@ import form from "../styles/utils/form.module.css";
 import button from "../styles/utils/button.module.css";
 import image from "../styles/utils/image.module.css";
 
+import Error from "./Error";
 import handleFetch from "../utils/handleFetch";
 
 const POST_LOGIN_URL = "http://localhost:3000/blog/users/login";
@@ -15,7 +16,8 @@ const defaultForm = { email: "", password: "" };
 
 const Login = () => {
 	const [formFields, setFormFields] = useState(defaultForm);
-	const [errors, setErrors] = useState(null);
+	const [error, setError] = useState(null);
+	const [inputErrors, setInputErrors] = useState(null);
 	const timer = useRef(null);
 
 	const { setToken } = useOutletContext();
@@ -44,7 +46,7 @@ const Login = () => {
 				abortEarly: false,
 			});
 
-			setErrors({});
+			setInputErrors({});
 			isValid = true;
 			return isValid;
 		} catch (err) {
@@ -52,7 +54,7 @@ const Login = () => {
 			for (const error of err.inner) {
 				obj[error.path] ?? (obj[error.path] = error.message);
 			}
-			setErrors(obj);
+			setInputErrors(obj);
 			return isValid;
 		}
 	};
@@ -65,16 +67,28 @@ const Login = () => {
 			body: JSON.stringify(formFields),
 		};
 		try {
-			const data = await handleFetch(POST_LOGIN_URL, fetchOption);
-			localStorage.setItem("token", JSON.stringify(data));
-			setToken(data.token);
-			navigate("/", { replace: true });
+			const result = await handleFetch(POST_LOGIN_URL, fetchOption);
+
+			const handleSetToken = () => {
+				localStorage.setItem("token", JSON.stringify(result.data));
+				setToken(result.data.token);
+				navigate(-1, { replace: true });
+			};
+
+			const handleSetInputErrors = () => {
+				const obj = {};
+				for (const error of result.errors) {
+					obj[error.field] = error.message;
+				}
+				setInputErrors(obj);
+			};
+			result.success
+				? handleSetToken()
+				: result?.errors
+				? handleSetInputErrors()
+				: setError(result.message);
 		} catch (err) {
-			const obj = {};
-			for (const error of err.cause) {
-				obj[error.field] = error.message;
-			}
-			setErrors(obj);
+			setError(err);
 		}
 	};
 	const handleSubmit = async e => {
@@ -89,69 +103,84 @@ const Login = () => {
 		};
 		setFormFields(fields);
 
-		errors && timer.current && clearTimeout(timer.current);
-		errors &&
+		inputErrors && timer.current && clearTimeout(timer.current);
+		inputErrors &&
 			(timer.current = setTimeout(() => handleValidFields(fields), 500));
 	};
 
 	return (
-		<div className={style.login}>
-			<h3 className={style.title}>Sign In</h3>
-			<div className={style.formWrap}>
-				<form className={form.content} onSubmit={handleSubmit}>
-					<div>
-						<label
-							htmlFor="email"
-							className={`${errors?.email ? form.error : ""}`}
-						>
-							Email
-							<input
-								id="email"
-								type="email"
-								name="email"
-								value={formFields.email}
-								onChange={handleChange}
-							/>
-						</label>
-						<div>
-							<span className={`${image.icon} ${form.alert}`} />
-							<span className={form.placeholder}>
-								{errors?.email ?? "Error message placeholder"}
-							</span>
+		<>
+			{error ? (
+				<Error message={error} />
+			) : (
+				<div className={style.login}>
+					<h3 className={style.title}>Sign In</h3>
+					<div className={style.formWrap}>
+						<form className={form.content} onSubmit={handleSubmit}>
+							<div>
+								<label
+									htmlFor="email"
+									className={`${
+										inputErrors?.email ? form.error : ""
+									}`}
+								>
+									Email
+									<input
+										id="email"
+										type="email"
+										name="email"
+										value={formFields.email}
+										onChange={handleChange}
+									/>
+								</label>
+								<div>
+									<span
+										className={`${image.icon} ${form.alert}`}
+									/>
+									<span className={form.placeholder}>
+										{inputErrors?.email ??
+											"Message placeholder"}
+									</span>
+								</div>
+							</div>
+							<div>
+								<label
+									htmlFor="password"
+									className={`${
+										inputErrors?.password ? form.error : ""
+									}`}
+								>
+									Password
+									<input
+										id="password"
+										type="password"
+										name="password"
+										value={formFields.password}
+										onChange={handleChange}
+									/>
+								</label>
+								<div>
+									<span
+										className={`${image.icon} ${form.alert}`}
+									/>
+									<span className={form.placeholder}>
+										{inputErrors?.password ??
+											"Message placeholder"}
+									</span>
+								</div>
+							</div>
+							<button type="submit" className={button.success}>
+								Login
+							</button>
+						</form>
+						<div className={style.linkWrap}>
+							<p>New to HeLog?</p>
+							<Link to="/users/register">Create an account</Link>
 						</div>
 					</div>
-					<div>
-						<label
-							htmlFor="password"
-							className={`${errors?.password ? form.error : ""}`}
-						>
-							Password
-							<input
-								id="password"
-								type="password"
-								name="password"
-								value={formFields.password}
-								onChange={handleChange}
-							/>
-						</label>
-						<div>
-							<span className={`${image.icon} ${form.alert}`} />
-							<span className={form.placeholder}>
-								{errors?.password ??
-									"Error message placeholder"}
-							</span>
-						</div>
-					</div>
-					<button type="submit" className={button.success}>
-						Login
-					</button>
-				</form>
-				<div className={style.linkWrap}>
-					<p>New to HeLog?</p>
-					<Link to="/users/register">Create an account</Link>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 
