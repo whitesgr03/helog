@@ -6,6 +6,7 @@
 	row-gap: 10px;
 	padding: 5% 0;
 	color: var(--light-scheme-highlight);
+	height: 100%;
 }
 
 .load {
