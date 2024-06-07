@@ -11,18 +11,20 @@ import image from "../styles/utils/image.module.css";
 
 import handleFetch from "../utils/handleFetch";
 
-import { UserContext } from "../contexts/UserContext";
+import { AppContext } from "../contexts/AppContext";
+import Error from "./Error";
 
 const PUT_USER_URL = "http://localhost:3000/blog/users";
 
 const defaultForm = { name: "" };
 
-const ChangeNameModel = ({ handleCloseModel }) => {
-	const [errors, setErrors] = useState(null);
+const ChangeNameModel = ({ userId, handleCloseModel }) => {
+	const [error, setError] = useState(null);
+	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
 	const timer = useRef(null);
 
-	const { token, user, handleGetUser } = UserContext();
+	const { token, handleGetUser } = AppContext();
 
 	const handleValidFields = async fields => {
 		let isValid = false;
@@ -42,7 +44,7 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 				abortEarly: false,
 			});
 
-			setErrors({});
+			setInputErrors({});
 			isValid = true;
 			return isValid;
 		} catch (err) {
@@ -50,39 +52,53 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 			for (const error of err.inner) {
 				obj[error.path] ?? (obj[error.path] = error.message);
 			}
-			setErrors(obj);
+			setInputErrors(obj);
 			return isValid;
+		}
+	};
+
+	const handleUpdate = async () => {
+		const fetchOption = {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(formFields),
+		};
+
+		try {
+			const result = await handleFetch(
+				`${PUT_USER_URL}/${userId}`,
+				fetchOption
+			);
+
+			const handleSetUser = async () => {
+				await handleGetUser();
+				handleCloseModel();
+			};
+
+			const handleSetInputErrors = () => {
+				const obj = {};
+				for (const error of result.errors) {
+					obj[error.field] = error.message;
+				}
+				setInputErrors(obj);
+			};
+
+			result.success
+				? handleSetUser()
+				: result?.errors
+				? handleSetInputErrors()
+				: setError(result.message);
+		} catch (err) {
+			setError(err);
 		}
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		const isValid = await handleValidFields(formFields);
-
-		const handleUpdate = async () => {
-			const fetchOption = {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(formFields),
-			};
-
-			try {
-				await handleFetch(`${PUT_USER_URL}/${user._id}`, fetchOption);
-				await handleGetUser();
-				handleCloseModel();
-			} catch (err) {
-				const obj = {};
-				for (const error of err.cause) {
-					obj[error.field] = error.message;
-				}
-				setErrors(obj);
-			}
-		};
-
-		isValid && (await handleUpdate());
+		(await handleValidFields(formFields)) && (await handleUpdate());
 	};
 
 	const handleChange = e => {
@@ -93,15 +109,28 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 		};
 		setFormFields(fields);
 
-		errors && timer.current && clearTimeout(timer.current);
-		errors &&
+		inputErrors && timer.current && clearTimeout(timer.current);
+		inputErrors &&
 			(timer.current = setTimeout(() => handleValidFields(fields), 500));
 	};
 
+	const handleClick = e => {
+		e.target.dataset.closeModel && handleCloseModel();
+	};
+
 	return (
-		<div className={blur} onClick={handleCloseModel} data-close>
+		<div
+			className={blur}
+			onClick={handleClick}
+			data-close-model
+			data-testid={"blurBgc"}
+		>
 			<div className={`${settings} ${style.model}`}>
-				<button type="button" className={button.closeBtn} data-close>
+				<button
+					type="button"
+					className={button.closeBtn}
+					data-close-model
+				>
 					<span className={`${image.icon} ${button.close}`} />
 				</button>
 
@@ -109,7 +138,7 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 					<div>
 						<label
 							htmlFor="changeName"
-							className={`${errors?.name ? form.error : ""}`}
+							className={`${inputErrors?.name ? form.error : ""}`}
 						>
 							Change Name
 							<input
@@ -123,20 +152,43 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 						<div>
 							<span className={`${image.icon} ${form.alert}`} />
 							<span className={form.placeholder}>
-								{errors?.name ?? "This is a placeholder"}
+								{inputErrors?.name ?? "Message placeholder"}
 							</span>
 						</div>
 					</div>
+
 					<button className={button.success} type="submit">
 						Save
 					</button>
 				</form>
+				{error && (
+					<div
+						className={blur}
+						onClick={handleClick}
+						data-close-model
+						data-testid={"blurBgc"}
+					>
+						<div className={`${settings} ${style.model}`}>
+							<button
+								type="button"
+								className={button.closeBtn}
+								data-close-model
+							>
+								<span
+									className={`${image.icon} ${button.close}`}
+								/>
+							</button>
+							<Error message={error} />
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
 };
 
 ChangeNameModel.propTypes = {
+	userId: PropTypes.string,
 	handleCloseModel: PropTypes.func,
 };
 
