@@ -3,16 +3,19 @@ import PropTypes from "prop-types";
 import style from "../styles/Error.module.css";
 import image from "../styles/utils/image.module.css";
 
-const Error = ({ message }) => {
+const defaultMessage =
+	"Please come back later or if you have any questions, please contact us.";
+
+const Error = ({ message = null }) => {
+	const errorMessage = typeof message === "string" ? message : defaultMessage;
+
+	typeof message !== "string" && console.error(message);
+
 	return (
 		<div className={style.error}>
-			<div className={style.message}>
-				<p>
-					<span className={`${image.icon} ${style.alert}`} />
-					Our apologies, there has been an error.
-				</p>
-				<p>{message}</p>
-			</div>
+			<span className={`${image.icon} ${style.alert}`} />
+			<p>Our apologies, there has been an error.</p>
+			<p>{errorMessage}</p>
 		</div>
 	);
 };
