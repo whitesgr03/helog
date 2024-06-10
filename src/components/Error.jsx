@@ -9,8 +9,6 @@ const defaultMessage =
 const Error = ({ message = null }) => {
 	const errorMessage = typeof message === "string" ? message : defaultMessage;
 
-	typeof message !== "string" && console.error(message);
-
 	return (
 		<div className={style.error}>
 			<span className={`${image.icon} ${style.alert}`} />
