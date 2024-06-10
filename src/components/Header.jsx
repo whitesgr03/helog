@@ -13,12 +13,9 @@ import Dropdown from "./Dropdown";
 const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
-	const handleActiveDropdown = () => {
-		setActiveDropdown(!activeDropdown);
-	};
-	const handleCloseDropdown = () => {
-		setActiveDropdown(false);
-	};
+	const handleActiveDropdown = () => setActiveDropdown(!activeDropdown);
+	const handleCloseDropdown = () => setActiveDropdown(false);
+
 	return (
 		<>
 			<header className={style.header}>
