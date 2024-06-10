@@ -47,14 +47,14 @@ const App = () => {
 	useEffect(() => {
 		const data = JSON.parse(localStorage.getItem("token"));
 
-		const handleRemoveToken = () => {
+		const handleDeleteToken = () => {
 			localStorage.removeItem("token");
 			setLoading(false);
 		};
 
 		const handleCheckToken = () => {
 			const isExpired = Date.now() > data.exp;
-			isExpired ? handleRemoveToken() : setToken(data.token);
+			isExpired ? handleDeleteToken() : setToken(data.token);
 		};
 
 		data ? handleCheckToken() : setLoading(false);
