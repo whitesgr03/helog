@@ -17,7 +17,7 @@ const Home = () => {
 					</div>
 				</div>
 				<div className={style.content}>
-					<h2 className={style.title}>A Daily Story for Reader</h2>
+					<h2 className={style.title}>A Daily Stories For Reader</h2>
 					<p>
 						Lorem ipsum dolor sit amet consectetur, adipisicing
 						elit. Odio, veniam voluptatem veritatis maxime iste
