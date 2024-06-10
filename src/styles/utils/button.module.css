@@ -11,6 +11,31 @@
 	background-color: var(--light-scheme-success);
 }
 
+.success .text {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	column-gap: 10px;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+}
+
+.success .loadIcon {
+	display: none;
+}
+.success.loading .loadICon {
+	width: var(--icon-size-desktop);
+	display: block;
+}
+
+.loadICon {
+	composes: load from "../Loading.module.css";
+}
+
 .error {
 	composes: content;
 	background-color: var(--light-scheme-error);
