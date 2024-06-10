@@ -77,13 +77,13 @@ const Settings = ({ user, handleCloseSettings }) => {
 				</div>
 				{model.changeName && (
 					<ChangeNameModel
-						userId={user?._id}
+						userId={user._id}
 						handleCloseModel={handleCloseModel}
 					/>
 				)}
 				{model.deleteAccount && (
 					<DeleteAccountModel
-						userId={user?._id}
+						userId={user._id}
 						handleCloseModel={handleCloseModel}
 						handleCloseSettings={handleCloseSettings}
 					/>
