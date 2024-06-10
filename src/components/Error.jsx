@@ -19,7 +19,7 @@ const Error = ({ message = null }) => {
 };
 
 Error.propTypes = {
-	message: PropTypes.string,
+	message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default Error;
