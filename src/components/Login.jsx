@@ -196,7 +196,7 @@ const Login = () => {
 								<span className={button.text}>
 									Login
 									<span
-										className={`${image.icon} ${button.loadICon}`}
+										className={`${image.icon} ${button.loadIcon}`}
 									/>
 								</span>
 							</button>

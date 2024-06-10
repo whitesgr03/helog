@@ -55,12 +55,12 @@
 	}
 }
 
-.success.loading .loadICon {
+.success.loading .loadIcon {
 	width: var(--icon-size-desktop);
 	display: block;
 }
 
-.loadICon {
+.loadIcon {
 	composes: load from "../Loading.module.css";
 }
 

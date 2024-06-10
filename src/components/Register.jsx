@@ -264,7 +264,7 @@ const Register = () => {
 							<span className={button.text}>
 								Register
 								<span
-									className={`${image.icon} ${button.loadICon}`}
+									className={`${image.icon} ${button.loadIcon}`}
 								/>
 							</span>
 						</button>
