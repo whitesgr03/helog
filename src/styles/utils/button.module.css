@@ -9,6 +9,8 @@
 .success {
 	composes: content;
 	background-color: var(--light-scheme-success);
+	position: relative;
+	overflow: hidden;
 }
 
 .success .text {
