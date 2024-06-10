@@ -24,7 +24,6 @@ const Dropdown = ({
 		handleCloseDropdown();
 	};
 	const handleActiveSettings = () => setActiveSettings(true);
-
 	const handleCloseSettings = () => setActiveSettings(false);
 	return (
 		<div className={style.dropdown}>
