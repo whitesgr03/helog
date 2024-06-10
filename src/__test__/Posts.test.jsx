@@ -8,13 +8,13 @@ import Posts from "../components/Posts";
 
 vi.mock("../hooks/useFetch");
 
-vi.mock("../components/Loading.jsx", () => {
-	return { default: () => <p>loading</p> };
-});
+vi.mock("../components/Loading.jsx", () => ({
+	default: () => <p>Loading component</p>,
+}));
 
-vi.mock("../components/Error.jsx", () => {
-	return { default: () => <p>error</p> };
-});
+vi.mock("../components/Error.jsx", () => ({
+	default: () => <p>Error component</p>,
+}));
 
 describe("Posts component", () => {
 	it("should render Loading component if loading state of useFetch is true", async () => {
@@ -26,9 +26,9 @@ describe("Posts component", () => {
 
 		render(<Posts />, { wrapper: BrowserRouter });
 
-		const element = screen.queryByText(/loading/i);
+		const element = screen.getByText("Loading component");
 
-		expect(element).not.toEqual(null);
+		expect(element).toBeInTheDocument();
 	});
 	it("should render Error component if error state of useFetch is true", async () => {
 		useFetch.mockReturnValueOnce({
@@ -39,9 +39,9 @@ describe("Posts component", () => {
 
 		render(<Posts />, { wrapper: BrowserRouter });
 
-		const element = screen.queryByText(/error/i);
+		const element = screen.getByText("Error component");
 
-		expect(element).not.toEqual(null);
+		expect(element).toBeInTheDocument();
 	});
 	it("should render static content if loading and error states of useFetch are not true and data is not true.", async () => {
 		useFetch.mockReturnValueOnce({
@@ -52,9 +52,9 @@ describe("Posts component", () => {
 
 		render(<Posts />, { wrapper: BrowserRouter });
 
-		const element = screen.queryByText(/There are not posts./i);
+		const element = screen.getByText("There are not posts.");
 
-		expect(element).not.toEqual(null);
+		expect(element).toBeInTheDocument();
 	});
 	it("should render dynamic data if loading and error states of useFetch are not true and data length is greater then 0.", async () => {
 		const mockPosts = [
@@ -85,8 +85,8 @@ describe("Posts component", () => {
 
 		render(<Posts />, { wrapper: BrowserRouter });
 
-		const element = screen.queryByRole("list");
+		const element = screen.getByRole("list");
 
-		expect(element).not.toEqual(null);
+		expect(element).toBeInTheDocument();
 	});
 });
