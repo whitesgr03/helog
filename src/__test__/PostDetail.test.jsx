@@ -1,110 +1,129 @@
-import { describe, it, expect } from "vitest";
+import { vi, describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-// import { format } from "date-fns";
-// import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { format } from "date-fns";
+
+import useFetch from "../hooks/useFetch";
 
 import PostDetail from "../components/PostDetail";
 
+vi.mock("../hooks/useFetch");
+
+vi.mock("../components/Comments.jsx", () => ({
+	default: () => <></>,
+}));
+
+vi.mock("../components/Loading.jsx", () => ({
+	default: () => <p>Loading component</p>,
+}));
+
+vi.mock("../components/Error.jsx", () => ({
+	default: () => <p>Error component</p>,
+}));
+
+/* eslint-disable react/prop-types */
+const Providers = ({ children }) => {
+	return (
+		<MemoryRouter initialEntries={["/posts/1"]}>
+			<Routes>
+				<Route path="/posts/:postId" element={children} />
+			</Routes>
+		</MemoryRouter>
+	);
+};
+
 describe("PostDetail component", () => {
-	it("should render correctly", () => {
-		const { asFragment } = render(<PostDetail />);
+	it("should render Loading component if loading state of useFetch is true", () => {
+		useFetch.mockReturnValueOnce({
+			data: false,
+			error: false,
+			loading: true,
+		});
 
-		const actual = asFragment();
+		render(<PostDetail />, { wrapper: Providers });
 
-		expect(actual).toMatchSnapshot();
+		const element = screen.getByText("Loading component");
+
+		expect(element).toBeInTheDocument();
+	});
+	it("should render Error component if error state of useFetch is true", async () => {
+		useFetch.mockReturnValueOnce({
+			data: false,
+			error: true,
+			loading: false,
+		});
+
+		render(<PostDetail />, { wrapper: Providers });
+
+		const element = screen.getByText("Error component");
+
+		expect(element).toBeInTheDocument();
+	});
+	it("should render dynamic data if loading and error states of useFetch are not true and data without lastModified is true.", async () => {
+		const mockPost = {
+			_id: "1",
+			title: "This is title A",
+			content: "This is content A",
+			createdAt: new Date("2024/5/1"),
+			author: {
+				name: "example",
+			},
+		};
+		useFetch.mockReturnValueOnce({
+			data: mockPost,
+			error: false,
+			loading: false,
+		});
+
+		render(<PostDetail />, { wrapper: Providers });
+
+		const title = screen.getByRole("heading", {
+			name: mockPost.title,
+			level: 2,
+		});
+		const content = screen.getByText(mockPost.content);
+		const createdAt = screen.getByText(
+			new RegExp(`${format(mockPost.createdAt, "MMMM d, y")}`, "i")
+		);
+
+		expect(title).toBeInTheDocument();
+		expect(content).toBeInTheDocument();
+		expect(createdAt).toBeInTheDocument();
+	});
+	it("should render dynamic data if loading and error states of useFetch are not true and data of the lastModified is true.", async () => {
+		const mockPost = {
+			_id: "1",
+			title: "This is title A",
+			content: "This is content A",
+			createdAt: new Date("2024/5/1"),
+			lastModified: new Date("2024/5/2"),
+			author: {
+				name: "example",
+			},
+		};
+		useFetch.mockReturnValueOnce({
+			data: mockPost,
+			error: false,
+			loading: false,
+		});
+
+		render(<PostDetail />, { wrapper: Providers });
+
+		const title = screen.getByRole("heading", {
+			name: mockPost.title,
+			level: 2,
+		});
+		const content = screen.getByText(mockPost.content);
+		const createdAt = screen.getByText(
+			new RegExp(`${format(mockPost.createdAt, "MMMM d, y")}`, "i")
+		);
+		const lastModified = screen.getByText(
+			new RegExp(`${format(mockPost.lastModified, "MMMM d, y")}`, "i")
+		);
+
+		expect(title).toBeInTheDocument();
+		expect(content).toBeInTheDocument();
+		expect(createdAt).toBeInTheDocument();
+		expect(lastModified).toBeInTheDocument();
 	});
 });
-
-// it("should render title, if post is true", () => {
-// 	const mockPosts = [
-// 		{
-// 			id: "1",
-// 			url: "#",
-// 			title: "This is title",
-// 			content: "This is content",
-// 			createdAt: new Date("2024/5/1"),
-// 			lastModified: new Date("2024/5/1"),
-// 		},
-// 	];
-// 	render(<PostDetail />);
-
-// 	const actual = screen.queryByRole("heading", {
-// 		level: 2,
-// 		name: mockPosts[0].title,
-// 	});
-
-// 	expect(actual).not.equal(null);
-// });
-// it("should render creation date, if post is true", () => {
-// 	const mockPosts = [
-// 		{
-// 			id: "1",
-// 			url: "#",
-// 			title: "This is title",
-// 			content: "This is content",
-// 			createdAt: new Date("2024/5/1"),
-// 			lastModified: new Date("2024/5/1"),
-// 		},
-// 	];
-// 	render(<PostDetail />);
-
-// 	const actual = screen.queryByText(
-// 		format(mockPosts[0].createdAt, "MMMM d, y")
-// 	);
-
-// 	expect(actual).not.equal(null);
-// });
-// it("should render last modified date, if post is true", () => {
-// 	const mockPosts = [
-// 		{
-// 			id: "1",
-// 			url: "#",
-// 			title: "This is title",
-// 			content: "This is content",
-// 			createdAt: new Date("2024/5/1"),
-// 			lastModified: new Date("2024/5/2"),
-// 		},
-// 	];
-// 	render(<PostDetail />);
-
-// 	const actual = screen.queryByText(
-// 		format(mockPosts[0].createdAt, "MMMM d, y")
-// 	);
-
-// 	expect(actual).not.equal(null);
-// });
-// it("should render image alt and url, if post is true", () => {
-// 	const mockPosts = [
-// 		{
-// 			id: "1",
-// 			url: "#",
-// 			title: "This is title",
-// 			content: "This is content",
-// 			createdAt: new Date("2024/5/1"),
-// 			lastModified: new Date("2024/5/1"),
-// 		},
-// 	];
-
-// 	render(<PostDetail />);
-
-// 	const actual = screen.getByAltText(mockPosts[0].title);
-
-// 	expect(actual).toHaveAttribute("src", mockPosts.url);
-// });
-// it("should render content, if post is true", () => {
-// 	const mockPosts = [
-// 		{
-// 			id: "1",
-// 			url: "#",
-// 			title: "This is title",
-// 			content: "This is content",
-// 			createdAt: new Date("2024/5/1"),
-// 			lastModified: new Date("2024/5/1"),
-// 		},
-// 	];
-// 	render(<PostDetail />);
-
-// 	const actual = screen.queryByText(mockPosts[0].content);
-
-// 	expect(actual).not.equal(null);
-// });
