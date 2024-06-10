@@ -19,6 +19,7 @@ const Login = () => {
 	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
 	const [debounce, setDebounce] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const timer = useRef(null);
 
 	const { setToken } = useOutletContext();
@@ -60,6 +61,8 @@ const Login = () => {
 		}
 	};
 	const handleLogin = async () => {
+		setLoading(true);
+
 		const fetchOption = {
 			method: "POST",
 			headers: {
@@ -69,13 +72,11 @@ const Login = () => {
 		};
 		try {
 			const result = await handleFetch(POST_LOGIN_URL, fetchOption);
-
 			const handleSetToken = () => {
 				localStorage.setItem("token", JSON.stringify(result.data));
 				setToken(result.data.token);
 				navigate(-1, { replace: true });
 			};
-
 			const handleSetInputErrors = () => {
 				const obj = {};
 				for (const error of result.errors) {
@@ -83,7 +84,6 @@ const Login = () => {
 				}
 				setInputErrors(obj);
 			};
-
 			result.success
 				? handleSetToken()
 				: result?.errors
@@ -91,12 +91,14 @@ const Login = () => {
 				: setError(result.message);
 		} catch (err) {
 			setError(err);
+		} finally {
+			setLoading(false);
 		}
 	};
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		(await handleValidFields(formFields))
+		!loading && (await handleValidFields(formFields))
 			? handleLogin()
 			: setDebounce(false);
 	};
@@ -130,6 +132,7 @@ const Login = () => {
 			) : (
 				<div className={style.login}>
 					<h3 className={style.title}>Sign In</h3>
+					<div className={style.test} />
 					<div className={style.formWrap}>
 						<form className={form.content} onSubmit={handleSubmit}>
 							<div>
@@ -184,8 +187,18 @@ const Login = () => {
 									</span>
 								</div>
 							</div>
-							<button type="submit" className={button.success}>
-								Login
+							<button
+								type="submit"
+								className={`${button.success} ${
+									loading ? button.loading : ""
+								}`}
+							>
+								<span className={button.text}>
+									Login
+									<span
+										className={`${image.icon} ${button.loadICon}`}
+									/>
+								</span>
 							</button>
 						</form>
 						<div className={style.linkWrap}>

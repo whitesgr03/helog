@@ -23,6 +23,7 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
 	const [debounce, setDebounce] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const timer = useRef(null);
 
 	const { token, handleGetUser } = AppContext();
@@ -93,13 +94,15 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 				: setError(result.message);
 		} catch (err) {
 			setError(err);
+		} finally {
+			setLoading(false);
 		}
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		(await handleValidFields(formFields))
+		!loading && (await handleValidFields(formFields))
 			? await handleUpdate()
 			: setDebounce(false);
 	};
@@ -169,8 +172,18 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 						</div>
 					</div>
 
-					<button className={button.success} type="submit">
-						Save
+					<button
+						type="submit"
+						className={`${button.success} ${
+							loading ? button.loading : ""
+						}`}
+					>
+						<span className={button.text}>
+							Save
+							<span
+								className={`${image.icon} ${button.loadICon}`}
+							/>
+						</span>
 					</button>
 				</form>
 				{error && (

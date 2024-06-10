@@ -19,6 +19,7 @@ const Register = () => {
 	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
 	const [debounce, setDebounce] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const timer = useRef(null);
 
 	const { setToken } = useOutletContext();
@@ -76,6 +77,8 @@ const Register = () => {
 	};
 
 	const handleRegister = async () => {
+		setLoading(true);
+
 		const fetchOption = {
 			method: "POST",
 			headers: {
@@ -85,13 +88,11 @@ const Register = () => {
 		};
 		try {
 			const result = await handleFetch(POST_REGISTER_URL, fetchOption);
-
 			const handleSetToken = () => {
 				localStorage.setItem("token", JSON.stringify(result.data));
 				setToken(result.data.token);
 				navigate("/", { replace: true });
 			};
-
 			const handleSetInputErrors = () => {
 				const obj = {};
 				for (const error of result.errors) {
@@ -106,13 +107,15 @@ const Register = () => {
 				: setError(result.message);
 		} catch (err) {
 			setError(err);
+		} finally {
+			setLoading(false);
 		}
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		(await handleValidFields(formFields))
+		!loading && (await handleValidFields(formFields))
 			? handleRegister()
 			: setDebounce(false);
 	};
@@ -252,8 +255,18 @@ const Register = () => {
 								</span>
 							</div>
 						</div>
-						<button type="submit" className={button.success}>
-							Register
+						<button
+							type="submit"
+							className={`${button.success} ${
+								loading ? button.loading : ""
+							}`}
+						>
+							<span className={button.text}>
+								Register
+								<span
+									className={`${image.icon} ${button.loadICon}`}
+								/>
+							</span>
 						</button>
 					</form>
 				</div>
