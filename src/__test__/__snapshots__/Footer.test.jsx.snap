@@ -17,7 +17,11 @@ exports[`Footer component > should render correctly 1`] = `
       </a>
       <div
         class="_address_4d8704"
-      />
+      >
+        <div>
+          Address component
+        </div>
+      </div>
     </div>
     <p>
       © 2024 Designed & coded by Weiss Bai
