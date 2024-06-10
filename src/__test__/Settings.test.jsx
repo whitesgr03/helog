@@ -1,28 +1,77 @@
-import { describe, it, expect } from "vitest";
+import { vi, describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 import Settings from "../components/Settings";
 
+vi.mock("../components/ChangeNameModel.jsx", () => ({
+	default: () => <div>ChangeNameModel component</div>,
+}));
+
+vi.mock("../components/DeleteAccountModel.jsx", () => ({
+	default: () => <div>DeleteAccountModel component</div>,
+}));
+
 describe("Settings component", () => {
-	it("should render the user name from props", () => {
-		const mockUserName = "Jeff";
+	it("should render the user name, email and avatar, if the user prop is true", () => {
+		const mockUser = {
+			name: "example",
+			email: "example@gmail.com",
+		};
 
-		render(<Settings userName={mockUserName} />);
+		render(<Settings user={mockUser} />);
 
-		const actual = screen.queryByText(mockUserName);
+		const avatar = screen.getByText(mockUser.name.charAt(0).toUpperCase());
+		const name = screen.getByText(mockUser.name);
+		const email = screen.getByText(mockUser.email);
 
-		expect(actual).not.toEqual(null);
+		expect(avatar).toBeInTheDocument();
+		expect(name).toBeInTheDocument();
+		expect(email).toBeInTheDocument();
 	});
-	it("should render the user email from props", () => {
-		const mockUserEmail = "example@gmail.com";
+	it("should handle close Settings component, if the blur bgc element is clicked", async () => {
+		const user = userEvent.setup();
+		const mockHandleCloseSettings = vi.fn();
 
-		render(<Settings userName={mockUserEmail} />, {
-			wrapper: BrowserRouter,
+		render(<Settings handleCloseSettings={mockHandleCloseSettings} />);
+
+		const element = screen.getByTestId("blurBgc");
+
+		await user.click(element);
+
+		expect(mockHandleCloseSettings).toBeCalledTimes(1);
+	});
+	it("should handle active mode, if the mode button is clicked", async () => {
+		const user = userEvent.setup();
+		const mockUser = {
+			_id: 1,
+			name: "example",
+			email: "example@gmail.com",
+		};
+
+		render(<Settings user={mockUser} />);
+
+		const changeNameBtn = screen.getByRole("button", {
+			name: "Change name",
+		});
+		const deleteAccountBtn = screen.getByRole("button", {
+			name: "Delete account",
 		});
 
-		const actual = screen.queryByText(mockUserEmail);
+		await user.click(changeNameBtn);
 
-		expect(actual).not.toEqual(null);
+		const changeNameModelComponent = screen.getByText(
+			"ChangeNameModel component"
+		);
+
+		expect(changeNameModelComponent).toBeInTheDocument();
+
+		await user.click(deleteAccountBtn);
+
+		const deleteAccountModelComponent = screen.getByText(
+			"DeleteAccountModel component"
+		);
+
+		expect(deleteAccountModelComponent).toBeInTheDocument();
 	});
 });
