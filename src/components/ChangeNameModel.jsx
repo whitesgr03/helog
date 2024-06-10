@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { object, string } from "yup";
 
@@ -22,6 +22,7 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
+	const [debounce, setDebounce] = useState(false);
 	const timer = useRef(null);
 
 	const { token, handleGetUser } = AppContext();
@@ -43,7 +44,6 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 			await schema.validate(fields, {
 				abortEarly: false,
 			});
-
 			setInputErrors({});
 			isValid = true;
 			return isValid;
@@ -98,7 +98,10 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		(await handleValidFields(formFields)) && (await handleUpdate());
+
+		(await handleValidFields(formFields))
+			? await handleUpdate()
+			: setDebounce(false);
 	};
 
 	const handleChange = e => {
@@ -108,15 +111,24 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 			[name]: value,
 		};
 		setFormFields(fields);
-
-		inputErrors && timer.current && clearTimeout(timer.current);
-		inputErrors &&
-			(timer.current = setTimeout(() => handleValidFields(fields), 500));
+		inputErrors && setDebounce(true);
 	};
 
 	const handleClick = e => {
 		e.target.dataset.closeModel && handleCloseModel();
 	};
+
+	useEffect(() => {
+		debounce &&
+			(timer.current = setTimeout(
+				() => handleValidFields(formFields),
+				500
+			));
+
+		return () => {
+			clearTimeout(timer.current);
+		};
+	}, [debounce, formFields]);
 
 	return (
 		<div

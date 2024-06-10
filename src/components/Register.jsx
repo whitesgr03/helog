@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { object, string, ref } from "yup";
 
@@ -18,6 +18,7 @@ const Register = () => {
 	const [formFields, setFormFields] = useState(defaultForm);
 	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
+	const [debounce, setDebounce] = useState(false);
 	const timer = useRef(null);
 
 	const { setToken } = useOutletContext();
@@ -110,7 +111,10 @@ const Register = () => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		(await handleValidFields(formFields)) && handleRegister();
+
+		(await handleValidFields(formFields))
+			? handleRegister()
+			: setDebounce(false);
 	};
 
 	const handleChange = e => {
@@ -120,11 +124,20 @@ const Register = () => {
 			[name]: value,
 		};
 		setFormFields(fields);
-
-		inputErrors && timer.current && clearTimeout(timer.current);
-		inputErrors &&
-			(timer.current = setTimeout(() => handleValidFields(fields), 500));
+		inputErrors && setDebounce(true);
 	};
+
+	useEffect(() => {
+		debounce &&
+			(timer.current = setTimeout(
+				() => handleValidFields(formFields),
+				500
+			));
+
+		return () => {
+			clearTimeout(timer.current);
+		};
+	}, [debounce, formFields]);
 
 	return (
 		<>
