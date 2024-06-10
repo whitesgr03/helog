@@ -3,7 +3,9 @@ import { render } from "@testing-library/react";
 
 import Footer from "../components/Footer";
 
-vi.mock('../components/Address.jsx')
+vi.mock("../components/Address.jsx", () => ({
+	default: () => <div>Address component</div>,
+}));
 
 describe("Footer component", () => {
 	it("should render correctly", () => {
