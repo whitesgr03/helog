@@ -20,7 +20,7 @@ vi.mock("../components/Error.jsx", () => ({
 	default: () => <p>Error component</p>,
 }));
 
-describe("Posts component", () => {
+describe("Components component", () => {
 	it("should render Loading component if loading state of useFetch is true", async () => {
 		useFetch.mockReturnValueOnce({
 			data: false,

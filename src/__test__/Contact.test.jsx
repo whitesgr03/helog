@@ -7,7 +7,7 @@ vi.mock("../components/Address.jsx", () => ({
 	default: () => <div>Address component</div>,
 }));
 
-describe("Footer component", () => {
+describe("Contact component", () => {
 	it("should render correctly", () => {
 		const { asFragment } = render(<Contact />);
 

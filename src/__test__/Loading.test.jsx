@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 
 import Loading from "../components/Loading";
 
-describe("Error component", () => {
+describe("Loading component", () => {
 	it("should render correctly", () => {
 		const { asFragment } = render(<Loading />);
 

@@ -13,7 +13,7 @@ vi.mock("../components/Error.jsx", () => ({
 }));
 vi.mock("../utils/handleFetch");
 
-describe("Settings component", () => {
+describe("DeleteAccountModel component", () => {
 	it("should handle close model if the blur bgc element is clicked.", async () => {
 		const user = userEvent.setup();
 		const mockHandleCloseModel = vi.fn();

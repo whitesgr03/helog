@@ -18,7 +18,7 @@ const Providers = ({ children, ...props }) => {
 	);
 };
 
-describe("PostList component", () => {
+describe("AuthGuard component", () => {
 	it("should render previous page if user is truly", () => {
 		const mockOutContext = {
 			user: {},
