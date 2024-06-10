@@ -29,6 +29,32 @@
 .success .loadIcon {
 	display: none;
 }
+
+.success.loading::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	right: 100%;
+	top: 50%;
+	transform: translate(0%, -50%);
+	border: 2px solid black;
+	border-left-width: 0;
+	border-right-width: 0;
+	background: linear-gradient(90deg, #0b563d 30%, #f2a145 100%);
+	animation: shimmer 1s forwards infinite ease-in-out;
+	z-index: 0;
+}
+
+@keyframes shimmer {
+	0% {
+		transform: translate(0%, -50%);
+	}
+	100% {
+		transform: translate(200%, -50%);
+	}
+}
+
 .success.loading .loadICon {
 	width: var(--icon-size-desktop);
 	display: block;
