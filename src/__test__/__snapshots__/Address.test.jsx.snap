@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Footer component > should render correctly 1`] = `
+exports[`Address component > should render correctly 1`] = `
 <DocumentFragment>
   <address>
     <a
