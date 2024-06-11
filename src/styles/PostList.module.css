@@ -15,6 +15,11 @@
 }
 
 /* Dark scheme classes */
+
+:global(.dark) .postList {
+	color: var(--dark-scheme-color);
+}
+
 :global(.dark) .postList li:not(:last-child) {
 	border-color: var(--dark-scheme-color);
 }
