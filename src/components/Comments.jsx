@@ -7,7 +7,7 @@ import CommentDetail from "./CommentDetail";
 import Loading from "./Loading";
 import Error from "./Error";
 
-const GET_POSTS_URL = "http://localhost:3000/blog/posts";
+const GET_POSTS_URL = `${import.meta.env.VITE_HOST}/blog/posts`;
 
 const Comments = ({ postAuthor, postId }) => {
 	const { data, error, loading } = useFetch(

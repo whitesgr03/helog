@@ -13,7 +13,7 @@ import { AppProvider } from "../contexts/AppContext";
 import handleFetch from "../utils/handleFetch";
 import handleColorScheme from "../utils/handleColorScheme";
 
-const GET_USER_URL = "http://localhost:3000/blog/users/user";
+const GET_USER_URL = `${import.meta.env.VITE_HOST}/blog/users/user`;
 
 const App = () => {
 	const [token, setToken] = useState(null);

@@ -12,7 +12,7 @@ import { AppContext } from "../contexts/AppContext";
 import handleFetch from "../utils/handleFetch";
 import Error from "./Error";
 
-const DELETE_USER_URL = "http://localhost:3000/blog/users";
+const DELETE_USER_URL = `${import.meta.env.VITE_HOST}/blog/users`;
 
 const DeleteAccountModel = ({
 	userId,

@@ -10,7 +10,7 @@ import image from "../styles/utils/image.module.css";
 import handleFetch from "../utils/handleFetch";
 import Error from "./Error";
 
-const POST_REGISTER_URL = "http://localhost:3000/blog/users";
+const POST_REGISTER_URL = `${import.meta.env.VITE_HOST}/blog/users`;
 
 const defaultForm = { name: "", email: "", password: "", confirmPassword: "" };
 

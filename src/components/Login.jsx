@@ -10,7 +10,7 @@ import image from "../styles/utils/image.module.css";
 import Error from "./Error";
 import handleFetch from "../utils/handleFetch";
 
-const POST_LOGIN_URL = "http://localhost:3000/blog/users/login";
+const POST_LOGIN_URL = `${import.meta.env.VITE_HOST}/blog/users/login`;
 
 const defaultForm = { email: "", password: "" };
 

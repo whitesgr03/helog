@@ -14,7 +14,7 @@ import handleFetch from "../utils/handleFetch";
 import { AppContext } from "../contexts/AppContext";
 import Error from "./Error";
 
-const PUT_USER_URL = "http://localhost:3000/blog/users";
+const PUT_USER_URL = `${import.meta.env.VITE_HOST}/blog/users`;
 
 const defaultForm = { name: "" };
 

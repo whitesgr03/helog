@@ -12,7 +12,7 @@ import useFetch from "../hooks/useFetch";
 
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
-const GET_POSTS_URL = "http://localhost:3000/blog/posts";
+const GET_POSTS_URL = `${import.meta.env.VITE_HOST}/blog/posts`;
 
 const Posts = ({ limit = 0 }) => {
 	const { data, error, loading } = useFetch(
