@@ -53,7 +53,7 @@ const Register = () => {
 				.trim()
 				.required("The confirm password is required.")
 				.oneOf(
-					[ref("password"), null],
+					[ref("password")],
 					"The confirmation password does not match the password."
 				),
 		}).noUnknown();
