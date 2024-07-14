@@ -1,13 +1,16 @@
+// Packages
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import style from "../styles/Header.module.css";
-import { sun, moon } from "../styles/Dropdown.module.css";
-import button from "../styles/utils/button.module.css";
-import image from "../styles/utils/image.module.css";
-import { transparent } from "../styles/utils/blur.module.css";
+// Styles
+import style from "../../styles/layout/Header.module.css";
+import { sun, moon } from "../../styles/layout/Dropdown.module.css";
+import button from "../../styles/utils/button.module.css";
+import image from "../../styles/utils/image.module.css";
+import { transparentWindow } from "../../styles/utils/bgc.module.css";
 
+// Components
 import Dropdown from "./Dropdown";
 
 const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
@@ -28,14 +31,14 @@ const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 				</Link>
 				<nav>
 					<ul className={style.list}>
-						{user?.isAdmin && (
+						{user && (
 							<li>
-								<Link to="/">
+								<a href="https://helog-editor.localtest.me:7001">
 									<span
 										className={`${image.icon} ${style.pencil}`}
 									/>
 									Write
-								</Link>
+								</a>
 							</li>
 						)}
 						<li className={style.toggleBtn}>
@@ -78,7 +81,7 @@ const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 			</header>
 			{activeDropdown && (
 				<div
-					className={transparent}
+					className={transparentWindow}
 					onClick={handleCloseDropdown}
 					data-testid="transparentBgc"
 				/>

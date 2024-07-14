@@ -4,7 +4,7 @@
 	justify-content: space-between;
 	background-color: var(--light-scheme-layout-bgc);
 	box-shadow: 0px 5px 5px 1px var(--light-scheme-layout-shadow);
-	z-index: 1;
+	z-index: 2;
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -65,7 +65,7 @@
 
 /* Pseudo classes */
 .list li:hover {
-	background-color: var(--light-scheme-link-bgc-hover);
+	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
 }
 
 /* Dark scheme classes */
@@ -84,7 +84,7 @@
 }
 
 :global(.dark) .list li:hover {
-	background-color: var(--dark-scheme-link-bgc-hover);
+	background-color: rgba(var(--dark-scheme-color-rgb), 0.2);
 }
 
 @media (min-width: 450px) {
