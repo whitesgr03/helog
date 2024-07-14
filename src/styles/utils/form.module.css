@@ -67,9 +67,12 @@
 .content label:hover {
 	color: var(--light-scheme-highlight);
 }
-.content input:focus,
-.content input:hover {
-	border: 2px solid var(--light-scheme-highlight);
+
+.content label:focus-within > input,
+.content label:hover > input,
+.content label:focus-within > textarea,
+.content label:hover > textarea {
+	border-color: var(--light-scheme-highlight);
 }
 
 /* Dark scheme classes */
@@ -85,13 +88,14 @@
 :global(.dark) .content label:hover {
 	color: var(--dark-scheme-highlight);
 }
-:global(.dark) .content input:focus,
-:global(.dark) .content input:hover {
-	border: 2px solid var(--dark-scheme-highlight);
+
+:global(.dark) .content label > textarea {
+	background-color: var(--dark-scheme-input-bgc);
 }
 
-@media (min-width: 700px) {
-	.content {
-		row-gap: 20px;
-	}
+:global(.dark) .content label:focus-within > input,
+:global(.dark) .content label:hover > input,
+:global(.dark) .content label:focus-within > textarea,
+:global(.dark) .content label:hover > textarea {
+	border-color: var(--dark-scheme-highlight);
 }
