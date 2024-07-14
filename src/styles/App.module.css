@@ -3,7 +3,6 @@
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
-	background-color: var(--light-scheme-main-bgc);
 }
 
 .container {
