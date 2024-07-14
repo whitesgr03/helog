@@ -73,6 +73,11 @@
 	background-color: var(--light-scheme-error);
 }
 
+.cancel {
+	composes: content;
+	color: var(--light-scheme-color);
+}
+
 .closeBtn {
 	position: absolute;
 	top: 0;
@@ -127,6 +132,11 @@
 	opacity: 0.8;
 }
 
+.cancel:hover {
+	background-color: var(--light-scheme-color);
+	color: var(--dark-scheme-color);
+}
+
 .closeBtn:hover {
 	transform: scale(1.2);
 }
@@ -135,6 +145,11 @@
 :global(.dark) .content {
 	border: 2px transparent;
 	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .cancel {
+	background-color: var(--dark-scheme-color);
+	color: var(--light-scheme-color);
 }
 
 :global(.dark) .closeBtn .close {
