@@ -1,5 +1,6 @@
-import style from "../styles/Address.module.css";
-import image from "../styles/utils/image.module.css";
+// Styles
+import style from "../../styles/layout/Address.module.css";
+import image from "../../styles/utils/image.module.css";
 
 const Address = () => {
 	return (

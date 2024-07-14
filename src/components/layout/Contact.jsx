@@ -1,6 +1,8 @@
-import style from "../styles/Contact.module.css";
+// Styles
+import style from "../../styles/layout/Contact.module.css";
 
-import Address from "../components/Address";
+// Components
+import Address from "./Address";
 
 const Contact = () => {
 	return (

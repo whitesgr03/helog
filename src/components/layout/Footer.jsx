@@ -1,8 +1,10 @@
-import style from "../styles/Footer.module.css";
-import { container } from "../styles/Contact.module.css";
-import image from "../styles/utils/image.module.css";
+// Styles
+import style from "../../styles/layout/Footer.module.css";
+import { container } from "../../styles/layout/Contact.module.css";
+import image from "../../styles/utils/image.module.css";
 
-import Address from "../components/Address";
+// Components
+import Address from "./Address";
 
 const Footer = () => {
 	return (
