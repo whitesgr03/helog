@@ -149,3 +149,11 @@ img {
 .dark img {
 	filter: brightness(0.8) contrast(1.2);
 }
+
+.dark textarea {
+	color: var(--dark-scheme-color);
+}
+
+.dark textarea::placeholder {
+	color: var(--dark-scheme-placeholder);
+}
