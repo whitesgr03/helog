@@ -2,7 +2,7 @@ const handleColorScheme = () => {
 	const darkTheme =
 		window.matchMedia("(prefers-color-scheme: dark)")?.matches ?? false;
 
-	localStorage.setItem("darkTheme", JSON.stringify(darkTheme));
+	localStorage.setItem("heLog.darkTheme", JSON.stringify(darkTheme));
 
 	return darkTheme;
 };
