@@ -15,11 +15,14 @@ const useFetch = url => {
 			try {
 				const result = await handleFetch(url, { signal });
 
-				result.success
-					? setData(result.data)
-					: setError(result.message);
+				const handleResult = () => {
+					result.success
+						? setData(result.data)
+						: setError(result.message);
+					setLoading(false);
+				};
 
-				setLoading(false);
+				result && handleResult();
 			} catch (err) {
 				!signal.aborted && setError(err);
 				!signal.aborted && setLoading(false);
