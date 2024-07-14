@@ -1,0 +1,74 @@
+.posts li {
+	row-gap: 5px;
+	padding: 5%;
+	display: flex;
+	flex-direction: column;
+}
+
+.posts li .container {
+	display: flex;
+	flex-direction: column;
+	row-gap: 15px;
+}
+
+.posts li .title {
+	color: var(--light-scheme-highlight);
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.posts li .content {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.dateTime {
+	font-style: italic;
+}
+
+/* Pseudo classes */
+.posts li a img:hover {
+	opacity: 0.8;
+}
+.posts li .title:hover {
+	text-decoration: underline;
+}
+
+/* Dark scheme classes */
+:global(.dark) .posts li {
+	color: var(--dark-scheme-color);
+}
+:global(.dark) .posts li .title {
+	color: var(--dark-scheme-highlight);
+}
+
+@media (min-width: 400px) {
+	.posts li {
+		padding: 5% 10%;
+	}
+}
+@media (min-width: 700px) {
+	.posts li {
+		padding: 5% 15%;
+	}
+	.posts li .container {
+		row-gap: 30px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.posts li {
+		padding: 0;
+        row-gap: 10px
+	}
+
+	.posts li .container {
+		row-gap: 20px;
+	}
+}
