@@ -1,83 +1,133 @@
-import { useState, useEffect, useCallback } from "react";
-import { Outlet } from "react-router-dom";
+// Packages
+import { useState, useEffect } from "react";
+import {
+	Outlet,
+	useOutletContext,
+	useLocation,
+	useNavigate,
+} from "react-router-dom";
 
+// Styles
 import style from "../styles/App.module.css";
 
-import Header from "./Header";
-import Footer from "./Footer";
-import Contact from "./Contact";
-import Loading from "./Loading";
+// Components
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
+import Contact from "./layout/Contact";
+import Loading from "./layout/Loading";
 
+// Contexts
 import { AppProvider } from "../contexts/AppContext";
 
+// Utils
+import handleGetAuthCode from "../utils/handleGetAuthCode";
 import handleFetch from "../utils/handleFetch";
-import handleColorScheme from "../utils/handleColorScheme";
-
-const GET_USER_URL = `${import.meta.env.VITE_HOST}/blog/users/user`;
 
 const App = () => {
-	const [token, setToken] = useState(null);
+	const {
+		user,
+		setUser,
+		error,
+		setError,
+		refreshToken,
+		accessToken,
+		setAccessToken,
+		darkTheme,
+		handleSwitchColorTheme,
+	} = useOutletContext();
 	const [loading, setLoading] = useState(true);
-	const [user, setUser] = useState(null);
-	const [darkTheme, setDarkTheme] = useState(
-		JSON.parse(localStorage.getItem("darkTheme")) ?? handleColorScheme
-	);
+	const navigate = useNavigate();
+	const location = useLocation();
 
-	const handleSwitchColorTheme = () => {
-		localStorage.setItem("darkTheme", JSON.stringify(!darkTheme));
-		setDarkTheme(!darkTheme);
+	const handleVerifyTokenExpire = async () => {
+		const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/auth/token`;
+
+		const options = {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		};
+
+		const result = await handleFetch(url, options);
+
+		const handleError = message => {
+			setError(message);
+			navigate("/error");
+		};
+
+		return !result.success
+			? result.message === "The token provided is expired."
+				? true
+				: handleError(result.message)
+			: false;
+	};
+	const handleExChangeToken = async () => {
+		const url = `${
+			import.meta.env.VITE_RESOURCE_ORIGIN
+		}/auth/token/refresh`;
+
+		const options = {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${refreshToken}`,
+			},
+		};
+
+		const result = await handleFetch(url, options);
+
+		const handleLogout = message => {
+			const errorMessage =
+				message === "Too many token exchange requests.";
+
+			errorMessage && localStorage.removeItem("heLog.login-exp");
+			errorMessage && setUser(null);
+
+			setError(message);
+			navigate("/error");
+		};
+
+		result.success
+			? setAccessToken(result.data.access_token)
+			: handleLogout(result.message);
 	};
 
-	const handleGetUser = useCallback(async () => {
-		try {
-			const result = await handleFetch(GET_USER_URL, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
-
-			result.success
-				? setUser(result.data)
-				: console.error(result.message);
-		} catch (err) {
-			console.error(err);
-		} finally {
-			setLoading(false);
-		}
-	}, [token]);
-
 	useEffect(() => {
-		const data = JSON.parse(localStorage.getItem("token"));
+		sessionStorage.setItem("heLog.lastPath", location.pathname);
+	}, [location]);
+	useEffect(() => {
+		let loginExp =
+			JSON.parse(localStorage.getItem("heLog.login-exp")) ?? false;
 
-		const handleDeleteToken = () => {
-			localStorage.removeItem("token");
-			setLoading(false);
+		const isExpire = loginExp && Date.now() > +new Date(loginExp);
+
+		const removeLoginState = () => {
+			localStorage.removeItem("heLog.login-exp");
+			loginExp = false;
 		};
 
-		const handleCheckToken = () => {
-			const isExpired = Date.now() > data.exp;
-			isExpired ? handleDeleteToken() : setToken(data.token);
-		};
+		isExpire && removeLoginState();
 
-		data ? handleCheckToken() : setLoading(false);
-	}, []);
-
-	useEffect(() => {
-		token ? handleGetUser() : setUser(null);
-	}, [token, handleGetUser]);
+		loginExp
+			? user
+				? setLoading(false)
+				: handleGetAuthCode()
+			: setLoading(false);
+	}, [user]);
 
 	return (
 		<>
 			{loading ? (
 				<Loading />
 			) : (
-				<div
-					className={` ${darkTheme ? "dark" : ""} ${style.app}`}
-					data-testid="app"
-				>
+				<div className={style.app} data-testid="app">
 					<AppProvider
-						setToken={setToken}
+						setError={setError}
 						setUser={setUser}
-						token={token}
-						handleGetUser={handleGetUser}
+						accessToken={accessToken}
+						refreshToken={refreshToken}
+						handleVerifyTokenExpire={handleVerifyTokenExpire}
+						handleExChangeToken={handleExChangeToken}
 					>
 						<Header
 							user={user}
@@ -87,7 +137,17 @@ const App = () => {
 					</AppProvider>
 					<div className={style.container}>
 						<main>
-							<Outlet context={{ setToken, user }} />
+							<Outlet
+								context={{
+									user,
+									error,
+									setError,
+									accessToken,
+									refreshToken,
+									handleVerifyTokenExpire,
+									handleExChangeToken,
+								}}
+							/>
 						</main>
 						<Contact />
 						<Footer />
