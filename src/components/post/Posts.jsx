@@ -1,30 +1,33 @@
+// Packages
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import style from "../styles/Posts.module.css";
-import image from "../styles/utils/image.module.css";
+// Styles
+import style from "../../styles/post/Posts.module.css";
+import image from "../../styles/utils/image.module.css";
 
-import Loading from "./Loading";
-import Error from "./Error";
+// Components
+import Loading from "../layout/Loading";
+import Error from "../layout/Error";
 
-import useFetch from "../hooks/useFetch";
+// Utils
+import useFetch from "../../hooks/useFetch";
 
-import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
+// Variables
+import imageUrl from "../../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
-const GET_POSTS_URL = `${import.meta.env.VITE_HOST}/blog/posts`;
+const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/blog/posts`;
 
 const Posts = ({ limit = 0 }) => {
-	const { data, error, loading } = useFetch(
-		`${GET_POSTS_URL}?limit=${limit}`
-	);
+	const { data, error, loading } = useFetch(`${url}?limit=${limit}`);
 
-	const postsAddUrl = data ? data.map(post => ({ ...post, url })) : []; // <- Temporarily add url
+	const postsAddUrl = data ? data.map(post => ({ ...post, imageUrl })) : []; // <- Temporarily add url
 	const items = postsAddUrl.map(post => (
 		<li key={post._id}>
 			<Link to={`/posts/${post._id}`}>
 				<div className={image.content}>
-					<img src={post.url} alt={post.title} />
+					<img src={post.imageUrl} alt={post.title} />
 				</div>
 			</Link>
 			<div className={style.container}>
