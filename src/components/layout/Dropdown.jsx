@@ -1,13 +1,18 @@
+// Packages
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 
-import style from "../styles/Dropdown.module.css";
+// Styles
+import style from "../../styles/layout/Dropdown.module.css";
+import button from "../../styles/utils/button.module.css";
+import image from "../../styles/utils/image.module.css";
+
+// Components
 import Settings from "./Settings";
-import button from "../styles/utils/button.module.css";
-import image from "../styles/utils/image.module.css";
 
-import { AppContext } from "../contexts/AppContext";
+// Utils
+import handleGetAuthCode from "../../utils/handleGetAuthCode.js";
 
 const Dropdown = ({
 	user,
@@ -15,14 +20,20 @@ const Dropdown = ({
 	handleCloseDropdown,
 	handleSwitchColorTheme,
 }) => {
+	const { setUser } = useOutletContext();
 	const [activeSettings, setActiveSettings] = useState(false);
-	const { setToken } = AppContext();
 
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		setToken(null);
+	const handleLogout = async () => {
+		window.location.replace(
+			`${import.meta.env.VITE_RESOURCE_ORIGIN}/account/logout`
+		);
+		localStorage.removeItem("heLog.login-exp");
+		setUser(null);
 		handleCloseDropdown();
 	};
+
+	const handleLogin = async () => await handleGetAuthCode();
+
 	const handleActiveSettings = () => setActiveSettings(true);
 	const handleCloseSettings = () => setActiveSettings(false);
 	return (
@@ -69,10 +80,10 @@ const Dropdown = ({
 							Logout
 						</button>
 					) : (
-						<Link to="/users/login" onClick={handleCloseDropdown}>
+						<button onClick={handleLogin}>
 							<span className={`${image.icon} ${style.login}`} />
 							Login
-						</Link>
+						</button>
 					)}
 				</li>
 			</ul>
