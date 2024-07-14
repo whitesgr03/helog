@@ -1,10 +1,14 @@
+// Packages
 import { Link } from "react-router-dom";
 
+// Styles
 import style from "../styles/Home.module.css";
 import image from "../styles/utils/image.module.css";
 
-import Posts from "./Posts";
+// Components
+import Posts from "./post/Posts";
 
+// Variables
 import url from "../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const Home = () => {
