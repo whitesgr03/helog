@@ -1,57 +1,55 @@
+// Packages
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-import style from "../styles/DeleteAccountModel.module.css";
-import { settings } from "../styles/Settings.module.css";
-import { blur } from "../styles/utils/blur.module.css";
-import button from "../styles/utils/button.module.css";
-import image from "../styles/utils/image.module.css";
+// Styles
+import style from "../../styles/layout/DeleteAccountModel.module.css";
+import { settings } from "../../styles/layout/Settings.module.css";
+import { blurWindow } from "../../styles/utils/bgc.module.css";
+import button from "../../styles/utils/button.module.css";
+import image from "../../styles/utils/image.module.css";
 
-import { AppContext } from "../contexts/AppContext";
-
-import handleFetch from "../utils/handleFetch";
+// Components
 import Error from "./Error";
 
-const DELETE_USER_URL = `${import.meta.env.VITE_HOST}/blog/users`;
+// Contexts
+import { AppContext } from "../../contexts/AppContext";
 
-const DeleteAccountModel = ({
-	userId,
-	handleCloseModel,
-	handleCloseSettings,
-}) => {
+// Utils
+import { deleteUser } from "../../utils/handleUser";
+
+const DeleteAccountModel = ({ handleCloseModel, handleCloseSettings }) => {
 	const [error, setError] = useState(null);
-	const { token, setToken } = AppContext();
+	const {
+		setUser,
+		accessToken,
+		refreshToken,
+		handleVerifyTokenExpire,
+		handleExChangeToken,
+	} = AppContext();
 
 	const handleDelete = async () => {
-		const fetchOption = {
-			method: "DELETE",
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
+		const isTokenExpire = await handleVerifyTokenExpire(accessToken);
+		isTokenExpire && handleExChangeToken(refreshToken);
+
+		const result = await deleteUser(accessToken);
+
+		const handleLogout = () => {
+			window.location.replace("http://localhost:3000/account/logout");
+			localStorage.removeItem("heLog.login-exp");
+			setUser(null);
+			handleCloseSettings();
+			handleCloseModel();
 		};
-		try {
-			const result = await handleFetch(`${DELETE_USER_URL}/${userId}`, {
-				...fetchOption,
-			});
 
-			const handleSetToken = () => {
-				localStorage.removeItem("token");
-				setToken(null);
-				handleCloseSettings();
-				handleCloseModel();
-			};
-
-			result.success ? handleSetToken() : setError(result.message);
-		} catch (err) {
-			setError(err);
-		}
+		result.success ? handleLogout() : setError(result.message);
 	};
 
 	const handleClick = e => e.target.dataset.closeModel && handleCloseModel();
 
 	return (
 		<div
-			className={blur}
+			className={blurWindow}
 			onClick={handleClick}
 			data-close-model
 			data-testid={"blurBgc"}
@@ -70,10 +68,7 @@ const DeleteAccountModel = ({
 					Do you really want to delete?
 				</span>
 				<div className={style.buttonWrap}>
-					<button
-						className={`${button.content} ${style.cancelBtn}`}
-						data-close-model
-					>
+					<button className={button.cancel} data-close-model>
 						Cancel
 					</button>
 					<button className={button.error} onClick={handleDelete}>
@@ -82,7 +77,7 @@ const DeleteAccountModel = ({
 				</div>
 				{error && (
 					<div
-						className={blur}
+						className={blurWindow}
 						onClick={handleClick}
 						data-close-model
 						data-testid={"blurBgc"}
@@ -107,7 +102,6 @@ const DeleteAccountModel = ({
 };
 
 DeleteAccountModel.propTypes = {
-	userId: PropTypes.string,
 	handleCloseModel: PropTypes.func,
 	handleCloseSettings: PropTypes.func,
 };

@@ -23,9 +23,6 @@
 	width: 40%;
 }
 
-.cancelBtn {
-	background-color: var(--light-scheme-color);
-}
 
 /* Dark scheme classes */
 :global(.dark) .cancelBtn {
