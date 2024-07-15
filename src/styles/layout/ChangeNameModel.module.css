@@ -5,7 +5,7 @@
 .model form {
 	display: flex;
 	flex-direction: column;
-	row-gap: 15px;
+	row-gap: 10px;
 	padding: 15px;
 }
 
@@ -17,23 +17,19 @@
 	margin-top: 20px;
 }
 
-.model form input {
-	background-color: var(--light-scheme-main-bgc);
-}
-
 .model form button {
 	width: 70%;
 	align-self: center;
 }
 
 /* Dark scheme classes */
-:global(.dark) model {
+:global(.dark) .model {
 	color: var(--dark-scheme-color);
 }
 
-:global(.dark) model form input {
+:global(.dark) .model form input {
 	color: var(--dark-scheme-color);
-	background-color: var(--dark-scheme-link-bgc-hover);
+	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
 }
 
 @media (min-width: 450px) {
@@ -52,15 +48,11 @@
 	.model {
 		width: 45%;
 	}
-	.model form {
-		row-gap: 20px;
-	}
 }
 
 @media (min-width: 1000px) {
 	.model form {
 		padding: 30px 40px;
-		row-gap: 30px;
 	}
 }
 

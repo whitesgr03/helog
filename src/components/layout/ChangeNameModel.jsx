@@ -1,24 +1,27 @@
+// Packages
 import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { object, string } from "yup";
 
-import style from "../styles/ChangeNameModel.module.css";
-import { settings } from "../styles/Settings.module.css";
-import { blur } from "../styles/utils/blur.module.css";
-import form from "../styles/utils/form.module.css";
-import button from "../styles/utils/button.module.css";
-import image from "../styles/utils/image.module.css";
+// Styles
+import style from "../../styles/layout/ChangeNameModel.module.css";
+import { settings } from "../../styles/layout/Settings.module.css";
+import { blurWindow } from "../../styles/utils/bgc.module.css";
+import form from "../../styles/utils/form.module.css";
+import button from "../../styles/utils/button.module.css";
+import image from "../../styles/utils/image.module.css";
 
-import handleFetch from "../utils/handleFetch";
-
-import { AppContext } from "../contexts/AppContext";
+// Components
+import { AppContext } from "../../contexts/AppContext";
 import Error from "./Error";
 
-const PUT_USER_URL = `${import.meta.env.VITE_HOST}/blog/users`;
+// Utils
+import { updateUser } from "../../utils/handleUser";
 
+// Variable
 const defaultForm = { name: "" };
 
-const ChangeNameModel = ({ userId, handleCloseModel }) => {
+const ChangeNameModel = ({ handleCloseModel }) => {
 	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
@@ -26,7 +29,13 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 	const [loading, setLoading] = useState(false);
 	const timer = useRef(null);
 
-	const { token, handleGetUser } = AppContext();
+	const {
+		setUser,
+		accessToken,
+		refreshToken,
+		handleVerifyTokenExpire,
+		handleExChangeToken,
+	} = AppContext();
 
 	const handleValidFields = async fields => {
 		let isValid = false;
@@ -59,44 +68,32 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 	};
 
 	const handleUpdate = async () => {
-		const fetchOption = {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(formFields),
+		setLoading(true);
+		const isTokenExpire = await handleVerifyTokenExpire(accessToken);
+		isTokenExpire && handleExChangeToken(refreshToken);
+
+		const result = await updateUser(accessToken, formFields);
+
+		const handleSetUser = async data => {
+			setUser(data);
+			handleCloseModel();
 		};
 
-		try {
-			const result = await handleFetch(
-				`${PUT_USER_URL}/${userId}`,
-				fetchOption
-			);
+		const handleSetInputErrors = () => {
+			const obj = {};
+			for (const error of result.errors) {
+				obj[error.field] = error.message;
+			}
+			setInputErrors(obj);
+		};
 
-			const handleSetUser = async () => {
-				await handleGetUser();
-				handleCloseModel();
-			};
+		result.success
+			? handleSetUser(result.data)
+			: result?.errors
+			? handleSetInputErrors()
+			: setError(result.message);
 
-			const handleSetInputErrors = () => {
-				const obj = {};
-				for (const error of result.errors) {
-					obj[error.field] = error.message;
-				}
-				setInputErrors(obj);
-			};
-
-			result.success
-				? handleSetUser()
-				: result?.errors
-				? handleSetInputErrors()
-				: setError(result.message);
-		} catch (err) {
-			setError(err);
-		} finally {
-			setLoading(false);
-		}
+		setLoading(false);
 	};
 
 	const handleSubmit = async e => {
@@ -135,7 +132,7 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 
 	return (
 		<div
-			className={blur}
+			className={blurWindow}
 			onClick={handleClick}
 			data-close-model
 			data-testid={"blurBgc"}
@@ -150,7 +147,7 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 				</button>
 
 				<form className={form.content} onSubmit={handleSubmit}>
-					<div>
+					<div className={form.labelWrap}>
 						<label
 							htmlFor="changeName"
 							className={`${inputErrors?.name ? form.error : ""}`}
@@ -188,7 +185,7 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 				</form>
 				{error && (
 					<div
-						className={blur}
+						className={blurWindow}
 						onClick={handleClick}
 						data-close-model
 						data-testid={"blurBgc"}
@@ -213,7 +210,6 @@ const ChangeNameModel = ({ userId, handleCloseModel }) => {
 };
 
 ChangeNameModel.propTypes = {
-	userId: PropTypes.string,
 	handleCloseModel: PropTypes.func,
 };
 
