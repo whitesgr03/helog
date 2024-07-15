@@ -1,14 +1,18 @@
+// Packages
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-import style from "../styles/Settings.module.css";
-import { blur } from "../styles/utils/blur.module.css";
-import button from "../styles/utils/button.module.css";
-import image from "../styles/utils/image.module.css";
+// Styles
+import style from "../../styles/layout/Settings.module.css";
+import { blurWindow } from "../../styles/utils/bgc.module.css";
+import button from "../../styles/utils/button.module.css";
+import image from "../../styles/utils/image.module.css";
 
+// Components
 import ChangeNameModel from "./ChangeNameModel";
 import DeleteAccountModel from "./DeleteAccountModel";
 
+// Variable
 const defaultModel = {
 	changeName: false,
 	deleteAccount: false,
@@ -29,7 +33,7 @@ const Settings = ({ user, handleCloseSettings }) => {
 
 	return (
 		<div
-			className={blur}
+			className={blurWindow}
 			onClick={handleClick}
 			data-close-setting
 			data-testid={"blurBgc"}
@@ -76,14 +80,10 @@ const Settings = ({ user, handleCloseSettings }) => {
 					</ul>
 				</div>
 				{model.changeName && (
-					<ChangeNameModel
-						userId={user._id}
-						handleCloseModel={handleCloseModel}
-					/>
+					<ChangeNameModel handleCloseModel={handleCloseModel} />
 				)}
 				{model.deleteAccount && (
 					<DeleteAccountModel
-						userId={user._id}
 						handleCloseModel={handleCloseModel}
 						handleCloseSettings={handleCloseSettings}
 					/>
