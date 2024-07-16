@@ -171,13 +171,12 @@ const CommentDetail = ({
 								</strong>
 							</div>
 							<div className={style.time}>
-								{comment.createdAt !== comment.lastModified
-									? `${formatDistanceToNowStrict(
-											comment.lastModified
-									  )} ago (edited)`
-									: `${formatDistanceToNowStrict(
-											comment.createdAt
-									  )} ago`}
+								{`${formatDistanceToNowStrict(
+									comment.lastModified
+								)} ago ${
+									comment.createdAt !==
+										comment.lastModified && "(edited)"
+								}`}
 							</div>
 						</div>
 
