@@ -1,7 +1,6 @@
 // Packages
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { useOutletContext } from "react-router-dom";
 
 // Styles
 import style from "../../styles/layout/Dropdown.module.css";
@@ -14,22 +13,14 @@ import Settings from "./Settings";
 // Utils
 import handleGetAuthCode from "../../utils/handleGetAuthCode.js";
 
-const Dropdown = ({
-	user,
-	darkTheme,
-	handleCloseDropdown,
-	handleSwitchColorTheme,
-}) => {
-	const { setUser } = useOutletContext();
+const Dropdown = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
 
 	const handleLogout = async () => {
+		localStorage.removeItem("heLog.login-exp");
 		window.location.replace(
 			`${import.meta.env.VITE_RESOURCE_ORIGIN}/account/logout`
 		);
-		localStorage.removeItem("heLog.login-exp");
-		setUser(null);
-		handleCloseDropdown();
 	};
 
 	const handleLogin = async () => await handleGetAuthCode();
@@ -100,7 +91,6 @@ const Dropdown = ({
 Dropdown.propTypes = {
 	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
-	handleCloseDropdown: PropTypes.func,
 	handleSwitchColorTheme: PropTypes.func,
 };
 
