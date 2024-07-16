@@ -72,7 +72,6 @@ const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 						user={user}
 						darkTheme={darkTheme}
 						handleSwitchColorTheme={handleSwitchColorTheme}
-						handleCloseDropdown={handleCloseDropdown}
 					/>
 				)}
 			</header>
