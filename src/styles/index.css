@@ -36,7 +36,6 @@
 	--dark-scheme-layout-border-shadow: rgb(202, 205, 212);
 	--dark-scheme-layout-border-shadow-rgb: 202, 205, 212;
 
-
 	--dark-scheme-input-bgc: rgb(72, 59, 46);
 	--dark-scheme-input-bgc-rgb: 72, 59, 46;
 
@@ -70,11 +69,6 @@
 }
 [hidden] {
 	display: none !important;
-}
-
-body * {
-	margin: 0;
-	padding: 0;
 }
 
 #root {
