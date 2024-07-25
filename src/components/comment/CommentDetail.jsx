@@ -50,7 +50,7 @@ const CommentDetail = ({
 
 	const handleCreateReply = async fields => {
 		const isTokenExpire = await handleVerifyTokenExpire(accessToken);
-		isTokenExpire && handleExChangeToken(refreshToken);
+		isTokenExpire && (await handleExChangeToken(refreshToken));
 
 		const data = {
 			...fields,
