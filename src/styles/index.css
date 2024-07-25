@@ -83,22 +83,31 @@ h5,
 h6 {
 	font-weight: 700;
 	line-height: 1.2em;
+	margin: 0;
 }
 
 a {
 	text-decoration: none;
-	color: var(--light-scheme-color);
+	color: inherit;
+	cursor: pointer;
 }
 
 p {
 	white-space: break-spaces;
 	line-height: 1.5em;
+	margin: 0;
 }
 
 button {
 	background-color: transparent;
 	border: 0;
 	cursor: pointer;
+}
+
+ol,
+ul {
+	margin: 0;
+	padding: 0;
 }
 
 li {
@@ -120,9 +129,12 @@ textarea {
 }
 
 img {
-	width: 100%;
 	height: auto;
 	vertical-align: middle;
+}
+
+img:not(#postDetail img) {
+	width: 100%;
 }
 
 /* Dark scheme classes */
