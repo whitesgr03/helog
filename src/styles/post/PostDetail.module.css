@@ -1,7 +1,7 @@
 .postDetail {
 	display: flex;
 	flex-direction: column;
-	row-gap: 30px;
+	row-gap: 15px;
 	padding: 5%;
 }
 
@@ -12,12 +12,72 @@
 .dateTime {
 	display: flex;
 	flex-direction: column;
-	row-gap: 10px;
+	row-gap: 15px;
 }
 
 .dateTime.createdAt strong,
 .dateTime.lastModified em {
 	color: var(--light-scheme-highlight);
+}
+
+.postDetail ol,
+.postDetail ul {
+	padding: revert;
+	margin: revert;
+}
+
+.postDetail li {
+	list-style: revert;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+}
+
+.postDetail a {
+	text-decoration: revert;
+}
+
+.postDetail p,
+.postDetail h2,
+.postDetail h3,
+.postDetail h5 {
+	margin: revert;
+}
+
+.postDetail :global(#content) img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+}
+
+.postDetail :global(#mainImage) {
+	position: relative;
+	padding-top: 56.25%;
+}
+
+.postDetail :global(#mainImage) p {
+	margin: 0;
+}
+
+.postDetail :global(#mainImage) img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
+
+.postDetail :global(#content.mce-content-body:not([dir="rtl"]) blockquote) {
+	border-left: 2px solid var(--dark-scheme-placeholder);
+	margin-left: 1.5rem;
+	padding-left: 1rem;
+}
+
+.postDetail :global(#content pre[class*="language-"]) {
+	background-color: var(--light-scheme-layout-bgc);
+	text-shadow: none;
+	font-family: unset;
 }
 
 /* Dark scheme classes */
@@ -30,6 +90,17 @@
 	color: var(--dark-scheme-highlight);
 }
 
+:global(.dark) .postDetail :global(#content pre[class*="language-"]) {
+	background-color: var(--dark-scheme-input-bgc);
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark)
+	.postDetail
+	:global(#content.mce-content-body:not([dir="rtl"]) blockquote) {
+	border-color: var(--dark-scheme-color);
+}
+
 @media (min-width: 400px) {
 	.postDetail {
 		padding: 5% 10%;
@@ -38,7 +109,7 @@
 
 @media (min-width: 700px) {
 	.postDetail {
-		row-gap: 40px;
+		row-gap: 30px;
 		padding: 5% 15%;
 	}
 
@@ -50,11 +121,11 @@
 @media (min-width: 1000px) {
 	.postDetail {
 		padding: 5% 10%;
-		row-gap: 50px;
+		row-gap: 40px;
 	}
 
-	.title {
-		font-size: 3rem;
+	.imageWrap {
+		padding: 0 10%;
 	}
 }
 
