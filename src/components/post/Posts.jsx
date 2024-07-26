@@ -14,33 +14,47 @@ import Error from "../layout/Error";
 // Utils
 import useFetch from "../../hooks/useFetch";
 
-// Variables
-import imageUrl from "../../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
-
 const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/blog/posts`;
 
 const Posts = ({ limit = 0 }) => {
 	const { data, error, loading } = useFetch(`${url}?limit=${limit}`);
 
-	const postsAddUrl = data ? data.map(post => ({ ...post, imageUrl })) : []; // <- Temporarily add url
-	const items = postsAddUrl.map(post => (
-		<li key={post._id}>
-			<Link to={`/posts/${post._id}`}>
-				<div className={image.content}>
-					<img src={post.imageUrl} alt={post.title} />
-				</div>
-			</Link>
-			<div className={style.container}>
-				<strong className={style.dateTime}>
-					{format(post.createdAt, "MMMM d, y")}
-				</strong>
-				<Link to={`/posts/${post._id}`}>
-					<h3 className={style.title}>{post.title}</h3>
-				</Link>
-				<p className={style.content}>{post.content}</p>
-			</div>
-		</li>
-	));
+	const items = data
+		? data.map(
+				post =>
+					post?.content !== "" && (
+						<li key={post._id}>
+							<Link to={`/posts/${post._id}`}>
+								<div className={image.content}>
+									{post.mainImageUrl ? (
+										<img
+											src={post.mainImageUrl}
+											alt={`${post.title} main image`}
+										/>
+									) : (
+										<div className={style.emptyImageWrap}>
+											{"( Empty Main Image )"}
+										</div>
+									)}
+								</div>
+							</Link>
+
+							<div className={style.container}>
+								<strong className={style.dateTime}>
+									{format(post.createdAt, "MMMM d, y")}
+								</strong>
+								<Link to={`/posts/${post._id}`}>
+									<h3 className={style.title}>
+										{post.title
+											? post.title
+											: "( Empty Title )"}
+									</h3>
+								</Link>
+							</div>
+						</li>
+					)
+		  )
+		: [];
 
 	return (
 		<>
