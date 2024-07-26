@@ -2,6 +2,7 @@
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
+import { Editor } from "@tinymce/tinymce-react";
 
 // Styles
 import style from "../../styles/post/PostDetail.module.css";
@@ -17,7 +18,6 @@ import useFetch from "../../hooks/useFetch";
 
 // Variables
 const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/blog/posts`;
-import imageUrl from "../../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg";
 
 const PostDetail = () => {
 	const { postId } = useParams();
@@ -32,12 +32,14 @@ const PostDetail = () => {
 		<>
 			{loading ? (
 				<Loading />
-			) : error ? (
+			) : error || post?.content === "" ? (
 				<Error message={error} />
 			) : (
 				<div>
-					<div className={style.postDetail}>
-						<h2 className={style.title}>{post.title}</h2>
+					<div id="postDetail" className={style.postDetail}>
+						{post?.title && (
+							<h2 className={style.title}>{post.title}</h2>
+						)}
 						<div
 							className={`${style.dateTime}
 							${
@@ -57,12 +59,30 @@ const PostDetail = () => {
 									{format(post.lastModified, "MMMM d, y")}
 								</em>
 							)}
-
-							<div className={image.content}>
-								<img src={imageUrl} alt={post.title} />
-							</div>
+							{post?.mainImageUrl && (
+								<div className={style.imageWrap}>
+									<div className={image.content}>
+										<img
+											src={post.mainImageUrl}
+											alt={`${post.title} main image`}
+										/>
+									</div>
+								</div>
+							)}
 						</div>
-						<p>{post.content}</p>
+
+						<Editor
+							apiKey="x2zlv8pvui3hofp395wp6my8308b15h3s176scf930dizek1"
+							id="content"
+							disabled={true}
+							value={post.content}
+							init={{
+								menubar: false,
+								toolbar: false,
+								inline: true,
+								plugins: "codesample",
+							}}
+						/>
 					</div>
 					<Comments postAuthorId={post.author._id} postId={postId} />
 				</div>
