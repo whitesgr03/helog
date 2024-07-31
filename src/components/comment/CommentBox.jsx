@@ -12,7 +12,6 @@ import button from "../../styles/utils/button.module.css";
 
 // Components
 import Loading from "../layout/Loading";
-import Error from "../layout/Error";
 
 const CommentBox = ({
 	submitBtn,
@@ -23,11 +22,10 @@ const CommentBox = ({
 }) => {
 	const defaultFields = { content: defaultValue ?? "" };
 
-	const { user } = useOutletContext();
+	const { user, onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultFields);
 	const [loading, setLoading] = useState(null);
-	const [error, setError] = useState(null);
 	const [showSubmitButton, setShowSubmitButton] = useState(null);
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef(null);
@@ -89,7 +87,7 @@ const CommentBox = ({
 			? await handleSetFields()
 			: result?.errors
 			? handleSetInputErrors()
-			: setError(result.message);
+			: onAlert({ message: result.message, error: true });
 
 		setLoading(false);
 	};
@@ -107,15 +105,17 @@ const CommentBox = ({
 	const handleChange = e => {
 		const ref = textbox.current;
 
+		ref.style.height = "auto";
+
 		const height =
 			ref.offsetHeight > ref.scrollHeight
 				? ref.offsetHeight
 				: ref.scrollHeight;
 
-		ref.style.height = "auto";
 		ref.style.height = `${height}px`;
 
 		const { name, value } = e.target;
+
 		const fields = {
 			...formFields,
 			[name]: value,
@@ -125,6 +125,7 @@ const CommentBox = ({
 	};
 
 	const handleFocus = () => setShowSubmitButton(true);
+
 	const handleCloseSubmitButton = () => {
 		textbox.current.style.height = "auto";
 		setShowSubmitButton(false);
@@ -132,6 +133,17 @@ const CommentBox = ({
 		setInputErrors(null);
 		setDebounce(false);
 	};
+
+	const handleUnescape = str =>
+		str
+			.replace(/&quot;/g, '"')
+			.replace(/&#x27;/g, "'")
+			.replace(/&lt;/g, "<")
+			.replace(/&gt;/g, ">")
+			.replace(/&#x2F;/g, "/")
+			.replace(/&#x5C;/g, "\\")
+			.replace(/&#96;/g, "`")
+			.replace(/&amp;/g, "&");
 
 	useEffect(() => {
 		debounce &&
@@ -145,88 +157,86 @@ const CommentBox = ({
 		};
 	}, [debounce, formFields]);
 
-	return (
-		<>
-			{error ? (
-				<Error />
-			) : (
-				<div
-					className={`${style.commentBox} ${
-						loading ? style.loading : ""
-					}`}
-				>
-					{loading && (
-						<div className={style.blur}>
-							<Loading />
-						</div>
-					)}
-					<form className={form.content} onSubmit={handleSubmit}>
-						<div className={form.labelWrap}>
-							<label
-								className={`${
-									inputErrors?.content ? form.error : ""
-								}`}
-							>
-								{!defaultValue && (
-									<div className={style.profile}>
-										<div className={style.avatar}>
-											{user?.name.charAt(0).toUpperCase()}
-										</div>
-										<h4>{user?.name}</h4>
-									</div>
-								)}
-								<textarea
-									name="content"
-									placeholder="write a comment ..."
-									onChange={handleChange}
-									onFocus={handleFocus}
-									value={formFields.content}
-									ref={textbox}
-									rows="1"
-									autoFocus={submitBtn !== "Comment"}
-								/>
-							</label>
-							{(defaultValue ||
-								submitBtn === "Reply" ||
-								showSubmitButton) &&
-								inputErrors && (
-									<div>
-										<span
-											className={`${image.icon} ${form.alert}`}
-										/>
-										<span className={form.placeholder}>
-											{inputErrors?.content}
-										</span>
-									</div>
-								)}
-						</div>
+	useEffect(() => {
+		const ref = textbox.current;
 
-						{(defaultValue ||
-							submitBtn === "Reply" ||
-							showSubmitButton) && (
-							<div className={style.buttonWrap}>
-								<button
-									type="button"
-									className={button.cancel}
-									onClick={
-										onCloseCommentBox ??
-										handleCloseSubmitButton
-									}
-								>
-									Cancel
-								</button>
-								<button
-									type="submit"
-									className={button.success}
-								>
-									{submitBtn}
-								</button>
-							</div>
-						)}
-					</form>
+		const height =
+			ref.offsetHeight > ref.scrollHeight
+				? ref.offsetHeight
+				: ref.scrollHeight;
+
+		ref.style.height = `${height}px`;
+
+		const lastTextPosition = ref.value.length;
+		ref.setSelectionRange(lastTextPosition, lastTextPosition);
+	}, []);
+
+	return (
+		<div className={`${style.commentBox} ${loading ? style.loading : ""}`}>
+			{loading && (
+				<div className={style.blur}>
+					<Loading />
 				</div>
 			)}
-		</>
+			<form className={form.content} onSubmit={handleSubmit}>
+				<div className={form.labelWrap}>
+					<label
+						className={`${inputErrors?.content ? form.error : ""}`}
+					>
+						{!defaultValue && (
+							<div className={style.profile}>
+								<div className={style.avatar}>
+									{user?.name.charAt(0).toUpperCase()}
+								</div>
+								<h4>{user?.name}</h4>
+							</div>
+						)}
+						<textarea
+							name="content"
+							placeholder="write a comment ..."
+							onChange={handleChange}
+							onFocus={handleFocus}
+							value={handleUnescape(formFields.content)}
+							ref={textbox}
+							rows="1"
+							autoFocus={submitBtn !== "Comment"}
+						/>
+					</label>
+					{(defaultValue ||
+						submitBtn === "Reply" ||
+						showSubmitButton) &&
+						inputErrors && (
+							<div>
+								<span
+									className={`${image.icon} ${form.alert}`}
+								/>
+								<span className={form.placeholder}>
+									{inputErrors?.content}
+								</span>
+							</div>
+						)}
+				</div>
+
+				{(defaultValue ||
+					submitBtn === "Reply" ||
+					showSubmitButton) && (
+					<div className={style.buttonWrap}>
+						<button
+							type="button"
+							className={button.cancel}
+							onClick={
+								onCloseCommentBox ?? handleCloseSubmitButton
+							}
+						>
+							Cancel
+						</button>
+						<button type="submit" className={button.success}>
+							{submitBtn}
+						</button>
+					</div>
+				)}
+			</form>
+		</div>
 	);
 };
 
