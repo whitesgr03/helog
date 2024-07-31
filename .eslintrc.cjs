@@ -17,6 +17,6 @@ module.exports = {
 			"warn",
 			{ allowConstantExport: true },
 		],
-		"no-mixed-spaces-and-tabs": 4,
+		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
 	},
 };
