@@ -2,6 +2,7 @@
 	position: absolute;
 	right: 5px;
 	top: 100%;
+	width: 70%;
 	border: 2px solid var(--light-scheme-color);
 	background-color: var(--light-scheme-layout-bgc);
 	border-radius: 8px;
@@ -25,10 +26,17 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	row-gap: 5px;
+	row-gap: 10px;
 	padding: 10px;
 }
 
+.profile > span {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100%;
+	text-align: center;
+}
 .avatar {
 	width: 45px;
 	height: 45px;
@@ -102,7 +110,7 @@
 
 @media (min-width: 450px) {
 	.dropdown {
-		min-width: 40%;
+		width: 40%;
 	}
 
 	.dropdown > ul li:first-of-type {
@@ -146,18 +154,18 @@
 
 @media (min-width: 700px) {
 	.dropdown {
-		min-width: 30%;
+		width: 30%;
 	}
 }
 
 @media (min-width: 1000px) {
 	.dropdown {
-		min-width: 25%;
+		width: 25%;
 	}
 }
 
 @media (min-width: 1300px) {
 	.dropdown {
-		min-width: 20%;
+		width: 20%;
 	}
 }
