@@ -18,10 +18,8 @@ import Error from "./Error";
 // Utils
 import { updateUser } from "../../utils/handleUser";
 
-// Variable
-const defaultForm = { name: "" };
-
-const ChangeNameModel = ({ handleCloseModel }) => {
+const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
+	const defaultForm = { name: defaultValue || "" };
 	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
@@ -32,7 +30,6 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 	const {
 		setUser,
 		accessToken,
-		refreshToken,
 		handleVerifyTokenExpire,
 		handleExChangeToken,
 	} = AppContext();
@@ -45,8 +42,8 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 				.required("The name is required.")
 				.max(30, ({ max }) => `The name must be less than ${max} long.`)
 				.matches(
-					/^[a-zA-Z]\w*$/,
-					"The name must be alphanumeric and underscore."
+					/^[a-zA-Z0-9]\w*$/,
+					"The name must be alphanumeric."
 				),
 		}).noUnknown();
 
@@ -69,10 +66,13 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const isTokenExpire = await handleVerifyTokenExpire(accessToken);
-		isTokenExpire && handleExChangeToken(refreshToken);
+		const isTokenExpire = await handleVerifyTokenExpire();
+		const newAccessToken = isTokenExpire && (await handleExChangeToken());
 
-		const result = await updateUser(accessToken, formFields);
+		const result = await updateUser(
+			newAccessToken || accessToken,
+			formFields
+		);
 
 		const handleSetUser = async data => {
 			setUser(data);
@@ -211,6 +211,7 @@ const ChangeNameModel = ({ handleCloseModel }) => {
 
 ChangeNameModel.propTypes = {
 	handleCloseModel: PropTypes.func,
+	defaultValue: PropTypes.string,
 };
 
 export default ChangeNameModel;
