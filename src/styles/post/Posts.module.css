@@ -89,18 +89,11 @@
 	.posts li {
 		padding: 5% 15%;
 	}
-	.posts li .container {
-		row-gap: 30px;
-	}
 }
 
 @media (min-width: 1000px) {
 	.posts li {
 		padding: 0;
-		row-gap: 20px;
-	}
-
-	.posts li .container {
 		row-gap: 20px;
 	}
 }
