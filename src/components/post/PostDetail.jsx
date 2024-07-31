@@ -1,5 +1,6 @@
 // Packages
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useOutletContext, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import { Editor } from "@tinymce/tinymce-react";
@@ -14,20 +15,39 @@ import Error from "../layout/Error";
 import Comments from "../comment/Comments";
 
 // Utils
-import useFetch from "../../hooks/useFetch";
-
-// Variables
-const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/blog/posts`;
+import { getPostDetail } from "../../utils/handlePost";
 
 const PostDetail = () => {
 	const { postId } = useParams();
-
-	const { data: post, error, loading } = useFetch(`${url}/${postId}`);
+	const { user } = useOutletContext();
+	const [post, setPost] = useState([]);
+	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	const createdAt = post?.createdAt && new Date(post.createdAt).getTime();
 	const lastModified =
 		post?.lastModified && new Date(post.lastModified).getTime();
 
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+
+		const handleGetPostDetail = async () => {
+			const result = await getPostDetail({ postId, signal });
+
+			const handleResult = () => {
+				result.success
+					? setPost(result.data)
+					: setError(result.message);
+				setLoading(false);
+			};
+
+			result && handleResult();
+		};
+
+		handleGetPostDetail();
+		return () => controller.abort();
+	}, [user, postId]);
 	return (
 		<>
 			{loading ? (
@@ -37,28 +57,36 @@ const PostDetail = () => {
 			) : (
 				<div>
 					<div id="postDetail" className={style.postDetail}>
+						<Link to="/posts" className={style.link}>
+							<span
+								className={`${style.leftArrow} ${image.icon}`}
+							/>
+							Back to list
+						</Link>
+
 						{post?.title && (
-							<h2 className={style.title}>{post.title}</h2>
+							<h2
+								className={style.title}
+								dangerouslySetInnerHTML={{
+									__html: post.title,
+								}}
+							/>
 						)}
-						<div
-							className={`${style.dateTime}
-							${
-								lastModified && createdAt !== lastModified
-									? style.lastModified
-									: style.createdAt
-							}
-							`}
-						>
-							<strong>
-								Published in{" "}
-								{format(post.createdAt, "MMMM d, y")}
-							</strong>
-							{lastModified && createdAt !== lastModified && (
-								<em>
-									Edited in{" "}
-									{format(post.lastModified, "MMMM d, y")}
-								</em>
-							)}
+						<div className={style.dateTime}>
+							<strong>{post.author.name}</strong>
+							<em>
+								{`${
+									createdAt === lastModified
+										? "Published"
+										: "Edited"
+								} in ${format(
+									createdAt === lastModified
+										? post.createdAt
+										: post.lastModified,
+									"MMMM d, y"
+								)}`}
+							</em>
+
 							{post?.mainImageUrl && (
 								<div className={style.imageWrap}>
 									<div className={image.content}>
@@ -70,7 +98,6 @@ const PostDetail = () => {
 								</div>
 							)}
 						</div>
-
 						<Editor
 							apiKey="x2zlv8pvui3hofp395wp6my8308b15h3s176scf930dizek1"
 							id="content"
