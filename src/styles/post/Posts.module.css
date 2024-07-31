@@ -5,10 +5,20 @@
 	flex-direction: column;
 }
 
-.posts li .container {
+.posts .info {
 	display: flex;
-	flex-direction: column;
-	row-gap: 15px;
+	column-gap: 15px;
+}
+
+.posts .info > strong {
+	flex: 1 1 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.posts .info > em {
+	flex: 1 0 auto;
 }
 
 .posts li .title {
