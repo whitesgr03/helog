@@ -5,6 +5,10 @@
 	padding: 5%;
 }
 
+.link {
+	text-decoration: none;
+}
+
 .title {
 	font-size: 1.5rem;
 }
@@ -13,11 +17,6 @@
 	display: flex;
 	flex-direction: column;
 	row-gap: 15px;
-}
-
-.dateTime.createdAt strong,
-.dateTime.lastModified em {
-	color: var(--light-scheme-highlight);
 }
 
 .postDetail ol,
@@ -30,10 +29,6 @@
 	list-style: revert;
 	margin-block-start: 1em;
 	margin-block-end: 1em;
-}
-
-.postDetail a {
-	text-decoration: revert;
 }
 
 .postDetail p,
@@ -58,6 +53,10 @@
 	margin: 0;
 }
 
+.postDetail :global(#content) a {
+	text-decoration: revert;
+}
+
 .postDetail :global(#mainImage) img {
 	position: absolute;
 	top: 0;
@@ -80,14 +79,21 @@
 	font-family: unset;
 }
 
+.leftArrow {
+	--size: var(--icon-size-desktop);
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='208' height='208' viewBox='0 0 20 20'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10' clip-rule='evenodd'/%3E%3C/svg%3E");
+	height: var(--size);
+	width: var(--size);
+}
+
+/* Pseudo classes */
+.link:hover {
+	text-decoration: underline;
+}
+
 /* Dark scheme classes */
 :global(.dark) .postDetail {
 	color: var(--dark-scheme-color);
-}
-
-:global(.dark) .dateTime.createdAt strong,
-:global(.dark) .dateTime.lastModified em {
-	color: var(--dark-scheme-highlight);
 }
 
 :global(.dark) .postDetail :global(#content pre[class*="language-"]) {
