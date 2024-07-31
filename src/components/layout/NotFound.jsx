@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 // Styles
 import style from "../../styles/layout/Error.module.css";
 import image from "../../styles/utils/image.module.css";
@@ -11,6 +13,9 @@ const NotFound = () => {
 				<p>Our apologies, there has been an error.</p>
 				<p>The page you are looking for could not be found.</p>
 				<p>You may surf over to our other pages.</p>
+				<p>
+					Back to <Link to="/">Home</Link> Page.
+				</p>
 			</div>
 		</div>
 	);
