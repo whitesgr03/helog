@@ -43,8 +43,6 @@ const Callback = () => {
 			const handleSuccess = async () => {
 				const { session, access_token, refresh_token } = result.data;
 
-				console.log("access_token", access_token);
-				console.log("refresh_token", refresh_token);
 				sessionStorage.removeItem("code_verifier");
 				sessionStorage.removeItem("state");
 
