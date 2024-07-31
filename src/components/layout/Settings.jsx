@@ -80,7 +80,10 @@ const Settings = ({ user, handleCloseSettings }) => {
 					</ul>
 				</div>
 				{model.changeName && (
-					<ChangeNameModel handleCloseModel={handleCloseModel} />
+					<ChangeNameModel
+						handleCloseModel={handleCloseModel}
+						defaultValue={user?.name}
+					/>
 				)}
 				{model.deleteAccount && (
 					<DeleteAccountModel
