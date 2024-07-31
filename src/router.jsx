@@ -32,10 +32,6 @@ const router = () => (
 								element: <Home />,
 							},
 							{
-								path: "error",
-								element: <Error />,
-							},
-							{
 								path: "posts",
 								element: <PostList />,
 							},
@@ -48,6 +44,10 @@ const router = () => (
 					{
 						path: "/callback",
 						element: <Callback />,
+					},
+					{
+						path: "error",
+						element: <Error />,
 					},
 				],
 			},
