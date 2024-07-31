@@ -33,7 +33,9 @@ const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 					<ul className={style.list}>
 						{user && (
 							<li>
-								<a href="https://helog-editor.localtest.me:7001">
+								<a
+									href={`https://helog-editor.localtest.me:7001?darkTheme=${darkTheme}`}
+								>
 									<span
 										className={`${image.icon} ${style.pencil}`}
 									/>
