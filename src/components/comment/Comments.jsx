@@ -17,13 +17,8 @@ import handleFetch from "../../utils/handleFetch";
 import { createComment } from "../../utils/handleComment";
 
 const Comments = ({ postAuthorId, postId }) => {
-	const {
-		user,
-		accessToken,
-		refreshToken,
-		handleVerifyTokenExpire,
-		handleExChangeToken,
-	} = useOutletContext();
+	const { user, accessToken, handleVerifyTokenExpire, handleExChangeToken } =
+		useOutletContext();
 	const [comments, setComments] = useState([]);
 	const [replies, setReplies] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -31,6 +26,20 @@ const Comments = ({ postAuthorId, postId }) => {
 
 	const allComments = (comments.length + replies.length).toLocaleString();
 
+	const handleCreateComment = async fields => {
+		const isTokenExpire = await handleVerifyTokenExpire();
+		const newAccessToken = isTokenExpire && (await handleExChangeToken());
+
+		const result = await createComment({
+			token: newAccessToken || accessToken,
+			data: {
+				...fields,
+				post: postId,
+			},
+		});
+
+		return result;
+	};
 	const handleGetComments = useCallback(
 		async option => {
 			const url = `${
@@ -50,23 +59,6 @@ const Comments = ({ postAuthorId, postId }) => {
 		},
 		[postId]
 	);
-	const handleCreateComment = async fields => {
-		const isTokenExpire = await handleVerifyTokenExpire(accessToken);
-		isTokenExpire && handleExChangeToken(refreshToken);
-
-		const data = {
-			...fields,
-			post: postId,
-		};
-
-		const result = await createComment({
-			token: accessToken,
-			data,
-		});
-
-		return result;
-	};
-
 	const handleGetReplies = useCallback(
 		async option => {
 			let url = `${
@@ -149,7 +141,7 @@ const Comments = ({ postAuthorId, postId }) => {
 		handleGetData();
 
 		return () => controller.abort();
-	}, [handleGetComments, handleGetReplies]);
+	}, [user, handleGetComments, handleGetReplies]);
 
 	return (
 		<div className={style.comments}>
@@ -160,13 +152,15 @@ const Comments = ({ postAuthorId, postId }) => {
 			) : (
 				<>
 					<h3> {allComments > 0 && allComments} Comments</h3>
-					<div className={style.commentBoxWrap}>
-						<CommentBox
-							submitBtn={"Comment"}
-							onGetComments={handleGetComments}
-							onCreateComment={handleCreateComment}
-						/>
-					</div>
+					{user && (
+						<div className={style.commentBoxWrap}>
+							<CommentBox
+								submitBtn={"Comment"}
+								onGetComments={handleGetComments}
+								onCreateComment={handleCreateComment}
+							/>
+						</div>
+					)}
 					<div className={style.content}>
 						{items.length > 0 ? (
 							<ul>{items}</ul>
