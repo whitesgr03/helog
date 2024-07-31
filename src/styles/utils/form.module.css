@@ -29,6 +29,7 @@
 	padding: 10px;
 	height: auto;
 	width: 100%;
+	line-height: 1.5em;
 }
 
 .content label + div {
