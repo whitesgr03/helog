@@ -34,7 +34,7 @@ const Dropdown = ({ user, darkTheme, handleSwitchColorTheme }) => {
 					<div className={style.avatar}>
 						{user.name.charAt(0).toUpperCase()}
 					</div>
-					{user.name}
+					<span title={user.name}>{user.name}</span>
 				</div>
 			)}
 			<ul>
