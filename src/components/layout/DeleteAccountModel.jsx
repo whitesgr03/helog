@@ -23,16 +23,16 @@ const DeleteAccountModel = ({ handleCloseModel, handleCloseSettings }) => {
 	const {
 		setUser,
 		accessToken,
-		refreshToken,
+
 		handleVerifyTokenExpire,
 		handleExChangeToken,
 	} = AppContext();
 
 	const handleDelete = async () => {
-		const isTokenExpire = await handleVerifyTokenExpire(accessToken);
-		isTokenExpire && handleExChangeToken(refreshToken);
+		const isTokenExpire = await handleVerifyTokenExpire();
+		const newAccessToken = isTokenExpire && (await handleExChangeToken());
 
-		const result = await deleteUser(accessToken);
+		const result = await deleteUser(newAccessToken || accessToken);
 
 		const handleLogout = () => {
 			window.location.replace("http://localhost:3000/account/logout");
