@@ -155,6 +155,10 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 
+	.latestPosts ul li {
+		overflow: hidden;
+	}
+
 	/* Dark scheme classes */
 	:global(.dark) .content {
 		border-color: var(--dark-scheme-color);
