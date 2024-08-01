@@ -18,11 +18,13 @@ const Error = ({ message = null }) => {
 	return (
 		<div className={style.error}>
 			<span className={`${image.icon} ${style.alert}`} />
-			<p>Our apologies, there has been an error.</p>
-			<p>{errorMessage}</p>
-			<p className={style.link}>
-				<Link to="/">Back to Home Page.</Link>
-			</p>
+			<div className={style.message}>
+				<p>Our apologies, there has been an error.</p>
+				<p>{errorMessage}</p>
+			</div>
+			<Link to="/" className={style.link}>
+				Back to Home Page.
+			</Link>
 		</div>
 	);
 };
