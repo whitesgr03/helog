@@ -42,7 +42,7 @@ const router = () => (
 						],
 					},
 					{
-						path: "/callback",
+						path: "callback",
 						element: <Callback />,
 					},
 					{
