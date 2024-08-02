@@ -186,14 +186,19 @@
 		line-height: 2rem;
 	}
 
+	.content h2 {
+		text-shadow: var(--dark-scheme-color) 0 0 10px,
+			var(--dark-scheme-color) 0 0 10px, var(--dark-scheme-color) 0 0 10px,
+			var(--dark-scheme-color) 0 0 10px, var(--dark-scheme-color) 0 0 10px;
+	}
+
 	.content p {
-		text-shadow: var(--light-scheme-color) 0 0 10px,
-			var(--light-scheme-color) 0 0 10px,
-			var(--light-scheme-color) 0 0 10px,
-			var(--light-scheme-color) 0 0 10px,
-			var(--light-scheme-color) 0 0 10px;
-		color: var(--dark-scheme-color);
+		text-shadow: var(--dark-scheme-color) 0 0 10px,
+			var(--dark-scheme-color) 0 0 10px, var(--dark-scheme-color) 0 0 10px,
+			var(--dark-scheme-color) 0 0 10px, var(--dark-scheme-color) 0 0 10px;
+		color: var(--light-scheme-color);
 		font-size: 1.2rem;
+		line-height: 3rem;
 	}
 
 	.link {
@@ -218,11 +223,22 @@
 	:global(.dark) .content {
 		background-color: rgba(0, 0, 0, 0.4);
 	}
+
+	:global(.dark) .content h2 {
+		text-shadow: var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px;
+	}
+
 	:global(.dark) .content p {
-		text-shadow: var(--dark-scheme-color) 0 0 10px,
-			var(--dark-scheme-color) 0 0 10px, var(--dark-scheme-color) 0 0 10px,
-			var(--dark-scheme-color) 0 0 10px, var(--dark-scheme-color) 0 0 10px;
-		color: var(--light-scheme-color);
+		text-shadow: var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px,
+			var(--light-scheme-color) 0 0 10px;
+		color: var(--dark-scheme-color);
 	}
 
 	:global(.dark) .link {
