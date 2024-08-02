@@ -35,7 +35,7 @@ const DeleteAccountModel = ({ handleCloseModel, handleCloseSettings }) => {
 		const result = await deleteUser(newAccessToken || accessToken);
 
 		const handleLogout = () => {
-			window.location.replace("http://localhost:3000/account/logout");
+			window.location.replace(`${import.meta.env.VITE_RESOURCE_URL}/account/logout`);
 			localStorage.removeItem("heLog.login-exp");
 			setUser(null);
 			handleCloseSettings();
