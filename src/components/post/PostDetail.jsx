@@ -23,6 +23,7 @@ const PostDetail = () => {
 	const [post, setPost] = useState([]);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [loadContent, setLoadContent] = useState(true);
 
 	const createdAt = post?.createdAt && new Date(post.createdAt).getTime();
 	const lastModified =
@@ -50,69 +51,82 @@ const PostDetail = () => {
 	}, [user, postId]);
 	return (
 		<>
-			{loading ? (
-				<Loading />
-			) : error || post?.content === "" ? (
+			{error || post?.content === "" ? (
 				<Error message={error} />
 			) : (
-				<div>
-					<div id="postDetail" className={style.postDetail}>
-						<Link to="/posts" className={style.link}>
-							<span
-								className={`${style.leftArrow} ${image.icon}`}
-							/>
-							Back to list
-						</Link>
+				<>
+					<div
+						className={`${
+							loading || loadContent ? style.loading : ""
+						}`}
+					>
+						<div id="postDetail" className={style.postDetail}>
+							<Link to="/posts" className={style.link}>
+								<span
+									className={`${style.leftArrow} ${image.icon}`}
+								/>
+								Back to list
+							</Link>
 
-						{post?.title && (
-							<h2
-								className={style.title}
-								dangerouslySetInnerHTML={{
-									__html: post.title,
+							{post?.title && (
+								<h2
+									className={style.title}
+									dangerouslySetInnerHTML={{
+										__html: post.title,
+									}}
+								/>
+							)}
+							<div className={style.dateTime}>
+								<strong>{post?.author?.name}</strong>
+								{post?.lastModified && (
+									<em>
+										{`${
+											createdAt === lastModified
+												? "Published"
+												: "Edited"
+										} in ${format(
+											createdAt === lastModified
+												? post.createdAt
+												: post.lastModified,
+											"MMMM d, y"
+										)}`}
+									</em>
+								)}
+
+								{post?.mainImageUrl && (
+									<div className={style.imageWrap}>
+										<div className={image.content}>
+											<img
+												src={post.mainImageUrl}
+												alt={`${post.title} main image`}
+											/>
+										</div>
+									</div>
+								)}
+							</div>
+							<Editor
+								apiKey="x2zlv8pvui3hofp395wp6my8308b15h3s176scf930dizek1"
+								id="content"
+								disabled={true}
+								value={post?.content}
+								onInit={() => {
+									setLoadContent(false);
+								}}
+								init={{
+									menubar: false,
+									toolbar: false,
+									inline: true,
+									plugins: "codesample",
 								}}
 							/>
-						)}
-						<div className={style.dateTime}>
-							<strong>{post.author.name}</strong>
-							<em>
-								{`${
-									createdAt === lastModified
-										? "Published"
-										: "Edited"
-								} in ${format(
-									createdAt === lastModified
-										? post.createdAt
-										: post.lastModified,
-									"MMMM d, y"
-								)}`}
-							</em>
-
-							{post?.mainImageUrl && (
-								<div className={style.imageWrap}>
-									<div className={image.content}>
-										<img
-											src={post.mainImageUrl}
-											alt={`${post.title} main image`}
-										/>
-									</div>
-								</div>
-							)}
 						</div>
-						<Editor
-							apiKey="x2zlv8pvui3hofp395wp6my8308b15h3s176scf930dizek1"
-							id="content"
-							disabled={true}
-							value={post.content}
-							init={{
-								menubar: false,
-								toolbar: false,
-								inline: true,
-								plugins: "codesample",
-							}}
+						<Comments
+							postAuthorId={post?.author?._id}
+							postId={postId}
 						/>
 					</div>
-					<Comments postAuthorId={post.author._id} postId={postId} />
-				</div>
+					{(loading || loadContent) && <Loading />}
+				</>
 			)}
 		</>
 	);
