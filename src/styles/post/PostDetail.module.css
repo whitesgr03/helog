@@ -1,3 +1,7 @@
+.loading {
+	display: none;
+}
+
 .postDetail {
 	display: flex;
 	flex-direction: column;
