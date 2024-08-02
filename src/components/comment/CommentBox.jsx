@@ -158,18 +158,22 @@ const CommentBox = ({
 	}, [debounce, formFields]);
 
 	useEffect(() => {
-		const ref = textbox.current;
+		const setTextboxHeight = () => {
+			const ref = textbox.current;
 
-		const height =
-			ref.offsetHeight > ref.scrollHeight
-				? ref.offsetHeight
-				: ref.scrollHeight;
+			const height =
+				ref.offsetHeight > ref.scrollHeight
+					? ref.offsetHeight
+					: ref.scrollHeight;
 
-		ref.style.height = `${height}px`;
+			ref.style.height = `${height}px`;
 
-		const lastTextPosition = ref.value.length;
-		ref.setSelectionRange(lastTextPosition, lastTextPosition);
-	}, []);
+			const lastTextPosition = ref.value.length;
+			ref.setSelectionRange(lastTextPosition, lastTextPosition);
+		};
+
+		submitBtn === "Update" && setTextboxHeight();
+	}, [submitBtn]);
 
 	return (
 		<div className={`${style.commentBox} ${loading ? style.loading : ""}`}>
