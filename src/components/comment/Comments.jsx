@@ -43,7 +43,7 @@ const Comments = ({ postAuthorId, postId }) => {
 	const handleGetComments = useCallback(
 		async option => {
 			const url = `${
-				import.meta.env.VITE_RESOURCE_ORIGIN
+				import.meta.env.VITE_RESOURCE_URL
 			}/blog/comments?postId=${postId}`;
 
 			const result = await handleFetch(url, option);
@@ -62,7 +62,7 @@ const Comments = ({ postAuthorId, postId }) => {
 	const handleGetReplies = useCallback(
 		async option => {
 			let url = `${
-				import.meta.env.VITE_RESOURCE_ORIGIN
+				import.meta.env.VITE_RESOURCE_URL
 			}/blog/replies?postId=${postId}`;
 
 			const result = await handleFetch(url, option);

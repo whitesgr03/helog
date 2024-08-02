@@ -1,6 +1,6 @@
 import handleFetch from "./handleFetch";
 
-const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/blog/comments`;
+const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/comments`;
 
 const createComment = async ({ token, data }) => {
 	const options = {

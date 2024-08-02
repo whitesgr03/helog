@@ -1,6 +1,6 @@
 import handleFetch from "./handleFetch";
 
-const url = `${import.meta.env.VITE_RESOURCE_ORIGIN}/blog/replies`;
+const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/replies`;
 
 const createReply = async ({ token, data }) => {
 	const options = {

@@ -34,7 +34,9 @@ const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 						{user && (
 							<li>
 								<a
-									href={`https://helog-editor.localtest.me:7001?darkTheme=${darkTheme}`}
+									href={`${
+										import.meta.env.VITE_HELOG_EDITOR_URL
+									}?darkTheme=${darkTheme}`}
 								>
 									<span
 										className={`${image.icon} ${style.pencil}`}

@@ -19,7 +19,7 @@ const Dropdown = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const handleLogout = async () => {
 		localStorage.removeItem("heLog.login-exp");
 		window.location.replace(
-			`${import.meta.env.VITE_RESOURCE_ORIGIN}/account/logout`
+			`${import.meta.env.VITE_RESOURCE_URL}/account/logout`
 		);
 	};
 
