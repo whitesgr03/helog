@@ -192,7 +192,7 @@ const CommentBox = ({
 								<div className={style.avatar}>
 									{user?.name.charAt(0).toUpperCase()}
 								</div>
-								<h4>{user?.name}</h4>
+								<h4 title={user?.name}>{user?.name}</h4>
 							</div>
 						)}
 						<textarea
