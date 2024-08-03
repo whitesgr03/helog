@@ -27,6 +27,12 @@
 	align-items: center;
 }
 
+.profile h4 {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 .avatar {
 	--size: var(--icon-size-desktop);
 	width: var(--size);
