@@ -144,7 +144,6 @@
 }
 
 .commentBoxWrap {
-	margin-top: 15px;
 	padding-left: 5%;
 }
 
@@ -251,12 +250,9 @@
 		margin-top: 25px;
 	}
 
-	.commentBoxWrap {
-		margin-top: 25px;
-	}
-
 	.replies {
 		row-gap: 25px;
+		margin-top: 25px;
 	}
 
 	.replies > li {
@@ -277,12 +273,9 @@
 		margin-top: 35px;
 	}
 
-	.commentBoxWrap {
-		margin-top: 35px;
-	}
-
 	.replies {
 		row-gap: 35px;
+		margin-top: 35px;
 	}
 
 	.replies > li {
