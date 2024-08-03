@@ -90,6 +90,7 @@ a {
 	text-decoration: none;
 	color: inherit;
 	cursor: pointer;
+	color: var(--light-scheme-color);
 }
 
 p {
@@ -102,6 +103,7 @@ button {
 	background-color: transparent;
 	border: 0;
 	cursor: pointer;
+	color: var(--light-scheme-color);
 }
 
 ol,
@@ -157,6 +159,13 @@ img:not(#postDetail img) {
 }
 
 .dark textarea {
+	color: var(--dark-scheme-color);
+}
+
+.dark button {
+	color: var(--dark-scheme-color);
+}
+.dark a {
 	color: var(--dark-scheme-color);
 }
 
