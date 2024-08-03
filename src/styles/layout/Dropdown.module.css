@@ -2,7 +2,6 @@
 	position: absolute;
 	right: 5px;
 	top: 100%;
-	width: 70%;
 	border: 2px solid var(--light-scheme-color);
 	background-color: var(--light-scheme-layout-bgc);
 	border-radius: 8px;
@@ -28,6 +27,8 @@
 	align-items: center;
 	row-gap: 10px;
 	padding: 10px;
+	max-width: 0px;
+    min-width: 100%;
 }
 
 .profile > span {
