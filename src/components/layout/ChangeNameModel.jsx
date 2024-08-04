@@ -5,34 +5,28 @@ import { object, string } from "yup";
 
 // Styles
 import style from "../../styles/layout/ChangeNameModel.module.css";
-import { settings } from "../../styles/layout/Settings.module.css";
-import { blurWindow } from "../../styles/utils/bgc.module.css";
 import form from "../../styles/utils/form.module.css";
 import button from "../../styles/utils/button.module.css";
 import image from "../../styles/utils/image.module.css";
 
-// Components
-import { AppContext } from "../../contexts/AppContext";
-import Error from "./Error";
-
 // Utils
 import { updateUser } from "../../utils/handleUser";
 
-const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
+const ChangeNameModel = ({
+	onModel,
+	onAlert,
+	defaultValue,
+	onUser,
+	accessToken,
+	onVerifyTokenExpire,
+	onExChangeToken,
+}) => {
 	const defaultForm = { name: defaultValue || "" };
-	const [error, setError] = useState(null);
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
 	const [debounce, setDebounce] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const timer = useRef(null);
-
-	const {
-		setUser,
-		accessToken,
-		handleVerifyTokenExpire,
-		handleExChangeToken,
-	} = AppContext();
 
 	const handleValidFields = async fields => {
 		let isValid = false;
@@ -41,10 +35,7 @@ const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
 				.trim()
 				.required("The name is required.")
 				.max(30, ({ max }) => `The name must be less than ${max} long.`)
-				.matches(
-					/^[a-zA-Z0-9]\w*$/,
-					"The name must be alphanumeric."
-				),
+				.matches(/^[a-zA-Z0-9]\w*$/, "The name must be alphanumeric."),
 		}).noUnknown();
 
 		try {
@@ -66,8 +57,8 @@ const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const isTokenExpire = await handleVerifyTokenExpire();
-		const newAccessToken = isTokenExpire && (await handleExChangeToken());
+		const isTokenExpire = await onVerifyTokenExpire();
+		const newAccessToken = isTokenExpire && (await onExChangeToken());
 
 		const result = await updateUser(
 			newAccessToken || accessToken,
@@ -75,8 +66,8 @@ const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
 		);
 
 		const handleSetUser = async data => {
-			setUser(data);
-			handleCloseModel();
+			onUser(data);
+			onModel(null);
 		};
 
 		const handleSetInputErrors = () => {
@@ -91,7 +82,7 @@ const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
 			? handleSetUser(result.data)
 			: result?.errors
 			? handleSetInputErrors()
-			: setError(result.message);
+			: onAlert({ message: result.message, error: true });
 
 		setLoading(false);
 	};
@@ -114,10 +105,6 @@ const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
 		inputErrors && setDebounce(true);
 	};
 
-	const handleClick = e => {
-		e.target.dataset.closeModel && handleCloseModel();
-	};
-
 	useEffect(() => {
 		debounce &&
 			(timer.current = setTimeout(
@@ -125,93 +112,58 @@ const ChangeNameModel = ({ handleCloseModel, defaultValue }) => {
 				500
 			));
 
-		return () => {
-			clearTimeout(timer.current);
-		};
+		return () => clearTimeout(timer.current);
 	}, [debounce, formFields]);
 
 	return (
-		<div
-			className={blurWindow}
-			onClick={handleClick}
-			data-close-model
-			data-testid={"blurBgc"}
-		>
-			<div className={`${settings} ${style.model}`}>
-				<button
-					type="button"
-					className={button.closeBtn}
-					data-close-model
-				>
-					<span className={`${image.icon} ${button.close}`} />
-				</button>
-
-				<form className={form.content} onSubmit={handleSubmit}>
-					<div className={form.labelWrap}>
-						<label
-							htmlFor="changeName"
-							className={`${inputErrors?.name ? form.error : ""}`}
-						>
-							Change Name
-							<input
-								id="changeName"
-								type="text"
-								name="name"
-								value={formFields.name}
-								onChange={handleChange}
-							/>
-						</label>
-						<div>
-							<span className={`${image.icon} ${form.alert}`} />
-							<span className={form.placeholder}>
-								{inputErrors?.name ?? "Message placeholder"}
-							</span>
-						</div>
-					</div>
-
-					<button
-						type="submit"
-						className={`${button.success} ${
-							loading ? button.loading : ""
-						}`}
+		<div className={style.model}>
+			<form className={form.content} onSubmit={handleSubmit}>
+				<div className={form.labelWrap}>
+					<label
+						htmlFor="changeName"
+						className={`${inputErrors?.name ? form.error : ""}`}
 					>
-						<span className={button.text}>
-							Save
-							<span
-								className={`${image.icon} ${button.loadIcon}`}
-							/>
+						Change Name
+						<input
+							id="changeName"
+							type="text"
+							name="name"
+							value={formFields.name}
+							onChange={handleChange}
+						/>
+					</label>
+					<div>
+						<span className={`${image.icon} ${form.alert}`} />
+						<span className={form.placeholder}>
+							{inputErrors?.name ?? "Message placeholder"}
 						</span>
-					</button>
-				</form>
-				{error && (
-					<div
-						className={blurWindow}
-						onClick={handleClick}
-						data-close-model
-						data-testid={"blurBgc"}
-					>
-						<div className={`${settings} ${style.model}`}>
-							<button
-								type="button"
-								className={button.closeBtn}
-								data-close-model
-							>
-								<span
-									className={`${image.icon} ${button.close}`}
-								/>
-							</button>
-							<Error message={error} />
-						</div>
 					</div>
-				)}
-			</div>
+				</div>
+
+				<button
+					type="submit"
+					className={`${button.success} ${
+						loading ? button.loading : ""
+					}`}
+				>
+					<span className={button.text}>
+						Save
+						<span className={`${image.icon} ${button.loadIcon}`} />
+					</span>
+				</button>
+			</form>
 		</div>
 	);
 };
 
 ChangeNameModel.propTypes = {
-	handleCloseModel: PropTypes.func,
+	onModel: PropTypes.func,
+	onAlert: PropTypes.func,
 	defaultValue: PropTypes.string,
+	onUser: PropTypes.func,
+	accessToken: PropTypes.string,
+	onVerifyTokenExpire: PropTypes.func,
+	onExChangeToken: PropTypes.func,
 };
 
 export default ChangeNameModel;
