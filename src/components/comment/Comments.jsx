@@ -102,8 +102,8 @@ const Comments = ({ postAuthorId, postId }) => {
 				replyList={replyList.length > 0 ? replyList : null}
 				handleGetComments={handleGetComments}
 				handleGetReplies={handleGetReplies}
-				isCommentAuthor={user?._id === comment.author._id}
-				isPostAuthor={postAuthorId === comment.author._id}
+				isCommentAuthor={user?._id === comment?.author?._id}
+				isPostAuthor={postAuthorId === comment?.author?._id}
 				isDeleted={comment.deleted}
 			>
 				{replyList.length > 0 && (
@@ -115,8 +115,12 @@ const Comments = ({ postAuthorId, postId }) => {
 								commentId={comment._id}
 								replyId={reply._id}
 								comment={reply}
-								isCommentAuthor={user?._id === reply.author._id}
-								isPostAuthor={postAuthorId === reply.author._id}
+								isCommentAuthor={
+									user?._id === reply?.author?._id
+								}
+								isPostAuthor={
+									postAuthorId === reply?.author?._id
+								}
 								handleGetReplies={handleGetReplies}
 								isDeleted={reply.deleted}
 							/>
@@ -152,15 +156,15 @@ const Comments = ({ postAuthorId, postId }) => {
 			) : (
 				<>
 					<h3> {allComments > 0 && allComments} Comments</h3>
-					{user && (
-						<div className={style.commentBoxWrap}>
-							<CommentBox
-								submitBtn={"Comment"}
-								onGetComments={handleGetComments}
-								onCreateComment={handleCreateComment}
-							/>
-						</div>
-					)}
+
+					<div className={style.commentBoxWrap}>
+						<CommentBox
+							submitBtn={"Comment"}
+							onGetComments={handleGetComments}
+							onCreateComment={handleCreateComment}
+						/>
+					</div>
+
 					<div className={style.content}>
 						{items.length > 0 ? (
 							<ul>{items}</ul>
