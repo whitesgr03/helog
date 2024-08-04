@@ -1,0 +1,38 @@
+.model {
+	z-index: 3;
+}
+
+.content {
+	position: relative;
+	width: 75%;
+	background-color: var(--light-scheme-layout-bgc);
+	border: 2px solid var(--light-scheme-color);
+	color: var(--light-scheme-color);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+/* Dark scheme classes */
+:global(.dark) .content {
+	background-color: var(--dark-scheme-input-bgc);
+	border: 2px solid var(--dark-scheme-color);
+	color: var(--dark-scheme-color);
+}
+
+@media (min-width: 600px) {
+	.content {
+		width: 55%;
+	}
+}
+
+@media (min-width: 700px) {
+	.content {
+		width: 45%;
+	}
+}
+
+@media (min-width: 1300px) {
+	.content {
+		width: 35%;
+	}
+}
