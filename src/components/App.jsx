@@ -156,6 +156,8 @@ const App = () => {
 					<AppProvider
 						setUser={onUser}
 						accessToken={accessToken}
+						onModel={setModel}
+						onAlert={handleAlert}
 						handleVerifyTokenExpire={handleTokenExpire}
 						handleExChangeToken={handleExChangeToken}
 					>
@@ -183,6 +185,7 @@ const App = () => {
 									accessToken,
 									handleVerifyTokenExpire: handleTokenExpire,
 									handleExChangeToken: handleExChangeToken,
+									onModel: setModel,
 									onAlert: handleAlert,
 								}}
 							/>
