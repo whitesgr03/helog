@@ -152,7 +152,6 @@
 	flex-direction: column;
 	row-gap: 15px;
 	padding-left: calc(5% + var(--icon-size-mobile) / 2);
-	margin-top: 15px;
 }
 
 .replies > li {
@@ -252,7 +251,6 @@
 
 	.replies {
 		row-gap: 25px;
-		margin-top: 25px;
 	}
 
 	.replies > li {
@@ -275,7 +273,6 @@
 
 	.replies {
 		row-gap: 35px;
-		margin-top: 35px;
 	}
 
 	.replies > li {
