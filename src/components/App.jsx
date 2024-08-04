@@ -16,6 +16,7 @@ import Footer from "./layout/Footer";
 import Contact from "./layout/Contact";
 import Loading from "./layout/Loading";
 import Alert from "./layout/Alert";
+import Model from "./layout/Model";
 
 // Contexts
 import { AppProvider } from "../contexts/AppContext";
@@ -44,6 +45,7 @@ const App = () => {
 		onAccessToken,
 		onColorTheme,
 	} = useOutletContext();
+	const [model, setModel] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [alert, setAlert] = useState(defaultAlert);
 
@@ -150,6 +152,7 @@ const App = () => {
 				<Loading />
 			) : (
 				<div className={style.app} data-testid="app">
+					{model && <Model onModel={setModel} model={model} />}
 					<AppProvider
 						setUser={onUser}
 						accessToken={accessToken}
