@@ -13,6 +13,9 @@ import button from "../../styles/utils/button.module.css";
 // Components
 import Loading from "../layout/Loading";
 
+// Utils
+import handleGetAuthCode from "../../utils/handleGetAuthCode";
+
 const CommentBox = ({
 	submitBtn,
 	onGetComments,
@@ -124,8 +127,8 @@ const CommentBox = ({
 		inputErrors && setDebounce(true);
 	};
 
-	const handleFocus = () => setShowSubmitButton(true);
-
+	const handleFocus = () =>
+		user ? setShowSubmitButton(true) : handleGetAuthCode();
 	const handleCloseSubmitButton = () => {
 		textbox.current.style.height = "auto";
 		setShowSubmitButton(false);
@@ -187,7 +190,7 @@ const CommentBox = ({
 					<label
 						className={`${inputErrors?.content ? form.error : ""}`}
 					>
-						{!defaultValue && (
+						{user && !defaultValue && (
 							<div className={style.profile}>
 								<div className={style.avatar}>
 									{user?.name.charAt(0).toUpperCase()}
