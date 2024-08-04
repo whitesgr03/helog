@@ -10,6 +10,7 @@ import image from "../../styles/utils/image.module.css";
 
 // Components
 import CommentBox from "./CommentBox";
+import DeleteModel from "../layout/DeleteModel";
 
 // Utils
 import { createReply, updateReply, deleteReply } from "../../utils/handleReply";
@@ -30,6 +31,7 @@ const CommentDetail = ({
 }) => {
 	const {
 		user,
+		onModel,
 		accessToken,
 		handleVerifyTokenExpire,
 		handleExChangeToken,
@@ -66,25 +68,36 @@ const CommentDetail = ({
 		return result;
 	};
 
-	const handleDelete = async () => {
-		const isTokenExpire = await handleVerifyTokenExpire();
-		const newAccessToken = isTokenExpire && (await handleExChangeToken());
+	const handleActiveModel = () => {
+		const handleDelete = async () => {
+			const isTokenExpire = await handleVerifyTokenExpire();
+			const newAccessToken =
+				isTokenExpire && (await handleExChangeToken());
 
-		const obj = {
-			token: newAccessToken || accessToken,
+			const obj = {
+				token: newAccessToken || accessToken,
+			};
+
+			replyId ? (obj.replyId = replyId) : (obj.commentId = commentId);
+
+			const result = replyId
+				? await deleteReply(obj)
+				: await deleteComment(obj);
+
+			result.success
+				? replyId
+					? await handleGetReplies()
+					: await handleGetComments()
+				: onAlert({ message: result.message, error: true });
+
+			onModel(null);
 		};
-
-		replyId ? (obj.replyId = replyId) : (obj.commentId = commentId);
-
-		const result = replyId
-			? await deleteReply(obj)
-			: await deleteComment(obj);
-
-		result.success
-			? replyId
-				? await handleGetReplies()
-				: await handleGetComments()
-			: onAlert({ message: result.message, error: true });
+		onModel(
+			<DeleteModel
+				onDelete={handleDelete}
+				title={replyId ? "Reply" : "Comment"}
+			/>
+		);
 	};
 
 	const handleUpdate = async fields => {
@@ -128,7 +141,7 @@ const CommentDetail = ({
 						)}
 						{(isCommentAuthor || user?.isAdmin) && (
 							<div className={style.commentButton}>
-								<button onClick={handleDelete}>
+								<button onClick={handleActiveModel}>
 									<span
 										className={`${image.icon} ${style.delete}`}
 									/>
@@ -195,7 +208,7 @@ const CommentDetail = ({
 					</div>
 				)}
 
-				{user && (replyList || (!isDeleted && !showEditBox)) && (
+				{(replyList || (!isDeleted && !showEditBox)) && (
 					<div className={style.buttonWrap}>
 						{replyList && (
 							<button
@@ -211,7 +224,7 @@ const CommentDetail = ({
 								{replyList.length}
 							</button>
 						)}
-						{!isDeleted && !showEditBox && (
+						{user && !isDeleted && !showEditBox && (
 							<button
 								className={style.addReplyBtn}
 								onClick={handleShowReplyCommentBox}
