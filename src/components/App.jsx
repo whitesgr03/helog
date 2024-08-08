@@ -154,7 +154,7 @@ const App = () => {
 				<div className={style.app} data-testid="app">
 					{model && <Model onModel={setModel} model={model} />}
 					<AppProvider
-						setUser={onUser}
+						onUser={onUser}
 						accessToken={accessToken}
 						onModel={setModel}
 						onAlert={handleAlert}
