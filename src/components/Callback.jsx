@@ -53,6 +53,7 @@ const Callback = () => {
 
 				onAccessToken(access_token);
 				onRefreshToken(refresh_token);
+				console.log("callback");
 			};
 
 			result.success
