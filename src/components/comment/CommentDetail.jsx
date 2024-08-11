@@ -200,11 +200,7 @@ const CommentDetail = ({
 									: comment.reply.author.name}
 							</a>
 						)}
-						<p
-							dangerouslySetInnerHTML={{
-								__html: comment.content,
-							}}
-						/>
+						<p>{comment.content}</p>
 					</div>
 				)}
 

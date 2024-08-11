@@ -59,15 +59,9 @@ const Posts = ({ limit = 0 }) => {
 					</Link>
 
 					<Link to={`/posts/${post._id}`}>
-						<h3
-							className={style.title}
-							title={post.title}
-							dangerouslySetInnerHTML={{
-								__html: `${
-									post.title ? post.title : "( Empty Title )"
-								}`,
-							}}
-						/>
+						<h3 className={style.title} title={post.title}>
+							{post.title ?? "( Empty Title )"}
+						</h3>
 					</Link>
 				</li>
 			)

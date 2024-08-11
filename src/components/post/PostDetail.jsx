@@ -69,12 +69,7 @@ const PostDetail = () => {
 							</Link>
 
 							{post?.title && (
-								<h2
-									className={style.title}
-									dangerouslySetInnerHTML={{
-										__html: post.title,
-									}}
-								/>
+								<h2 className={style.title}>{post.title}</h2>
 							)}
 							<div className={style.dateTime}>
 								<strong>{post?.author?.name}</strong>
