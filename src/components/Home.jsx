@@ -34,7 +34,7 @@ const Home = () => {
 						become famous, both in the online community and in the
 						real world.
 					</p>
-					<Link to={`/posts`} className={style.link}>
+					<Link to={'/posts'} className={style.link}>
 						<span>Latest </span>
 						<span>All </span>Posts
 						<span
