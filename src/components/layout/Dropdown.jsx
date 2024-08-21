@@ -1,6 +1,7 @@
 // Packages
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 
 // Styles
 import style from "../../styles/layout/Dropdown.module.css";
@@ -15,9 +16,11 @@ import handleGetAuthCode from "../../utils/handleGetAuthCode.js";
 
 const Dropdown = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
+	const location = useLocation();
 
 	const handleLogout = async () => {
 		localStorage.removeItem("heLog.login-exp");
+		localStorage.setItem("heLog.logout-lastPath", location.pathname);
 		window.location.replace(
 			`${import.meta.env.VITE_RESOURCE_URL}/account/logout`
 		);

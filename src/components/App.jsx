@@ -98,6 +98,12 @@ const App = () => {
 	}, [onAccessToken, refreshToken, navigate, onError, onUser]);
 
 	useEffect(() => {
+		const logoutAfter =
+			localStorage.getItem("heLog.logout-lastPath") ?? false;
+		localStorage.removeItem("heLog.logout-lastPath");
+		logoutAfter && navigate(logoutAfter);
+	}, [navigate]);
+	useEffect(() => {
 		sessionStorage.setItem("heLog.lastPath", location.pathname);
 	}, [location]);
 	useEffect(() => {
