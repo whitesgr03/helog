@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import NotFound from "../components/NotFound";
 
 describe("NotFound component", () => {
-	it("should render correctly", () => {
+	it("should render DOM correctly", () => {
 		const { asFragment } = render(<NotFound />);
 
 		const actual = asFragment();
