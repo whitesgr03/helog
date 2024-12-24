@@ -2,17 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./styles/index.css";
 
-import App from "./components/App";
-import NotFound from "./components/layout/NotFound";
-import Home from "./components/Home";
-import PostList from "./components/post/PostList";
-import PostDetail from "./components/post/PostDetail";
+import { Login } from './components/pages/account/login';
 
-import Error from "./components/layout/Error";
-import Callback from "./components/Callback";
-
-import UserProvider from "./components/UserProvider";
-const router = () => (
+export const router = () => (
 	<RouterProvider
 		router={createBrowserRouter([
 			{
@@ -22,6 +14,10 @@ const router = () => (
 					{
 						index: true,
 						element: <Home />,
+					},
+					{
+						path: 'login',
+						element: <Login />,
 					},
 					{
 						path: '*',
