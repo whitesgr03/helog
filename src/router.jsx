@@ -16,37 +16,19 @@ const router = () => (
 	<RouterProvider
 		router={createBrowserRouter([
 			{
-				path: "/",
-				element: <UserProvider />,
+				path: '/',
+				element: <App />,
 				children: [
 					{
-						path: "/",
-						element: <App />,
-						children: [
-							{
-								path: "*",
-								element: <NotFound />,
-							},
-							{
-								index: true,
-								element: <Home />,
-							},
-							{
-								path: "posts",
-								element: <PostList />,
-							},
-							{
-								path: "posts/:postId",
-								element: <PostDetail />,
-							},
-						],
+						index: true,
+						element: <Home />,
 					},
 					{
-						path: "callback",
-						element: <Callback />,
+						path: '*',
+						element: <NotFound />,
 					},
 					{
-						path: "error",
+						path: 'error',
 						element: <Error />,
 					},
 				],
