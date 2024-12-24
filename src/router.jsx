@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import "./styles/index.css";
-
-import { Login } from './components/pages/account/login';
+import { Error } from './components/layout/Error';
 
 export const router = () => (
 	<RouterProvider
