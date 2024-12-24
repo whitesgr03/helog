@@ -17,8 +17,7 @@ export const Error = () => {
 					<p>{state?.error}</p>
 				) : (
 					<p>
-						Please come back later, or if you have any questions,
-						contact us.
+						Please come back later, or if you have any questions, contact us.
 					</p>
 				)}
 			</div>
