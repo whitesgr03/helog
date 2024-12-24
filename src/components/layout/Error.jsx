@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import style from "../../styles/layout/Error.module.css";
 import image from "../../styles/utils/image.module.css";
 
+export const Error = () => {
 	const { state } = useLocation();
 
 	return (
@@ -32,4 +33,3 @@ import image from "../../styles/utils/image.module.css";
 		</div>
 	);
 };
-export default Error;
