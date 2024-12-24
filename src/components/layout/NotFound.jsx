@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 // Styles
-import style from "../../styles/layout/Error.module.css";
-import image from "../../styles/utils/image.module.css";
+import style from '../../styles/layout/Error.module.css';
+import image from '../../styles/utils/image.module.css';
 
-const NotFound = () => {
+export const NotFound = () => {
 	return (
 		<div className={style.error}>
 			<span className={`${image.icon} ${style.alert}`} />
@@ -20,5 +20,3 @@ const NotFound = () => {
 		</div>
 	);
 };
-
-export default NotFound;
