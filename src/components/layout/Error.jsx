@@ -1,9 +1,9 @@
 // Packages
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 
 // Styles
-import style from "../../styles/layout/Error.module.css";
-import image from "../../styles/utils/image.module.css";
+import style from '../../styles/layout/Error.module.css';
+import image from '../../styles/utils/image.module.css';
 
 export const Error = () => {
 	const { state } = useLocation();
