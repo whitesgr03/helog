@@ -13,6 +13,14 @@ import Settings from './Settings.jsx';
 
 // Utils
 export const Dropdown = ({
+	user,
+	onUser,
+	darkTheme,
+	onSwitchColorTheme,
+	onCloseDropdown,
+	onModel,
+	onAlert,
+}) => {
 	const [activeSettings, setActiveSettings] = useState(false);
 	const location = useLocation();
 
@@ -92,6 +100,10 @@ export const Dropdown = ({
 
 Dropdown.propTypes = {
 	user: PropTypes.object,
+	onUser: PropTypes.func,
 	darkTheme: PropTypes.bool,
-	handleSwitchColorTheme: PropTypes.func,
+	onSwitchColorTheme: PropTypes.func,
+	onCloseDropdown: PropTypes.func,
+	onModel: PropTypes.func,
+	onAlert: PropTypes.func,
 };
