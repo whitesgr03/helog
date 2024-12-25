@@ -1,5 +1,5 @@
 // Styles
-import style from "../../styles/post/PostList.module.css";
+import style from '../../styles/post/PostList.module.css';
 
 // Components
 import Posts from "./Posts";
