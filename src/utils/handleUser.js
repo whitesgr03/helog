@@ -4,31 +4,28 @@ const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/user`;
 
 export const getUser = async ({ signal }) => {
 	const options = {
-		method: "GET",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
+		method: 'GET',
+		signal,
+		credentials: 'include',
 	};
 
 	return await handleFetch(url, options);
 };
 export const updateUser = async fields => {
 	const options = {
-		method: "PUT",
+		method: 'PATCH',
 		headers: {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "application/json",
+			'Content-Type': 'application/json',
 		},
+		credentials: 'include',
 		body: JSON.stringify(fields),
 	};
 	return await handleFetch(url, options);
 };
 export const deleteUser = async () => {
 	const options = {
-		method: "DELETE",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
+		method: 'DELETE',
+		credentials: 'include',
 	};
 	return await handleFetch(url, options);
 };
