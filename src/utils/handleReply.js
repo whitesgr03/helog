@@ -15,7 +15,7 @@ export const createReply = async ({ data }) => {
 };
 export const updateReply = async ({ data, replyId }) => {
 	const options = {
-		method: 'PUT',
+		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 		},

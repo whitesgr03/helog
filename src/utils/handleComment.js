@@ -15,7 +15,7 @@ export const createComment = async ({ data }) => {
 };
 export const updateComment = async ({ data, commentId }) => {
 	const options = {
-		method: 'PUT',
+		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 		},
