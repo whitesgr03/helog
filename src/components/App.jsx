@@ -3,18 +3,24 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 // Styles
-import style from "../styles/App.module.css";
+import style from '../styles/App.module.css';
 
 // Components
+import Header from './layout/Header';
+import Footer from './layout/Footer';
+import Contact from './layout/Contact';
+import Alert from './layout/Alert';
+import { Modal } from './layout/Modal';
+import { CreateUsername } from './layout/CreateUsername';
+import { Loading } from './layout/Loading';
 
 
 // Utils
-
-
+import { getUser } from '../utils/handleUser';
 
 // Variables
 const defaultAlert = {
-	message: "",
+	message: '',
 	error: false,
 };
 
