@@ -144,10 +144,6 @@ img {
 	vertical-align: middle;
 }
 
-img:not(#postDetail img) {
-	width: 100%;
-}
-
 /* Dark scheme classes */
 .dark * {
 	font-weight: 300;
@@ -180,4 +176,8 @@ img:not(#postDetail img) {
 
 .dark textarea::placeholder {
 	color: var(--dark-scheme-placeholder);
+}
+
+img:not(#post-detail img) {
+	width: 100%;
 }
