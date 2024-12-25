@@ -15,7 +15,7 @@ import Error from "../layout/Error";
 // Utils
 import { getPosts } from "../../utils/handlePost";
 
-const Posts = ({ limit = 0 }) => {
+export const Posts = ({ limit = 0 }) => {
 	const { user } = useOutletContext();
 	const [posts, setPosts] = useState([]);
 	const [error, setError] = useState(null);
@@ -110,5 +110,3 @@ const Posts = ({ limit = 0 }) => {
 Posts.propTypes = {
 	limit: PropTypes.number,
 };
-
-export default Posts;
