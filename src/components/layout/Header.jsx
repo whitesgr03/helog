@@ -13,7 +13,7 @@ import { transparentWindow } from "../../styles/utils/bgc.module.css";
 // Components
 import Dropdown from "./Dropdown";
 
-const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
+export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
 	const handleActiveDropdown = () => setActiveDropdown(!activeDropdown);
@@ -94,5 +94,3 @@ Header.propTypes = {
 	darkTheme: PropTypes.bool,
 	handleSwitchColorTheme: PropTypes.func,
 };
-
-export default Header;
