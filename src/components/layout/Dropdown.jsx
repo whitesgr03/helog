@@ -21,6 +21,7 @@ export const Dropdown = ({
 	onModel,
 	onAlert,
 }) => {
+	const [loading, setLoading] = useState(null);
 	const [activeSettings, setActiveSettings] = useState(false);
 	const location = useLocation();
 
@@ -79,6 +80,13 @@ export const Dropdown = ({
 						<li>
 							{user ? (
 								<button onClick={handleLogout}>
+									{loading ? (
+										<span
+											className={`${image.icon} ${loadingStyles.load} ${loadingStyles['load-desktop']}`}
+										/>
+									) : (
+										<span className={`${image.icon} ${style.logout}`} />
+									)}
 									Logout
 								</button>
 							) : (
