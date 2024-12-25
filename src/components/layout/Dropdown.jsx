@@ -19,14 +19,22 @@ const Dropdown = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const location = useLocation();
 
 	const handleLogout = async () => {
-		localStorage.removeItem("heLog.login-exp");
-		localStorage.setItem("heLog.logout-lastPath", location.pathname);
-		window.location.replace(
-			`${import.meta.env.VITE_RESOURCE_URL}/account/logout`
-		);
-	};
+		setLoading(true);
 
-	const handleLogin = async () => await handleGetAuthCode();
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
+
+		const options = {
+			method: 'POST',
+			credentials: 'include',
+		};
+
+		const result = await handleFetch(url, options);
+
+		result.success ? onUser(null) : setError(result.message);
+
+		setLoading(false);
+		onCloseDropdown();
+	};
 
 	const handleActiveSettings = () => setActiveSettings(true);
 	const handleCloseSettings = () => setActiveSettings(false);
