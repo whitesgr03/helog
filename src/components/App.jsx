@@ -26,21 +26,7 @@ const defaultAlert = {
 	error: false,
 };
 
-const App = () => {
-	const {
-		darkTheme,
-		user,
-		accessToken,
-		refreshToken,
-		error,
-		ignore,
-		onUser,
-		onError,
-		onAccessToken,
-		onColorTheme,
-	} = useOutletContext();
-	const [model, setModel] = useState(null);
-	const [loading, setLoading] = useState(true);
+  
 	const [alert, setAlert] = useState(defaultAlert);
 
 
