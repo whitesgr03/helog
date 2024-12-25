@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 // Styles
-import style from "../../styles/layout/Loading.module.css";
-import image from "../../styles/utils/image.module.css";
+import style from '../../styles/layout/Loading.module.css';
+import image from '../../styles/utils/image.module.css';
 
 export const Loading = ({ text, dark, light, shadow }) => {
 	return (
 		<div
-			className={`${style.loading} ${dark ? style.dark : ""} ${
-				light ? style.light : ""
-			} ${shadow ? style.shadow : ""}`}
+			className={`${style.loading} ${dark ? style.dark : ''} ${
+				light ? style.light : ''
+			} ${shadow ? style.shadow : ''}`}
 		>
 			<span className={`${image.icon} ${style.load}`} />
 			{text}
