@@ -113,7 +113,7 @@ export const App = () => {
 						</Modal>
 					)}
 
-					<div className={style.headerBar}>
+					<div className={style['header-bar']}>
 						<Header
 							user={user}
 							darkTheme={darkTheme}
