@@ -26,6 +26,7 @@ const defaultAlert = {
 	error: false,
 };
 
+	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [alert, setAlert] = useState(defaultAlert);
 
@@ -98,11 +99,7 @@ const defaultAlert = {
 							<Outlet
 								context={{
 									user,
-									error,
-									accessToken,
-									handleVerifyTokenExpire: handleTokenExpire,
-									handleExChangeToken: handleExChangeToken,
-									onModel: setModel,
+									onUser: setUser,
 									onAlert: handleAlert,
 								}}
 							/>
