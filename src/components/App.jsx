@@ -71,6 +71,25 @@ const App = () => {
 		getColorTheme();
 	}, []);
 
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+
+		const handleGetUser = async () => {
+			const result = await getUser({ signal });
+
+			const handleResult = () => {
+				result.success && setUser(result.data);
+				setLoading(false);
+			};
+
+			result && handleResult();
+		};
+		handleGetUser();
+		return () => controller.abort();
+	}, []);
+
+
 	return (
 		<>
 			{loading ? (
