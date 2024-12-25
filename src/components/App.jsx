@@ -23,6 +23,7 @@ const defaultAlert = {
 	error: false,
 };
 
+export const App = () => {
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [alert, setAlert] = useState(defaultAlert);
@@ -132,5 +133,3 @@ const defaultAlert = {
 		</>
 	);
 };
-
-export default App;
