@@ -4,32 +4,30 @@ const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/replies`;
 
 export const createReply = async ({ data }) => {
 	const options = {
-		method: "POST",
+		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "application/json",
+			'Content-Type': 'application/json',
 		},
+		credentials: 'include',
 		body: JSON.stringify(data),
 	};
 	return await handleFetch(url, options);
 };
 export const updateReply = async ({ data, replyId }) => {
 	const options = {
-		method: "PUT",
+		method: 'PUT',
 		headers: {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "application/json",
+			'Content-Type': 'application/json',
 		},
+		credentials: 'include',
 		body: JSON.stringify(data),
 	};
 	return await handleFetch(`${url}/${replyId}`, options);
 };
 export const deleteReply = async ({ replyId }) => {
 	const options = {
-		method: "DELETE",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
+		method: 'DELETE',
+		credentials: 'include',
 	};
 	return await handleFetch(`${url}/${replyId}`, options);
 };
