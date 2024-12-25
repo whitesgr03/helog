@@ -7,6 +7,7 @@ import { Navigate, Link, useLocation } from 'react-router-dom';
 import style from '../../styles/layout/Dropdown.module.css';
 import button from '../../styles/utils/button.module.css';
 import image from '../../styles/utils/image.module.css';
+import loadingStyles from '../../styles/layout/Loading.module.css';
 
 // Components
 import Settings from './Settings.jsx';
