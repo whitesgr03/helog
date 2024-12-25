@@ -1,7 +1,7 @@
 // Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from "react-router-dom";
+import { Navigate, Link, useLocation } from 'react-router-dom';
 
 // Styles
 import style from '../../styles/layout/Dropdown.module.css';
@@ -12,6 +12,8 @@ import image from '../../styles/utils/image.module.css';
 import Settings from './Settings.jsx';
 
 // Utils
+import { handleFetch } from '../../utils/handleFetch.js';
+
 export const Dropdown = ({
 	user,
 	onUser,
@@ -22,8 +24,10 @@ export const Dropdown = ({
 	onAlert,
 }) => {
 	const [loading, setLoading] = useState(null);
+	const [error, setError] = useState(null);
 	const [activeSettings, setActiveSettings] = useState(false);
-	const location = useLocation();
+
+	const { pathname: previousPath } = useLocation();
 
 	const handleLogout = async () => {
 		setLoading(true);
@@ -46,6 +50,10 @@ export const Dropdown = ({
 	const handleActiveSettings = () => setActiveSettings(true);
 	const handleCloseSettings = () => setActiveSettings(false);
 	return (
+		<>
+			{error ? (
+				<Navigate to="/error" state={{ error, previousPath }} />
+			) : (
 				<div className={style.dropdown}>
 					{user?.name && (
 						<div className={style.profile}>
