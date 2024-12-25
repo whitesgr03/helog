@@ -36,10 +36,10 @@ export const Posts = ({ limit = 0 }) => {
 						<em>
 							{format(
 								new Date(post.createdAt).getTime() ===
-									new Date(post.lastModified).getTime()
+									new Date(post.updatedAt).getTime()
 									? post.createdAt
-									: post.lastModified,
-								"MMMM d, y"
+									: post.updatedAt,
+								'MMMM d, y',
 							)}
 						</em>
 					</div>
