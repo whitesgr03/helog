@@ -12,9 +12,7 @@ import image from "../../styles/utils/image.module.css";
 import Settings from "./Settings";
 
 // Utils
-import handleGetAuthCode from "../../utils/handleGetAuthCode.js";
-
-const Dropdown = ({ user, darkTheme, handleSwitchColorTheme }) => {
+export const Dropdown = ({
 	const [activeSettings, setActiveSettings] = useState(false);
 	const location = useLocation();
 
@@ -104,5 +102,3 @@ Dropdown.propTypes = {
 	darkTheme: PropTypes.bool,
 	handleSwitchColorTheme: PropTypes.func,
 };
-
-export default Dropdown;
