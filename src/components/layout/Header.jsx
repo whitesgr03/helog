@@ -1,17 +1,17 @@
 // Packages
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Styles
-import style from "../../styles/layout/Header.module.css";
-import { sun, moon } from "../../styles/layout/Dropdown.module.css";
-import button from "../../styles/utils/button.module.css";
-import image from "../../styles/utils/image.module.css";
-import { transparentWindow } from "../../styles/utils/bgc.module.css";
+import style from '../../styles/layout/Header.module.css';
+import { sun, moon } from '../../styles/layout/Dropdown.module.css';
+import button from '../../styles/utils/button.module.css';
+import image from '../../styles/utils/image.module.css';
+import { transparentWindow } from '../../styles/utils/bgc.module.css';
 
 // Components
-import Dropdown from "./Dropdown";
+import { Dropdown } from './Dropdown';
 
 export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
@@ -49,16 +49,13 @@ export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 							<button onClick={handleSwitchColorTheme}>
 								<div className={button.theme}>
 									<span
-										data-testid={"icon"}
-										className={`${image.icon} ${
-											darkTheme ? moon : sun
-										}`}
+										data-testid={'icon'}
 									/>
 									<div>
 										<div />
 									</div>
 								</div>
-								<span>{darkTheme ? "Dark" : "Light"} mode</span>
+								<span>{darkTheme ? 'Dark' : 'Light'} mode</span>
 							</button>
 						</li>
 						<li>
