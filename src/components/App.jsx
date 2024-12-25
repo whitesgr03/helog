@@ -14,7 +14,6 @@ import { Modal } from './layout/Modal';
 import { CreateUsername } from './layout/CreateUsername';
 import { Loading } from './layout/Loading';
 
-
 // Utils
 import { getUser } from '../utils/handleUser';
 
@@ -36,6 +35,13 @@ const defaultAlert = {
 	const handleAlert = ({ message, error = false }) =>
 		setAlert({ message, error });
 	const handleCloseAlert = () => setAlert(defaultAlert);
+
+	const handleActiveModal = ({ component, clickToClose = true }) => {
+		document.body.removeAttribute('style');
+		component && (document.body.style.overflow = 'hidden');
+		component ? setModal({ component, clickToClose }) : setModal(null);
+	};
+
 	useEffect(() => {
 		const getColorTheme = () => {
 			const darkScheme = localStorage.getItem('darkTheme');
@@ -113,6 +119,7 @@ const defaultAlert = {
 								context={{
 									user,
 									onUser: setUser,
+									onActiveModal: handleActiveModal,
 									onAlert: handleAlert,
 								}}
 							/>
