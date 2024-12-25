@@ -26,7 +26,7 @@ const defaultAlert = {
 	error: false,
 };
 
-  
+	const [darkTheme, setDarkTheme] = useState(false);
 	const [alert, setAlert] = useState(defaultAlert);
 
 
@@ -89,31 +89,10 @@ const defaultAlert = {
 			{loading ? (
 				<Loading />
 			) : (
-				<div className={style.app} data-testid="app">
-					{model && <Model onModel={setModel} model={model} />}
-					<AppProvider
-						onUser={onUser}
-						accessToken={accessToken}
-						onModel={setModel}
-						onAlert={handleAlert}
-						handleVerifyTokenExpire={handleTokenExpire}
-						handleExChangeToken={handleExChangeToken}
-					>
-						<div className={style.headerBar}>
-							<Header
-								user={user}
-								darkTheme={darkTheme}
-								handleSwitchColorTheme={onColorTheme}
-							/>
-							{alert.message !== "" && (
-								<Alert
-									onCloseAlert={handleCloseAlert}
-									alert={alert}
-								/>
-							)}
-						</div>
-					</AppProvider>
-
+				<div
+					className={`${darkTheme ? 'dark' : ''} ${style.app}`}
+					data-testid="app"
+				>
 					<div className={style.container}>
 						<main>
 							<Outlet
