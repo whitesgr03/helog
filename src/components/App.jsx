@@ -1,5 +1,5 @@
 // Packages
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from 'react';
 import {
 	Outlet,
 	useOutletContext,
@@ -22,9 +22,8 @@ import Model from "./layout/Model";
 import { AppProvider } from "../contexts/AppContext";
 
 // Utils
-import handleGetAuthCode from "../utils/handleGetAuthCode";
-import { verifyToken, exChangeToken } from "../utils/handleToken";
-import { getUser } from "../utils/handleUser";
+
+
 
 // Variables
 const defaultAlert = {
