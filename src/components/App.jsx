@@ -89,6 +89,20 @@ const App = () => {
 		return () => controller.abort();
 	}, []);
 
+	useEffect(() => {
+		user &&
+			!user.username &&
+			handleActiveModal({
+				component: (
+					<CreateUsername
+						onActiveModal={handleActiveModal}
+						onUser={setUser}
+						onAlert={handleAlert}
+					/>
+				),
+				clickToClose: false,
+			});
+	}, [user]);
 
 	return (
 		<>
