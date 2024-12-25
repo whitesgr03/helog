@@ -1,17 +1,17 @@
 // Packages
-import { Navigate, useOutletContext } from "react-router-dom";
-import { useState } from "react";
+import { Navigate, useOutletContext } from 'react-router-dom';
+import { useState } from 'react';
 
 // style
-import image from "../../../styles/utils/image.module.css";
-import style from "../../../styles/pages/account/login.module.css";
+import image from '../../../styles/utils/image.module.css';
+import style from '../../../styles/pages/account/Login.module.css';
 
 // Components
-import { Loading } from "../../layout/Loading";
+import { Loading } from '../../layout/Loading';
 
 // Assets
-import googleIcon from "../../../assets/google.png";
-import facebookIcon from "../../../assets/facebook.png";
+import googleIcon from '../../../assets/google.png';
+import facebookIcon from '../../../assets/facebook.png';
 
 export const Login = () => {
 	const { user } = useOutletContext();
@@ -22,7 +22,7 @@ export const Login = () => {
 		setLoading(true);
 
 		window.location.assign(
-			`${import.meta.env.VITE_RESOURCE_URL}/account/login/${provider}`
+			`${import.meta.env.VITE_RESOURCE_URL}/account/login/${provider}`,
 		);
 
 		setLoading(false);
@@ -36,11 +36,11 @@ export const Login = () => {
 				<div className={style.account}>
 					<h3 className={style.title}>User Sign in</h3>
 					<div className={style.container}>
-						{loading && <Loading text={"Submitting..."} />}
+						{loading && <Loading text={'Submitting...'} />}
 						<div className={style.federation}>
 							<button
-								className={style["federation-button"]}
-								onClick={() => handleSocialLogin("google")}
+								className={style['federation-button']}
+								onClick={() => handleSocialLogin('google')}
 							>
 								<div className={`${image} ${style.google}`}>
 									<img src={googleIcon} alt="Google icon" />
@@ -48,14 +48,11 @@ export const Login = () => {
 								Sign in with Google
 							</button>
 							<button
-								className={style["federation-button"]}
-								onClick={() => handleSocialLogin("facebook")}
+								className={style['federation-button']}
+								onClick={() => handleSocialLogin('facebook')}
 							>
 								<div className={`${image} ${style.facebook}`}>
-									<img
-										src={facebookIcon}
-										alt="Facebook icon"
-									/>
+									<img src={facebookIcon} alt="Facebook icon" />
 								</div>
 								Sign in with Facebook
 							</button>
