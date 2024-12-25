@@ -62,6 +62,7 @@
 	overflow-wrap: break-word;
 	overflow-wrap: anywhere;
 }
+
 [hidden] {
 	display: none !important;
 }
@@ -76,28 +77,28 @@ h3,
 h4,
 h5,
 h6 {
+	margin: 0;
 	font-weight: 700;
 	line-height: 1.2em;
-	margin: 0;
 }
 
 a {
-	text-decoration: none;
-	color: inherit;
 	cursor: pointer;
+	color: inherit;
 	color: var(--light-scheme-color);
+	text-decoration: none;
 }
 
 p {
-	white-space: break-spaces;
-	line-height: 1.5em;
 	margin: 0;
+	line-height: 1.5em;
+	white-space: break-spaces;
 }
 
 button {
-	background-color: transparent;
-	border: 0;
 	cursor: pointer;
+	border: 0;
+	background-color: transparent;
 	color: var(--light-scheme-color);
 }
 
@@ -126,8 +127,8 @@ textarea {
 }
 
 img {
-	height: auto;
 	vertical-align: middle;
+	height: auto;
 }
 
 /* Dark scheme classes */
@@ -156,6 +157,7 @@ img {
 .dark button {
 	color: var(--dark-scheme-color);
 }
+
 .dark a {
 	color: var(--dark-scheme-color);
 }
