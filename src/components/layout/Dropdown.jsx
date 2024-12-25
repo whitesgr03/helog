@@ -107,10 +107,7 @@ export const Dropdown = ({
 						</li>
 					</ul>
 					{activeSettings && (
-						<Settings
-							user={user}
-							handleCloseSettings={handleCloseSettings}
-						/>
+						<Settings user={user} handleCloseSettings={handleCloseSettings} />
 					)}
 				</div>
 			)}
