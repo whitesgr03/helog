@@ -90,7 +90,11 @@ export const Dropdown = ({
 									Logout
 								</button>
 							) : (
+                    <Link to="login"
+                    >
+									<span className={`${image.icon} ${style.login}`} />
 									Login
+								</Link>
 							)}
 						</li>
 					</ul>
