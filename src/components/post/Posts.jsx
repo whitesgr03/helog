@@ -30,11 +30,8 @@ export const Posts = ({ limit = 0 }) => {
 			post?.content !== '' && (
 				<li key={post._id}>
 					<div className={style.info}>
-						<strong
-							className={style.dateTime}
-							title={post.author.name}
-						>
-							{post.author.name}
+						<strong className={style.dateTime} title={post.author.username}>
+							{post.author.username}
 						</strong>
 						<em>
 							{format(
