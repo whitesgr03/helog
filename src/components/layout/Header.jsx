@@ -22,11 +22,7 @@ export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 	return (
 		<>
 			<header className={style.header}>
-				<Link
-					to="/"
-					className={style.logo}
-					onClick={handleCloseDropdown}
-				>
+				<Link to="/" className={style.logo} onClick={handleCloseDropdown}>
 					<h1>HeLog</h1>
 				</Link>
 				<nav>
@@ -38,9 +34,7 @@ export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 										import.meta.env.VITE_HELOG_EDITOR_URL
 									}?darkTheme=${darkTheme}`}
 								>
-									<span
-										className={`${image.icon} ${style.pencil}`}
-									/>
+									<span className={`${image.icon} ${style.pencil}`} />
 									Write
 								</a>
 							</li>
@@ -50,6 +44,7 @@ export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 								<div className={button.theme}>
 									<span
 										data-testid={'icon'}
+										className={`${image.icon} ${darkTheme ? moon : sun}`}
 									/>
 									<div>
 										<div />
@@ -60,9 +55,7 @@ export const Header = ({ user, darkTheme, handleSwitchColorTheme }) => {
 						</li>
 						<li>
 							<button onClick={handleActiveDropdown}>
-								<span
-									className={`${image.icon} ${style.account}`}
-								/>
+								<span className={`${image.icon} ${style.account}`} />
 								Account
 							</button>
 						</li>
