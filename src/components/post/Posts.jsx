@@ -1,19 +1,23 @@
 // Packages
-import { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { Link, useOutletContext } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import {
+	Link,
+	useOutletContext,
+	Navigate,
+	useLocation,
+} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Styles
-import style from "../../styles/post/Posts.module.css";
-import image from "../../styles/utils/image.module.css";
+import style from '../../styles/post/Posts.module.css';
+import image from '../../styles/utils/image.module.css';
 
 // Components
-import Loading from "../layout/Loading";
-import Error from "../layout/Error";
+import { Loading } from '../layout/Loading';
 
 // Utils
-import { getPosts } from "../../utils/handlePost";
+import { getPosts } from '../../utils/handlePost';
 
 export const Posts = ({ limit = 0 }) => {
 	const { user } = useOutletContext();
@@ -23,7 +27,7 @@ export const Posts = ({ limit = 0 }) => {
 
 	const items = posts.map(
 		post =>
-			post?.content !== "" && (
+			post?.content !== '' && (
 				<li key={post._id}>
 					<div className={style.info}>
 						<strong
@@ -52,7 +56,7 @@ export const Posts = ({ limit = 0 }) => {
 								/>
 							) : (
 								<div className={style.emptyImageWrap}>
-									{"( Empty Main Image )"}
+									{'( Empty Main Image )'}
 								</div>
 							)}
 						</div>
@@ -60,7 +64,7 @@ export const Posts = ({ limit = 0 }) => {
 
 					<Link to={`/posts/${post._id}`}>
 						<h3 className={style.title} title={post.title}>
-							{post.title ?? "( Empty Title )"}
+							{post.title ?? '( Empty Title )'}
 						</h3>
 					</Link>
 				</li>
