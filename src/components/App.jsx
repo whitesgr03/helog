@@ -1,11 +1,6 @@
 // Packages
 import { useState, useEffect } from 'react';
-import {
-	Outlet,
-	useOutletContext,
-	useLocation,
-	useNavigate,
-} from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 // Styles
 import style from "../styles/App.module.css";
@@ -48,8 +43,7 @@ const App = () => {
 	const [loading, setLoading] = useState(true);
 	const [alert, setAlert] = useState(defaultAlert);
 
-	const location = useLocation();
-	const navigate = useNavigate();
+
 
 	const handleAlert = ({ message, error = false }) =>
 		setAlert({ message, error });
