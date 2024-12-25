@@ -90,8 +90,7 @@ export const Dropdown = ({
 									Logout
 								</button>
 							) : (
-                    <Link to="login"
-                    >
+								<Link to="login" onClick={onCloseDropdown}>
 									<span className={`${image.icon} ${style.login}`} />
 									Login
 								</Link>
