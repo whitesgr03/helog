@@ -9,7 +9,7 @@ import { Login } from './components/pages/account/Login';
 
 import { Error } from './components/layout/Error';
 
-export const router = () => (
+export const Router = () => (
 	<RouterProvider
 		router={createBrowserRouter([
 			{
@@ -37,5 +37,3 @@ export const router = () => (
 		])}
 	/>
 );
-
-export default router;
