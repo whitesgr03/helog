@@ -25,6 +25,8 @@ export const Posts = ({ limit = 0 }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(true);
 
+	const { pathname: previousPath } = useLocation();
+
 	const items = posts.map(
 		post =>
 			post?.content !== '' && (
@@ -86,10 +88,10 @@ export const Posts = ({ limit = 0 }) => {
 
 	return (
 		<>
-			{loading ? (
+			{error ? (
+				<Navigate to="/error" state={{ error, previousPath }} />
+			) : loading ? (
 				<Loading />
-			) : error ? (
-				<Error message={error} />
 			) : (
 				<>
 					{items.length > 0 ? (
