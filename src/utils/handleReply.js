@@ -1,8 +1,8 @@
-import handleFetch from "./handleFetch";
+import { handleFetch } from './handleFetch';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/replies`;
 
-const createReply = async ({ token, data }) => {
+export const createReply = async ({ data }) => {
 	const options = {
 		method: "POST",
 		headers: {
@@ -13,7 +13,7 @@ const createReply = async ({ token, data }) => {
 	};
 	return await handleFetch(url, options);
 };
-const updateReply = async ({ token, data, replyId }) => {
+export const updateReply = async ({ data, replyId }) => {
 	const options = {
 		method: "PUT",
 		headers: {
@@ -24,7 +24,7 @@ const updateReply = async ({ token, data, replyId }) => {
 	};
 	return await handleFetch(`${url}/${replyId}`, options);
 };
-const deleteReply = async ({ token, replyId }) => {
+export const deleteReply = async ({ replyId }) => {
 	const options = {
 		method: "DELETE",
 		headers: {
@@ -33,5 +33,3 @@ const deleteReply = async ({ token, replyId }) => {
 	};
 	return await handleFetch(`${url}/${replyId}`, options);
 };
-
-export { createReply, updateReply, deleteReply };
