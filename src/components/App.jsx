@@ -26,7 +26,9 @@ const defaultAlert = {
 export const App = () => {
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [alert, setAlert] = useState(defaultAlert);
+	const [modal, setModal] = useState(null);
 
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
@@ -102,6 +104,15 @@ export const App = () => {
 					className={`${darkTheme ? 'dark' : ''} ${style.app}`}
 					data-testid="app"
 				>
+					{modal && (
+						<Modal
+							onActiveModal={handleActiveModal}
+							clickToClose={modal.clickToClose}
+						>
+							{modal.component}
+						</Modal>
+					)}
+
 					<div className={style.headerBar}>
 						<Header
 							user={user}
