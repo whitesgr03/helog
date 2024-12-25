@@ -47,10 +47,7 @@ export const Posts = ({ limit = 0 }) => {
 					<Link to={`/posts/${post._id}`}>
 						<div className={image.content}>
 							{post.mainImageUrl ? (
-								<img
-									src={post.mainImageUrl}
-									alt={`${post.title} main image`}
-								/>
+								<img src={post.mainImageUrl} alt={`${post.title} main image`} />
 							) : (
 								<div className={style.emptyImageWrap}>
 									{'( Empty Main Image )'}
@@ -65,7 +62,7 @@ export const Posts = ({ limit = 0 }) => {
 						</h3>
 					</Link>
 				</li>
-			)
+			),
 	);
 
 	useEffect(() => {
@@ -76,9 +73,7 @@ export const Posts = ({ limit = 0 }) => {
 			const result = await getPosts({ limit, signal });
 
 			const handleResult = () => {
-				result.success
-					? setPosts(result.data)
-					: setError(result.message);
+				result.success ? setPosts(result.data) : setError(result.message);
 				setLoading(false);
 			};
 
