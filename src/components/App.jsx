@@ -28,7 +28,10 @@ const defaultAlert = {
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [alert, setAlert] = useState(defaultAlert);
 
-
+	const handleColorTheme = () => {
+		setDarkTheme(!darkTheme);
+		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
+	};
 
 	const handleAlert = ({ message, error = false }) =>
 		setAlert({ message, error });
@@ -92,8 +95,18 @@ const defaultAlert = {
 					className={`${darkTheme ? 'dark' : ''} ${style.app}`}
 					data-testid="app"
 				>
-
-            
+					<div className={style.headerBar}>
+						<Header
+							user={user}
+							darkTheme={darkTheme}
+							onUser={setUser}
+							onAlert={handleAlert}
+							handleSwitchColorTheme={handleColorTheme}
+						/>
+						{alert.message !== '' && (
+							<Alert onCloseAlert={handleCloseAlert} alert={alert} />
+						)}
+					</div>
 					<div className={style.container}>
 						<main>
 							<Outlet
