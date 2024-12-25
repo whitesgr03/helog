@@ -64,8 +64,10 @@ export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
 				{activeDropdown && (
 					<Dropdown
 						user={user}
+						onUser={onUser}
 						darkTheme={darkTheme}
-						handleSwitchColorTheme={handleSwitchColorTheme}
+						onSwitchColorTheme={handleSwitchColorTheme}
+						onCloseDropdown={handleCloseDropdown}
 					/>
 				)}
 			</header>
