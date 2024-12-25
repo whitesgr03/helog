@@ -6,7 +6,7 @@ import style from '../styles/Home.module.css';
 import image from '../styles/utils/image.module.css';
 
 // Components
-import Posts from "./post/Posts";
+import { Posts } from './post/Posts';
 
 // Variables
 import url from '../assets/bram-naus-n8Qb1ZAkK88-unsplash.jpg';
