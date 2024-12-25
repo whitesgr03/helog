@@ -6,15 +6,7 @@ import { Outlet } from 'react-router-dom';
 import style from "../styles/App.module.css";
 
 // Components
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
-import Contact from "./layout/Contact";
-import Loading from "./layout/Loading";
-import Alert from "./layout/Alert";
-import Model from "./layout/Model";
 
-// Contexts
-import { AppProvider } from "../contexts/AppContext";
 
 // Utils
 
@@ -94,6 +86,8 @@ const defaultAlert = {
 					className={`${darkTheme ? 'dark' : ''} ${style.app}`}
 					data-testid="app"
 				>
+
+            
 					<div className={style.container}>
 						<main>
 							<Outlet
