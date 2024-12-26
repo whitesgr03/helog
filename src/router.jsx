@@ -2,14 +2,15 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import './styles/index.css';
 
-import { App } from './components/App';
-import { NotFound } from './components/layout/NotFound';
-import { Home } from './components/Home';
-import { PostList } from './components/post/PostList';
-import { Login } from './components/pages/account/Login';
-import { CheckUsername } from './components/pages/utils/CheckUsername';
+import { App } from './components/pages/App/App';
+import { Home } from './components/pages/Home/Home';
+import { PostList } from './components/pages/Post/PostList';
 
-import { Error } from './components/layout/Error';
+import { Login } from './components/pages/Account/Login';
+import { CheckUsername } from './components/utils/CheckUsername';
+
+import { Error } from './components/utils/Error';
+import { NotFound } from './components/utils/NotFound';
 
 export const Router = () => (
 	<RouterProvider
