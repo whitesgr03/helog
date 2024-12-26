@@ -1,34 +1,34 @@
 // Packages
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 // Styles
-import style from "../../styles/layout/Settings.module.css";
-import { blurWindow } from "../../styles/utils/bgc.module.css";
-import button from "../../styles/utils/button.module.css";
-import image from "../../styles/utils/image.module.css";
+import styles from './Settings.module.css';
+import bgcStyles from '../../styles/bgc.module.css';
+import buttonStyles from '../../styles/button.module.css';
+import imageStyles from '../../styles/image.module.css';
 
 // Components
-import { AppContext } from "../../contexts/AppContext";
-import ChangeNameModel from "./ChangeNameModel";
-import DeleteModel from "./DeleteModel";
+// import { AppContext } from "../../contexts/AppContext";
+import { ChangeNameModel } from './ChangeNameModel';
+import { DeleteModel } from './DeleteModel';
 
 // Utils
-import { deleteUser } from "../../utils/handleUser";
+import { deleteUser } from '../../utils/handleUser';
 
 // Variable
 const models = {
 	changeName: ChangeNameModel,
 	deleteAccount: DeleteModel,
 };
-const Settings = ({ user, handleCloseSettings }) => {
-	const {
-		onModel,
-		onAlert,
-		onUser,
-		accessToken,
-		handleVerifyTokenExpire: onVerifyTokenExpire,
-		handleExChangeToken: onExChangeToken,
-	} = AppContext();
+const Settings = ({ user, onUser, handleCloseSettings, onModel, onAlert }) => {
+	// const {
+	// 	onModel,
+	// 	onAlert,
+	// 	onUser,
+	// 	accessToken,
+	// 	handleVerifyTokenExpire: onVerifyTokenExpire,
+	// 	handleExChangeToken: onExChangeToken,
+	// } = AppContext();
 
 	const handleActiveModel = type => {
 		const Model = models[type];
@@ -37,49 +37,48 @@ const Settings = ({ user, handleCloseSettings }) => {
 			onModel,
 			onAlert,
 			onUser,
-			accessToken,
-			onVerifyTokenExpire,
-			onExChangeToken,
+			// accessToken,
+			// onVerifyTokenExpire,
+			// onExChangeToken,
 		};
 
 		switch (type) {
-			case "changeName":
+			case 'changeName':
 				{
 					props = { ...props, defaultValue: user.name };
 				}
 				break;
-			case "deleteAccount":
+			case 'deleteAccount':
 				{
-					const handleDelete = async () => {
-						const isTokenExpire = await onVerifyTokenExpire();
-						const newAccessToken =
-							isTokenExpire && (await onExChangeToken());
+					// const handleDelete = async () => {
+					// 	// const isTokenExpire = await onVerifyTokenExpire();
+					// 	// const newAccessToken =
+					// 	// 	isTokenExpire && (await onExChangeToken());
 
-						const result = await deleteUser(
-							newAccessToken || accessToken
-						);
+					// 	const result = await deleteUser();
+					// 	// newAccessToken || accessToken
 
-						const handleLogout = () => {
-							window.location.replace(
-								`${
-									import.meta.env.VITE_RESOURCE_URL
-								}/account/logout`
-							);
-							localStorage.removeItem("heLog.login-exp");
-							onUser(null);
-							handleCloseSettings();
-							onModel(null);
-						};
+					// 	const handleLogout = () => {
+					// 		window.location.replace(
+					// 			`${
+					// 				import.meta.env.VITE_RESOURCE_URL
+					// 			}/account/logout`
+					// 		);
+					// 		localStorage.removeItem("heLog.login-exp");
+					// 		onUser(null);
+					// 		handleCloseSettings();
+					// 		onModel(null);
+					// 	};
 
-						result.success
-							? handleLogout()
-							: onAlert({ message: result.message, error: true });
-					};
+					// 	result.success
+					// 		? handleLogout()
+					// 		: onAlert({ message: result.message, error: true });
+					// };
 
 					props = {
 						...props,
-						title: "Account",
-						onDelete: handleDelete,
+						title: 'Account',
+						onCloseSettings: handleCloseSettings,
 					};
 				}
 				break;
@@ -97,14 +96,10 @@ const Settings = ({ user, handleCloseSettings }) => {
 			className={blurWindow}
 			onClick={handleClick}
 			data-close-setting
-			data-testid={"blurBgc"}
+			data-testid={'blurBgc'}
 		>
 			<div className={style.settings}>
-				<button
-					type="button"
-					className={button.closeBtn}
-					data-close-setting
-				>
+				<button type="button" className={button.closeBtn} data-close-setting>
 					<span className={`${image.icon} ${button.close}`} />
 				</button>
 				<div className={style.header}>Settings</div>
@@ -120,7 +115,7 @@ const Settings = ({ user, handleCloseSettings }) => {
 							{user && <span>{user.name}</span>}
 							<button
 								className={style.changeBtn}
-								onClick={() => handleActiveModel("changeName")}
+								onClick={() => handleActiveModel('changeName')}
 							>
 								Change name
 							</button>
@@ -133,7 +128,7 @@ const Settings = ({ user, handleCloseSettings }) => {
 							<strong className={style.title}>Delete</strong>
 							<button
 								className={style.deleteBtn}
-								onClick={() => handleActiveModel("deleteAccount")}
+								onClick={() => handleActiveModel('deleteAccount')}
 							>
 								Delete account
 							</button>
@@ -148,6 +143,9 @@ const Settings = ({ user, handleCloseSettings }) => {
 Settings.propTypes = {
 	user: PropTypes.object,
 	handleCloseSettings: PropTypes.func,
+	onUser: PropTypes.func,
+	onModel: PropTypes.func,
+	onAlert: PropTypes.func,
 };
 
 export default Settings;

@@ -1,27 +1,27 @@
 // Packages
-import { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
-import { object, string } from "yup";
+import { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { object, string } from 'yup';
 
 // Styles
-import style from "../../styles/layout/ChangeNameModel.module.css";
-import form from "../../styles/utils/form.module.css";
-import button from "../../styles/utils/button.module.css";
-import image from "../../styles/utils/image.module.css";
+import style from '../../styles/layout/ChangeNameModel.module.css';
+import form from '../../styles/utils/form.module.css';
+import button from '../../styles/utils/button.module.css';
+import image from '../../styles/utils/image.module.css';
 
 // Utils
-import { updateUser } from "../../utils/handleUser";
+import { updateUser } from '../../utils/handleUser';
 
 const ChangeNameModel = ({
 	onModel,
 	onAlert,
 	defaultValue,
 	onUser,
-	accessToken,
-	onVerifyTokenExpire,
-	onExChangeToken,
+	// accessToken,
+	// onVerifyTokenExpire,
+	// onExChangeToken,
 }) => {
-	const defaultForm = { name: defaultValue || "" };
+	const defaultForm = { name: defaultValue || '' };
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
 	const [debounce, setDebounce] = useState(false);
@@ -33,9 +33,9 @@ const ChangeNameModel = ({
 		const schema = object({
 			name: string()
 				.trim()
-				.required("The name is required.")
+				.required('The name is required.')
 				.max(30, ({ max }) => `The name must be less than ${max} long.`)
-				.matches(/^[a-zA-Z0-9]\w*$/, "The name must be alphanumeric."),
+				.matches(/^[a-zA-Z0-9]\w*$/, 'The name must be alphanumeric.'),
 		}).noUnknown();
 
 		try {
@@ -57,12 +57,12 @@ const ChangeNameModel = ({
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		const isTokenExpire = await onVerifyTokenExpire();
-		const newAccessToken = isTokenExpire && (await onExChangeToken());
+		// const isTokenExpire = await onVerifyTokenExpire();
+		// const newAccessToken = isTokenExpire && (await onExChangeToken());
 
 		const result = await updateUser(
-			newAccessToken || accessToken,
-			formFields
+			// newAccessToken || accessToken,
+			formFields,
 		);
 
 		const handleSetUser = async data => {
@@ -81,8 +81,8 @@ const ChangeNameModel = ({
 		result.success
 			? handleSetUser(result.data)
 			: result?.errors
-			? handleSetInputErrors()
-			: onAlert({ message: result.message, error: true });
+				? handleSetInputErrors()
+				: onAlert({ message: result.message, error: true });
 
 		setLoading(false);
 	};
@@ -107,10 +107,7 @@ const ChangeNameModel = ({
 
 	useEffect(() => {
 		debounce &&
-			(timer.current = setTimeout(
-				() => handleValidFields(formFields),
-				500
-			));
+			(timer.current = setTimeout(() => handleValidFields(formFields), 500));
 
 		return () => clearTimeout(timer.current);
 	}, [debounce, formFields]);
@@ -121,7 +118,7 @@ const ChangeNameModel = ({
 				<div className={form.labelWrap}>
 					<label
 						htmlFor="changeName"
-						className={`${inputErrors?.name ? form.error : ""}`}
+						className={`${inputErrors?.name ? form.error : ''}`}
 					>
 						Change Name
 						<input
@@ -135,16 +132,14 @@ const ChangeNameModel = ({
 					<div>
 						<span className={`${image.icon} ${form.alert}`} />
 						<span className={form.placeholder}>
-							{inputErrors?.name ?? "Message placeholder"}
+							{inputErrors?.name ?? 'Message placeholder'}
 						</span>
 					</div>
 				</div>
 
 				<button
 					type="submit"
-					className={`${button.success} ${
-						loading ? button.loading : ""
-					}`}
+					className={`${button.success} ${loading ? button.loading : ''}`}
 				>
 					<span className={button.text}>
 						Save
@@ -161,9 +156,9 @@ ChangeNameModel.propTypes = {
 	onAlert: PropTypes.func,
 	defaultValue: PropTypes.string,
 	onUser: PropTypes.func,
-	accessToken: PropTypes.string,
-	onVerifyTokenExpire: PropTypes.func,
-	onExChangeToken: PropTypes.func,
+	// accessToken: PropTypes.string,
+	// onVerifyTokenExpire: PropTypes.func,
+	// onExChangeToken: PropTypes.func,
 };
 
 export default ChangeNameModel;

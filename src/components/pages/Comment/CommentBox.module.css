@@ -1,0 +1,87 @@
+.commentBox {
+	position: relative;
+	z-index: 0;
+}
+
+.commentBox.loading {
+	padding: 1px;
+}
+
+.blur {
+	display: flex;
+	position: absolute;
+	top: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
+	backdrop-filter: blur(3px);
+	background-color: rgba(var(--light-scheme-main-bgc-rgb), 0.8);
+	width: 100%;
+	height: 100%;
+}
+
+.profile {
+	display: flex;
+	column-gap: 10px;
+	align-items: center;
+}
+
+.profile h4 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.avatar {
+	--size: var(--icon-size-desktop);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100%;
+	background-color: var(--light-scheme-color);
+	width: var(--size);
+	height: var(--size);
+	color: var(--dark-scheme-color);
+	font-size: calc(var(--size) / 2);
+}
+
+.commentBox textarea {
+	background-color: var(--light-scheme-layout-bgc);
+}
+
+.buttonWrap {
+	display: flex;
+	column-gap: 15px;
+	justify-content: flex-end;
+}
+
+.buttonWrap button {
+	border-radius: 20px;
+	padding: 10px;
+}
+
+/* Dark scheme classes */
+:global(.dark) .avatar {
+	background-color: var(--dark-scheme-color);
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .box {
+	background-color: var(--dark-scheme-input-bgc);
+}
+
+@media (min-width: 450px) {
+	.avatar {
+		--size: calc(var(--icon-size-mobile));
+	}
+
+	.buttonWrap {
+		column-gap: 30px;
+	}
+}
+@media (min-width: 700px) {
+	.buttonWrap button {
+		padding: 10px 20px;
+	}
+}

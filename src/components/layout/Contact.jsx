@@ -1,19 +1,17 @@
 // Styles
-import style from "../../styles/layout/Contact.module.css";
+import styles from './Contact.module.css';
 
 // Components
-import Address from "./Address";
+import Address from './Address';
 
-const Contact = () => {
+export const Contact = () => {
 	return (
-		<div className={style.contact}>
+		<div className={styles.contact}>
 			<h3>Contact</h3>
 			<p>Please contact us, If you have any questions.</p>
-			<div className={style.container}>
+			<div className={styles.container}>
 				<Address />
 			</div>
 		</div>
 	);
 };
-
-export default Contact;

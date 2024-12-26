@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Styles
-import style from '../../styles/layout/Header.module.css';
-import { sun, moon } from '../../styles/layout/Dropdown.module.css';
-import button from '../../styles/utils/button.module.css';
-import image from '../../styles/utils/image.module.css';
-import { transparentWindow } from '../../styles/utils/bgc.module.css';
+import styles from './Header.module.css';
+import buttonStyles from '../../styles/button.module.css';
+import imageStyles from '../../styles/image.module.css';
+import bgcStyles from '../../styles/bgc.module.css';
 
 // Components
 import { Dropdown } from './Dropdown';
@@ -21,12 +20,12 @@ export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
 
 	return (
 		<>
-			<header className={style.header}>
-				<Link to="/" className={style.logo} onClick={handleCloseDropdown}>
+			<header className={styles.header}>
+				<Link to="/" className={styles.logo} onClick={handleCloseDropdown}>
 					<h1>HeLog</h1>
 				</Link>
 				<nav>
-					<ul className={style.list}>
+					<ul className={styles.list}>
 						{user && (
 							<li>
 								<a
@@ -34,17 +33,17 @@ export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
 										import.meta.env.VITE_HELOG_EDITOR_URL
 									}?darkTheme=${darkTheme}`}
 								>
-									<span className={`${image.icon} ${style.pencil}`} />
+									<span className={`${imageStyles.icon} ${styles.pencil}`} />
 									Write
 								</a>
 							</li>
 						)}
-						<li className={style.toggleBtn}>
+						<li className={styles.toggleBtn}>
 							<button onClick={handleSwitchColorTheme}>
-								<div className={button.theme}>
+								<div className={buttonStyles.theme}>
 									<span
 										data-testid={'icon'}
-										className={`${image.icon} ${darkTheme ? moon : sun}`}
+										className={`${imageStyles.icon} ${darkTheme ? styles.moon : styles.sun}`}
 									/>
 									<div>
 										<div />
@@ -55,7 +54,7 @@ export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
 						</li>
 						<li>
 							<button onClick={handleActiveDropdown}>
-								<span className={`${image.icon} ${style.account}`} />
+								<span className={`${imageStyles.icon} ${styles.account}`} />
 								Account
 							</button>
 						</li>
@@ -73,7 +72,7 @@ export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
 			</header>
 			{activeDropdown && (
 				<div
-					className={transparentWindow}
+					className={bgcStyles.transparentWindow}
 					onClick={handleCloseDropdown}
 					data-testid="transparentBgc"
 				/>

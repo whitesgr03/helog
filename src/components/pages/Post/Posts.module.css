@@ -1,0 +1,99 @@
+.posts li {
+	display: flex;
+	row-gap: 10px;
+	flex-direction: column;
+	padding: 5%;
+}
+
+.posts .info {
+	display: flex;
+	column-gap: 15px;
+}
+
+.posts .info > strong {
+	flex: 1 1 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.posts .info > em {
+	flex: 1 0 auto;
+}
+
+.posts li .title {
+	display: -webkit-box;
+	color: var(--light-scheme-highlight);
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.posts li .content {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.dateTime {
+	font-style: italic;
+}
+
+.emptyImageWrap {
+	display: flex;
+	position: absolute;
+	top: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid var(--dark-scheme-placeholder);
+	border-style: dashed;
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+}
+
+/* Pseudo classes */
+.posts li a img:hover {
+	opacity: 0.8;
+}
+.posts li .title:hover {
+	text-decoration: underline;
+}
+
+.emptyImageWrap:hover {
+	border-color: var(--light-scheme-color);
+}
+
+/* Dark scheme classes */
+:global(.dark) .posts li {
+	color: var(--dark-scheme-color);
+}
+:global(.dark) .posts li .title {
+	color: var(--dark-scheme-highlight);
+}
+
+:global(.dark) .emptyImageWrap:hover {
+	border-color: var(--dark-scheme-color);
+}
+
+@media (min-width: 400px) {
+	.posts li {
+		padding: 5% 10%;
+	}
+}
+@media (min-width: 700px) {
+	.posts li {
+		padding: 5% 15%;
+	}
+}
+
+@media (min-width: 1000px) {
+	.posts li {
+		row-gap: 20px;
+		padding: 0;
+	}
+}

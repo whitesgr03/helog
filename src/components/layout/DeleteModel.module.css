@@ -1,0 +1,66 @@
+.model {
+	display: flex;
+	position: relative;
+	row-gap: 20px;
+	flex-direction: column;
+	padding: 15px;
+}
+
+.loading {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
+	background-color: rgba(var(--dark-scheme-color-rgb), 0.8);
+}
+
+.title {
+	font-weight: 700;
+}
+
+.content {
+	align-self: center;
+}
+
+.buttonWrap {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.buttonWrap button {
+	width: 40%;
+}
+
+/* Dark scheme classes */
+:global(.dark) .cancelBtn {
+	background-color: var(--dark-scheme-color);
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .loading {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.6);
+}
+
+@media (min-width: 450px) {
+	.model {
+		row-gap: 40px;
+		padding: 20px;
+	}
+}
+
+@media (min-width: 700px) {
+	.model form {
+		row-gap: 20px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.model {
+		padding: 30px 40px;
+	}
+}

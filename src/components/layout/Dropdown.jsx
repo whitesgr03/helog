@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Navigate, Link, useLocation } from 'react-router-dom';
 
 // Styles
-import style from '../../styles/layout/Dropdown.module.css';
-import button from '../../styles/utils/button.module.css';
-import image from '../../styles/utils/image.module.css';
-import loadingStyles from '../../styles/layout/Loading.module.css';
+import styles from './Dropdown.module.css';
+import buttonStyles from '../../styles/button.module.css';
+import imageStyles from '../../styles/image.module.css';
+import loadingStyles from '../utils/Loading.module.css';
 
 // Components
-import Settings from './Settings.jsx';
+// import Settings from './Settings.jsx';
 
 // Utils
 import { handleFetch } from '../../utils/handleFetch.js';
@@ -21,8 +21,6 @@ export const Dropdown = ({
 	darkTheme,
 	onSwitchColorTheme,
 	onCloseDropdown,
-	onModel,
-	onAlert,
 }) => {
 	const [loading, setLoading] = useState(null);
 	const [error, setError] = useState(null);
@@ -55,10 +53,10 @@ export const Dropdown = ({
 			{error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
-				<div className={style.dropdown}>
+				<div className={styles.dropdown}>
 					{user?.name && (
-						<div className={style.profile}>
-							<div className={style.avatar}>
+						<div className={styles.profile}>
+							<div className={styles.avatar}>
 								{user.name.charAt(0).toUpperCase()}
 							</div>
 							<span title={user.name}>{user.name}</span>
@@ -66,10 +64,13 @@ export const Dropdown = ({
 					)}
 					<ul>
 						<li>
-							<button className={button.theme} onClick={onSwitchColorTheme}>
+							<button
+								className={buttonStyles.theme}
+								onClick={onSwitchColorTheme}
+							>
 								<span
-									className={`${image.icon} ${
-										darkTheme ? style.moon : style.sun
+									className={`${imageStyles.icon} ${
+										darkTheme ? styles.moon : styles.sun
 									}`}
 								/>
 								{darkTheme ? 'Dark' : 'Light'} mode
@@ -81,7 +82,7 @@ export const Dropdown = ({
 						{user && (
 							<li>
 								<button onClick={handleActiveSettings}>
-									<span className={`${image.icon} ${style.settings}`} />
+									<span className={`${imageStyles.icon} ${styles.settings}`} />
 									Settings
 								</button>
 							</li>
@@ -91,24 +92,24 @@ export const Dropdown = ({
 								<button onClick={handleLogout}>
 									{loading ? (
 										<span
-											className={`${image.icon} ${loadingStyles.load} ${loadingStyles['load-desktop']}`}
+											className={`${imageStyles.icon} ${loadingStyles.load} ${loadingStyles['load-desktop']}`}
 										/>
 									) : (
-										<span className={`${image.icon} ${style.logout}`} />
+										<span className={`${imageStyles.icon} ${styles.logout}`} />
 									)}
 									Logout
 								</button>
 							) : (
 								<Link to="login" onClick={onCloseDropdown}>
-									<span className={`${image.icon} ${style.login}`} />
+									<span className={`${imageStyles.icon} ${styles.login}`} />
 									Login
 								</Link>
 							)}
 						</li>
 					</ul>
-					{activeSettings && (
+					{/* {activeSettings && (
 						<Settings user={user} handleCloseSettings={handleCloseSettings} />
-					)}
+					)} */}
 				</div>
 			)}
 		</>

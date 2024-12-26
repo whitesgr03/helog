@@ -1,11 +1,11 @@
 // Packages
-import { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 // Styles
-import style from "../../styles/layout/Alert.module.css";
+import styles from './Alert.module.css';
 
-const Alert = ({ alert, onCloseAlert }) => {
+export const Alert = ({ alert, onCloseAlert }) => {
 	const [activeAlert, setActiveAlert] = useState(false);
 	const [pauseAlert, setPauseAlert] = useState(false);
 	const timerId = useRef(null);
@@ -14,9 +14,9 @@ const Alert = ({ alert, onCloseAlert }) => {
 
 	const handleTransitionend = () => !activeAlert && onCloseAlert();
 	const handlePause = e => {
-		const target = e.target.closest(`.${style.alert}`);
-		e.type === "mouseover" && target && setPauseAlert(true);
-		e.type === "mouseout" && target && setPauseAlert(false);
+		const target = e.target.closest(`.${styles.alert}`);
+		e.type === 'mouseover' && target && setPauseAlert(true);
+		e.type === 'mouseout' && target && setPauseAlert(false);
 	};
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ const Alert = ({ alert, onCloseAlert }) => {
 			!remaining.current && (remaining.current = delay);
 			timerId.current = setTimeout(
 				() => setActiveAlert(false),
-				remaining.current
+				remaining.current,
 			);
 		};
 
@@ -49,8 +49,8 @@ const Alert = ({ alert, onCloseAlert }) => {
 			onTransitionEnd={handleTransitionend}
 			onMouseOver={handlePause}
 			onMouseOut={handlePause}
-			className={`${style.alert} ${activeAlert ? style.active : ""} ${
-				alert.error ? style.error : ""
+			className={`${styles.alert} ${activeAlert ? styles.active : ''} ${
+				alert.error ? styles.error : ''
 			}`}
 		>
 			<p>{alert.message}</p>
@@ -62,5 +62,3 @@ Alert.propTypes = {
 	alert: PropTypes.object,
 	onCloseAlert: PropTypes.func,
 };
-
-export default Alert;

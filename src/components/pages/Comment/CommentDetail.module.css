@@ -1,0 +1,287 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	border-left: 5px solid var(--light-scheme-color);
+	padding-left: 5%;
+}
+
+.container.user {
+	border-color: var(--light-scheme-success);
+}
+
+.container.author {
+	border-color: var(--light-scheme-error);
+}
+
+.avatar {
+	--size: var(--icon-size-mobile);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100%;
+	background-color: var(--light-scheme-color);
+	width: var(--size);
+	min-width: var(--size);
+	height: var(--size);
+	color: var(--dark-scheme-color);
+	font-size: calc(var(--size) / 2);
+}
+
+.buttonWrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 45px;
+	color: var(--light-scheme-highlight);
+}
+
+.buttonWrap * {
+	color: inherit;
+}
+
+.buttonWrap .highlight {
+	flex: 1 0 auto;
+}
+
+.commentButton {
+	display: flex;
+	column-gap: 15px;
+	flex: 1 1 100%;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.commentButton button {
+	min-width: 45px;
+	min-height: 45px;
+	color: var(--light-scheme-color);
+}
+
+.edit {
+	--size: calc(var(--icon-size-desktop));
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='208' height='208' viewBox='0 0 20 20'%3E%3Cpath fill='%23000' d='M17.181 2.927a2.975 2.975 0 0 0-4.259-.054l-9.375 9.375a2.44 2.44 0 0 0-.656 1.194l-.877 3.95a.5.5 0 0 0 .596.597l3.927-.873a2.5 2.5 0 0 0 1.234-.678l9.358-9.358a2.975 2.975 0 0 0 .052-4.153m-3.552.653a1.975 1.975 0 1 1 2.793 2.793l-.671.671l-2.793-2.792zm-1.378 1.38l2.793 2.792l-7.98 7.98a1.5 1.5 0 0 1-.744.409l-3.16.702l.708-3.183c.059-.267.193-.511.386-.704z'/%3E%3C/svg%3E");
+	width: var(--size);
+	height: var(--size);
+}
+.delete {
+	--size: calc(var(--icon-size-desktop));
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='m6.774 6.4l.812 13.648a.8.8 0 0 0 .798.752h7.232a.8.8 0 0 0 .798-.752L17.226 6.4zm11.655 0l-.817 13.719A2 2 0 0 1 15.616 22H8.384a2 2 0 0 1-1.996-1.881L5.571 6.4H3.5v-.7a.5.5 0 0 1 .5-.5h16a.5.5 0 0 1 .5.5v.7zM14 3a.5.5 0 0 1 .5.5v.7h-5v-.7A.5.5 0 0 1 10 3zM9.5 9h1.2l.5 9H10zm3.8 0h1.2l-.5 9h-1.2z'/%3E%3C/svg%3E");
+	width: var(--size);
+	height: var(--size);
+}
+
+.infoWrap {
+	display: flex;
+	column-gap: 15px;
+	row-gap: 5px;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+.info {
+	display: flex;
+	column-gap: 10px;
+	align-items: center;
+	overflow: hidden;
+}
+
+.infoWrap strong {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.time {
+	display: flex;
+	flex: 1 0 auto;
+	justify-content: flex-end;
+}
+
+.content {
+	display: flex;
+	column-gap: 10px;
+	align-items: center;
+	margin: 15px 0;
+	border-radius: 10px;
+	background-color: var(--light-scheme-layout-bgc);
+	padding: 10px;
+}
+
+.content > a {
+	color: var(--light-scheme-highlight);
+}
+
+.replyListBtn {
+	display: flex;
+	column-gap: 5px;
+	align-items: center;
+	min-width: 45px;
+	min-height: 45px;
+	color: var(--light-scheme-color);
+	font-weight: bolder;
+}
+
+.addReplyBtn {
+	margin: 5px;
+	margin-left: auto;
+	border-bottom: 1px solid transparent;
+	color: var(--light-scheme-highlight);
+}
+
+.replyIcon {
+	--size: calc(var(--icon-size-desktop));
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M8 13.5h8m-8-5h4M6.099 19q-1.949-.192-2.927-1.172C2 16.657 2 14.771 2 11v-.5c0-3.771 0-5.657 1.172-6.828S6.229 2.5 10 2.5h4c3.771 0 5.657 0 6.828 1.172S22 6.729 22 10.5v.5c0 3.771 0 5.657-1.172 6.828S17.771 19 14 19c-.56.012-1.007.055-1.445.155c-1.199.276-2.309.89-3.405 1.424c-1.563.762-2.344 1.143-2.834.786c-.938-.698-.021-2.863.184-3.865' color='%23000'/%3E%3C/svg%3E");
+	width: var(--size);
+	height: var(--size);
+}
+
+.replyIcon.active {
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m15 2l3.5 3.5m0 0L22 9m-3.5-3.5L22 2m-3.5 3.5L15 9M6.099 19.5q-1.949-.192-2.927-1.172C2 17.157 2 15.271 2 11.5V11c0-3.771 0-5.657 1.172-6.828S6.229 3 10 3h1.5m-5 15c-.205 1.002-1.122 3.166-.184 3.865c.49.357 1.271-.024 2.834-.786c1.096-.535 2.206-1.148 3.405-1.424c.438-.1.885-.143 1.445-.155c3.771 0 5.657 0 6.828-1.172C21.947 17.21 21.998 15.44 22 12M8 14h6M8 9h3' color='%23000'/%3E%3C/svg%3E");
+}
+
+.editBoxWrap {
+	margin-top: 15px;
+}
+
+.commentBoxWrap {
+	padding-left: 5%;
+}
+
+.replies {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+	padding-left: calc(5% + var(--icon-size-mobile) / 2);
+}
+
+.replies > li {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+}
+
+/* Pseudo classes */
+.content > a:hover {
+	font-style: italic;
+	font-weight: bolder;
+}
+
+.commentButton button:hover,
+.replyListBtn:hover {
+	color: var(--light-scheme-highlight);
+}
+
+.addReplyBtn:hover {
+	border-bottom-color: var(--light-scheme-highlight);
+	font-style: italic;
+}
+
+/* Dark scheme classes */
+
+:global(.dark) .container {
+	border-left: 2px solid var(--dark-scheme-color);
+}
+
+:global(.dark) .container.user {
+	border-color: var(--dark-scheme-success);
+}
+
+:global(.dark) .container.author {
+	border-color: var(--dark-scheme-error);
+}
+
+:global(.dark) .buttonWrap {
+	color: var(--dark-scheme-highlight);
+}
+
+:global(.dark) .info strong {
+	color: var(--dark-scheme-highlight);
+}
+
+:global(.dark) .avatar {
+	background-color: var(--dark-scheme-color);
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .content {
+	background-color: var(--dark-scheme-input-bgc);
+}
+
+:global(.dark) .content > a {
+	color: var(--dark-scheme-highlight);
+}
+
+:global(.dark) .commentButton button,
+:global(.dark) .replyListBtn {
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .addReplyBtn {
+	color: var(--dark-scheme-highlight);
+}
+
+/* Pseudo classes */
+:global(.dark) .commentButton button:hover,
+:global(.dark) .replyListBtn:hover {
+	color: var(--dark-scheme-highlight);
+}
+
+:global(.dark) .addReplyBtn:hover {
+	border-color: var(--dark-scheme-highlight);
+}
+
+@media (min-width: 450px) {
+	.avatar {
+		--size: calc(var(--icon-size-mobile));
+	}
+}
+
+@media (min-width: 700px) {
+	.commentBox {
+		padding: 0 15%;
+	}
+
+	.content {
+		margin: 25px 0;
+	}
+
+	.editBoxWrap {
+		margin-top: 25px;
+	}
+
+	.replies {
+		row-gap: 25px;
+	}
+
+	.replies > li {
+		row-gap: 25px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.commentBox {
+		padding: 0 10%;
+	}
+
+	.content {
+		margin: 35px 0;
+	}
+
+	.editBoxWrap {
+		margin-top: 35px;
+	}
+
+	.replies {
+		row-gap: 35px;
+	}
+
+	.replies > li {
+		row-gap: 35px;
+	}
+}
+
+@media (min-width: 1600px) {
+	.commentBox {
+		padding: 0;
+	}
+}

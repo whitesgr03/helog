@@ -1,19 +1,18 @@
 // Styles
-import style from "../../styles/layout/Footer.module.css";
-import { container } from "../../styles/layout/Contact.module.css";
-import image from "../../styles/utils/image.module.css";
+import styles from './Footer.module.css';
+import imageStyles from '../../styles/image.module.css';
 
 // Components
-import Address from "./Address";
+import Address from './Address';
 
-const Footer = () => {
+export const Footer = () => {
 	return (
-		<footer className={style.footer}>
-			<div className={container}>
-				<a href="#git" alt="github" className={style.link}>
-					<span className={`${image.icon} ${style.github}`} />
+		<footer className={styles.footer}>
+			<div className={styles.container}>
+				<a href="#git" alt="github" className={styles.link}>
+					<span className={`${imageStyles.icon} ${styles.github}`} />
 				</a>
-				<div className={style.address}>
+				<div className={styles.address}>
 					<Address />
 				</div>
 			</div>
@@ -21,5 +20,3 @@ const Footer = () => {
 		</footer>
 	);
 };
-
-export default Footer;

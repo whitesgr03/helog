@@ -2,12 +2,12 @@
 import { Navigate, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 
-// style
-import image from '../../../styles/utils/image.module.css';
-import style from '../../../styles/pages/account/Login.module.css';
+// styles
+import imageStyles from '../../../styles/image.module.css';
+import styles from './Login.module.css';
 
 // Components
-import { Loading } from '../../layout/Loading';
+import { Loading } from '../../utils/Loading';
 
 // Assets
 import googleIcon from '../../../assets/google.png';
@@ -33,25 +33,25 @@ export const Login = () => {
 			{user ? (
 				<Navigate to="/" replace={true} />
 			) : (
-				<div className={style.account}>
-					<h3 className={style.title}>User Sign in</h3>
-					<div className={style.container}>
+				<div className={styles.account}>
+					<h3 className={styles.title}>User Sign in</h3>
+					<div className={styles.container}>
 						{loading && <Loading text={'Submitting...'} />}
-						<div className={style.federation}>
+						<div className={styles.federation}>
 							<button
-								className={style['federation-button']}
+								className={styles['federation-button']}
 								onClick={() => handleSocialLogin('google')}
 							>
-								<div className={`${image} ${style.google}`}>
+								<div className={`${imageStyles} ${styles.google}`}>
 									<img src={googleIcon} alt="Google icon" />
 								</div>
 								Sign in with Google
 							</button>
 							<button
-								className={style['federation-button']}
+								className={styles['federation-button']}
 								onClick={() => handleSocialLogin('facebook')}
 							>
-								<div className={`${image} ${style.facebook}`}>
+								<div className={`${imageStyles} ${styles.facebook}`}>
 									<img src={facebookIcon} alt="Facebook icon" />
 								</div>
 								Sign in with Facebook
