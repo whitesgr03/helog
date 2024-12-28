@@ -19,7 +19,7 @@ export const Dropdown = ({
 	user,
 	onUser,
 	darkTheme,
-	onSwitchColorTheme,
+	onColorTheme,
 	onCloseDropdown,
 }) => {
 	const [loading, setLoading] = useState(null);
@@ -64,10 +64,7 @@ export const Dropdown = ({
 					)}
 					<ul>
 						<li>
-							<button
-								className={buttonStyles.theme}
-								onClick={onSwitchColorTheme}
-							>
+							<button className={buttonStyles.theme} onClick={onColorTheme}>
 								<span
 									className={`${imageStyles.icon} ${
 										darkTheme ? styles.moon : styles.sun
