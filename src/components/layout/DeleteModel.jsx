@@ -13,10 +13,7 @@ import { deleteUser } from '../../../utils/handleUser';
 // Components
 import { Loading } from '../../utils/Loading';
 
-const DeleteModel = ({
-	// onDelete,
-	onModel,
-	onAlert,
+export const DeleteModel = ({
 	onUser,
 	title,
 	onCloseSettings,
@@ -76,5 +73,3 @@ DeleteModel.propTypes = {
 	onCloseSettings: PropTypes.func,
 	title: PropTypes.string,
 };
-
-export default DeleteModel;
