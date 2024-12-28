@@ -28,7 +28,7 @@
 	align-items: center;
 	padding: 10px;
 	min-width: 100%;
-	max-width: 0px;
+	max-width: 0;
 }
 
 .profile > span {
