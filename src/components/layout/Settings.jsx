@@ -29,22 +29,24 @@ export const Settings = ({
 			data-close-setting
 			data-testid={'blurBgc'}
 		>
+			<div className={styles.settings}>
 				<button
 					type="button"
 					className={buttonStyles['close-btn']}
 					data-close-setting
 				>
+					<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
 				</button>
-				<div className={style.header}>Settings</div>
-				<div className={style.container}>
+				<div className={styles.header}>Settings</div>
+				<div className={styles.container}>
 					<div className={styles['avatar-wrap']}>
-						<div className={style.avatar}>
+						<div className={styles.avatar}>
 							{user && user.username.charAt(0).toUpperCase()}
 						</div>
 					</div>
-					<ul className={style.list}>
+					<ul className={styles.list}>
 						<li>
-                Username
+							<strong className={styles.title}>Username</strong>
 							{user && <span>{user.username}</span>}
 							<button
 								className={styles['change-btn']}
@@ -53,11 +55,11 @@ export const Settings = ({
 							</button>
 						</li>
 						<li>
-							<strong className={style.title}>Email</strong>
+							<strong className={styles.title}>Email</strong>
 							{user && <span>{user.email}</span>}
 						</li>
 						<li>
-							<strong className={style.title}>Delete</strong>
+							<strong className={styles.title}>Delete</strong>
 							<button
 								className={styles['delete-btn']}
 							>
