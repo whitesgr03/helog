@@ -11,7 +11,7 @@
 	padding: 15px;
 }
 
-.avatarWrap {
+.avatar-wrap {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -47,13 +47,13 @@
 	border-top: 1px solid var(--light-scheme-color);
 }
 
-.changeBtn {
+.change-btn {
 	color: var(--light-scheme-highlight);
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
 
-.deleteBtn {
+.delete-btn {
 	color: var(--light-scheme-error);
 	text-decoration: underline;
 	text-underline-offset: 3px;
@@ -61,8 +61,8 @@
 
 /* Pseudo classes */
 
-.changeBtn:hover,
-.deleteBtn:hover {
+.change-btn:hover,
+.delete-btn:hover {
 	font-style: italic;
 	font-weight: 700;
 	text-decoration-thickness: 2px;
@@ -85,10 +85,10 @@
 :global(.dark) .list li:last-of-type {
 	border-top-color: var(--dark-scheme-color);
 }
-:global(.dark) .changeBtn {
+:global(.dark) .change-btn {
 	color: var(--dark-scheme-highlight);
 }
-:global(.dark) .deleteBtn {
+:global(.dark) .delete-btn {
 	color: var(--dark-scheme-error);
 }
 
@@ -135,7 +135,7 @@
 	}
 
 	/* Dark scheme classes */
-	:global(.dark) .avatarWrap {
+	:global(.dark) .avatar-wrap {
 		border-right-color: var(--dark-scheme-color);
 	}
 }
