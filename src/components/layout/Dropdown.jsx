@@ -106,9 +106,15 @@ export const Dropdown = ({
 							)}
 						</li>
 					</ul>
-					{/* {activeSettings && (
-						<Settings user={user} handleCloseSettings={handleCloseSettings} />
-					)} */}
+					{activeSettings && (
+						<Settings
+							user={user}
+							onUser={onUser}
+							onAlert={onAlert}
+							onActiveModal={onActiveModal}
+							onCloseSettings={handleCloseSettings}
+						/>
+					)}
 				</div>
 			)}
 		</>
