@@ -11,14 +11,10 @@ import imageStyles from '../../../styles/image.module.css';
 // Utils
 import { updateUser } from '../../utils/handleUser';
 
-const ChangeNameModel = ({
-	onModel,
-	onAlert,
-	defaultValue,
+	username,
 	onUser,
-	// accessToken,
-	// onVerifyTokenExpire,
-	// onExChangeToken,
+	onAlert,
+	onActiveModal,
 }) => {
 	const defaultForm = { name: defaultValue || '' };
 	const [inputErrors, setInputErrors] = useState(null);
