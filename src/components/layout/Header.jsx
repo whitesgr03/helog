@@ -71,8 +71,10 @@ export const Header = ({
 					<Dropdown
 						user={user}
 						onUser={onUser}
+						onAlert={onAlert}
 						darkTheme={darkTheme}
-						onSwitchColorTheme={handleSwitchColorTheme}
+						onColorTheme={onColorTheme}
+						onActiveModal={onActiveModal}
 						onCloseDropdown={handleCloseDropdown}
 					/>
 				)}
