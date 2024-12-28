@@ -23,12 +23,12 @@
 	align-self: center;
 }
 
-.buttonWrap {
+.button-wrap {
 	display: flex;
 	justify-content: space-evenly;
 }
 
-.buttonWrap button {
+.button-wrap button {
 	width: 40%;
 }
 
