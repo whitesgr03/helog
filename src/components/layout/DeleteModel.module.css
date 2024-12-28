@@ -37,20 +37,20 @@
 	background-color: rgba(var(--light-scheme-color-rgb), 0.6);
 }
 
-@media (min-width: 450px) {
+@media (width >= 450px) {
 	.model {
 		row-gap: 40px;
 		padding: 20px;
 	}
 }
 
-@media (min-width: 700px) {
+@media (width >= 700px) {
 	.model form {
 		row-gap: 20px;
 	}
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
 	.model {
 		padding: 30px 40px;
 	}
