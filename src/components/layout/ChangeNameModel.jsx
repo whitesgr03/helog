@@ -91,8 +91,23 @@ export const ChangeNameModel = ({
 	};
 
 	useEffect(() => {
+		const schema = {
+			username: string()
+				.trim()
+				.max(30, ({ max }) => `Username must be less than ${max} long.`)
+				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.required('Username is required.'),
+		};
 		debounce &&
-			(timer.current = setTimeout(() => handleValidFields(formFields), 500));
+			(timer.current = setTimeout(async () => {
+				const validationResult = await verifyScheme({
+					schema,
+					data: formFields,
+				});
+				validationResult.success
+					? setInputErrors({})
+					: setInputErrors(validationResult.fields);
+			}, 500));
 
 		return () => clearTimeout(timer.current);
 	}, [debounce, formFields]);
