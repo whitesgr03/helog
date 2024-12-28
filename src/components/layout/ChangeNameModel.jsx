@@ -115,7 +115,24 @@ export const ChangeNameModel = ({
 	return (
 		<form className={formStyles.content} onSubmit={handleSubmit}>
 			<div className={formStyles['label-wrap']}>
+				<label
+					htmlFor="changeUserName"
+					className={`${inputErrors?.username ? formStyles.error : ''}`}
+				>
+					Change username
+					<input
+						id="changeUserName"
+						type="text"
+						name="username"
+						value={formFields.username}
+						onChange={handleChange}
+					/>
+				</label>
+				<div>
 					<span className={`${imageStyles.icon} ${formStyles.alert}`} />
+					<span>{inputErrors.username ?? 'Message placeholder'}</span>
+				</div>
+			</div>
 
 			<button
 				type="submit"
