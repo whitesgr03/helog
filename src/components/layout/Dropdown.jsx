@@ -54,12 +54,12 @@ export const Dropdown = ({
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<div className={styles.dropdown}>
-					{user?.name && (
+					{user?.username && (
 						<div className={styles.profile}>
 							<div className={styles.avatar}>
-								{user.name.charAt(0).toUpperCase()}
+								{user.username.charAt(0).toUpperCase()}
 							</div>
-							<span title={user.name}>{user.name}</span>
+							<span title={user.username}>{user.username}</span>
 						</div>
 					)}
 					<ul>
