@@ -6,10 +6,10 @@ import { Outlet } from 'react-router-dom';
 import styles from './App.module.css';
 
 // Components
-import { Header } from '../../layout/Header';
-import { Footer } from '../../layout/Footer';
+import { Header } from '../../layout/Header/Header';
+import { Footer } from '../../layout/Footer/Footer';
 import { Contact } from '../../layout/Contact';
-import { Alert } from '../../layout/Alert';
+import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { CreateUsername } from './CreateUsername';
 import { Loading } from '../../utils/Loading';
