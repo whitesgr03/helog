@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 
 // Styles
-import style from '../../styles/layout/ChangeNameModel.module.css';
 import formStyles from '../../../styles/form.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
