@@ -12,7 +12,14 @@ import bgcStyles from '../../../styles/bgc.module.css';
 // Components
 import { Dropdown } from './Dropdown';
 
-export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
+export const Header = ({
+	user,
+	onUser,
+	onAlert,
+	darkTheme,
+	onColorTheme,
+	onActiveModal,
+}) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
 	const handleActiveDropdown = () => setActiveDropdown(!activeDropdown);
@@ -83,6 +90,8 @@ export const Header = ({ user, onUser, darkTheme, handleSwitchColorTheme }) => {
 Header.propTypes = {
 	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
-	handleSwitchColorTheme: PropTypes.func,
+	onColorTheme: PropTypes.func,
+	onActiveModal: PropTypes.func,
 	onUser: PropTypes.func,
+	onAlert: PropTypes.func,
 };
