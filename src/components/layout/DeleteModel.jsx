@@ -1,11 +1,11 @@
 // Packages
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Styles
 import styles from './DeleteModel.module.css';
 import buttonStyles from '../../../styles/button.module.css';
-
 
 // Utils
 import { deleteUser } from '../../../utils/handleUser';
@@ -20,31 +20,28 @@ export const DeleteModel = ({
 	onAlert,
 }) => {
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+	const { pathname: previousPath } = useLocation();
 
 	const handleDelete = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
+		const result = await deleteUser();
 
-		const options = {
-			method: 'POST',
-			credentials: 'include',
-		};
-
-		const result = await handleFetch(url, options);
-
-		const handleSuccess = () => {
-			onModel(null);
+		const handleSetUser = () => {
 			onUser(null);
+			onAlert({ message: result.message });
+			onActiveModal({ component: null });
+			onCloseSettings();
 		};
 
 		result.success
-			? handleSuccess()
-			: onAlert({ message: result.message, error: true });
-		// await onDelete();
+			? handleSetUser()
+			: navigate('/error', {
+					state: { error: result.message, previousPath },
+				});
 
 		setLoading(false);
-		onCloseSettings();
 	};
 	return (
 		<div className={styles.model}>
@@ -59,6 +56,7 @@ export const DeleteModel = ({
 				<button
 					className={buttonStyles.cancel}
 					data-close-model
+					onClick={() => onActiveModal({ component: null })}
 				>
 					Cancel
 				</button>
