@@ -109,6 +109,7 @@ import { updateUser } from '../../utils/handleUser';
 
 	return (
 		<form className={formStyles.content} onSubmit={handleSubmit}>
+			<div className={formStyles['label-wrap']}>
 					<span className={`${imageStyles.icon} ${formStyles.alert}`} />
 
 			<button
