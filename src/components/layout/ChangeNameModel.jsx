@@ -87,7 +87,7 @@ export const ChangeNameModel = ({
 			[name]: value,
 		};
 		setFormFields(fields);
-		inputErrors && setDebounce(true);
+		!isEmpty(inputErrors) && setDebounce(true);
 	};
 
 	useEffect(() => {
