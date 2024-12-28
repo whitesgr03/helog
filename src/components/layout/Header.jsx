@@ -56,7 +56,7 @@ export const Header = ({
 										<div />
 									</div>
 								</div>
-								<span>{darkTheme ? 'Dark' : 'Light'} mode</span>
+								{darkTheme ? 'Dark' : 'Light'} mode
 							</button>
 						</li>
 						<li>
