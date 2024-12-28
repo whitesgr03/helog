@@ -28,32 +28,22 @@ export const ChangeNameModel = ({
 
 	const handleUpdate = async () => {
 		setLoading(true);
-		// const isTokenExpire = await onVerifyTokenExpire();
-		// const newAccessToken = isTokenExpire && (await onExChangeToken());
 
-		const result = await updateUser(
-			// newAccessToken || accessToken,
-			formFields,
-		);
+		const result = await updateUser(formFields);
 
-		const handleSetUser = async data => {
-			onUser(data);
-			onModel(null);
-		};
-
-		const handleSetInputErrors = () => {
-			const obj = {};
-			for (const error of result.errors) {
-				obj[error.field] = error.message;
-			}
-			setInputErrors(obj);
+		const handleSetUser = () => {
+			onUser(result.data);
+			onAlert({ message: result.message });
+			onActiveModal({ component: null });
 		};
 
 		result.success
-			? handleSetUser(result.data)
-			: result?.errors
-				? handleSetInputErrors()
-				: onAlert({ message: result.message, error: true });
+			? handleSetUser()
+			: result.fields
+				? setInputErrors({ ...result.fields })
+				: navigate('/error', {
+						state: { error: result.message, previousPath },
+					});
 
 		setLoading(false);
 	};
@@ -61,9 +51,31 @@ export const ChangeNameModel = ({
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		!loading && (await handleValidFields(formFields))
-			? await handleUpdate()
-			: setDebounce(false);
+		const schema = {
+			username: string()
+				.trim()
+				.max(30, ({ max }) => `Username must be less than ${max} long.`)
+				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.notOneOf(
+					[username],
+					'New username should be different from the old username.',
+				)
+				.required('Username is required.'),
+		};
+
+		const validationResult = await verifyScheme({ schema, data: formFields });
+
+		const handleInValid = () => {
+			setInputErrors(validationResult.fields);
+			setDebounce(false);
+		};
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleUpdate();
+		};
+
+		validationResult.success ? await handleValid() : handleInValid();
 	};
 
 	const handleChange = e => {
