@@ -47,19 +47,23 @@ export const DeleteModel = ({
 		onCloseSettings();
 	};
 	return (
-		<div className={style.model}>
+		<div className={styles.model}>
 			{loading && (
-				<div className={style.loading}>
+				<div className={styles.loading}>
 					<Loading />
 				</div>
 			)}
-			<span className={style.title}>Delete {title}</span>
-			<span className={style.content}>Do you really want to delete?</span>
-			<div className={style.buttonWrap}>
-				<button className={button.cancel} data-close-model>
+      <span className={styles.title}>
+      </span>
+			<span className={styles.content}>Do you really want to delete?</span>
+			<div className={styles['button-wrap']}>
+				<button
+					className={buttonStyles.cancel}
+					data-close-model
+				>
 					Cancel
 				</button>
-				<button className={button.error} onClick={handleDelete}>
+				<button className={buttonStyles.error} onClick={handleDelete}>
 					Delete
 				</button>
 			</div>
