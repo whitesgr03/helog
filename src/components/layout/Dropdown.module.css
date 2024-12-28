@@ -123,11 +123,11 @@
 		height: calc(var(--icon-size-mobile) * 1.33);
 	}
 
-	.colorThemeToggle {
+	.color-theme-toggle {
 		--toggle-width: 45px;
 	}
 
-	.colorThemeToggle button {
+	.color-theme-toggle button {
 		margin: 0;
 	}
 
