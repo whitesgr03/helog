@@ -22,34 +22,6 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
-	const verifyScheme = async data => {
-		let result = {
-			success: true,
-			fields: {},
-		};
-
-		try {
-			const schema = object({
-				username: string()
-					.trim()
-					.max(30, ({ max }) => `Username must be less than ${max} long.`)
-					.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
-					.required('Username is required.'),
-			}).noUnknown();
-			await schema.validate(data, {
-				abortEarly: false,
-				stripUnknown: true,
-			});
-		} catch (err) {
-			for (const error of err.inner) {
-				result.fields[error.path] = error.message;
-			}
-			result.success = false;
-		}
-
-		return result;
-	};
-
 	const handleUpdate = async () => {
 		setLoading(true);
 
