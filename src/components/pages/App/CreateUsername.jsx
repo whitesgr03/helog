@@ -13,7 +13,7 @@ import imageStyles from '../../../styles/image.module.css';
 
 import { updateUser } from '../../../utils/handleUser';
 
-export const CreateUsername = ({ onActiveModal, onUser }) => {
+export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username: '' });
 	const [debounce, setDebounce] = useState(false);
@@ -167,4 +167,5 @@ export const CreateUsername = ({ onActiveModal, onUser }) => {
 CreateUsername.propTypes = {
 	onActiveModal: PropTypes.func,
 	onUser: PropTypes.func,
+	onAlert: PropTypes.func,
 };
