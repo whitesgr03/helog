@@ -53,8 +53,7 @@ export const DeleteModel = ({
 					<Loading />
 				</div>
 			)}
-      <span className={styles.title}>
-      </span>
+			<span className={styles.title}>Delete Your Account Forever</span>
 			<span className={styles.content}>Do you really want to delete?</span>
 			<div className={styles['button-wrap']}>
 				<button
