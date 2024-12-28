@@ -5,9 +5,9 @@ import { object, string } from 'yup';
 
 // Styles
 import style from '../../styles/layout/ChangeNameModel.module.css';
-import form from '../../styles/utils/form.module.css';
-import button from '../../styles/utils/button.module.css';
-import image from '../../styles/utils/image.module.css';
+import formStyles from '../../../styles/form.module.css';
+import buttonStyles from '../../../styles/button.module.css';
+import imageStyles from '../../../styles/image.module.css';
 
 // Utils
 import { updateUser } from '../../utils/handleUser';
