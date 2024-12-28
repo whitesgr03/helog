@@ -123,7 +123,7 @@ export const App = () => {
 							onActiveModal={handleActiveModal}
 						/>
 						{alert.message !== '' && (
-							<Alert onCloseAlert={handleCloseAlert} alert={alert} />
+							<Alert alert={alert} onCloseAlert={handleCloseAlert} />
 						)}
 					</div>
 					<div className={styles.container}>
