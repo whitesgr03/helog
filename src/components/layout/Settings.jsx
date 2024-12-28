@@ -8,7 +8,6 @@ import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Components
-// import { AppContext } from "../../contexts/AppContext";
 import { ChangeNameModel } from './ChangeNameModel';
 import { DeleteModel } from './DeleteModel';
 
