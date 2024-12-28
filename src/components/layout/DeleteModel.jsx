@@ -15,8 +15,9 @@ import { Loading } from '../../utils/Loading';
 
 export const DeleteModel = ({
 	onUser,
-	title,
 	onCloseSettings,
+	onActiveModal,
+	onAlert,
 }) => {
 	const [loading, setLoading] = useState(false);
 
@@ -68,8 +69,7 @@ export const DeleteModel = ({
 
 DeleteModel.propTypes = {
 	onAlert: PropTypes.func,
-	onModel: PropTypes.func,
 	onUser: PropTypes.func,
 	onCloseSettings: PropTypes.func,
-	title: PropTypes.string,
+	onActiveModal: PropTypes.func,
 };
