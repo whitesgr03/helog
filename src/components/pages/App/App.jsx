@@ -119,7 +119,7 @@ export const App = () => {
 							darkTheme={darkTheme}
 							onUser={setUser}
 							onAlert={handleAlert}
-							handleSwitchColorTheme={handleColorTheme}
+							onColorTheme={handleColorTheme}
 						/>
 						{alert.message !== '' && (
 							<Alert onCloseAlert={handleCloseAlert} alert={alert} />
