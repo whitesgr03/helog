@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Header.module.css';
-import buttonStyles from '../../styles/button.module.css';
-import imageStyles from '../../styles/image.module.css';
-import bgcStyles from '../../styles/bgc.module.css';
+import buttonStyles from '../../../styles/button.module.css';
+import imageStyles from '../../../styles/image.module.css';
+import bgcStyles from '../../../styles/bgc.module.css';
 
 // Components
 import { Dropdown } from './Dropdown';
