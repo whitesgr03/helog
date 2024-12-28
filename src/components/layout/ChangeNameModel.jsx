@@ -9,7 +9,7 @@ import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Utils
-import { updateUser } from '../../utils/handleUser';
+import { updateUser } from '../../../utils/handleUser';
 
 	username,
 	onUser,
