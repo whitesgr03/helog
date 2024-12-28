@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 // Styles
 import styles from './DeleteModel.module.css';
 import buttonStyles from '../../../styles/button.module.css';
-import { Loading } from './Loading';
+
 
 // Utils
-import { handleFetch } from '../../utils/handleFetch';
+// Components
+import { Loading } from '../../utils/Loading';
 
 const DeleteModel = ({
 	// onDelete,
