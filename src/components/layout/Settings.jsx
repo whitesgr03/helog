@@ -33,17 +33,17 @@ export const Settings = ({
 				<div className={style.container}>
 					<div className={styles['avatar-wrap']}>
 						<div className={style.avatar}>
-							{user && user.name.charAt(0).toUpperCase()}
+							{user && user.username.charAt(0).toUpperCase()}
 						</div>
 					</div>
 					<ul className={style.list}>
 						<li>
-							<strong className={style.title}>Name</strong>
-							{user && <span>{user.name}</span>}
+                Username
+							{user && <span>{user.username}</span>}
 							<button
 								className={styles['change-btn']}
 							>
-								Change name
+								Change username
 							</button>
 						</li>
 						<li>
