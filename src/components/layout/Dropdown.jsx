@@ -13,7 +13,7 @@ import loadingStyles from '../../utils/Loading.module.css';
 import { Settings } from './Settings.jsx';
 
 // Utils
-import { handleFetch } from '../../utils/handleFetch.js';
+import { handleFetch } from '../../../utils/handleFetch.js';
 
 export const Dropdown = ({
 	user,
