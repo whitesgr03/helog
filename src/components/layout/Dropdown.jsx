@@ -18,9 +18,11 @@ import { handleFetch } from '../../../utils/handleFetch.js';
 export const Dropdown = ({
 	user,
 	onUser,
+	onAlert,
 	darkTheme,
 	onColorTheme,
 	onCloseDropdown,
+	onActiveModal,
 }) => {
 	const [loading, setLoading] = useState(null);
 	const [error, setError] = useState(null);
@@ -117,8 +119,8 @@ Dropdown.propTypes = {
 	user: PropTypes.object,
 	onUser: PropTypes.func,
 	darkTheme: PropTypes.bool,
-	onSwitchColorTheme: PropTypes.func,
+	onColorTheme: PropTypes.func,
 	onCloseDropdown: PropTypes.func,
-	onModel: PropTypes.func,
+	onActiveModal: PropTypes.func,
 	onAlert: PropTypes.func,
 };
