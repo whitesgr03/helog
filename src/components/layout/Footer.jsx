@@ -1,6 +1,6 @@
 // Styles
 import styles from './Footer.module.css';
-import imageStyles from '../../styles/image.module.css';
+import imageStyles from '../../../styles/image.module.css';
 
 // Components
 import Address from './Address';
