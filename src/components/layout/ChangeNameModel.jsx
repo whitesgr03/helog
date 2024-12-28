@@ -11,6 +11,7 @@ import imageStyles from '../../../styles/image.module.css';
 // Utils
 import { updateUser } from '../../../utils/handleUser';
 
+export const ChangeNameModel = ({
 	username,
 	onUser,
 	onAlert,
@@ -133,5 +134,3 @@ ChangeNameModel.propTypes = {
 	username: PropTypes.string,
 	onUser: PropTypes.func,
 };
-
-export default ChangeNameModel;
