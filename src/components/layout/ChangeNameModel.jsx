@@ -113,41 +113,21 @@ const ChangeNameModel = ({
 	}, [debounce, formFields]);
 
 	return (
-		<div className={style.model}>
-			<form className={form.content} onSubmit={handleSubmit}>
-				<div className={form.labelWrap}>
-					<label
-						htmlFor="changeName"
-						className={`${inputErrors?.name ? form.error : ''}`}
-					>
-						Change Name
-						<input
-							id="changeName"
-							type="text"
-							name="name"
-							value={formFields.name}
-							onChange={handleChange}
-						/>
-					</label>
-					<div>
-						<span className={`${image.icon} ${form.alert}`} />
-						<span className={form.placeholder}>
-							{inputErrors?.name ?? 'Message placeholder'}
-						</span>
-					</div>
-				</div>
+		<form className={formStyles.content} onSubmit={handleSubmit}>
+					<span className={`${imageStyles.icon} ${formStyles.alert}`} />
 
-				<button
-					type="submit"
-					className={`${button.success} ${loading ? button.loading : ''}`}
-				>
-					<span className={button.text}>
-						Save
-						<span className={`${image.icon} ${button.loadIcon}`} />
-					</span>
-				</button>
-			</form>
-		</div>
+			<button
+				type="submit"
+				className={`${buttonStyles.success} ${loading ? buttonStyles.loading : ''}`}
+			>
+				<span className={buttonStyles.text}>
+					Save
+					<span
+						className={`${imageStyles.icon} ${buttonStyles['load-Icon']}`}
+					/>
+				</span>
+			</button>
+		</form>
 	);
 };
 
