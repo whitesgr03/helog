@@ -46,7 +46,7 @@ export const Header = ({
 							</li>
 						)}
 						<li className={styles['toggle-btn']}>
-							<button onClick={handleSwitchColorTheme}>
+							<button onClick={onColorTheme}>
 								<div className={buttonStyles.theme}>
 									<span
 										data-testid={'icon'}
