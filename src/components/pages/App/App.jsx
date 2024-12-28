@@ -120,6 +120,7 @@ export const App = () => {
 							onUser={setUser}
 							onAlert={handleAlert}
 							onColorTheme={handleColorTheme}
+							onActiveModal={handleActiveModal}
 						/>
 						{alert.message !== '' && (
 							<Alert onCloseAlert={handleCloseAlert} alert={alert} />
