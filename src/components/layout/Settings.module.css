@@ -118,7 +118,7 @@
 		display: flex;
 	}
 
-	.avatarWrap {
+	.avatar-wrap {
 		align-items: flex-start;
 		border-right: 1px solid var(--light-scheme-color);
 		padding: 20px 30px;
