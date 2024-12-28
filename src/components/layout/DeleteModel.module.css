@@ -33,11 +33,6 @@
 }
 
 /* Dark scheme classes */
-:global(.dark) .cancelBtn {
-	background-color: var(--dark-scheme-color);
-	color: var(--light-scheme-color);
-}
-
 :global(.dark) .loading {
 	background-color: rgba(var(--light-scheme-color-rgb), 0.6);
 }
