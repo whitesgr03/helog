@@ -127,13 +127,10 @@ import { updateUser } from '../../utils/handleUser';
 };
 
 ChangeNameModel.propTypes = {
-	onModel: PropTypes.func,
+	onActiveModal: PropTypes.func,
 	onAlert: PropTypes.func,
-	defaultValue: PropTypes.string,
+	username: PropTypes.string,
 	onUser: PropTypes.func,
-	// accessToken: PropTypes.string,
-	// onVerifyTokenExpire: PropTypes.func,
-	// onExChangeToken: PropTypes.func,
 };
 
 export default ChangeNameModel;
