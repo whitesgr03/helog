@@ -2,16 +2,17 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { object, string } from 'yup';
+import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 
 // Styles
-
 import formStyles from '../../../styles/form.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
+// utils
 import { updateUser } from '../../../utils/handleUser';
+import { verifyScheme } from '../../../utils/verifyScheme';
 
 export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	const [inputErrors, setInputErrors] = useState({});
@@ -29,16 +30,9 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 
 		const handleSetUser = () => {
 			onUser(result.data);
+			onAlert({ message: 'Set username successfully' });
 			onActiveModal({ component: null });
 		};
-
-		// const handleSetInputErrors = () => {
-		// 	const obj = {};
-		// 	for (const error of result.errors) {
-		// 		obj[error.field] = error.message;
-		// 	}
-		// 	setInputErrors(obj);
-		// };
 
 		result.success
 			? handleSetUser()
@@ -47,16 +41,22 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 				: navigate('/error', {
 						state: { error: result.message, previousPath },
 					});
-		// : result?.errors
-		// ? handleSetInputErrors()
-		// : onAlert({ message: result.message, error: true });
+
 		setLoading(false);
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		const validationResult = await verifyScheme(formFields);
+		const schema = {
+			username: string()
+				.trim()
+				.max(30, ({ max }) => `Username must be less than ${max} long.`)
+				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.required('Username is required.'),
+		};
+
+		const validationResult = await verifyScheme({ schema, data: formFields });
 
 		const handleInValid = () => {
 			setInputErrors(validationResult.fields);
@@ -69,10 +69,6 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 		};
 
 		validationResult.success ? await handleValid() : handleInValid();
-
-		// !loading && (await handleValidFields(formFields))
-		// 	? await handleUpdate()
-		//   : setDebounce(false);
 	};
 
 	const handleChange = e => {
@@ -86,9 +82,19 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	};
 
 	useEffect(() => {
+		const schema = {
+			username: string()
+				.trim()
+				.max(30, ({ max }) => `Username must be less than ${max} long.`)
+				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.required('Username is required.'),
+		};
 		debounce &&
 			(timer.current = setTimeout(async () => {
-				const validationResult = await verifyScheme(formFields);
+				const validationResult = await verifyScheme({
+					schema,
+					data: formFields,
+				});
 				validationResult.success
 					? setInputErrors({})
 					: setInputErrors(validationResult.fields);
