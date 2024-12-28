@@ -50,6 +50,18 @@ export const Settings = ({
 							{user && <span>{user.username}</span>}
 							<button
 								className={styles['change-btn']}
+								onClick={() =>
+									onActiveModal({
+										component: (
+											<ChangeNameModel
+												username={user.username}
+												onActiveModal={onActiveModal}
+												onUser={onUser}
+												onAlert={onAlert}
+											/>
+										),
+									})
+								}
 							>
 								Change username
 							</button>
