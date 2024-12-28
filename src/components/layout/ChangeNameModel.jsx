@@ -17,39 +17,13 @@ export const ChangeNameModel = ({
 	onAlert,
 	onActiveModal,
 }) => {
-	
-	const [inputErrors, setInputErrors] = useState(null);
-	const [formFields, setFormFields] = useState(defaultForm);
+  const [inputErrors, setInputErrors] = useState({});
+	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const timer = useRef(null);
-
-	const handleValidFields = async fields => {
-		let isValid = false;
-		const schema = object({
-			name: string()
-				.trim()
-				.required('The name is required.')
-				.max(30, ({ max }) => `The name must be less than ${max} long.`)
-				.matches(/^[a-zA-Z0-9]\w*$/, 'The name must be alphanumeric.'),
-		}).noUnknown();
-
-		try {
-			await schema.validate(fields, {
-				abortEarly: false,
-			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
-		} catch (err) {
-			const obj = {};
-			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
-			}
-			setInputErrors(obj);
-			return isValid;
-		}
-	};
+	const navigate = useNavigate();
+	const { pathname: previousPath } = useLocation();
 
 	const handleUpdate = async () => {
 		setLoading(true);
