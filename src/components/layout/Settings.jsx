@@ -12,8 +12,14 @@ import { ChangeNameModel } from './ChangeNameModel';
 import { DeleteModel } from './DeleteModel';
 
 export const Settings = ({
+	user,
+	onUser,
+	onAlert,
+	onCloseSettings,
+	onActiveModal,
+}) => {
 	const handleClick = e => {
-		e.target.dataset.closeSetting && handleCloseSettings();
+		e.target.dataset.closeSetting && onCloseSettings();
 	};
 
 	return (
@@ -67,8 +73,8 @@ export const Settings = ({
 
 Settings.propTypes = {
 	user: PropTypes.object,
-	handleCloseSettings: PropTypes.func,
+	onCloseSettings: PropTypes.func,
+	onActiveModal: PropTypes.func,
 	onUser: PropTypes.func,
-	onModel: PropTypes.func,
 	onAlert: PropTypes.func,
 };
