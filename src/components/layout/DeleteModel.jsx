@@ -8,6 +8,8 @@ import buttonStyles from '../../../styles/button.module.css';
 
 
 // Utils
+import { deleteUser } from '../../../utils/handleUser';
+
 // Components
 import { Loading } from '../../utils/Loading';
 
