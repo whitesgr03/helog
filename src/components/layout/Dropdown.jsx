@@ -47,7 +47,7 @@ export const Dropdown = ({
 	};
 
 	const handleActiveSettings = () => setActiveSettings(true);
-	const handleCloseSettings = () => setActiveSettings(false);
+	const handleCloseSettings = () => onCloseDropdown(false);
 	return (
 		<>
 			{error ? (
