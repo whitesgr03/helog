@@ -75,36 +75,41 @@
 	background-color: var(--dark-scheme-input-bgc);
 	color: var(--dark-scheme-color);
 }
+
 :global(.dark) .header {
 	border-bottom: 1px solid var(--dark-scheme-color);
 }
+
 :global(.dark) .avatar {
 	background-color: var(--dark-scheme-color);
 	color: var(--light-scheme-color);
 }
+
 :global(.dark) .list li:last-of-type {
 	border-top-color: var(--dark-scheme-color);
 }
+
 :global(.dark) .change-btn {
 	color: var(--dark-scheme-highlight);
 }
+
 :global(.dark) .delete-btn {
 	color: var(--dark-scheme-error);
 }
 
-@media (min-width: 600px) {
+@media (width >= 600px) {
 	.settings {
 		width: 60%;
 	}
 }
 
-@media (min-width: 700px) {
+@media (width >= 700px) {
 	.settings {
 		width: 50%;
 	}
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
 	.header {
 		padding: 20px;
 	}
@@ -140,7 +145,7 @@
 	}
 }
 
-@media (min-width: 1300px) {
+@media (width >= 1300px) {
 	.settings {
 		width: 40%;
 	}
