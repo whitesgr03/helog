@@ -17,7 +17,7 @@ export const ChangeNameModel = ({
 	onAlert,
 	onActiveModal,
 }) => {
-	const defaultForm = { name: defaultValue || '' };
+	
 	const [inputErrors, setInputErrors] = useState(null);
 	const [formFields, setFormFields] = useState(defaultForm);
 	const [debounce, setDebounce] = useState(false);
