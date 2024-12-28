@@ -2,7 +2,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { object, string } from 'yup';
+import { string } from 'yup';
+import isEmpty from 'lodash.isempty';
 
 // Styles
 import formStyles from '../../../styles/form.module.css';
@@ -11,6 +12,7 @@ import imageStyles from '../../../styles/image.module.css';
 
 // Utils
 import { updateUser } from '../../../utils/handleUser';
+import { verifyScheme } from '../../../utils/verifyScheme';
 
 export const ChangeNameModel = ({
 	username,
