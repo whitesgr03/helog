@@ -74,6 +74,18 @@ export const Settings = ({
 							<strong className={styles.title}>Delete</strong>
 							<button
 								className={styles['delete-btn']}
+								onClick={() =>
+									onActiveModal({
+										component: (
+											<DeleteModel
+												onActiveModal={onActiveModal}
+												onUser={onUser}
+												onAlert={onAlert}
+												onCloseSettings={onCloseSettings}
+											/>
+										),
+									})
+								}
 							>
 								Delete account
 							</button>
