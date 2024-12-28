@@ -17,73 +17,8 @@ const models = {
 	changeName: ChangeNameModel,
 	deleteAccount: DeleteModel,
 };
-const Settings = ({ user, onUser, handleCloseSettings, onModel, onAlert }) => {
-	// const {
-	// 	onModel,
-	// 	onAlert,
-	// 	onUser,
-	// 	accessToken,
-	// 	handleVerifyTokenExpire: onVerifyTokenExpire,
-	// 	handleExChangeToken: onExChangeToken,
-	// } = AppContext();
 
-	const handleActiveModel = type => {
-		const Model = models[type];
-
-		let props = {
-			onModel,
-			onAlert,
-			onUser,
-			// accessToken,
-			// onVerifyTokenExpire,
-			// onExChangeToken,
-		};
-
-		switch (type) {
-			case 'changeName':
-				{
-					props = { ...props, defaultValue: user.name };
-				}
-				break;
-			case 'deleteAccount':
-				{
-					// const handleDelete = async () => {
-					// 	// const isTokenExpire = await onVerifyTokenExpire();
-					// 	// const newAccessToken =
-					// 	// 	isTokenExpire && (await onExChangeToken());
-
-					// 	const result = await deleteUser();
-					// 	// newAccessToken || accessToken
-
-					// 	const handleLogout = () => {
-					// 		window.location.replace(
-					// 			`${
-					// 				import.meta.env.VITE_RESOURCE_URL
-					// 			}/account/logout`
-					// 		);
-					// 		localStorage.removeItem("heLog.login-exp");
-					// 		onUser(null);
-					// 		handleCloseSettings();
-					// 		onModel(null);
-					// 	};
-
-					// 	result.success
-					// 		? handleLogout()
-					// 		: onAlert({ message: result.message, error: true });
-					// };
-
-					props = {
-						...props,
-						title: 'Account',
-						onCloseSettings: handleCloseSettings,
-					};
-				}
-				break;
-		}
-
-		onModel(<Model {...props} />);
-	};
-
+export const Settings = ({
 	const handleClick = e => {
 		e.target.dataset.closeSetting && handleCloseSettings();
 	};
@@ -144,5 +79,3 @@ Settings.propTypes = {
 	onModel: PropTypes.func,
 	onAlert: PropTypes.func,
 };
-
-export default Settings;
