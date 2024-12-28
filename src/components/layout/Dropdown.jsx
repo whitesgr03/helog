@@ -10,7 +10,7 @@ import imageStyles from '../../../styles/image.module.css';
 import loadingStyles from '../../utils/Loading.module.css';
 
 // Components
-// import Settings from './Settings.jsx';
+import { Settings } from './Settings.jsx';
 
 // Utils
 import { handleFetch } from '../../utils/handleFetch.js';
