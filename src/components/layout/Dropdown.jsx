@@ -5,9 +5,9 @@ import { Navigate, Link, useLocation } from 'react-router-dom';
 
 // Styles
 import styles from './Dropdown.module.css';
-import buttonStyles from '../../styles/button.module.css';
-import imageStyles from '../../styles/image.module.css';
-import loadingStyles from '../utils/Loading.module.css';
+import buttonStyles from '../../../styles/button.module.css';
+import imageStyles from '../../../styles/image.module.css';
+import loadingStyles from '../../utils/Loading.module.css';
 
 // Components
 // import Settings from './Settings.jsx';
