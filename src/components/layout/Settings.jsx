@@ -18,18 +18,20 @@ export const Settings = ({
 
 	return (
 		<div
-			className={blurWindow}
+			className={bgcStyles['blur-window']}
 			onClick={handleClick}
 			data-close-setting
 			data-testid={'blurBgc'}
 		>
-			<div className={style.settings}>
-				<button type="button" className={button.closeBtn} data-close-setting>
-					<span className={`${image.icon} ${button.close}`} />
+				<button
+					type="button"
+					className={buttonStyles['close-btn']}
+					data-close-setting
+				>
 				</button>
 				<div className={style.header}>Settings</div>
 				<div className={style.container}>
-					<div className={style.avatarWrap}>
+					<div className={styles['avatar-wrap']}>
 						<div className={style.avatar}>
 							{user && user.name.charAt(0).toUpperCase()}
 						</div>
@@ -39,8 +41,7 @@ export const Settings = ({
 							<strong className={style.title}>Name</strong>
 							{user && <span>{user.name}</span>}
 							<button
-								className={style.changeBtn}
-								onClick={() => handleActiveModel('changeName')}
+								className={styles['change-btn']}
 							>
 								Change name
 							</button>
@@ -52,8 +53,7 @@ export const Settings = ({
 						<li>
 							<strong className={style.title}>Delete</strong>
 							<button
-								className={style.deleteBtn}
-								onClick={() => handleActiveModel('deleteAccount')}
+								className={styles['delete-btn']}
 							>
 								Delete account
 							</button>
