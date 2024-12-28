@@ -11,13 +11,6 @@ import imageStyles from '../../../styles/image.module.css';
 import { ChangeNameModel } from './ChangeNameModel';
 import { DeleteModel } from './DeleteModel';
 
-
-// Variable
-const models = {
-	changeName: ChangeNameModel,
-	deleteAccount: DeleteModel,
-};
-
 export const Settings = ({
 	const handleClick = e => {
 		e.target.dataset.closeSetting && handleCloseSettings();
