@@ -17,6 +17,7 @@
 .alert.active {
 	transform: translateY(0%);
 }
+
 .alert.active.top {
 	z-index: 1;
 }
