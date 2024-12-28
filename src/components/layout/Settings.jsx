@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Settings.module.css';
-import bgcStyles from '../../styles/bgc.module.css';
-import buttonStyles from '../../styles/button.module.css';
-import imageStyles from '../../styles/image.module.css';
+import bgcStyles from '../../../styles/bgc.module.css';
+import buttonStyles from '../../../styles/button.module.css';
+import imageStyles from '../../../styles/image.module.css';
 
 // Components
 // import { AppContext } from "../../contexts/AppContext";
