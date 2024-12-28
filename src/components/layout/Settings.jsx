@@ -11,8 +11,6 @@ import imageStyles from '../../../styles/image.module.css';
 import { ChangeNameModel } from './ChangeNameModel';
 import { DeleteModel } from './DeleteModel';
 
-// Utils
-import { deleteUser } from '../../utils/handleUser';
 
 // Variable
 const models = {
