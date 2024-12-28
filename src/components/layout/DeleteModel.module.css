@@ -1,6 +1,5 @@
 .model {
 	display: flex;
-	position: relative;
 	row-gap: 20px;
 	flex-direction: column;
 	padding: 15px;
