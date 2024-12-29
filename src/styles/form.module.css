@@ -80,6 +80,11 @@
 	height: var(--size);
 }
 
+:global(.dark) .form input {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
+	color: var(--dark-scheme-color);
+}
+
 /* Pseudo classes */
 .content label:focus-within,
 .content label:hover {
@@ -94,6 +99,11 @@
 }
 
 /* Dark scheme classes */
+
+:global(.dark) .form {
+	color: var(--dark-scheme-color);
+}
+
 :global(.dark) .content label + div {
 	color: var(--dark-scheme-error);
 }
@@ -116,16 +126,6 @@
 :global(.dark) .content label:focus-within > textarea,
 :global(.dark) .content label:hover > textarea {
 	border-color: var(--dark-scheme-highlight);
-}
-
-/* Dark scheme classes */
-:global(.dark) .form {
-	color: var(--dark-scheme-color);
-}
-
-:global(.dark) .form input {
-	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
-	color: var(--dark-scheme-color);
 }
 
 @media (width >= 450px) {
