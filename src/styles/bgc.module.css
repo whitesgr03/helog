@@ -18,5 +18,18 @@
 	composes: content;
 	position: fixed;
 	backdrop-filter: blur(4px);
-	background-color: rgba(0, 0, 0, 0.6);
+	animation: fade-in 0.3s forwards;
 }
+
+
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
