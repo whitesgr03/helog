@@ -3,7 +3,7 @@ import styles from './Footer.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Components
-import Address from './Address';
+import { Address } from './Address';
 
 export const Footer = () => {
 	return (
