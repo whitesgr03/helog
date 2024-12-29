@@ -8,7 +8,7 @@ import styles from './App.module.css';
 // Components
 import { Header } from '../../layout/Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
-import { Contact } from '../../layout/Contact';
+import { Contact } from './Contact';
 import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { CreateUsername } from './CreateUsername';
