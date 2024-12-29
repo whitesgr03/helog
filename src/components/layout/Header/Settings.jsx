@@ -57,7 +57,6 @@ export const Settings = ({
 												username={user.username}
 												onActiveModal={onActiveModal}
 												onUser={onUser}
-												onAlert={onAlert}
 											/>
 										),
 									})

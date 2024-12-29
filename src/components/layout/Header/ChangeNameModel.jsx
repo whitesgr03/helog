@@ -14,12 +14,7 @@ import imageStyles from '../../../styles/image.module.css';
 import { updateUser } from '../../../utils/handleUser';
 import { verifySchema } from '../../../utils/verifySchema';
 
-export const ChangeNameModel = ({
-	username,
-	onUser,
-	onAlert,
-	onActiveModal,
-}) => {
+export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
@@ -35,7 +30,6 @@ export const ChangeNameModel = ({
 
 		const handleSetUser = () => {
 			onUser(result.data);
-			onAlert({ message: result.message });
 			onActiveModal({ component: null });
 		};
 
@@ -151,7 +145,6 @@ export const ChangeNameModel = ({
 
 ChangeNameModel.propTypes = {
 	onActiveModal: PropTypes.func,
-	onAlert: PropTypes.func,
 	username: PropTypes.string,
 	onUser: PropTypes.func,
 };
