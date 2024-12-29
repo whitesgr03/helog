@@ -9,8 +9,8 @@ import { PostList } from './components/pages/Post/PostList';
 import { Login } from './components/pages/Account/Login';
 import { CheckUsername } from './components/utils/CheckUsername';
 
-import { Error } from './components/utils/Error';
-import { NotFound } from './components/utils/NotFound';
+import { Error } from './components/utils/Error/Error';
+import { NotFound } from './components/utils/Error/NotFound';
 
 export const Router = () => (
 	<RouterProvider
