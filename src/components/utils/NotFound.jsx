@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 // Styles
 import styles from './Error.module.css';
-import imageStyles from '../../styles/image.module.css';
+import imageStyles from '../../../styles/image.module.css';
 
 export const NotFound = () => {
 	return (
