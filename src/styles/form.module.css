@@ -1,3 +1,12 @@
+.error input {
+	border-color: var(--light-scheme-error);
+}
+
+.error + div {
+	visibility: visible;
+	opacity: 1;
+}
+
 .form {
 	display: flex;
 	row-gap: 10px;
@@ -58,22 +67,6 @@
 	opacity: 0;
 	margin-left: 30px;
 	color: var(--light-scheme-error);
-}
-
-.content label + div span:first-of-type {
-	position: absolute;
-	top: 50%;
-	right: 100%;
-	transform: translateY(-50%);
-	margin-right: 5px;
-}
-
-.content label.error input {
-	border-color: var(--light-scheme-error);
-}
-.content label.error + div {
-	visibility: visible;
-	opacity: 1;
 }
 
 .alert {
