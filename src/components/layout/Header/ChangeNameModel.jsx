@@ -12,7 +12,7 @@ import imageStyles from '../../../styles/image.module.css';
 
 // Utils
 import { updateUser } from '../../../utils/handleUser';
-import { verifyScheme } from '../../../utils/verifyScheme';
+import { verifySchema } from '../../../utils/verifySchema';
 
 export const ChangeNameModel = ({
 	username,
@@ -20,7 +20,7 @@ export const ChangeNameModel = ({
 	onAlert,
 	onActiveModal,
 }) => {
-  const [inputErrors, setInputErrors] = useState({});
+	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ export const ChangeNameModel = ({
 				.required('Username is required.'),
 		};
 
-		const validationResult = await verifyScheme({ schema, data: formFields });
+		const validationResult = await verifySchema({ schema, data: formFields });
 
 		const handleInValid = () => {
 			setInputErrors(validationResult.fields);
@@ -100,7 +100,7 @@ export const ChangeNameModel = ({
 		};
 		debounce &&
 			(timer.current = setTimeout(async () => {
-				const validationResult = await verifyScheme({
+				const validationResult = await verifySchema({
 					schema,
 					data: formFields,
 				});
