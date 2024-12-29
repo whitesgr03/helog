@@ -6,6 +6,15 @@
 	color: var(--dark-scheme-color);
 }
 
+.load-icon {
+	--size: calc(var(--icon-size-desktop) * 1.5);
+
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8'/%3E%3C/svg%3E");
+	animation: spin 1s linear infinite;
+	width: var(--size);
+	height: var(--size);
+}
+
 .success {
 	composes: content;
 	position: relative;
@@ -30,6 +39,11 @@
 	display: none;
 }
 
+.success.loading .load-icon {
+	display: block;
+	width: var(--icon-size-desktop);
+}
+
 .success.loading::after {
 	position: absolute;
 	top: 50%;
@@ -50,22 +64,10 @@
 	0% {
 		transform: translate(0%, -50%);
 	}
+
 	100% {
 		transform: translate(200%, -50%);
 	}
-}
-
-.success.loading .loadIcon {
-	display: block;
-	width: var(--icon-size-desktop);
-}
-
-.loadIcon {
-	--size: calc(var(--icon-size-desktop) * 1.5);
-	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8'/%3E%3C/svg%3E");
-	animation: spin 1s linear infinite;
-	width: var(--size);
-	height: var(--size);
 }
 
 .error {
