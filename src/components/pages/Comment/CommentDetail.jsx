@@ -6,11 +6,11 @@ import { formatDistanceToNow } from 'date-fns';
 
 // Styles
 import styles from './CommentDetail.module.css';
-import imageStyles from '../../../styles/imageStyles.module.css';
+import imageStyles from '../../../styles/image.module.css';
 
 // Components
 import { CommentBox } from './CommentBox';
-import { DeleteModel } from '../../layout/DeleteModel';
+import { DeleteModel } from '../../layout/Header/DeleteModel';
 
 // Utils
 import {

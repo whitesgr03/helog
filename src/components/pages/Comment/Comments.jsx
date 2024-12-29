@@ -8,7 +8,7 @@ import styles from './Comments.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading';
-import { Error } from '../../utils/Error';
+import { Error } from '../../utils/Error/Error';
 import { CommentDetail } from './CommentDetail';
 import { CommentBox } from './CommentBox';
 

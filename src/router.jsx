@@ -8,7 +8,7 @@ import { PostList } from './components/pages/Post/PostList';
 
 import { Login } from './components/pages/Account/Login';
 import { CheckUsername } from './components/utils/CheckUsername';
-import { PostDetail } from './components/pages/post/PostDetail';
+import { PostDetail } from './components/pages/Post/PostDetail';
 
 import { Error } from './components/utils/Error/Error';
 import { NotFound } from './components/utils/Error/NotFound';

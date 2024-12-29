@@ -6,9 +6,9 @@ import { object, string } from 'yup';
 
 // Styles
 import styles from './CommentBox.module.css';
-import formStyles from '../../../styles/formStyles.module.css';
-import imageStyles from '../../../styles/imageStyles.module.css';
-import buttonStyles from '.../../../styles/buttonStyles.module.css';
+import formStyles from '../../../styles/form.module.css';
+import imageStyles from '../../../styles/image.module.css';
+import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading';

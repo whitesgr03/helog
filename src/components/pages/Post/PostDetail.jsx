@@ -7,12 +7,12 @@ import { Editor } from '@tinymce/tinymce-react';
 
 // Styles
 import styles from './PostDetail.module.css';
-import imageStyles from '../../../styles/imageStyles.module.css';
+import imageStyles from '../../../styles/image.module.css';
 
 // Components
-import { Loading } from '../layout/Loading';
-import { Error } from '../layout/Error';
-import { Comments } from '../Comment/Comments.module.css';
+import { Loading } from '../../utils/Loading';
+import { Error } from '../../utils/Error/Error';
+import { Comments } from '../Comment/Comments';
 
 // Utils
 import { getPostDetail } from '../../../utils/handlePost';
