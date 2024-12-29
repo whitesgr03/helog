@@ -96,9 +96,11 @@
 	--toggle-padding: 2px;
 	--toggle-border: 2px;
 	--toggle-slide: calc(var(--toggle-width) / 3);
+
 	display: flex;
 	column-gap: 10px;
 	align-items: center;
+	height: var(--icon-size-mobile);
 }
 
 .theme span + div {
