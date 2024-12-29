@@ -9,12 +9,12 @@
 	height: 100%;
 }
 
-.transparentWindow {
+.transparent-window {
 	composes: content;
 	position: fixed;
 }
 
-.blurWindow {
+.blur-window {
 	composes: content;
 	position: fixed;
 	backdrop-filter: blur(4px);
