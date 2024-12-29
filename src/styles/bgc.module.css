@@ -19,6 +19,7 @@
 	position: fixed;
 	backdrop-filter: blur(4px);
 	animation: fade-in 0.3s forwards;
+	background-color: rgba(var(--light-scheme-color-rgb), 0.9);
 }
 
 
