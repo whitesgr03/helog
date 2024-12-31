@@ -13,6 +13,7 @@ import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { CreateUsername } from './CreateUsername';
 import { Loading } from '../../utils/Loading';
+import { Error } from '../../utils/Error/Error';
 
 // Utils
 import { getUser } from '../../../utils/handleUser';
@@ -29,6 +30,8 @@ export const App = () => {
 	const [loading, setLoading] = useState(false);
 	const [alert, setAlert] = useState(defaultAlert);
 	const [modal, setModal] = useState(null);
+	const [error, setError] = useState(false);
+	const [reGetUser, setReGetUser] = useState(false);
 
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
@@ -70,15 +73,25 @@ export const App = () => {
 			const result = await getUser({ signal });
 
 			const handleResult = () => {
-				result.success && setUser(result.data);
+				reGetUser && setReGetUser(false);
+
+				const handleSuccess = () => {
+					error && setError(false);
+					setUser(result.data);
+				};
+
+				result.success
+					? handleSuccess()
+					: result.status === 500 && setError(result.message);
+
 				setLoading(false);
 			};
 
 			result && handleResult();
 		};
-		handleGetUser();
+		(reGetUser || !user) && handleGetUser();
 		return () => controller.abort();
-	}, []);
+	}, [reGetUser, user, error]);
 
 	useEffect(() => {
 		user &&
@@ -97,7 +110,9 @@ export const App = () => {
 
 	return (
 		<>
-			{loading ? (
+			{error ? (
+				<Error onReGetUser={setReGetUser} />
+			) : loading ? (
 				<Loading />
 			) : (
 				<div

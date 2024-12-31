@@ -1,11 +1,12 @@
 // Packages
 import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Error.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
-export const Error = () => {
+export const Error = ({ onReGetUser }) => {
 	const { state } = useLocation();
 
 	return (
@@ -26,9 +27,18 @@ export const Error = () => {
 					Go Back
 				</Link>
 			)}
-			<Link to="/" className={styles.link}>
+
+			<Link
+				to="/"
+				className={styles.link}
+				onClick={() => onReGetUser && onReGetUser(true)}
+			>
 				Back to Home Page.
 			</Link>
 		</div>
 	);
+};
+
+Error.propTypes = {
+	onReGetUser: PropTypes.func,
 };
