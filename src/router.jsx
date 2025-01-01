@@ -38,7 +38,6 @@ export const Router = () => (
 							},
 						],
 					},
-
 					{
 						path: 'login',
 						element: <Login />,
