@@ -31,8 +31,11 @@ export const Posts = ({ limit = 0 }) => {
 		post =>
 			post?.content !== '' && (
 				<li key={post._id}>
-					<div className={style.info}>
-						<strong className={style.dateTime} title={post.author.username}>
+					<div className={styles.info}>
+						<strong
+							className={styles['date-time']}
+							title={post.author.username}
+						>
 							{post.author.username}
 						</strong>
 						<em>
@@ -51,7 +54,7 @@ export const Posts = ({ limit = 0 }) => {
 							{post.mainImageUrl ? (
 								<img src={post.mainImageUrl} alt={`${post.title} main image`} />
 							) : (
-								<div className={styles.emptyImageWrap}>
+								<div className={styles['empty-image-wrap']}>
 									{'( Empty Main Image )'}
 								</div>
 							)}

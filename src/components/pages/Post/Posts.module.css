@@ -38,11 +38,11 @@
 	overflow: hidden;
 }
 
-.dateTime {
+.date-time {
 	font-style: italic;
 }
 
-.emptyImageWrap {
+.empty-image-wrap {
 	display: flex;
 	position: absolute;
 	top: 0;
@@ -60,11 +60,12 @@
 .posts li a img:hover {
 	opacity: 0.8;
 }
+
 .posts li .title:hover {
 	text-decoration: underline;
 }
 
-.emptyImageWrap:hover {
+.empty-image-wrap:hover {
 	border-color: var(--light-scheme-color);
 }
 
@@ -72,11 +73,12 @@
 :global(.dark) .posts li {
 	color: var(--dark-scheme-color);
 }
+
 :global(.dark) .posts li .title {
 	color: var(--dark-scheme-highlight);
 }
 
-:global(.dark) .emptyImageWrap:hover {
+:global(.dark) .empty-image-wrap:hover {
 	border-color: var(--dark-scheme-color);
 }
 
