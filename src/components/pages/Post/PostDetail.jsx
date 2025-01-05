@@ -88,7 +88,8 @@ export const PostDetail = () => {
 								)}
 							</div>
 							<Editor
-								apiKey="x2zlv8pvui3hofp395wp6my8308b15h3s176scf930dizek1"
+								tinymceScriptSrc="/tinymce/tinymce.min.js"
+								licenseKey="gpl"
 								id="content"
 								disabled={true}
 								value={post?.content}
