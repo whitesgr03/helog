@@ -79,7 +79,7 @@ export const Header = ({
 			</header>
 			{activeDropdown && (
 				<div
-					className={bgcStyles.transparentWindow}
+					className={bgcStyles['transparent-window']}
 					onClick={handleCloseDropdown}
 					data-testid="transparentBgc"
 				/>
