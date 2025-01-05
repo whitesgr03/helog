@@ -81,7 +81,7 @@ export const PostDetail = () => {
 										<div className={imageStyles.content}>
 											<img
 												src={post.mainImageUrl}
-												alt={`${post.title} main imageStyles`}
+												alt={`${post.title}'s main image`}
 											/>
 										</div>
 									</div>
