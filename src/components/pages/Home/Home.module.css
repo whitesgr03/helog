@@ -185,7 +185,7 @@
 		left: 0;
 		backdrop-filter: blur(4px);
 		border-bottom: 0;
-		background-color: rgba(199, 202, 207, 0.4);
+		background-color: rgba(var(--light-scheme-hero-bgc-rgb), 0.4);
 		padding: 0 20%;
 		width: 100%;
 		height: 100%;
@@ -233,7 +233,7 @@
 
 	/* Dark scheme classes */
 	:global(.dark) .content {
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: rgba(var(--light-scheme-color-rgb), 0.4);
 	}
 
 	:global(.dark) .content h2 {
