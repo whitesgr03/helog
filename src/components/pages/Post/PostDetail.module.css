@@ -30,6 +30,7 @@
 }
 
 .post-detail li {
+	margin-block: 1em;
 	list-style: revert;
 }
 
