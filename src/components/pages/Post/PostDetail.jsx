@@ -54,14 +54,14 @@ export const PostDetail = () => {
 			) : (
 				<>
 					<div className={`${loading || loadContent ? styles.loading : ''}`}>
-						<div id="postDetail" className={styles.postDetail}>
+						<div id="post-detail" className={styles['post-detail']}>
 							<Link to="/posts" className={styles.link}>
-								<span className={`${styles.leftArrow} ${imageStyles.icon}`} />
+								<span className={`${styles['left-arrow']} ${imageStyles.icon}`} />
 								Back to list
 							</Link>
 
 							{post?.title && <h2 className={styles.title}>{post.title}</h2>}
-							<div className={styles.dateTime}>
+							<div className={styles['date-time']}>
 								<strong>{post?.author?.name}</strong>
 								{post?.lastModified && (
 									<em>
@@ -77,7 +77,7 @@ export const PostDetail = () => {
 								)}
 
 								{post?.mainImageUrl && (
-									<div className={styles.imageWrap}>
+									<div className={styles['image-wrap']}>
 										<div className={imageStyles.content}>
 											<img
 												src={post.mainImageUrl}
