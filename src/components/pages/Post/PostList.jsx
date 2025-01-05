@@ -6,7 +6,7 @@ import { Posts } from './Posts';
 
 export const PostList = () => {
 	return (
-		<div className={styles.postList}>
+		<div className={styles['post-list']}>
 			<Posts />
 		</div>
 	);
