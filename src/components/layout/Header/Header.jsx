@@ -35,7 +35,9 @@ export const Header = ({
 					<ul className={styles.list}>
 						{user && (
 							<li>
-								<a href={import.meta.env.VITE_HELOG_EDITOR_URL}>
+								<a
+									href={`${import.meta.env.VITE_HELOG_EDITOR_URL}?theme=${darkTheme}`}
+								>
 									<span className={`${imageStyles.icon} ${styles.pencil}`} />
 									Write
 								</a>
