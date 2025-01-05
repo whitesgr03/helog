@@ -41,7 +41,7 @@ export const Home = () => {
 					</Link>
 				</div>
 			</div>
-			<div className={styles.latestPosts}>
+			<div className={styles['latest-posts']}>
 				<h2>Latest Posts</h2>
 				<Posts limit={4} />
 			</div>
