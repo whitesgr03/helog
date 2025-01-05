@@ -24,7 +24,7 @@
 	border-color: var(--dark-scheme-color);
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
 	.post-list ul {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -38,7 +38,7 @@
 	}
 }
 
-@media (min-width: 1600px) {
+@media (width >= 1600px) {
 	.post-list ul {
 		padding: 5% 0;
 	}
