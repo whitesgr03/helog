@@ -2,7 +2,7 @@
 	display: none;
 }
 
-.postDetail {
+.post-detail {
 	display: flex;
 	row-gap: 15px;
 	flex-direction: column;
@@ -17,52 +17,50 @@
 	font-size: 1.5rem;
 }
 
-.dateTime {
+.date-time {
 	display: flex;
 	row-gap: 15px;
 	flex-direction: column;
 }
 
-.postDetail ol,
-.postDetail ul {
+.post-detail ol,
+.post-detail ul {
 	margin: revert;
 	padding: revert;
 }
 
-.postDetail li {
-	margin-block-start: 1em;
-	margin-block-end: 1em;
+.post-detail li {
 	list-style: revert;
 }
 
-.postDetail p,
-.postDetail h2,
-.postDetail h3,
-.postDetail h5 {
+.post-detail p,
+.post-detail h2,
+.post-detail h3,
+.post-detail h5 {
 	margin: revert;
 }
 
-.postDetail :global(#content) img {
+.post-detail :global(#content) img {
 	display: block;
 	margin: 0 auto;
 	max-width: 100%;
 	object-fit: cover;
 }
 
-.postDetail :global(#mainImage) {
+.post-detail :global(#main-image) {
 	position: relative;
 	padding-top: 56.25%;
 }
 
-.postDetail :global(#mainImage) p {
+.post-detail :global(#main-image) p {
 	margin: 0;
 }
 
-.postDetail :global(#content) a {
+.post-detail :global(#content) a {
 	text-decoration: revert;
 }
 
-.postDetail :global(#mainImage) img {
+.post-detail :global(#main-image) img {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -72,20 +70,21 @@
 	object-fit: cover;
 }
 
-.postDetail :global(#content.mce-content-body:not([dir='rtl']) blockquote) {
+.post-detail :global(#content.mce-content-body:not([dir='rtl']) blockquote) {
 	margin-left: 1.5rem;
 	border-left: 2px solid var(--dark-scheme-placeholder);
 	padding-left: 1rem;
 }
 
-.postDetail :global(#content pre[class*='language-']) {
+.post-detail :global(#content pre[class*='language-']) {
 	background-color: var(--light-scheme-layout-bgc);
 	font-family: unset;
 	text-shadow: none;
 }
 
-.leftArrow {
+.left-arrow {
 	--size: var(--icon-size-desktop);
+
 	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='208' height='208' viewBox='0 0 20 20'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10' clip-rule='evenodd'/%3E%3C/svg%3E");
 	width: var(--size);
 	height: var(--size);
@@ -97,29 +96,29 @@
 }
 
 /* Dark scheme classes */
-:global(.dark) .postDetail {
+:global(.dark) .post-detail {
 	color: var(--dark-scheme-color);
 }
 
-:global(.dark) .postDetail :global(#content pre[class*='language-']) {
+:global(.dark) .post-detail :global(#content pre[class*='language-']) {
 	background-color: var(--dark-scheme-input-bgc);
 	color: var(--dark-scheme-color);
 }
 
 :global(.dark)
-	.postDetail
+	.post-detail
 	:global(#content.mce-content-body:not([dir='rtl']) blockquote) {
 	border-color: var(--dark-scheme-color);
 }
 
 @media (min-width: 400px) {
-	.postDetail {
+	.post-detail {
 		padding: 5% 10%;
 	}
 }
 
 @media (min-width: 700px) {
-	.postDetail {
+	.post-detail {
 		row-gap: 30px;
 		padding: 5% 15%;
 	}
@@ -130,18 +129,18 @@
 }
 
 @media (min-width: 1000px) {
-	.postDetail {
+	.post-detail {
 		row-gap: 40px;
 		padding: 5% 10%;
 	}
 
-	.imageWrap {
+	.image-wrap {
 		padding: 0 10%;
 	}
 }
 
 @media (min-width: 1600px) {
-	.postDetail {
+	.post-detail {
 		padding: 5% 0;
 	}
 }
