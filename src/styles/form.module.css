@@ -1,8 +1,29 @@
-.error input {
+.form label > div {
+	margin-top: 20px;
+}
+
+.content label > input {
+	border: 2px solid transparent;
+	border-radius: 10px;
+	padding: 10px;
+	width: 100%;
+}
+
+.content label + div {
+	display: flex;
+	position: relative;
+	column-gap: 5px;
+	align-items: center;
+	visibility: hidden;
+	opacity: 0;
+	color: var(--light-scheme-error);
+}
+
+.content .error input {
 	border-color: var(--light-scheme-error);
 }
 
-.error + div {
+.content .error + div {
 	visibility: visible;
 	opacity: 1;
 }
@@ -16,10 +37,6 @@
 
 .form label {
 	font-weight: 700;
-}
-
-.form label > div {
-	margin-top: 20px;
 }
 
 .form button {
@@ -45,13 +62,6 @@
 	flex-direction: column;
 }
 
-.content label > input {
-	border: 2px solid transparent;
-	border-radius: 10px;
-	padding: 10px;
-	width: 100%;
-}
-
 .content label > textarea {
 	border: 2px solid transparent;
 	border-radius: 10px;
@@ -59,16 +69,6 @@
 	width: 100%;
 	height: auto;
 	line-height: 1.5em;
-}
-
-.content label + div {
-	display: flex;
-	position: relative;
-	column-gap: 5px;
-	align-items: center;
-	visibility: hidden;
-	opacity: 0;
-	color: var(--light-scheme-error);
 }
 
 .alert {
