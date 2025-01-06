@@ -78,7 +78,7 @@ export const Dropdown = ({
 								</div>
 							</button>
 						</li>
-						{user && (
+						{user && user.username && (
 							<li>
 								<button onClick={handleActiveSettings}>
 									<span className={`${imageStyles.icon} ${styles.settings}`} />
