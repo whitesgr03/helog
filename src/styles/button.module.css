@@ -15,6 +15,12 @@
 	height: var(--size);
 }
 
+@keyframes spin {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 .success {
 	composes: content;
 	position: relative;
