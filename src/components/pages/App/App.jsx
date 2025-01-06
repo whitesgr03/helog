@@ -27,7 +27,7 @@ const defaultAlert = {
 export const App = () => {
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(null);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [alert, setAlert] = useState(defaultAlert);
 	const [modal, setModal] = useState(null);
 	const [error, setError] = useState(false);
