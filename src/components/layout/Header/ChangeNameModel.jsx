@@ -135,7 +135,7 @@ export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
 				<span className={buttonStyles.text}>
 					Save
 					<span
-						className={`${imageStyles.icon} ${buttonStyles['load-Icon']}`}
+						className={`${imageStyles.icon} ${buttonStyles['load-icon']}`}
 					/>
 				</span>
 			</button>
