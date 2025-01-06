@@ -50,7 +50,7 @@
 	right: 100%;
 	transform: translate(0%, -50%);
 	z-index: 0;
-	animation: shimmer 1s forwards infinite ease-in-out;
+	animation: shimmer 1.5s forwards infinite ease-in-out;
 	border: 2px solid black;
 	border-right-width: 0;
 	border-left-width: 0;
