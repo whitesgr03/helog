@@ -67,7 +67,6 @@ export const App = () => {
 
 			localStorage.setItem('darkTheme', theme);
 			setDarkTheme(theme === 'true');
-			navigate('/');
 		};
 		darkTheme === null && getColorTheme();
 	}, [navigate, darkTheme, searchParams]);
