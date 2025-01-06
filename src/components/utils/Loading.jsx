@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // Styles
-import styles from '../utils/Loading.module.css';
+import styles from './Loading.module.css';
 import imageStyles from '../../styles/image.module.css';
 
 export const Loading = ({ text, dark, light, shadow }) => {
