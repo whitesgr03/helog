@@ -104,7 +104,7 @@ export const App = () => {
 			{error ? (
 				<Error onReGetUser={setReGetUser} />
 			) : loading ? (
-				<Loading />
+				<Loading text={'Loading...'} />
 			) : (
 				<div
 					className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
