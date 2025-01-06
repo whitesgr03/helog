@@ -23,15 +23,7 @@ export const Posts = ({ posts, limit }) => {
 										>
 											{post.author.username}
 										</strong>
-										<em>
-											{format(
-												new Date(post.createdAt).getTime() ===
-													new Date(post.updatedAt).getTime()
-													? post.createdAt
-													: post.updatedAt,
-												'MMMM d, y',
-											)}
-										</em>
+										<em>{format(post.updatedAt, 'MMMM d, y')}</em>
 									</div>
 
 									<Link to={`/posts/${post._id}`}>
