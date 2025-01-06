@@ -105,6 +105,18 @@
 		display: inline;
 	}
 
+	.loading-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+    row-gap: 10px;
+	}
+
+	.loading {
+		margin: 0 auto;
+	}
+
 	.latest-posts {
 		display: flex;
 		row-gap: 20px;

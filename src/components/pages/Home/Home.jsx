@@ -1,9 +1,10 @@
 // Packages
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 
 // Styles
 import styles from './Home.module.css';
 import imageStyles from '../../../styles/image.module.css';
+import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { Posts } from '../Post/Posts';
@@ -12,6 +13,7 @@ import { Posts } from '../Post/Posts';
 import url from '../../../assets/hero.jpg';
 
 export const Home = () => {
+	const { posts, fetching } = useOutletContext();
 	return (
 		<div className={styles.home}>
 			<div className={styles.container}>
@@ -43,7 +45,16 @@ export const Home = () => {
 			</div>
 			<div className={styles['latest-posts']}>
 				<h2>Latest Posts</h2>
-				<Posts limit={4} />
+				{fetching ? (
+					<div className={styles['loading-container']}>
+						<span
+							className={`${styles.loading} ${imageStyles.icon} ${buttonStyles['load-icon']}`}
+						/>
+						Loading posts...
+					</div>
+				) : (
+					<Posts posts={posts} limit={4} />
+				)}
 			</div>
 		</div>
 	);

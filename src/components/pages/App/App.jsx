@@ -17,6 +17,7 @@ import { Error } from '../../utils/Error/Error';
 
 // Utils
 import { getUser } from '../../../utils/handleUser';
+import { getPosts } from '../../../utils/handlePost';
 
 // Variables
 const defaultAlert = {
@@ -26,8 +27,10 @@ const defaultAlert = {
 
 export const App = () => {
 	const [user, setUser] = useState(null);
+	const [posts, setPosts] = useState([]);
 	const [darkTheme, setDarkTheme] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [fetching, setFetching] = useState(true);
 	const [alert, setAlert] = useState(defaultAlert);
 	const [modal, setModal] = useState(null);
 	const [error, setError] = useState(false);
@@ -99,6 +102,25 @@ export const App = () => {
 		return () => controller.abort();
 	}, [reGetUser, user, error]);
 
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+
+		const handleGetPosts = async () => {
+			const result = await getPosts({ limit: 10, signal });
+
+			const handleResult = () => {
+				result.success ? setPosts(result.data) : setError(result.message);
+				setFetching(false);
+			};
+
+			result && handleResult();
+		};
+
+		handleGetPosts();
+		return () => controller.abort();
+	}, []);
+
 	return (
 		<>
 			{error ? (
@@ -151,6 +173,8 @@ export const App = () => {
 								<Outlet
 									context={{
 										user,
+										posts,
+										fetching,
 										onUser: setUser,
 										onActiveModal: handleActiveModal,
 										onAlert: handleAlert,

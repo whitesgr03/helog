@@ -56,6 +56,10 @@
 	height: 100%;
 }
 
+.no-posts {
+  text-align: center;
+}
+
 /* Pseudo classes */
 .posts li a img:hover {
 	opacity: 0.8;
