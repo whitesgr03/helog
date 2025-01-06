@@ -44,27 +44,25 @@ export const DeleteModel = ({
 		setLoading(false);
 	};
 	return (
-		<div className={styles.model}>
-			{loading && (
-				<div className={styles.loading}>
-					<Loading />
+		<>
+			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
+			<div className={styles.model}>
+				<span className={styles.title}>Delete Your Account Forever</span>
+				<span className={styles.content}>Do you really want to delete?</span>
+				<div className={styles['button-wrap']}>
+					<button
+						className={buttonStyles.cancel}
+						data-close-model
+						onClick={() => onActiveModal({ component: null })}
+					>
+						Cancel
+					</button>
+					<button className={buttonStyles.error} onClick={handleDelete}>
+						Delete
+					</button>
 				</div>
-			)}
-			<span className={styles.title}>Delete Your Account Forever</span>
-			<span className={styles.content}>Do you really want to delete?</span>
-			<div className={styles['button-wrap']}>
-				<button
-					className={buttonStyles.cancel}
-					data-close-model
-					onClick={() => onActiveModal({ component: null })}
-				>
-					Cancel
-				</button>
-				<button className={buttonStyles.error} onClick={handleDelete}>
-					Delete
-				</button>
 			</div>
-		</div>
+		</>
 	);
 };
 
