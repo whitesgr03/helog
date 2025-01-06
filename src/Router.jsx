@@ -28,7 +28,7 @@ export const Router = () => (
 						element: <PostList />,
 					},
 					{
-						path: ':postId',
+						path: 'posts/:postId',
 						element: <PostDetail />,
 					},
 					{
