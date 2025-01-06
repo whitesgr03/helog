@@ -47,6 +47,9 @@
 
 .success.loading .load-icon {
 	display: block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: var(--icon-size-desktop);
 }
 
