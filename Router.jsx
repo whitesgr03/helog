@@ -7,7 +7,6 @@ import { Home } from './components/pages/Home/Home';
 import { PostList } from './components/pages/Post/PostList';
 
 import { Login } from './components/pages/Account/Login';
-import { CheckUsername } from './components/utils/CheckUsername';
 import { PostDetail } from './components/pages/Post/PostDetail';
 
 import { Error } from './components/utils/Error/Error';
@@ -26,11 +25,7 @@ export const Router = () => (
 					},
 					{
 						path: 'posts',
-						element: (
-							<CheckUsername>
-								<PostList />
-							</CheckUsername>
-						),
+						element: <PostList />,
 					},
 					{
 						path: ':postId',

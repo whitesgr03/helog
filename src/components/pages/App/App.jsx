@@ -100,21 +100,6 @@ export const App = () => {
 		return () => controller.abort();
 	}, [reGetUser, user, error]);
 
-	useEffect(() => {
-		user &&
-			!user.username &&
-			handleActiveModal({
-				component: (
-					<CreateUsername
-						onActiveModal={handleActiveModal}
-						onUser={setUser}
-						onAlert={handleAlert}
-					/>
-				),
-				clickToClose: false,
-			});
-	}, [user]);
-
 	return (
 		<>
 			{error ? (
@@ -150,14 +135,29 @@ export const App = () => {
 					</div>
 					<div className={styles.container}>
 						<main>
-							<Outlet
-								context={{
-									user,
-									onUser: setUser,
-									onActiveModal: handleActiveModal,
-									onAlert: handleAlert,
-								}}
-							/>
+							{user && !user.username ? (
+								!modal &&
+								handleActiveModal({
+									component: (
+										<CreateUsername
+											onActiveModal={handleActiveModal}
+											onUser={setUser}
+											onAlert={handleAlert}
+											onError={setError}
+										/>
+									),
+									clickToClose: false,
+								})
+							) : (
+								<Outlet
+									context={{
+										user,
+										onUser: setUser,
+										onActiveModal: handleActiveModal,
+										onAlert: handleAlert,
+									}}
+								/>
+							)}
 						</main>
 						<Contact />
 						<Footer />
