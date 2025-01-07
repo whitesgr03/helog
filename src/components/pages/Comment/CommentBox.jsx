@@ -201,8 +201,8 @@ export const CommentBox = ({
 							autoFocus={submitBtn !== 'Comment'}
 						/>
 					</label>
-					{(defaultValue || submitBtn === 'Reply' || showSubmitButton) &&
-						inputErrors && (
+					{!isEmpty(inputErrors) &&
+						(submitBtn === 'Reply' || showSubmitButton) && (
 							<div>
 								<span className={`${imageStyles.icon} ${formStyles.alert}`} />
 								<span className={formStyles.placeholder}>
@@ -212,7 +212,7 @@ export const CommentBox = ({
 						)}
 				</div>
 
-				{(defaultValue || submitBtn === 'Reply' || showSubmitButton) && (
+				{(submitBtn === 'Reply' || showSubmitButton) && (
 					<div className={styles['button-wrap']}>
 						<button
 							type="button"
