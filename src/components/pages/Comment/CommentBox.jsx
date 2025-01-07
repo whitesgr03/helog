@@ -27,7 +27,7 @@ export const CommentBox = ({
 	const defaultFields = { content: defaultValue ?? '' };
 
 	const { user, onAlert } = useOutletContext();
-	const [inputErrors, setInputErrors] = useState(null);
+	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState(defaultFields);
 	const [loading, setLoading] = useState(null);
 	const [showSubmitButton, setShowSubmitButton] = useState(null);
@@ -113,7 +113,7 @@ export const CommentBox = ({
 			[name]: value,
 		};
 		setFormFields(fields);
-		inputErrors && setDebounce(true);
+		!isEmpty(inputErrors) && setDebounce(true);
 	};
 
 	// const handleFocus = () =>
@@ -122,18 +122,26 @@ export const CommentBox = ({
 		textbox.current.styles.height = 'auto';
 		setShowSubmitButton(false);
 		setFormFields(defaultFields);
-		setInputErrors(null);
+		setInputErrors({});
 		setDebounce(false);
 	};
 
 	useEffect(() => {
 		debounce &&
-			(timer.current = setTimeout(() => handleValidFields(formFields), 500));
+			(timer.current = setTimeout(async () => {
+				const validationResult = await verifySchema({
+					schema,
+					data: formFields,
+				});
+				validationResult.success
+					? setInputErrors({})
+					: setInputErrors(validationResult.fields);
+			}, 500));
 
 		return () => {
 			clearTimeout(timer.current);
 		};
-	}, [debounce, formFields]);
+	}, [schema, debounce, formFields]);
 
 	useEffect(() => {
 		const setTextboxHeight = () => {
@@ -191,7 +199,7 @@ export const CommentBox = ({
 							<div>
 								<span className={`${imageStyles.icon} ${formStyles.alert}`} />
 								<span className={formStyles.placeholder}>
-									{inputErrors?.content}
+									{inputErrors.content}
 								</span>
 							</div>
 						)}
