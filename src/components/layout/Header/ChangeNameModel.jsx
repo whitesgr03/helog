@@ -90,6 +90,10 @@ export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
 				.trim()
 				.max(30, ({ max }) => `Username must be less than ${max} long.`)
 				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.notOneOf(
+					[username],
+					'New username should be different from the old username.',
+				)
 				.required('Username is required.'),
 		};
 		debounce &&
@@ -104,7 +108,7 @@ export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
 			}, 500));
 
 		return () => clearTimeout(timer.current);
-	}, [debounce, formFields]);
+	}, [debounce, username, formFields]);
 
 	return (
 		<form
