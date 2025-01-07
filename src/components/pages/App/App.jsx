@@ -107,7 +107,7 @@ export const App = () => {
 		const { signal } = controller;
 
 		const handleGetPosts = async () => {
-			const result = await getPosts({ limit: 10, signal });
+			const result = await getPosts({ skip: 0, signal });
 
 			const handleResult = () => {
 				result.success ? setPosts(result.data) : setError(result.message);
