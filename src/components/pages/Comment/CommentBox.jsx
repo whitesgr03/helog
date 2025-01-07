@@ -192,7 +192,7 @@ export const CommentBox = ({
 						)}
 						<textarea
 							name="content"
-							placeholder="write a comment ..."
+							placeholder="write a comment..."
 							onChange={handleChange}
 							// onFocus={handleFocus}
 							value={handleUnescape(formFields.content)}
