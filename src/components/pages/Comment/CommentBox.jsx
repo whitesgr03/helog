@@ -99,12 +99,12 @@ export const CommentBox = ({
 	const handleChange = e => {
 		const ref = textbox.current;
 
-		ref.styles.height = 'auto';
+		ref.style.height = 'auto';
 
 		const height =
 			ref.offsetHeight > ref.scrollHeight ? ref.offsetHeight : ref.scrollHeight;
 
-		ref.styles.height = `${height}px`;
+		ref.style.height = `${height}px`;
 
 		const { name, value } = e.target;
 
@@ -128,7 +128,7 @@ export const CommentBox = ({
 	};
 
 	const handleCloseSubmitButton = () => {
-		textbox.current.styles.height = 'auto';
+		textbox.current.style.height = 'auto';
 		setShowSubmitButton(false);
 		setFormFields(defaultFields);
 		setInputErrors({});
@@ -161,7 +161,7 @@ export const CommentBox = ({
 					? ref.offsetHeight
 					: ref.scrollHeight;
 
-			ref.styles.height = `${height}px`;
+			ref.style.height = `${height}px`;
 
 			const lastTextPosition = ref.value.length;
 			ref.setSelectionRange(lastTextPosition, lastTextPosition);
