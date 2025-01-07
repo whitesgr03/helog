@@ -1,6 +1,6 @@
 import { object } from 'yup';
 
-export const verifySchema = async ({ data, schema }) => {
+export const verifySchema = async ({ schema, data }) => {
 	let result = {
 		success: true,
 		fields: {},
