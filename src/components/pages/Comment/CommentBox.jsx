@@ -34,30 +34,27 @@ export const CommentBox = ({
 	const textbox = useRef(null);
 	const timer = useRef(null);
 
-	const handleAddComment = async () => {
+	const handleCreateComment = async () => {
 		setLoading(true);
-		const result = await onCreateComment(formFields);
 
-		const handleSetInputErrors = () => {
-			const obj = {};
-			for (const error of result.errors) {
-				obj[error.field] = error.message;
-			}
-			setInputErrors(obj);
-		};
+		const result = await createComment({ postId, data: formFields });
 
-		const handleSetFields = async () => {
-			await onGetComments();
+		const handleSuccess = () => {
+			onUpdatePost({ postId, newComments: [result.data, ...comments] });
+			onAlert({ message: 'Add comment successfully' });
 			setFormFields(defaultFields);
 			setDebounce(false);
 			onCloseCommentBox ? onCloseCommentBox(false) : setShowSubmitButton(false);
 		};
 
 		result.success
-			? await handleSetFields()
-			: result?.errors
-				? handleSetInputErrors()
-				: onAlert({ message: result.message, error: true });
+			? handleSuccess()
+			: result.fields
+				? setInputErrors({ ...result.fields })
+				: onAlert({
+						message: 'There are some errors occur, please try again later.',
+						error: true,
+					});
 
 		setLoading(false);
 	};
