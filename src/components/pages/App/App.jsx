@@ -54,6 +54,12 @@ export const App = () => {
 		component ? setModal({ component, clickToClose }) : setModal(null);
 	};
 
+	const handleUpdatePost = ({ postId, newComments: comments }) => {
+		setPosts(
+			posts.map(post => (post.id === postId ? { ...post, comments } : post)),
+		);
+	};
+
 	useEffect(() => {
 		const getColorTheme = () => {
 			const themeParams = searchParams.get('theme');
@@ -178,6 +184,7 @@ export const App = () => {
 										onUser: setUser,
 										onActiveModal: handleActiveModal,
 										onAlert: handleAlert,
+										onUpdatePost: handleUpdatePost,
 									}}
 								/>
 							)}
