@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { string } from 'yup';
+import isEmpty from 'lodash.isempty';
 
 // Styles
 import styles from './CommentBox.module.css';
