@@ -197,7 +197,7 @@ export const CommentBox = ({
 							placeholder="write a comment..."
 							onChange={handleChange}
 							onFocus={handleFocus}
-							value={handleUnescape(formFields.content)}
+							value={formFields.content}
 							ref={textbox}
 							rows="1"
 							autoFocus={submitBtn !== 'Comment'}
