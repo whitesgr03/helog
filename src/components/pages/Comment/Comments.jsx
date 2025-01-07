@@ -16,10 +16,7 @@ import { CommentBox } from './CommentBox';
 import { handleFetch } from '../../../utils/handleFetch';
 import { createComment } from '../../../utils/handleComment';
 
-export const Comments = ({ postAuthorId, postId }) => {
-	const { user, accessToken, handleVerifyTokenExpire, handleExChangeToken } =
-		useOutletContext();
-	const [comments, setComments] = useState([]);
+export const Comments = ({ post }) => {
 	const [replies, setReplies] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -169,6 +166,5 @@ export const Comments = ({ postAuthorId, postId }) => {
 };
 
 Comments.propTypes = {
-	postAuthorId: PropTypes.string,
-	postId: PropTypes.string,
+	post: PropTypes.object,
 };
