@@ -72,7 +72,7 @@
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-@media (min-width: 450px) {
+@media (width >= 450px) {
 	.avatar {
 		--size: calc(var(--icon-size-mobile));
 	}
@@ -82,6 +82,7 @@
 	}
 }
 
+@media (width >= 700px) {
 	.button-wrap button {
 		padding: 10px 20px;
 	}

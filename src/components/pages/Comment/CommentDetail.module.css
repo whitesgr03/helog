@@ -236,13 +236,13 @@
 	border-color: var(--dark-scheme-highlight);
 }
 
-@media (min-width: 450px) {
+@media (width >= 450px) {
 	.avatar {
 		--size: calc(var(--icon-size-mobile));
 	}
 }
 
-@media (min-width: 700px) {
+@media (width >= 700px) {
 	.comment-box {
 		padding: 0 15%;
 	}
@@ -264,7 +264,7 @@
 	}
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
 	.comment-box {
 		padding: 0 10%;
 	}
@@ -286,7 +286,7 @@
 	}
 }
 
-@media (min-width: 1600px) {
+@media (width >= 1600px) {
 	.comment-box {
 		padding: 0;
 	}
