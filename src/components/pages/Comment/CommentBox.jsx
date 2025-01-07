@@ -34,6 +34,24 @@ export const CommentBox = ({
 	const textbox = useRef(null);
 	const timer = useRef(null);
 
+	const schema = useMemo(
+		() => ({
+			content: string()
+				.trim()
+				.required('Content is required.')
+				.when([], {
+					is: () => defaultValue !== '',
+					then: schema =>
+						schema.notOneOf(
+							[defaultValue],
+							'New content should be different from the old content.',
+						),
+				})
+				.max(500, ({ max }) => `Content must be less than ${max} long.`),
+		}),
+		[defaultValue],
+	);
+
 	const handleCreateComment = async () => {
 		setLoading(true);
 
