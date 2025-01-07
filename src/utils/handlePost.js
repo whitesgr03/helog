@@ -2,13 +2,13 @@ import { handleFetch } from './handleFetch';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/posts`;
 
-export const getPosts = async ({ limit, signal }) => {
+export const getPosts = async ({ skip, signal }) => {
 	const options = {
 		method: 'GET',
 		signal,
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}?limit=${limit}`, options);
+	return await handleFetch(`${url}?skip=${skip}`, options);
 };
 
 export const getPostDetail = async ({ postId, signal }) => {
