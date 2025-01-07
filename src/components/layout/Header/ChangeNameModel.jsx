@@ -107,7 +107,10 @@ export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
 	}, [debounce, formFields]);
 
 	return (
-		<form className={formStyles.content} onSubmit={handleSubmit}>
+		<form
+			className={formStyles.content}
+			onSubmit={(e) => !loading && handleSubmit(e)}
+		>
 			<div className={formStyles['label-wrap']}>
 				<label
 					htmlFor="changeUserName"

@@ -105,7 +105,10 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 
 	return (
 		<div className={formStyles.form}>
-			<form className={formStyles.content} onSubmit={handleSubmit}>
+			<form
+				className={formStyles.content}
+				onSubmit={(e) => !loading && handleSubmit(e)}
+			>
 				<div className={formStyles.labelWrap}>
 					<label
 						htmlFor="username"
