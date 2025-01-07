@@ -34,34 +34,6 @@ export const CommentBox = ({
 	const textbox = useRef(null);
 	const timer = useRef(null);
 
-	const handleValidFields = async fields => {
-		let isValid = false;
-		const schema = object({
-			content: string()
-				.trim()
-				.required('The content is required.')
-				.max(500, ({ max }) => `The content must be less than ${max} long.`),
-		}).noUnknown();
-
-		try {
-			await schema.validate(fields, {
-				abortEarly: false,
-			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
-		} catch (err) {
-			const obj = {};
-
-			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
-			}
-
-			setInputErrors(obj);
-			return isValid;
-		}
-	};
-
 	const handleAddComment = async () => {
 		setLoading(true);
 		const result = await onCreateComment(formFields);
