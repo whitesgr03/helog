@@ -177,7 +177,7 @@ export const CommentBox = ({
 				</>
 			)}
 			<form className={formStyles.content} onSubmit={handleSubmit}>
-				<div className={formStyles.labelWrap}>
+				<div className={formStyles['label-wrap']}>
 					<label className={`${inputErrors?.content ? formStyles.error : ''}`}>
 						{user && !defaultValue && (
 							<div className={styles.profile}>
@@ -210,7 +210,7 @@ export const CommentBox = ({
 				</div>
 
 				{(defaultValue || submitBtn === 'Reply' || showSubmitButton) && (
-					<div className={styles.buttonWrap}>
+					<div className={styles['button-wrap']}>
 						<button
 							type="button"
 							className={buttonStyles.cancel}
