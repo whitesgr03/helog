@@ -2,7 +2,7 @@ import { handleFetch } from './handleFetch';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/comments`;
 
-export const createComment = async ({ data }) => {
+export const createComment = async ({ postId, data }) => {
 	const options = {
 		method: 'POST',
 		headers: {
@@ -13,7 +13,8 @@ export const createComment = async ({ data }) => {
 	};
 	return await handleFetch(url, options);
 };
-export const updateComment = async ({ data, commentId }) => {
+
+export const updateComment = async ({ postId, commentId, data }) => {
 	const options = {
 		method: 'PATCH',
 		headers: {
@@ -24,7 +25,8 @@ export const updateComment = async ({ data, commentId }) => {
 	};
 	return await handleFetch(`${url}/${commentId}`, options);
 };
-export const deleteComment = async ({ commentId }) => {
+
+export const deleteComment = async ({ postId, commentId }) => {
 	const options = {
 		method: 'DELETE',
 		credentials: 'include',
