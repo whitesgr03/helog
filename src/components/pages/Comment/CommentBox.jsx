@@ -130,17 +130,6 @@ export const CommentBox = ({
 		setDebounce(false);
 	};
 
-	const handleUnescape = str =>
-		str
-			.replace(/&quot;/g, '"')
-			.replace(/&#x27;/g, "'")
-			.replace(/&lt;/g, '<')
-			.replace(/&gt;/g, '>')
-			.replace(/&#x2F;/g, '/')
-			.replace(/&#x5C;/g, '\\')
-			.replace(/&#96;/g, '`')
-			.replace(/&amp;/g, '&');
-
 	useEffect(() => {
 		debounce &&
 			(timer.current = setTimeout(() => handleValidFields(formFields), 500));
