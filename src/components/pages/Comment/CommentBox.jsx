@@ -1,8 +1,8 @@
 // Packages
 import PropTypes from 'prop-types';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { object, string } from 'yup';
+import { string } from 'yup';
 
 // Styles
 import styles from './CommentBox.module.css';
@@ -14,7 +14,8 @@ import buttonStyles from '../../../styles/button.module.css';
 import { Loading } from '../../utils/Loading';
 
 // Utils
-// import handleGetAuthCode from '../../utils/handleGetAuthCode';
+import { createComment } from '../../../utils/handleComment';
+import { verifySchema } from '../../../utils/verifySchema';
 
 export const CommentBox = ({
 	submitBtn,
@@ -80,11 +81,19 @@ export const CommentBox = ({
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		(!defaultValue || defaultValue !== formFields.content) &&
-		!loading &&
-		(await handleValidFields(formFields))
-			? await handleAddComment()
-			: setDebounce(false);
+		const validationResult = await verifySchema({ schema, data: formFields });
+
+		const handleInValid = () => {
+			setInputErrors(validationResult.fields);
+			setDebounce(false);
+		};
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleCreateComment();
+		};
+
+		validationResult.success ? await handleValid() : handleInValid();
 	};
 
 	const handleChange = e => {
