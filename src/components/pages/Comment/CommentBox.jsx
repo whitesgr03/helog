@@ -185,9 +185,9 @@ export const CommentBox = ({
 						{user && !defaultValue && (
 							<div className={styles.profile}>
 								<div className={styles.avatar}>
-									{user?.name.charAt(0).toUpperCase()}
+									{user.username.charAt(0).toUpperCase()}
 								</div>
-								<h4 title={user?.name}>{user?.name}</h4>
+								<h4 title={user.username}>{user.username}</h4>
 							</div>
 						)}
 						<textarea
