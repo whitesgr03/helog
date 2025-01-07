@@ -23,9 +23,9 @@ export const CommentBox = ({
 	submitBtn,
 	onUpdatePost,
 	onCloseCommentBox,
-	defaultValue,
+	defaultValue = '',
 }) => {
-	const defaultFields = { content: defaultValue ?? '' };
+	const defaultFields = { content: defaultValue };
 
 	const { user, onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
