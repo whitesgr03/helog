@@ -66,7 +66,7 @@ export const PostDetail = () => {
 							}}
 						/>
 					</div>
-					<Comments postAuthorId={post?.author?._id} postId={postId} />
+					<Comments post={post} />
 				</div>
 			)}
 		</>
