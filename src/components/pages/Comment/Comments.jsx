@@ -17,6 +17,7 @@ import { handleFetch } from '../../../utils/handleFetch';
 import { createComment } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
+	const { user, onUpdatePost } = useOutletContext();
 	const [replies, setReplies] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
