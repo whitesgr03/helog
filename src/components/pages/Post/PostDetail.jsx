@@ -26,9 +26,9 @@ export const PostDetail = () => {
 			) : (
 				<div className={loadContent ? styles.loading : ''}>
 					<div id="post-detail" className={styles['post-detail']}>
-						<Link to="/posts" className={styles.link}>
+						<Link to={-1} className={styles.link}>
 							<span className={`${styles['left-arrow']} ${imageStyles.icon}`} />
-							Back to list
+							Back to previous page
 						</Link>
 						{post?.title && <h2 className={styles.title}>{post.title}</h2>}
 						<div className={styles['date-time']}>
