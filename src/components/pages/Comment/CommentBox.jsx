@@ -21,8 +21,6 @@ export const CommentBox = ({
 	post,
 	submitBtn,
 	onUpdatePost,
-	onGetComments,
-	onCreateComment,
 	onCloseCommentBox,
 	defaultValue,
 }) => {
@@ -242,8 +240,6 @@ CommentBox.propTypes = {
 	post: PropTypes.object,
 	submitBtn: PropTypes.string,
 	onUpdatePost: PropTypes.func,
-	onGetComments: PropTypes.func,
-	onCreateComment: PropTypes.func,
 	onCloseCommentBox: PropTypes.func,
 	defaultValue: PropTypes.string,
 };
