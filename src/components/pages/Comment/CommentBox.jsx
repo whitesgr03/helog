@@ -18,7 +18,9 @@ import { createComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
 
 export const CommentBox = ({
+	post,
 	submitBtn,
+	onUpdatePost,
 	onGetComments,
 	onCreateComment,
 	onCloseCommentBox,
@@ -56,10 +58,13 @@ export const CommentBox = ({
 	const handleCreateComment = async () => {
 		setLoading(true);
 
-		const result = await createComment({ postId, data: formFields });
+		const result = await createComment({ postId: post.id, data: formFields });
 
 		const handleSuccess = () => {
-			onUpdatePost({ postId, newComments: [result.data, ...comments] });
+			onUpdatePost({
+				postId: post.id,
+				newComments: [result.data, ...post.comments],
+			});
 			onAlert({ message: 'Add comment successfully' });
 			setFormFields(defaultFields);
 			setDebounce(false);
@@ -234,7 +239,9 @@ export const CommentBox = ({
 };
 
 CommentBox.propTypes = {
+	post: PropTypes.object,
 	submitBtn: PropTypes.string,
+	onUpdatePost: PropTypes.func,
 	onGetComments: PropTypes.func,
 	onCreateComment: PropTypes.func,
 	onCloseCommentBox: PropTypes.func,
