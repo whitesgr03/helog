@@ -181,7 +181,7 @@ export const CommentBox = ({
 				onSubmit={e => !loading && handleSubmit(e)}
 			>
 				<div className={formStyles['label-wrap']}>
-					<label className={`${inputErrors?.content ? formStyles.error : ''}`}>
+					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
 						{user && !defaultValue && (
 							<div className={styles.profile}>
 								<div className={styles.avatar}>
