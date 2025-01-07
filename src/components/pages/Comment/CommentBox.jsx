@@ -176,7 +176,10 @@ export const CommentBox = ({
 					<Loading text={'Commenting...'} />
 				</>
 			)}
-			<form className={formStyles.content} onSubmit={handleSubmit}>
+			<form
+				className={formStyles.content}
+				onSubmit={e => !loading && handleSubmit(e)}
+			>
 				<div className={formStyles['label-wrap']}>
 					<label className={`${inputErrors?.content ? formStyles.error : ''}`}>
 						{user && !defaultValue && (
