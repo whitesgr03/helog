@@ -184,7 +184,7 @@ export const CommentBox = ({
 			>
 				<div className={formStyles['label-wrap']}>
 					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
-						{user && !defaultValue && (
+						{user && defaultValue === '' && (
 							<div className={styles.profile}>
 								<div className={styles.avatar}>
 									{user.username.charAt(0).toUpperCase()}
