@@ -1,6 +1,6 @@
 import { handleFetch } from './handleFetch';
 
-const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/comments`;
+const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/posts`;
 
 export const createComment = async ({ postId, data }) => {
 	const options = {
@@ -11,7 +11,7 @@ export const createComment = async ({ postId, data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(url, options);
+	return await handleFetch(`${url}/${postId}/comments`, options);
 };
 
 export const updateComment = async ({ postId, commentId, data }) => {
@@ -23,7 +23,7 @@ export const updateComment = async ({ postId, commentId, data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(`${url}/${commentId}`, options);
+	return await handleFetch(`${url}/${postId}/comments/${commentId}`, options);
 };
 
 export const deleteComment = async ({ postId, commentId }) => {
@@ -31,5 +31,5 @@ export const deleteComment = async ({ postId, commentId }) => {
 		method: 'DELETE',
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}/${commentId}`, options);
+	return await handleFetch(`${url}/${postId}/comments/${commentId}`, options);
 };
