@@ -116,8 +116,17 @@ export const CommentBox = ({
 		!isEmpty(inputErrors) && setDebounce(true);
 	};
 
-	// const handleFocus = () =>
-	// 	user ? setShowSubmitButton(true) : handleGetAuthCode();
+	const handleFocus = () => {
+		const handleBlur = () => {
+			textbox.current.blur();
+			onAlert({
+				message: 'You need to be logged in to your account to post a comment.',
+			});
+		};
+
+		user ? setShowSubmitButton(true) : handleBlur();
+	};
+
 	const handleCloseSubmitButton = () => {
 		textbox.current.styles.height = 'auto';
 		setShowSubmitButton(false);
@@ -187,7 +196,7 @@ export const CommentBox = ({
 							name="content"
 							placeholder="write a comment..."
 							onChange={handleChange}
-							// onFocus={handleFocus}
+							onFocus={handleFocus}
 							value={handleUnescape(formFields.content)}
 							ref={textbox}
 							rows="1"
