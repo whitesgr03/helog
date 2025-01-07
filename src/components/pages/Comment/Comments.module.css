@@ -1,5 +1,6 @@
 .comments {
 	display: flex;
+	position: relative;
 	row-gap: 15px;
 	flex-direction: column;
 	padding: 10% 5%;
