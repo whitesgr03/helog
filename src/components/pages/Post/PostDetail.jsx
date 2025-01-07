@@ -33,10 +33,10 @@ export const PostDetail = () => {
 						{post?.title && <h2 className={styles.title}>{post.title}</h2>}
 						<div className={styles['date-time']}>
 							<strong>{post.author.username}</strong>
-							{post.updatedAt && (
-								<em>
-									{`${new Date(post.createdAt).getTime() !== new Date(post.updatedAt).getTime() ? 'Edited' : 'Published'} in ${format(post.updatedAt, 'MMMM d, y')}`}
-								</em>
+							<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
+							{new Date(post.createdAt).getDate() !==
+								new Date(post.updatedAt).getDate() && (
+								<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
 							)}
 							{post?.mainImageUrl && (
 								<div className={styles['image-wrap']}>
