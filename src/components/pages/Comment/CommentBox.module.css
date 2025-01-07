@@ -3,10 +3,6 @@
 	z-index: 0;
 }
 
-.comment-box.loading {
-	padding: 1px;
-}
-
 .blur {
 	display: flex;
 	position: absolute;

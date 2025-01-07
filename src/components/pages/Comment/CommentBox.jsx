@@ -169,7 +169,7 @@ export const CommentBox = ({
 	}, [submitBtn]);
 
 	return (
-		<div className={`${styles.commentBox} ${loading ? styles.loading : ''}`}>
+		<div className={styles['comment-box']}>
 			{loading && (
 				<div className={styles.blur}>
 					<Loading />
