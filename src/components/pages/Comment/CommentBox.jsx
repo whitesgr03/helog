@@ -172,7 +172,7 @@ export const CommentBox = ({
 		<div className={styles['comment-box']}>
 			{loading && (
 				<div className={styles.blur}>
-					<Loading />
+					<Loading text={'Commenting...'} />
 				</div>
 			)}
 			<form className={formStyles.content} onSubmit={handleSubmit}>
