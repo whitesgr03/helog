@@ -97,14 +97,14 @@ export const CommentDetail = ({
 				data-testid="container"
 			>
 				{!comment.deleted && (
-					<div className={styles.buttonWrap}>
+					<div className={styles['button-wrap']}>
 						{isPostAuthor && (
 							<em className={`${isPostAuthor ? styles.highlight : ''}`}>
 								POST AUTHOR
 							</em>
 						)}
 						{(isCommentOwner || user?.isAdmin) && (
-							<div className={styles.commentButton}>
+							<div className={styles['comment-button']}>
 								<button onClick={handleActiveModel}>
 									<span className={`${imageStyles.icon} ${styles.delete}`} />
 								</button>
@@ -116,7 +116,7 @@ export const CommentDetail = ({
 						)}
 					</div>
 				)}
-				<div className={styles.infoWrap}>
+				<div className={styles['info-wrap']}>
 					<div className={styles.info}>
 						<div className={styles.avatar}>
 							{!comment.deleted && (
@@ -134,7 +134,7 @@ export const CommentDetail = ({
 				</div>
 
 				{!comment.deleted && showEditBox ? (
-					<div className={styles.editBoxWrap}>
+					<div className={styles['edit-box-wrap']}>
 						<CommentBox
 							submitBtn={'Update'}
 							onGetComments={replyId ? handleGetReplies : handleGetComments}
