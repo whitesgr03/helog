@@ -72,37 +72,6 @@ export const CommentDetail = ({
 		return result;
 	};
 
-	const handleActiveModel = () => {
-		const handleDelete = async () => {
-			const isTokenExpire = await handleVerifyTokenExpire();
-			const newAccessToken = isTokenExpire && (await handleExChangeToken());
-
-			const obj = {
-				token: newAccessToken || accessToken,
-			};
-
-			replyId ? (obj.replyId = replyId) : (obj.commentId = commentId);
-
-			const result = replyId
-				? await deleteReply(obj)
-				: await deleteComment(obj);
-
-			result.success
-				? replyId
-					? await handleGetReplies()
-					: await handleGetComments()
-				: onAlert({ message: result.message, error: true });
-
-			onModel(null);
-		};
-		onModel(
-			<DeleteModel
-				onDelete={handleDelete}
-				title={replyId ? 'Reply' : 'Comment'}
-			/>,
-		);
-	};
-
 	const handleUpdate = async fields => {
 		const isTokenExpire = await handleVerifyTokenExpire();
 		const newAccessToken = isTokenExpire && (await handleExChangeToken());
