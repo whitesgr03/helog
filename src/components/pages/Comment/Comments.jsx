@@ -25,39 +25,9 @@ export const Comments = ({ post }) => {
 	const countComments = comments.length + replies.length;
 
 	const comments = post?.comments ?? [];
+
 	const { pathname: previousPath } = useLocation();
 
-	const handleCreateComment = async fields => {
-		const isTokenExpire = await handleVerifyTokenExpire();
-		const newAccessToken = isTokenExpire && (await handleExChangeToken());
-
-		const result = await createComment({
-			token: newAccessToken || accessToken,
-			data: {
-				...fields,
-				post: postId,
-			},
-		});
-
-		return result;
-	};
-	const handleGetComments = useCallback(
-		async option => {
-			const url = `${
-				import.meta.env.VITE_RESOURCE_URL
-			}/blog/comments?postId=${postId}`;
-
-			const result = await handleFetch(url, option);
-
-			const handleResult = () => {
-				result.success ? setComments(result.data) : setError(result.message);
-				setLoading(false);
-			};
-
-			result && handleResult();
-		},
-		[postId],
-	);
 	const handleGetReplies = useCallback(
 		async option => {
 			let url = `${
