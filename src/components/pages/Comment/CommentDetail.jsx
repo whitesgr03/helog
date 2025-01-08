@@ -143,8 +143,8 @@ export const CommentDetail = ({
 						</strong>
 					</div>
 					<div className={styles.time}>
-						{`${formatDistanceToNow(comment.lastModified)} ago `}
-						{comment.createdAt !== comment.lastModified && '(edited)'}
+						{`${formatDistanceToNow(comment.updatedAt)} ago `}
+						{comment.createdAt !== comment.updatedAt && '(edited)'}
 					</div>
 				</div>
 
