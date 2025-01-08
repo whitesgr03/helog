@@ -13,21 +13,9 @@ import { CommentBox } from './CommentBox';
 import { CommentDelete } from './CommentDelete';
 
 // Utils
-import {
-	createReply,
-	updateReply,
-	deleteReply,
-} from '../../../utils/handleReply';
 import { updateComment } from '../../../utils/handleComment';
 
-export const CommentDetail = ({
-	post,
-	comment,
-	replyList,
-	replyId,
-	children,
-	onUpdatePost,
-}) => {
+export const CommentDetail = ({ post, comment, onUpdatePost, children }) => {
 	const { user, onAlert, onActiveModal } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
@@ -42,24 +30,6 @@ export const CommentDetail = ({
 	};
 	const handleShowReplyCommentBox = () =>
 		setShowReplyCommentBox(!showReplyCommentBox);
-
-	const handleUpdate = async fields => {
-		const isTokenExpire = await handleVerifyTokenExpire();
-		const newAccessToken = isTokenExpire && (await handleExChangeToken());
-
-		const obj = {
-			token: newAccessToken || accessToken,
-			data: {
-				...fields,
-			},
-		};
-
-		replyId ? (obj.replyId = replyId) : (obj.commentId = commentId);
-
-		const result = replyId ? await updateReply(obj) : await updateComment(obj);
-
-		return result;
-	};
 
 	return (
 		<li id={`item-${comment._id}`}>
@@ -192,9 +162,7 @@ export const CommentDetail = ({
 
 CommentDetail.propTypes = {
 	post: PropTypes.object,
-	replyId: PropTypes.string,
 	comment: PropTypes.object,
-	replyList: PropTypes.array,
 	onUpdatePost: PropTypes.func,
 	children: PropTypes.node,
 };
