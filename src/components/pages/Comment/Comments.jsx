@@ -1,6 +1,6 @@
 // Packages
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useOutletContext, Navigate, useLocation } from 'react-router-dom';
 
 // Styles
