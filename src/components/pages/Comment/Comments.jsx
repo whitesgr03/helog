@@ -162,7 +162,7 @@ export const Comments = ({ post }) => {
 	return (
 		<div className={styles.comments}>
 			{loading ? (
-				<Loading />
+				<Loading text={'Loading comments...'} />
 			) : error ? (
 				<Error message={error} />
 			) : (
