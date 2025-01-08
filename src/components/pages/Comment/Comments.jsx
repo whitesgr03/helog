@@ -96,22 +96,6 @@ export const Comments = ({ post }) => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const handleGetData = async () => {
-			await Promise.all([
-				handleGetComments({ signal }),
-				handleGetReplies({ signal }),
-			]);
-		};
-
-		handleGetData();
-
-		return () => controller.abort();
-	}, [user, handleGetComments, handleGetReplies]);
-
-	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-
 		const handleGetComments = async () => {
 			const result = await getComments({ postId: post.id, skip: 0, signal });
 			const handleResult = () => {
