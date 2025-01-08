@@ -21,9 +21,9 @@ import {
 import { updateComment, deleteComment } from '../../../utils/handleComment';
 
 export const CommentDetail = ({
+	post,
 	comment,
 	replyList,
-	postId,
 	replyId,
 	isPostAuthor,
 	children,
@@ -190,7 +190,7 @@ export const CommentDetail = ({
 };
 
 CommentDetail.propTypes = {
-	postId: PropTypes.string,
+	post: PropTypes.object,
 	replyId: PropTypes.string,
 	comment: PropTypes.object,
 	replyList: PropTypes.array,
