@@ -20,6 +20,9 @@ export const Comments = ({ post }) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
+	const { pathname: previousPath } = useLocation();
+
+	const comments = post?.comments ?? [];
 	const countComments = comments.length + replies.length;
 
 	const comments = post?.comments ?? [];
