@@ -106,7 +106,21 @@ export const CommentDetail = ({
 						)}
 						{(isCommentOwner || user?.isAdmin) && (
 							<div className={styles['comment-button']}>
-								<button onClick={handleActiveModel}>
+								<button
+									onClick={() =>
+										onActiveModal({
+											component: (
+												<CommentDelete
+													post={post}
+													commentId={comment._id}
+													onActiveModal={onActiveModal}
+													onAlert={onAlert}
+													onUpdatePost={onUpdatePost}
+												/>
+											),
+										})
+									}
+								>
 									<span className={`${imageStyles.icon} ${styles.delete}`} />
 								</button>
 
