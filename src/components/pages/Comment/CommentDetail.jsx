@@ -98,7 +98,7 @@ export const CommentDetail = ({
 				} ${isCommentAuthor ? styles.user : ''}`}
 				data-testid="container"
 			>
-				{!isDeleted && (
+				{!comment.deleted && (
 					<div className={styles.buttonWrap}>
 						{isPostAuthor && (
 							<em className={`${isPostAuthor ? styles.highlight : ''}`}>
@@ -121,13 +121,12 @@ export const CommentDetail = ({
 				<div className={styles.infoWrap}>
 					<div className={styles.info}>
 						<div className={styles.avatar}>
-							{!isDeleted && (
+							{!comment.deleted && (
 								<>{comment.author.username.charAt(0).toUpperCase()}</>
 							)}
 						</div>
-						<strong title={!isDeleted ? comment.author.username : ''}>
-							{!isDeleted ? comment.author.username : '[deleted]'}
-						</strong>
+						<strong title={!comment.deleted ? comment.author.username : ''}>
+							{!comment.deleted ? comment.author.username : '[deleted]'}
 						</strong>
 					</div>
 					<div className={styles.time}>
@@ -136,7 +135,7 @@ export const CommentDetail = ({
 					</div>
 				</div>
 
-				{!isDeleted && showEditBox ? (
+				{!comment.deleted && showEditBox ? (
 					<div className={styles.editBoxWrap}>
 						<CommentBox
 							submitBtn={'Update'}
@@ -148,10 +147,12 @@ export const CommentDetail = ({
 					</div>
 				) : (
 					<div className={styles.content}>
-						{!isDeleted && comment.reply && (
+						{!comment.deleted && comment.reply && (
 							<a href={`#item-${comment.reply._id}`}>
 								@
-								{comment.reply.deleted ? '[delete]' : comment.reply.author.name}
+								{comment.reply.deleted
+									? '[delete]'
+									: comment.reply.author.username}
 							</a>
 						)}
 						<p>{comment.content}</p>
@@ -203,13 +204,11 @@ export const CommentDetail = ({
 
 CommentDetail.propTypes = {
 	postId: PropTypes.string,
-	commentId: PropTypes.string,
 	replyId: PropTypes.string,
 	comment: PropTypes.object,
 	replyList: PropTypes.array,
 	isPostAuthor: PropTypes.bool,
 	isCommentAuthor: PropTypes.bool,
-	isDeleted: PropTypes.bool,
 	handleGetComments: PropTypes.func,
 	handleGetReplies: PropTypes.func,
 	children: PropTypes.node,
