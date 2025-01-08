@@ -12,8 +12,6 @@ import { CommentDetail } from './CommentDetail';
 import { CommentBox } from './CommentBox';
 
 // Utils
-import { handleFetch } from '../../../utils/handleFetch';
-import { createComment } from '../../../utils/handleComment';
 import { getComments } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
