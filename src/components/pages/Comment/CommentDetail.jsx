@@ -10,7 +10,7 @@ import imageStyles from '../../../styles/image.module.css';
 
 // Components
 import { CommentBox } from './CommentBox';
-import { DeleteModel } from '../../layout/Header/DeleteModel';
+import { CommentDelete } from './CommentDelete';
 
 // Utils
 import {
@@ -26,19 +26,10 @@ export const CommentDetail = ({
 	postId,
 	replyId,
 	isPostAuthor,
-	handleGetComments,
-	handleGetReplies,
 	children,
 	onUpdatePost,
 }) => {
-	const {
-		user,
-		onModel,
-		accessToken,
-		handleVerifyTokenExpire,
-		handleExChangeToken,
-		onAlert,
-	} = useOutletContext();
+	const { user, onAlert, onActiveModal } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
@@ -50,26 +41,6 @@ export const CommentDetail = ({
 	};
 	const handleShowReplyCommentBox = () =>
 		setShowReplyCommentBox(!showReplyCommentBox);
-
-	const handleCreateReply = async fields => {
-		const isTokenExpire = await handleVerifyTokenExpire();
-		const newAccessToken = isTokenExpire && (await handleExChangeToken());
-
-		const data = {
-			...fields,
-			post: postId,
-			comment: commentId,
-		};
-
-		replyId && (data.reply = replyId);
-
-		const result = await createReply({
-			token: newAccessToken || accessToken,
-			data,
-		});
-
-		return result;
-	};
 
 	const handleUpdate = async fields => {
 		const isTokenExpire = await handleVerifyTokenExpire();
