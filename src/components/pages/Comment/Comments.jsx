@@ -9,7 +9,7 @@ import styles from './Comments.module.css';
 // Components
 import { Loading } from '../../utils/Loading';
 import { CommentDetail } from './CommentDetail';
-import { CommentBox } from './CommentBox';
+import { CommentCreate } from './CommentCreate';
 
 // Utils
 import { getComments } from '../../../utils/handleComment';
@@ -125,11 +125,7 @@ export const Comments = ({ post }) => {
 					<h3> {countComments > 0 ? countComments : ''} Comments</h3>
 
 					<div className={styles['comment-box-wrap']}>
-						<CommentBox
-							submitBtn={'Comment'}
-							onGetComments={handleGetComments}
-							onCreateComment={handleCreateComment}
-						/>
+						<CommentCreate post={post} onUpdatePost={onUpdatePost} />
 					</div>
 
 					<div className={styles.content}>
