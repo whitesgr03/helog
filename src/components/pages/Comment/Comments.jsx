@@ -124,7 +124,7 @@ export const Comments = ({ post }) => {
 				<>
 					<h3> {countComments > 0 ? countComments : ''} Comments</h3>
 
-					<div className={styles.commentBoxWrap}>
+					<div className={styles['comment-box-wrap']}>
 						<CommentBox
 							submitBtn={'Comment'}
 							onGetComments={handleGetComments}
