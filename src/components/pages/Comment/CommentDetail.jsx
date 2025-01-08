@@ -18,14 +18,13 @@ import {
 	updateReply,
 	deleteReply,
 } from '../../../utils/handleReply';
-import { updateComment, deleteComment } from '../../../utils/handleComment';
+import { updateComment } from '../../../utils/handleComment';
 
 export const CommentDetail = ({
 	post,
 	comment,
 	replyList,
 	replyId,
-	isPostAuthor,
 	children,
 	onUpdatePost,
 }) => {
@@ -33,7 +32,9 @@ export const CommentDetail = ({
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
+
 	const isCommentOwner = user?.username === comment.author.username;
+	const isPostAuthor = post.author.username === comment.author.username;
 
 	const handleShowReplies = () => setShowReplies(!showReplies);
 	const handleShowEditBox = () => {
@@ -194,9 +195,6 @@ CommentDetail.propTypes = {
 	replyId: PropTypes.string,
 	comment: PropTypes.object,
 	replyList: PropTypes.array,
-	isPostAuthor: PropTypes.bool,
-	handleGetComments: PropTypes.func,
-	handleGetReplies: PropTypes.func,
 	onUpdatePost: PropTypes.func,
 	children: PropTypes.node,
 };
