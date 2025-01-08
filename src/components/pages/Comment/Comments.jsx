@@ -161,10 +161,10 @@ export const Comments = ({ post }) => {
 
 	return (
 		<div className={styles.comments}>
-			{loading ? (
-				<Loading text={'Loading comments...'} />
-			) : error ? (
+			{error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
+			) : loading ? (
+				<Loading text={'Loading comments...'} />
 			) : (
 				<>
 					<h3> {allComments > 0 && allComments} Comments</h3>
