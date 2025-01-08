@@ -144,7 +144,10 @@ export const CommentDetail = ({
 					</div>
 					<div className={styles.time}>
 						{`${formatDistanceToNow(comment.updatedAt)} ago `}
-						{comment.createdAt !== comment.updatedAt && '(edited)'}
+						{new Date(comment.createdAt).getTime() !==
+						new Date(comment.updatedAt).getTime()
+							? '(edited)'
+							: ''}
 					</div>
 				</div>
 
