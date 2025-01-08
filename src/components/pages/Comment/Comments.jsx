@@ -98,10 +98,10 @@ export const Comments = ({ post }) => {
 		const { signal } = controller;
 
 		const handleGetComments = async () => {
-			const result = await getComments({ postId: post.id, skip: 0, signal });
+			const result = await getComments({ postId: post._id, skip: 0, signal });
 			const handleResult = () => {
 				result.success
-					? onUpdatePost({ postId: post.id, newComments: result.data })
+					? onUpdatePost({ postId: post._id, newComments: result.data })
 					: setError(result.message);
 				setLoading(false);
 			};
