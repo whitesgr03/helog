@@ -25,10 +25,6 @@ export const Comments = ({ post }) => {
 	const comments = post?.comments ?? [];
 	const countComments = comments.length + replies.length;
 
-	const comments = post?.comments ?? [];
-
-	const { pathname: previousPath } = useLocation();
-
 	const handleGetReplies = useCallback(
 		async option => {
 			let url = `${
