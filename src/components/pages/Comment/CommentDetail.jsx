@@ -24,11 +24,8 @@ export const CommentDetail = ({
 	comment,
 	replyList,
 	postId,
-	commentId,
 	replyId,
 	isPostAuthor,
-	isCommentAuthor,
-	isDeleted,
 	handleGetComments,
 	handleGetReplies,
 	children,
@@ -44,6 +41,7 @@ export const CommentDetail = ({
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
+	const isCommentOwner = user?.username === comment.author.username;
 
 	const handleShowReplies = () => setShowReplies(!showReplies);
 	const handleShowEditBox = () => {
@@ -95,7 +93,7 @@ export const CommentDetail = ({
 			<div
 				className={`${styles.container} ${
 					isPostAuthor ? styles.author : ''
-				} ${isCommentAuthor ? styles.user : ''}`}
+				} ${isCommentOwner ? styles.user : ''}`}
 				data-testid="container"
 			>
 				{!comment.deleted && (
@@ -105,7 +103,7 @@ export const CommentDetail = ({
 								POST AUTHOR
 							</em>
 						)}
-						{(isCommentAuthor || user?.isAdmin) && (
+						{(isCommentOwner || user?.isAdmin) && (
 							<div className={styles.commentButton}>
 								<button onClick={handleActiveModel}>
 									<span className={`${imageStyles.icon} ${styles.delete}`} />
@@ -208,7 +206,6 @@ CommentDetail.propTypes = {
 	comment: PropTypes.object,
 	replyList: PropTypes.array,
 	isPostAuthor: PropTypes.bool,
-	isCommentAuthor: PropTypes.bool,
 	handleGetComments: PropTypes.func,
 	handleGetReplies: PropTypes.func,
 	children: PropTypes.node,
