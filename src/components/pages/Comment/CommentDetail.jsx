@@ -29,6 +29,7 @@ export const CommentDetail = ({
 	handleGetComments,
 	handleGetReplies,
 	children,
+	onUpdatePost,
 }) => {
 	const {
 		user,
@@ -208,5 +209,6 @@ CommentDetail.propTypes = {
 	isPostAuthor: PropTypes.bool,
 	handleGetComments: PropTypes.func,
 	handleGetReplies: PropTypes.func,
+	onUpdatePost: PropTypes.func,
 	children: PropTypes.node,
 };
