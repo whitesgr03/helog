@@ -121,10 +121,13 @@ export const CommentDetail = ({
 				<div className={styles.infoWrap}>
 					<div className={styles.info}>
 						<div className={styles.avatar}>
-							{!isDeleted && <>{comment.author.name.charAt(0).toUpperCase()}</>}
+							{!isDeleted && (
+								<>{comment.author.username.charAt(0).toUpperCase()}</>
+							)}
 						</div>
-						<strong title={!isDeleted ? comment?.author.name : ''}>
-							{!isDeleted ? comment?.author.name : '[deleted]'}
+						<strong title={!isDeleted ? comment.author.username : ''}>
+							{!isDeleted ? comment.author.username : '[deleted]'}
+						</strong>
 						</strong>
 					</div>
 					<div className={styles.time}>
