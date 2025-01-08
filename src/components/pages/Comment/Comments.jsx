@@ -22,7 +22,7 @@ export const Comments = ({ post }) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const allComments = (comments.length + replies.length).toLocaleString();
+	const countComments = comments.length + replies.length;
 
 	const comments = post?.comments ?? [];
 	const { pathname: previousPath } = useLocation();
@@ -167,7 +167,7 @@ export const Comments = ({ post }) => {
 				<Loading text={'Loading comments...'} />
 			) : (
 				<>
-					<h3> {allComments > 0 && allComments} Comments</h3>
+					<h3> {countComments > 0 ? countComments : ''} Comments</h3>
 
 					<div className={styles.commentBoxWrap}>
 						<CommentBox
