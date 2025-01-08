@@ -1,14 +1,13 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, Navigate, useLocation } from 'react-router-dom';
 
 // Styles
 import styles from './Comments.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading';
-import { Error } from '../../utils/Error/Error';
 import { CommentDetail } from './CommentDetail';
 import { CommentBox } from './CommentBox';
 
@@ -26,6 +25,7 @@ export const Comments = ({ post }) => {
 	const allComments = (comments.length + replies.length).toLocaleString();
 
 	const comments = post?.comments ?? [];
+	const { pathname: previousPath } = useLocation();
 
 	const handleCreateComment = async fields => {
 		const isTokenExpire = await handleVerifyTokenExpire();
@@ -164,7 +164,7 @@ export const Comments = ({ post }) => {
 			{loading ? (
 				<Loading text={'Loading comments...'} />
 			) : error ? (
-				<Error message={error} />
+				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<>
 					<h3> {allComments > 0 && allComments} Comments</h3>
