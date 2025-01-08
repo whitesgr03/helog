@@ -15,6 +15,7 @@ import { CommentBox } from './CommentBox';
 // Utils
 import { handleFetch } from '../../../utils/handleFetch';
 import { createComment } from '../../../utils/handleComment';
+import { getComments } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
 	const { user, onUpdatePost } = useOutletContext();
@@ -23,6 +24,8 @@ export const Comments = ({ post }) => {
 	const [error, setError] = useState(null);
 
 	const allComments = (comments.length + replies.length).toLocaleString();
+
+	const comments = post?.comments ?? [];
 
 	const handleCreateComment = async fields => {
 		const isTokenExpire = await handleVerifyTokenExpire();
@@ -134,6 +137,27 @@ export const Comments = ({ post }) => {
 
 		return () => controller.abort();
 	}, [user, handleGetComments, handleGetReplies]);
+
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+
+		const handleGetComments = async () => {
+			const result = await getComments({ postId: post.id, skip: 0, signal });
+			const handleResult = () => {
+				result.success
+					? onUpdatePost({ postId: post.id, newComments: result.data })
+					: setError(result.message);
+				setLoading(false);
+			};
+
+			result && handleResult();
+		};
+
+		post?.comments === undefined ? handleGetComments() : setLoading(false);
+
+		return () => controller.abort();
+	}, [post, onUpdatePost]);
 
 	return (
 		<div className={styles.comments}>
