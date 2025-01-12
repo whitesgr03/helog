@@ -59,8 +59,16 @@ export const Comments = ({ post }) => {
 					</div>
 
 					<div className={styles.content}>
-						{items.length > 0 ? (
-							<ul>{items}</ul>
+						{comments.length ? (
+							<ul>
+								{comments.map(comment => (
+									<CommentDetail
+										key={comment._id}
+										post={post}
+										comment={comment}
+									/>
+								))}
+							</ul>
 						) : (
 							<p>There are not comments.</p>
 						)}
