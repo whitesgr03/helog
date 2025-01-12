@@ -146,7 +146,13 @@ export const CommentDetail = ({ post, comment }) => {
 										} ${showReplies ? styles.active : ''}`}
 										data-testid="commentIcon"
 									/>
-									{comment.countReplies}
+									{loading ? (
+										<span
+											className={`${imageStyles.icon} ${buttonStyles['load-icon']} ${buttonStyles['load-icon-desktop']} `}
+										/>
+									) : (
+										comment.countReplies
+									)}
 								</button>
 							)}
 							{user && !isDeleted && !showEditBox && (
