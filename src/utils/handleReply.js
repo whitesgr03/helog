@@ -1,8 +1,8 @@
 import { handleFetch } from './handleFetch';
 
-const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/replies`;
+const url = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
 
-export const replyComment = async ({ data }) => {
+export const replyComment = async ({ commentId, data }) => {
 	const options = {
 		method: 'POST',
 		headers: {
@@ -11,7 +11,7 @@ export const replyComment = async ({ data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(url, options);
+	return await handleFetch(`${url}/comments/${commentId}/replies`, options);
 };
 
 export const updateReply = async ({ data, replyId }) => {
