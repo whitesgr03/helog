@@ -108,8 +108,8 @@ export const CommentDetail = ({ post, comment }) => {
 								<>{comment.author.username.charAt(0).toUpperCase()}</>
 							)}
 						</div>
-						<strong title={!comment.deleted ? comment.author.username : ''}>
-							{!comment.deleted ? comment.author.username : '[deleted]'}
+						<strong title={!comment.deleted ? comment?.author?.username : ''}>
+							{!comment.deleted ? comment?.author?.username : '[deleted]'}
 						</strong>
 					</div>
 					<div className={styles.time}>
@@ -121,14 +121,12 @@ export const CommentDetail = ({ post, comment }) => {
 					</div>
 				</div>
 
-				{!comment.deleted && showEditBox ? (
+				{showEditBox ? (
 					<div className={styles['edit-box-wrap']}>
-						<CommentBox
-							submitBtn={'Update'}
-							onGetComments={replyId ? handleGetReplies : handleGetComments}
-							onCreateComment={handleUpdate}
+						<CommentUpdate
+							post={post}
+							comment={comment}
 							onCloseCommentBox={handleShowEditBox}
-							defaultValue={comment.content}
 						/>
 					</div>
 				) : (
