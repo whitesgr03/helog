@@ -23,7 +23,7 @@ export const createComment = async ({ postId, data }) => {
 	return await handleFetch(`${url}/${postId}/comments`, options);
 };
 
-export const updateComment = async ({ postId, commentId, data }) => {
+export const updateComment = async ({ commentId, data }) => {
 	const options = {
 		method: 'PATCH',
 		headers: {
@@ -35,7 +35,7 @@ export const updateComment = async ({ postId, commentId, data }) => {
 	return await handleFetch(`${url}/${postId}/comments/${commentId}`, options);
 };
 
-export const deleteComment = async ({ postId, commentId }) => {
+export const deleteComment = async ({ commentId }) => {
 	const options = {
 		method: 'DELETE',
 		credentials: 'include',
