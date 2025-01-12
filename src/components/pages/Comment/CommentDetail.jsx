@@ -56,7 +56,13 @@ export const CommentDetail = ({ post, comment }) => {
 	const handleShowEditBox = () => {
 		setShowEditBox(!showEditBox);
 	};
-	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
+	const handleShowReplyBox = async () => {
+		comment?.countReplies > 0 &&
+			comment?.replies === undefined &&
+			(await handleGetReplies());
+
+		setShowReplyBox(!showReplyBox);
+	};
 
 	return (
 		<li id={`item-${comment._id}`}>
