@@ -13,7 +13,7 @@ import buttonStyles from '../../../styles/button.module.css';
 import { Replies } from '../Reply/Replies';
 import { CommentUpdate } from './CommentUpdate';
 import { CommentDelete } from './CommentDelete';
-import { Replies } from '../Reply/Replies';
+import { ReplyCreate } from '../Reply/ReplyCreate';
 
 // Utils
 import { getReplies } from '../../../utils/handleReply';
@@ -181,11 +181,10 @@ export const CommentDetail = ({ post, comment }) => {
 
 			{showReplyBox && (
 				<div className={styles['comment-box-wrap']}>
-					<CommentBox
-						submitBtn={'Reply'}
-						onGetComments={handleGetReplies}
-						onCreateComment={handleCreateReply}
-						onCloseCommentBox={handleShowReplyCommentBox}
+					<ReplyCreate
+						post={post}
+						comment={comment}
+						onCloseReplyBox={handleShowReplyBox}
 					/>
 				</div>
 			)}
