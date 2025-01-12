@@ -132,14 +132,6 @@ export const CommentDetail = ({ post, comment }) => {
 				) : (
 					<>
 						<div className={styles.content}>
-							{!comment.deleted && comment.reply && (
-								<a href={`#item-${comment.reply._id}`}>
-									@
-									{comment.reply.deleted
-										? '[delete]'
-										: comment.reply.author.username}
-								</a>
-							)}
 							<p>{comment.content}</p>
 						</div>
 						<div className={styles.buttonWrap}>
