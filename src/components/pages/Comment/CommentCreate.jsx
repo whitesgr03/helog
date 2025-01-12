@@ -55,9 +55,10 @@ export const CommentCreate = ({ post }) => {
 				},
 			});
 			onAlert({ message: 'Add comment successfully' });
-			setFormFields(DEFAULT_FIELDS);
 			setDebounce(false);
 			setShowSubmitButton(false);
+			setFormFields(DEFAULT_FIELDS);
+			textbox.current.style.height = 'auto';
 		};
 
 		result.success
