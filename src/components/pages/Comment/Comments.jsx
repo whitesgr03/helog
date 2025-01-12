@@ -55,7 +55,7 @@ export const Comments = ({ post }) => {
 					<h3> {post.countComments > 0 ? post.countComments : ''} Comments</h3>
 
 					<div className={styles['comment-box-wrap']}>
-						<CommentCreate post={post} onUpdatePost={onUpdatePost} />
+						<CommentCreate post={post} />
 					</div>
 
 					<div className={styles.content}>
