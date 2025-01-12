@@ -7,6 +7,7 @@ import { formatDistanceToNow } from 'date-fns';
 // Styles
 import styles from './CommentDetail.module.css';
 import imageStyles from '../../../styles/image.module.css';
+import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { Replies } from '../Reply/Replies';
