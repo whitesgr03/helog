@@ -54,9 +54,15 @@ export const App = () => {
 		component ? setModal({ component, clickToClose }) : setModal(null);
 	};
 
-	const handleUpdatePost = ({ postId, newComments: comments }) => {
+	const handleUpdatePost = ({ postId, newPost, newComments: comments }) => {
 		setPosts(
-			posts.map(post => (post.id === postId ? { ...post, comments } : post)),
+			posts.map(post => {
+				return post._id === postId
+					? newPost
+						? newPost
+						: { ...post, comments }
+					: post;
+			}),
 		);
 	};
 

@@ -48,7 +48,11 @@ export const CommentCreate = ({ post }) => {
 		const handleSuccess = () => {
 			onUpdatePost({
 				postId: post._id,
-				newComments: [result.data, ...post.comments],
+				newPost: {
+					...post,
+					countComments: post.countComments + 1,
+					comments: [result.data, ...post.comments],
+				},
 			});
 			onAlert({ message: 'Add comment successfully' });
 			setFormFields(DEFAULT_FIELDS);
