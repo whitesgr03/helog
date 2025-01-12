@@ -130,44 +130,43 @@ export const CommentDetail = ({ post, comment }) => {
 						/>
 					</div>
 				) : (
-					<div className={styles.content}>
-						{!comment.deleted && comment.reply && (
-							<a href={`#item-${comment.reply._id}`}>
-								@
-								{comment.reply.deleted
-									? '[delete]'
-									: comment.reply.author.username}
-							</a>
-						)}
-						<p>{comment.content}</p>
-					</div>
-				)}
-
-				{(replyList || (!isDeleted && !showEditBox)) && (
-					<div className={styles.buttonWrap}>
-						{replyList && (
-							<button
-								className={styles.replyListBtn}
-								onClick={handleShowReplies}
-							>
-								<span
-									className={`${imageStyles.icon} ${
-										styles.replyIcon
-									} ${showReplies ? styles.active : ''}`}
-									data-testid="commentIcon"
-								/>
-								{replyList.length}
-							</button>
-						)}
-						{user && !isDeleted && !showEditBox && (
-							<button
-								className={styles.addReplyBtn}
-								onClick={handleShowReplyCommentBox}
-							>
-								Reply
-							</button>
-						)}
-					</div>
+					<>
+						<div className={styles.content}>
+							{!comment.deleted && comment.reply && (
+								<a href={`#item-${comment.reply._id}`}>
+									@
+									{comment.reply.deleted
+										? '[delete]'
+										: comment.reply.author.username}
+								</a>
+							)}
+							<p>{comment.content}</p>
+						</div>
+						<div className={styles.buttonWrap}>
+							{replyList && (
+								<button
+									className={styles.replyListBtn}
+									onClick={handleShowReplies}
+								>
+									<span
+										className={`${imageStyles.icon} ${
+											styles.replyIcon
+										} ${showReplies ? styles.active : ''}`}
+										data-testid="commentIcon"
+									/>
+									{replyList.length}
+								</button>
+							)}
+							{user && !isDeleted && !showEditBox && (
+								<button
+									className={styles.addReplyBtn}
+									onClick={handleShowReplyCommentBox}
+								>
+									Reply
+								</button>
+							)}
+						</div>
+					</>
 				)}
 			</div>
 
