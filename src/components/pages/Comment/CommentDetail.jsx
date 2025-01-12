@@ -52,7 +52,10 @@ export const CommentDetail = ({ post, comment }) => {
 		setLoading(false);
 	};
 
-	const handleShowReplies = () => setShowReplies(!showReplies);
+	const handleShowReplies = async () => {
+		comment?.replies === undefined && (await handleGetReplies());
+		setShowReplies(!showReplies);
+	};
 	const handleShowEditBox = () => {
 		setShowEditBox(!showEditBox);
 	};
