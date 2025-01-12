@@ -23,7 +23,7 @@ export const updateReply = async ({ data, replyId }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(`${url}/${replyId}`, options);
+	return await handleFetch(`${url}/replies/${replyId}`, options);
 };
 
 export const deleteReply = async ({ replyId }) => {
@@ -31,5 +31,5 @@ export const deleteReply = async ({ replyId }) => {
 		method: 'DELETE',
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}/${replyId}`, options);
+	return await handleFetch(`${url}/replies/${replyId}`, options);
 };
