@@ -134,15 +134,15 @@ export const CommentDetail = ({ post, comment }) => {
 						<div className={styles.content}>
 							<p>{comment.content}</p>
 						</div>
-						<div className={styles.buttonWrap}>
+						<div className={styles['button-wrap']}>
 							{replyList && (
 								<button
-									className={styles.replyListBtn}
+									className={styles['reply-list-btn']}
 									onClick={handleShowReplies}
 								>
 									<span
 										className={`${imageStyles.icon} ${
-											styles.replyIcon
+											styles['reply-icon']
 										} ${showReplies ? styles.active : ''}`}
 										data-testid="commentIcon"
 									/>
@@ -151,7 +151,7 @@ export const CommentDetail = ({ post, comment }) => {
 							)}
 							{user && !isDeleted && !showEditBox && (
 								<button
-									className={styles.addReplyBtn}
+									className={styles['add-reply-btn']}
 									onClick={handleShowReplyCommentBox}
 								>
 									Reply
