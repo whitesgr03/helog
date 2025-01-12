@@ -22,7 +22,6 @@ export const Comments = ({ post }) => {
 	const { pathname: previousPath } = useLocation();
 
 	const comments = post?.comments ?? [];
-	const countComments = comments.length + replies.length;
 
 	useEffect(() => {
 		const controller = new AbortController();
