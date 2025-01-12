@@ -9,7 +9,8 @@ import styles from './CommentDetail.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Components
-import { CommentBox } from './CommentBox';
+import { Replies } from '../Reply/Replies';
+import { CommentUpdate } from './CommentUpdate';
 import { CommentDelete } from './CommentDelete';
 import { Replies } from '../Reply/Replies';
 
@@ -100,24 +101,9 @@ export const CommentDetail = ({ post, comment }) => {
 						)}
 						{(isCommentOwner || user?.isAdmin) && (
 							<div className={styles['comment-button']}>
-								<button
-									onClick={() =>
-										onActiveModal({
-											component: (
-												<CommentDelete
-													post={post}
-													commentId={comment._id}
-													onActiveModal={onActiveModal}
-													onAlert={onAlert}
-													onUpdatePost={onUpdatePost}
-												/>
-											),
-										})
-									}
-								>
+								<button onClick={handleDelete}>
 									<span className={`${imageStyles.icon} ${styles.delete}`} />
 								</button>
-
 								<button onClick={handleShowEditBox}>
 									<span className={`${imageStyles.icon} ${styles.edit}`} />
 								</button>
