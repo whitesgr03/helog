@@ -179,7 +179,7 @@ export const CommentDetail = ({ post, comment }) => {
 				)}
 			</div>
 
-			{!isDeleted && showReplyCommentBox && (
+			{showReplyBox && (
 				<div className={styles.commentBoxWrap}>
 					<CommentBox
 						submitBtn={'Reply'}
