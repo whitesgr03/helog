@@ -15,7 +15,7 @@ import { CommentDelete } from './CommentDelete';
 // Utils
 import { getReplies } from '../../../utils/handleReply';
 
-export const CommentDetail = ({ post, comment, children }) => {
+export const CommentDetail = ({ post, comment }) => {
 	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
@@ -190,6 +190,4 @@ export const CommentDetail = ({ post, comment, children }) => {
 CommentDetail.propTypes = {
 	post: PropTypes.object,
 	comment: PropTypes.object,
-	onUpdatePost: PropTypes.func,
-	children: PropTypes.node,
 };
