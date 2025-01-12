@@ -88,8 +88,8 @@ export const CommentDetail = ({ post, comment }) => {
 		<li id={`item-${comment._id}`}>
 			<div
 				className={`${styles.container} ${
-					isPostAuthor ? styles.author : ''
-				} ${isCommentOwner ? styles.user : ''}`}
+					!comment.deleted && isPostAuthor ? styles.author : ''
+				} ${!comment.deleted && isCommentOwner ? styles.user : ''}`}
 				data-testid="container"
 			>
 				{!comment.deleted && (
