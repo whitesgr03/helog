@@ -1,6 +1,12 @@
 // Packages
-import { useState } from 'react';
-import { useParams, useOutletContext, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+	useParams,
+	useOutletContext,
+	Link,
+	Navigate,
+	useLocation,
+} from 'react-router-dom';
 import { format } from 'date-fns';
 import { Editor } from '@tinymce/tinymce-react';
 
@@ -12,16 +18,46 @@ import imageStyles from '../../../styles/image.module.css';
 import { Loading } from '../../utils/Loading';
 import { Comments } from '../Comment/Comments';
 
+// Utils
+import { getPostDetail } from '../../../utils/handlePost';
+
 export const PostDetail = () => {
 	const { postId } = useParams();
-	const { posts, fetching } = useOutletContext();
+	const { posts, fetching, onUpdatePost } = useOutletContext();
 	const [loadContent, setLoadContent] = useState(true);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-	const post = posts.find(post => post.id === postId);
+	const post = posts.find(post => post._id === postId);
+
+	const { pathname: previousPath } = useLocation();
+
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+
+		const handleGetPostDetail = async () => {
+			const result = await getPostDetail({ postId: post._id, signal });
+			const handleResult = () => {
+				result.success
+					? onUpdatePost({ postId: post._id, newPost: result.data })
+					: setError(result.message);
+				setLoading(false);
+			};
+
+			result && handleResult();
+		};
+
+		post?.content === undefined ? handleGetPostDetail() : setLoading(false);
+
+		return () => controller.abort();
+	}, [post, onUpdatePost]);
 
 	return (
 		<>
-			{fetching ? (
+			{error ? (
+				<Navigate to="/error" state={{ error, previousPath }} />
+			) : fetching || loading ? (
 				<Loading text={'Loading post...'} />
 			) : (
 				<div className={loadContent ? styles.loading : ''}>
