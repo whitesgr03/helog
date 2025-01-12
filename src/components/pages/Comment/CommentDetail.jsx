@@ -180,7 +180,7 @@ export const CommentDetail = ({ post, comment }) => {
 			</div>
 
 			{showReplyBox && (
-				<div className={styles.commentBoxWrap}>
+				<div className={styles['comment-box-wrap']}>
 					<CommentBox
 						submitBtn={'Reply'}
 						onGetComments={handleGetReplies}
