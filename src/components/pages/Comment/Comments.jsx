@@ -15,7 +15,7 @@ import { CommentCreate } from './CommentCreate';
 import { getComments } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
-	const { user, onUpdatePost } = useOutletContext();
+	const { onUpdatePost } = useOutletContext();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
