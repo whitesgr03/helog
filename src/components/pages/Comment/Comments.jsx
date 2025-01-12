@@ -16,7 +16,6 @@ import { getComments } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
 	const { user, onUpdatePost } = useOutletContext();
-	const [replies, setReplies] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -24,70 +23,6 @@ export const Comments = ({ post }) => {
 
 	const comments = post?.comments ?? [];
 	const countComments = comments.length + replies.length;
-
-	const handleGetReplies = useCallback(
-		async option => {
-			let url = `${
-				import.meta.env.VITE_RESOURCE_URL
-			}/blog/replies?postId=${postId}`;
-
-			const result = await handleFetch(url, option);
-
-			const handleResult = () => {
-				result.success ? setReplies(result.data) : setError(result.message);
-				setLoading(false);
-			};
-
-			result && handleResult();
-		},
-		[postId],
-	);
-
-	const repliesCopy = [...replies];
-
-	const items = comments.map(comment => {
-		const replyList = [...repliesCopy].filter(
-			reply =>
-				reply.comment === comment._id &&
-				repliesCopy.splice(
-					repliesCopy.findIndex(replyCopy => replyCopy._id === reply._id),
-					1,
-				),
-		);
-
-		return (
-			<CommentDetail
-				key={comment._id}
-				postId={postId}
-				commentId={comment._id}
-				comment={comment}
-				replyList={replyList.length > 0 ? replyList : null}
-				handleGetComments={handleGetComments}
-				handleGetReplies={handleGetReplies}
-				isCommentAuthor={user?._id === comment?.author?._id}
-				isPostAuthor={postAuthorId === comment?.author?._id}
-				isDeleted={comment.deleted}
-			>
-				{replyList.length > 0 && (
-					<>
-						{replyList.map(reply => (
-							<CommentDetail
-								key={reply._id}
-								postId={postId}
-								commentId={comment._id}
-								replyId={reply._id}
-								comment={reply}
-								isCommentAuthor={user?._id === reply?.author?._id}
-								isPostAuthor={postAuthorId === reply?.author?._id}
-								handleGetReplies={handleGetReplies}
-								isDeleted={reply.deleted}
-							/>
-						))}
-					</>
-				)}
-			</CommentDetail>
-		);
-	});
 
 	useEffect(() => {
 		const controller = new AbortController();
