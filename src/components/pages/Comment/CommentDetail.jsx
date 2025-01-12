@@ -155,7 +155,7 @@ export const CommentDetail = ({ post, comment }) => {
 									)}
 								</button>
 							)}
-							{user && !isDeleted && !showEditBox && (
+							{user && !comment.deleted && (
 								<button
 									className={styles['add-reply-btn']}
 									onClick={handleShowReplyCommentBox}
