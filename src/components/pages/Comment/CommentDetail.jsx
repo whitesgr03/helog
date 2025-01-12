@@ -11,6 +11,7 @@ import imageStyles from '../../../styles/image.module.css';
 // Components
 import { CommentBox } from './CommentBox';
 import { CommentDelete } from './CommentDelete';
+import { Replies } from '../Reply/Replies';
 
 // Utils
 import { getReplies } from '../../../utils/handleReply';
@@ -182,7 +183,10 @@ export const CommentDetail = ({ post, comment }) => {
 					/>
 				</div>
 			)}
-			{showReplies && <ul className={styles.replies}>{children}</ul>}
+
+			{showReplies && (
+				<Replies post={post} comment={comment} onLoading={setLoading} />
+			)}
 		</li>
 	);
 };
