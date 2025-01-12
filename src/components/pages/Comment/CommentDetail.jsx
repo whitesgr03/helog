@@ -135,7 +135,7 @@ export const CommentDetail = ({ post, comment }) => {
 							<p>{comment.content}</p>
 						</div>
 						<div className={styles['button-wrap']}>
-							{replyList && (
+							{comment.countReplies > 0 && (
 								<button
 									className={styles['reply-list-btn']}
 									onClick={handleShowReplies}
@@ -146,7 +146,7 @@ export const CommentDetail = ({ post, comment }) => {
 										} ${showReplies ? styles.active : ''}`}
 										data-testid="commentIcon"
 									/>
-									{replyList.length}
+									{comment.countReplies}
 								</button>
 							)}
 							{user && !isDeleted && !showEditBox && (
