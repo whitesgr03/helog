@@ -1,6 +1,6 @@
 import { handleFetch } from './handleFetch';
 
-const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/posts`;
+const url = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
 
 export const getComments = async ({ skip, signal, postId }) => {
 	const options = {
@@ -8,7 +8,10 @@ export const getComments = async ({ skip, signal, postId }) => {
 		signal,
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}/${postId}/comments?skip=${skip}`, options);
+	return await handleFetch(
+		`${url}/posts/${postId}/comments?skip=${skip}`,
+		options,
+	);
 };
 
 export const createComment = async ({ postId, data }) => {
@@ -20,7 +23,7 @@ export const createComment = async ({ postId, data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(`${url}/${postId}/comments`, options);
+	return await handleFetch(`${url}/posts/${postId}/comments`, options);
 };
 
 export const updateComment = async ({ commentId, data }) => {
@@ -32,7 +35,7 @@ export const updateComment = async ({ commentId, data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(`${url}/${postId}/comments/${commentId}`, options);
+	return await handleFetch(`${url}/comments/${commentId}`, options);
 };
 
 export const deleteComment = async ({ commentId }) => {
@@ -40,5 +43,5 @@ export const deleteComment = async ({ commentId }) => {
 		method: 'DELETE',
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}/${postId}/comments/${commentId}`, options);
+	return await handleFetch(`${url}/comments/${commentId}`, options);
 };
