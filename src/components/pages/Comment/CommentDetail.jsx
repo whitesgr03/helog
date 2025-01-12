@@ -13,16 +13,43 @@ import { CommentBox } from './CommentBox';
 import { CommentDelete } from './CommentDelete';
 
 // Utils
-import { updateComment } from '../../../utils/handleComment';
+import { getReplies } from '../../../utils/handleReply';
 
-export const CommentDetail = ({ post, comment, onUpdatePost, children }) => {
-	const { user, onAlert, onActiveModal } = useOutletContext();
+export const CommentDetail = ({ post, comment, children }) => {
+	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const isCommentOwner = user?.username === comment?.author?.username;
 	const isPostAuthor = post.author.username === comment?.author?.username;
+	const handleGetReplies = async () => {
+		setLoading(true);
+
+		const result = await getReplies({
+			commentId: comment._id,
+			skip: 0,
+		});
+
+		const handleSuccess = () => {
+			const newComments = post.comments.map(postComment =>
+				postComment._id === comment._id
+					? { ...postComment, replies: result.data }
+					: postComment,
+			);
+			onUpdatePost({ postId: post._id, newComments });
+		};
+
+		result.success
+			? handleSuccess()
+			: onAlert({
+					message: 'There are some errors occur, please try again later.',
+					error: true,
+				});
+
+		setLoading(false);
+	};
 
 	const handleShowReplies = () => setShowReplies(!showReplies);
 	const handleShowEditBox = () => {
