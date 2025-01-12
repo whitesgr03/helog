@@ -25,6 +25,22 @@ export const CommentDetail = ({ post, comment }) => {
 
 	const isCommentOwner = user?.username === comment?.author?.username;
 	const isPostAuthor = post.author.username === comment?.author?.username;
+
+	const handleDelete = () => {
+		setShowEditBox(false);
+		onActiveModal({
+			component: (
+				<CommentDelete
+					post={post}
+					commentId={comment._id}
+					onUpdatePost={onUpdatePost}
+					onAlert={onAlert}
+					onActiveModal={onActiveModal}
+				/>
+			),
+		});
+	};
+
 	const handleGetReplies = async () => {
 		setLoading(true);
 
