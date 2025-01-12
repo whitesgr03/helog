@@ -6,6 +6,19 @@
 	padding: 10% 5%;
 }
 
+.replies {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+	padding-left: calc(5% + var(--icon-size-mobile) / 2);
+}
+
+.replies > li {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+}
+
 .content > ul,
 .content > ul > li {
 	display: flex;
@@ -35,6 +48,14 @@
 		padding: 10% 15%;
 	}
 
+	.replies {
+		row-gap: 25px;
+	}
+
+	.replies > li {
+		row-gap: 25px;
+	}
+
 	.content > ul,
 	.content > ul > li {
 		row-gap: 25px;
@@ -45,6 +66,14 @@
 	.comments {
 		row-gap: 35px;
 		padding: 5% 10%;
+	}
+
+	.replies {
+		row-gap: 35px;
+	}
+
+	.replies > li {
+		row-gap: 35px;
 	}
 
 	.content > ul,

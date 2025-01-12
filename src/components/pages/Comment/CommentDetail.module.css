@@ -152,19 +152,6 @@
 	padding-left: 5%;
 }
 
-.replies {
-	display: flex;
-	row-gap: 15px;
-	flex-direction: column;
-	padding-left: calc(5% + var(--icon-size-mobile) / 2);
-}
-
-.replies > li {
-	display: flex;
-	row-gap: 15px;
-	flex-direction: column;
-}
-
 /* Pseudo classes */
 .content > a:hover {
 	font-style: italic;
@@ -253,14 +240,6 @@
 	.edit-box-wrap {
 		margin-top: 25px;
 	}
-
-	.replies {
-		row-gap: 25px;
-	}
-
-	.replies > li {
-		row-gap: 25px;
-	}
 }
 
 @media (width >= 1000px) {
@@ -274,14 +253,6 @@
 
 	.edit-box-wrap {
 		margin-top: 35px;
-	}
-
-	.replies {
-		row-gap: 35px;
-	}
-
-	.replies > li {
-		row-gap: 35px;
 	}
 }
 
