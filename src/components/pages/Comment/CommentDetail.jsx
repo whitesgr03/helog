@@ -19,7 +19,7 @@ import { getReplies } from '../../../utils/handleReply';
 export const CommentDetail = ({ post, comment }) => {
 	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
-	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
+	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -56,8 +56,7 @@ export const CommentDetail = ({ post, comment }) => {
 	const handleShowEditBox = () => {
 		setShowEditBox(!showEditBox);
 	};
-	const handleShowReplyCommentBox = () =>
-		setShowReplyCommentBox(!showReplyCommentBox);
+	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
 
 	return (
 		<li id={`item-${comment._id}`}>
@@ -158,7 +157,7 @@ export const CommentDetail = ({ post, comment }) => {
 							{user && !comment.deleted && (
 								<button
 									className={styles['add-reply-btn']}
-									onClick={handleShowReplyCommentBox}
+									onClick={handleShowReplyBox}
 								>
 									Reply
 								</button>
