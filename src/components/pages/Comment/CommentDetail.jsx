@@ -21,8 +21,8 @@ export const CommentDetail = ({ post, comment, onUpdatePost, children }) => {
 	const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 
-	const isCommentOwner = user?.username === comment.author.username;
-	const isPostAuthor = post.author.username === comment.author.username;
+	const isCommentOwner = user?.username === comment?.author?.username;
+	const isPostAuthor = post.author.username === comment?.author?.username;
 
 	const handleShowReplies = () => setShowReplies(!showReplies);
 	const handleShowEditBox = () => {
