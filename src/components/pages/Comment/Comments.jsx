@@ -61,9 +61,10 @@ export const Comments = ({ post }) => {
 					<div className={styles.content}>
 						{comments.length ? (
 							<ul>
-								{comments.map(comment => (
+								{comments.map((comment, index) => (
 									<CommentDetail
 										key={comment._id}
+										index={index}
 										post={post}
 										comment={comment}
 									/>
