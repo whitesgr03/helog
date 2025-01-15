@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Settings.module.css';
-import bgcStyles from '../../../styles/bgc.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
@@ -24,7 +23,7 @@ export const Settings = ({
 
 	return (
 		<div
-			className={bgcStyles['blur-window']}
+			className={styles['blur-background']}
 			onClick={handleClick}
 			data-close-setting
 			data-testid={'blurBgc'}
