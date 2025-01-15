@@ -15,6 +15,15 @@
 	border-bottom: 1px solid var(--light-scheme-color);
 }
 
+.load-btn {
+	display: flex;
+	column-gap: 10px;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+  font-style: italic;
+}
+
 /* Dark scheme classes */
 
 :global(.dark) .post-list {
