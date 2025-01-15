@@ -60,6 +60,28 @@
 	text-underline-offset: 3px;
 }
 
+.blur-background {
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+	backdrop-filter: blur(4px);
+	animation: fade-in 0.3s forwards;
+	inset: 0;
+	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
 /* Pseudo classes */
 
 .change-btn:hover,
