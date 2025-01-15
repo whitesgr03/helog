@@ -14,7 +14,7 @@ export const Settings = ({
 	user,
 	onUser,
 	onAlert,
-	onCloseSettings,
+	onToggleSettingsMenu,
 	onActiveModal,
 }) => {
 	const handleClick = e => {
@@ -24,7 +24,7 @@ export const Settings = ({
 	return (
 		<div
 			className={styles['blur-background']}
-			onClick={handleClick}
+			onClick={onToggleSettingsMenu}
 			data-close-setting
 			data-testid={'blurBgc'}
 		>
@@ -32,7 +32,7 @@ export const Settings = ({
 				<button
 					type="button"
 					className={buttonStyles['close-btn']}
-					data-close-setting
+					onClick={onToggleSettingsMenu}
 				>
 					<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
 				</button>
@@ -79,7 +79,7 @@ export const Settings = ({
 												onActiveModal={onActiveModal}
 												onUser={onUser}
 												onAlert={onAlert}
-												onCloseSettings={onCloseSettings}
+												onToggleSettingsMenu={onToggleSettingsMenu}
 											/>
 										),
 									})
@@ -97,7 +97,7 @@ export const Settings = ({
 
 Settings.propTypes = {
 	user: PropTypes.object,
-	onCloseSettings: PropTypes.func,
+	onToggleSettingsMenu: PropTypes.func,
 	onActiveModal: PropTypes.func,
 	onUser: PropTypes.func,
 	onAlert: PropTypes.func,
