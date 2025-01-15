@@ -60,52 +60,51 @@ export const PostDetail = () => {
 			) : (
 				<>
 					{(loading || loadContent) && <Loading text={'Loading post...'} />}
-					<div className={loadContent ? styles.loading : ''}>
-						<div id="post-detail" className={styles['post-detail']}>
-							<Link to={-1} className={styles.link}>
-								<span
-									className={`${styles['left-arrow']} ${imageStyles.icon}`}
-								/>
-								Back to previous page
-							</Link>
-							{post?.title && <h2 className={styles.title}>{post.title}</h2>}
-							<div className={styles['date-time']}>
-								<strong>{post.author.username}</strong>
-								<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
-								{new Date(post.createdAt).getDate() !==
-									new Date(post.updatedAt).getDate() && (
-									<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
-								)}
-								{post?.mainImageUrl && (
-									<div className={styles['image-wrap']}>
-										<div className={imageStyles.content}>
-											<img
-												src={post.mainImageUrl}
-												alt={`${post.title}'s main image`}
-											/>
-										</div>
+					<div
+						id="post-detail"
+						className={`${styles['post-detail']} ${loading || loadContent ? styles.loading : ''}`}
+					>
+						<Link to={-1} className={styles.link}>
+							<span className={`${styles['left-arrow']} ${imageStyles.icon}`} />
+							Back to previous page
+						</Link>
+						{post?.title && <h2 className={styles.title}>{post.title}</h2>}
+						<div className={styles['date-time']}>
+							<strong>{post.author.username}</strong>
+							<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
+							{new Date(post.createdAt).getDate() !==
+								new Date(post.updatedAt).getDate() && (
+								<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
+							)}
+							{post?.mainImageUrl && (
+								<div className={styles['image-wrap']}>
+									<div className={imageStyles.content}>
+										<img
+											src={post.mainImageUrl}
+											alt={`${post.title}'s main image`}
+										/>
 									</div>
-								)}
-							</div>
-							<Editor
-								tinymceScriptSrc="/tinymce/tinymce.min.js"
-								licenseKey="gpl"
-								id="content"
-								disabled={true}
-								value={post.content ?? ''}
-								onInit={() => {
-									setLoadContent(false);
-								}}
-								init={{
-									menubar: false,
-									toolbar: false,
-									inline: true,
-									plugins: 'codesample',
-								}}
-							/>
+								</div>
+							)}
 						</div>
-						<Comments post={post} />
+						<Editor
+							tinymceScriptSrc="/tinymce/tinymce.min.js"
+							licenseKey="gpl"
+							id="content"
+							disabled={true}
+							value={post.content ?? ''}
+							onInit={() => {
+								setLoadContent(false);
+							}}
+							init={{
+								menubar: false,
+								toolbar: false,
+								inline: true,
+								plugins: 'codesample',
+							}}
+						/>
 					</div>
+					<Comments post={post} />
 				</>
 			)}
 		</>
