@@ -19,6 +19,12 @@
 	flex-direction: column;
 }
 
+.content {
+	display: flex;
+	row-gap: 20px;
+	flex-direction: column;
+}
+
 .content > ul,
 .content > ul > li {
 	display: flex;
@@ -29,6 +35,13 @@
 .content > p {
 	padding: 5% 0;
 	text-align: center;
+}
+
+.load {
+	display: flex;
+	position: relative;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Dark scheme classes */

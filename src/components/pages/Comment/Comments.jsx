@@ -5,6 +5,8 @@ import { useOutletContext } from 'react-router-dom';
 
 // Styles
 import styles from './Comments.module.css';
+import imageStyles from '../../../styles/image.module.css';
+import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading';
@@ -17,10 +19,27 @@ import { getComments } from '../../../utils/handleComment';
 export const Comments = ({ post }) => {
 	const { onAlert, onUpdatePost } = useOutletContext();
 	const [loading, setLoading] = useState(false);
-
+	const [skipComments, setSkipComments] = useState(10);
 	const [fetching, setFetching] = useState(true);
 
 	const comments = post?.comments ?? [];
+
+	const handleGetComments = async () => {
+		setLoading(true);
+		const result = await getComments({ postId: post._id, skip: skipComments });
+
+		setSkipComments(skipComments + 10);
+		result.success
+			? onUpdatePost({
+					postId: post._id,
+					newComments: post.comments.concat(result.data),
+				})
+			: onAlert({
+					message: 'There are some errors occur, please try again later.',
+					error: true,
+				});
+		setLoading(false);
+	};
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -65,16 +84,32 @@ export const Comments = ({ post }) => {
 
 					<div className={styles.content}>
 						{comments.length ? (
-							<ul>
-								{comments.map((comment, index) => (
-									<CommentDetail
-										key={comment._id}
-										index={index}
-										post={post}
-										comment={comment}
-									/>
-								))}
-							</ul>
+							<>
+								<ul>
+									{comments.map((comment, index) => (
+										<CommentDetail
+											key={comment._id}
+											index={index}
+											post={post}
+											comment={comment}
+										/>
+									))}
+								</ul>
+								{post.countComments > skipComments &&
+									post.comments.length >= 10 && (
+										<div className={styles.load}>
+											<button
+												className={`${buttonStyles.content} ${buttonStyles.more} `}
+												onClick={handleGetComments}
+											>
+												Show more comments
+												<span
+													className={`${imageStyles.icon} ${loading ? '' : imageStyles['hide-icon']} ${buttonStyles['load-icon']}`}
+												/>
+											</button>
+										</div>
+									)}
+							</>
 						) : (
 							<p>There are not comments.</p>
 						)}
