@@ -16,7 +16,7 @@ import { getComments } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
 	const { onAlert, onUpdatePost } = useOutletContext();
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	const [fetching, setFetching] = useState(true);
 
