@@ -15,7 +15,7 @@ import { CommentCreate } from './CommentCreate';
 import { getComments } from '../../../utils/handleComment';
 
 export const Comments = ({ post }) => {
-	const { onUpdatePost } = useOutletContext();
+	const { onAlert, onUpdatePost } = useOutletContext();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -37,8 +37,11 @@ export const Comments = ({ post }) => {
 			const handleResult = () => {
 				result.success
 					? onUpdatePost({ postId: post._id, newComments: result.data })
-          : setError(result.message);
-        
+					: onAlert({
+							message: 'There are some errors occur, please try again later.',
+							error: true,
+						});
+
 				setFetching(false);
 			};
 
@@ -48,7 +51,7 @@ export const Comments = ({ post }) => {
 		post?.comments === undefined ? handleFetchComments() : setFetching(false);
 
 		return () => controller.abort();
-	}, [post, onUpdatePost]);
+	}, [post, onUpdatePost, onAlert]);
 
 	return (
 		<div className={styles.comments}>
