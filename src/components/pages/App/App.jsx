@@ -8,7 +8,6 @@ import styles from './App.module.css';
 // Components
 import { Header } from '../../layout/Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
-import { Contact } from './Contact';
 import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { CreateUsername } from './CreateUsername';
@@ -195,7 +194,6 @@ export const App = () => {
 								/>
 							)}
 						</main>
-						<Contact />
 						<Footer />
 					</div>
 				</div>
