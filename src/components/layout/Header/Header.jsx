@@ -65,24 +65,24 @@ export const Header = ({
 					</ul>
 				</nav>
 				{activeDropdown && (
-					<Dropdown
-						user={user}
-						onUser={onUser}
-						onAlert={onAlert}
-						darkTheme={darkTheme}
-						onColorTheme={onColorTheme}
-						onActiveModal={onActiveModal}
-						onCloseDropdown={handleCloseDropdown}
-					/>
+					<>
+						<Dropdown
+							user={user}
+							onUser={onUser}
+							onAlert={onAlert}
+							darkTheme={darkTheme}
+							onColorTheme={onColorTheme}
+							onActiveModal={onActiveModal}
+							onCloseDropdown={handleCloseDropdown}
+						/>
+						<div
+							className={styles['transparent-background']}
+							onClick={handleCloseDropdown}
+							data-testid="transparentBgc"
+						/>
+					</>
 				)}
 			</header>
-			{activeDropdown && (
-				<div
-					className={styles['transparent-background']}
-					onClick={handleCloseDropdown}
-					data-testid="transparentBgc"
-				/>
-			)}
 		</>
 	);
 };
