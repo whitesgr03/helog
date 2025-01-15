@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import styles from './Posts.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
-export const Posts = ({ posts, limit }) => {
+export const Posts = ({ posts, limit, postListRef }) => {
 	return (
 		<>
 			{posts.length ? (
-				<ul className={styles.posts}>
+				<ul className={styles.posts} ref={postListRef}>
 					{posts.slice(0, limit).map(
 						post =>
 							post?.content !== '' && (
@@ -60,4 +60,5 @@ export const Posts = ({ posts, limit }) => {
 Posts.propTypes = {
 	posts: PropTypes.array,
 	limit: PropTypes.number,
+	postListRef: PropTypes.object,
 };
