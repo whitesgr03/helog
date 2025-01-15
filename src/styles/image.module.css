@@ -22,3 +22,7 @@
 	background-color: currentcolor;
 	pointer-events: none;
 }
+
+.hide-icon {
+	display: none;
+}
