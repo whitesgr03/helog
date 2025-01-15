@@ -13,7 +13,7 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 import { ReplyUpdate } from './ReplyUpdate';
 import { ReplyDelete } from './ReplyDelete';
 
-export const ReplyDetail = ({ post, comment, reply }) => {
+export const ReplyDetail = ({ index, post, comment, reply }) => {
 	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
@@ -71,6 +71,7 @@ export const ReplyDetail = ({ post, comment, reply }) => {
 				)}
 				<div className={styles['info-wrap']}>
 					<div className={styles.info}>
+						<span>{index + 1}.</span>
 						<div className={styles.avatar}>
 							{!reply.deleted && (
 								<>{reply.author.username.charAt(0).toUpperCase()}</>
@@ -144,6 +145,7 @@ export const ReplyDetail = ({ post, comment, reply }) => {
 };
 
 ReplyDetail.propTypes = {
+	index: PropTypes.number,
 	post: PropTypes.object,
 	comment: PropTypes.object,
 	reply: PropTypes.object,
