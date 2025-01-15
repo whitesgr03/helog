@@ -14,9 +14,10 @@ export const Replies = ({ post, comment }) => {
 		<div className={styles.replies}>
 			<div className={styles.content}>
 				<ul>
-					{replies.map(reply => (
+					{replies.map((reply, index) => (
 						<ReplyDetail
 							key={reply._id}
+							index={index}
 							post={post}
 							comment={comment}
 							reply={reply}
