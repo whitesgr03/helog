@@ -6,7 +6,7 @@ import { useState } from 'react';
 import styles from './Login.module.css';
 
 // Components
-import { Loading } from '../utils/Loading';
+import { Loading } from '../../utils/Loading';
 
 // Assets
 import googleIcon from '../../../assets/google.png';
