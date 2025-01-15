@@ -65,6 +65,17 @@
 	overflow-wrap: anywhere;
 }
 
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+body * {
+	margin: 0;
+	padding: 0;
+}
+
 #root {
 	display: flex;
 	flex: 1 1 100%;
