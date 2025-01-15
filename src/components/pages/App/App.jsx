@@ -144,6 +144,7 @@ export const App = () => {
 					className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
 					data-testid="app"
 				>
+					<ScrollRestoration getKey={location => location.key} />
 					{modal && (
 						<Modal
 							onActiveModal={handleActiveModal}
