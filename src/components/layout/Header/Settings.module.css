@@ -1,3 +1,11 @@
+.settings {
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	inset: 0;
+}
+
 .wrap {
 	position: relative;
 	z-index: 2;
