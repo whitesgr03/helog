@@ -138,7 +138,7 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 					<span className={buttonStyles.text}>
 						{loading ? 'Saving...' : 'Save'}
 						<span
-							className={`${imageStyles.icon} ${buttonStyles['load-icon']}`}
+							className={`${imageStyles.icon} ${loading ? '' : imageStyles['hide-icon']} ${buttonStyles['load-icon']}`}
 						/>
 					</span>
 				</button>
