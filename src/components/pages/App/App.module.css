@@ -31,10 +31,3 @@
 :global(.dark).app {
 	background-color: var(--dark-scheme-layout-bgc);
 }
-
-@media (width >= 1300px) {
-	.app main {
-		margin: 0 auto;
-		max-width: 1300px;
-	}
-}
