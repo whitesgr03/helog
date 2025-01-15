@@ -137,7 +137,7 @@ export const App = () => {
 		<>
 			{error ? (
 				<Error onReGetUser={setReGetUser} />
-			) : loading ? (
+			) : loading || fetching ? (
 				<Loading text={'Loading...'} />
 			) : (
 				<div
