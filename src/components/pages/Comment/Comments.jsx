@@ -17,7 +17,6 @@ import { getComments } from '../../../utils/handleComment';
 export const Comments = ({ post }) => {
 	const { onAlert, onUpdatePost } = useOutletContext();
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 
 	const { pathname: previousPath } = useLocation();
 	const [fetching, setFetching] = useState(true);
@@ -55,9 +54,7 @@ export const Comments = ({ post }) => {
 
 	return (
 		<div className={styles.comments}>
-			{error ? (
-				<Navigate to="/error" state={{ error, previousPath }} />
-			) : loading ? (
+			{loading ? (
 				<Loading text={'Loading comments...'} />
 			) : (
 				<>
