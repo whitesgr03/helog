@@ -18,7 +18,7 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 // Utils
 import { getReplies } from '../../../utils/handleReply';
 
-export const CommentDetail = ({ post, comment }) => {
+export const CommentDetail = ({ index, post, comment }) => {
 	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyBox, setShowReplyBox] = useState(false);
@@ -114,6 +114,7 @@ export const CommentDetail = ({ post, comment }) => {
 				)}
 				<div className={styles['info-wrap']}>
 					<div className={styles.info}>
+						<span>{`[${index + 1}]`}</span>
 						<div className={styles.avatar}>
 							{!comment.deleted && (
 								<span>{comment.author.username.charAt(0).toUpperCase()}</span>
@@ -197,6 +198,7 @@ export const CommentDetail = ({ post, comment }) => {
 };
 
 CommentDetail.propTypes = {
+	index: PropTypes.number,
 	post: PropTypes.object,
 	comment: PropTypes.object,
 };
