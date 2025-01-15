@@ -4,6 +4,7 @@
 	right: 5px;
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 8px;
+  z-index: 1;
 	background-color: var(--light-scheme-layout-bgc);
 }
 
