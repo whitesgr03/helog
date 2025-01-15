@@ -57,9 +57,8 @@ export const PostDetail = () => {
 		<>
 			{error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
-			) : fetching || loading ? (
-				<Loading text={'Loading post...'} />
-			) : (
+      ) : (
+          {(fetching || loading) && <Loading text={'Loading post...'} />}
 				<div className={loadContent ? styles.loading : ''}>
 					<div id="post-detail" className={styles['post-detail']}>
 						<Link to={-1} className={styles.link}>
