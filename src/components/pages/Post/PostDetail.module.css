@@ -139,9 +139,3 @@
 		padding: 0 10%;
 	}
 }
-
-@media (width >= 1600px) {
-	.post-detail {
-		padding: 5% 0;
-	}
-}

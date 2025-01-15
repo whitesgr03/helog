@@ -21,7 +21,7 @@
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 20px;
-  font-style: italic;
+	font-style: italic;
 }
 
 /* Dark scheme classes */
@@ -45,11 +45,5 @@
 
 	.post-list li:not(:only-of-type) {
 		border-bottom: 0;
-	}
-}
-
-@media (width >= 1600px) {
-	.post-list ul {
-		padding: 5% 0;
 	}
 }

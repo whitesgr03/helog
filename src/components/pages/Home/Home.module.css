@@ -278,9 +278,3 @@
 		color: var(--dark-scheme-color);
 	}
 }
-
-@media (width >= 1600px) {
-	.home {
-		padding: 5% 0;
-	}
-}

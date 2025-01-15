@@ -94,9 +94,3 @@
 		row-gap: 35px;
 	}
 }
-
-@media (width >= 1600px) {
-	.comments {
-		padding: 5% 0;
-	}
-}
