@@ -13,11 +13,7 @@ export const PostList = () => {
 
 	return (
 		<div className={styles['post-list']}>
-			{fetching ? (
-				<Loading text={'Loading posts...'} />
-			) : (
-				<Posts posts={posts} limit={posts.length} />
-			)}
+			<Posts posts={posts} limit={posts.length} />
 		</div>
 	);
 };
