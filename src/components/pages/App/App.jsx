@@ -72,6 +72,11 @@ export const App = () => {
 		);
 	};
 
+	const handleUpdatePosts = data => {
+		setPosts(posts.concat(data.posts));
+		setCountPosts(data.countPosts);
+	};
+
 	useEffect(() => {
 		const getColorTheme = () => {
 			const themeParams = searchParams.get('theme');
