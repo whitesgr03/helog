@@ -65,10 +65,6 @@
 	overflow-wrap: anywhere;
 }
 
-[hidden] {
-	display: none !important;
-}
-
 #root {
 	height: 100vh;
 }
