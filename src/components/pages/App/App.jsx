@@ -127,8 +127,13 @@ export const App = () => {
 		const handleGetPosts = async () => {
 			const result = await getPosts({ skip: 0, signal });
 
+			const handleSuccess = () => {
+				setPosts(result.data.posts);
+				setCountPosts(result.data.countPosts);
+			};
+
 			const handleResult = () => {
-				result.success ? setPosts(result.data) : setError(result.message);
+				result.success ? handleSuccess(result.data) : setError(result.message);
 				setFetching(false);
 			};
 
