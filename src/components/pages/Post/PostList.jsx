@@ -6,7 +6,6 @@ import styles from './PostList.module.css';
 
 // Components
 import { Posts } from './Posts';
-import { Loading } from '../../utils/Loading';
 
 export const PostList = () => {
 	const { posts, fetching } = useOutletContext();
