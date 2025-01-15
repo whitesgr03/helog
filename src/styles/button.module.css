@@ -53,12 +53,7 @@
 	height: 100%;
 }
 
-.success .load-icon {
-	display: none;
-}
-
-.success.loading .load-icon {
-	display: block;
+.loading .load-icon {
 	display: flex;
 	justify-content: center;
 	align-items: center;
