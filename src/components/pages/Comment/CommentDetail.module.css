@@ -118,6 +118,10 @@
 	line-height: 1.5rem;
 }
 
+.comment {
+	flex: 1 1 100%;
+}
+
 .reply-list-btn {
 	display: flex;
 	column-gap: 5px;

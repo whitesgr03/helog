@@ -103,7 +103,7 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 										: `@${reply.reply.author.username}`}
 								</a>
 							)}
-							<p>{reply.content}</p>
+							<p className={styles.comment}>{reply.content}</p>
 						</div>
 						<div className={styles['button-wrap']}>
 							{user && !reply.deleted && (
