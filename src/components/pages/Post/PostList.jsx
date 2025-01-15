@@ -8,7 +8,8 @@ import styles from './PostList.module.css';
 import { Posts } from './Posts';
 
 export const PostList = () => {
-	const { posts, fetching } = useOutletContext();
+	const { posts, countPosts, headerRef, onUpdatePosts, onAlert } =
+		useOutletContext();
 
 	return (
 		<div className={styles['post-list']}>
