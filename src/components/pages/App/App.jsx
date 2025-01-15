@@ -27,6 +27,7 @@ const defaultAlert = {
 export const App = () => {
 	const [user, setUser] = useState(null);
 	const [posts, setPosts] = useState([]);
+	const [countPosts, setCountPosts] = useState(0);
 	const [darkTheme, setDarkTheme] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [fetching, setFetching] = useState(true);
