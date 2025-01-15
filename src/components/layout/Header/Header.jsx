@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import styles from './Header.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
-import bgcStyles from '../../../styles/bgc.module.css';
 
 // Components
 import { Dropdown } from './Dropdown';
@@ -79,7 +78,7 @@ export const Header = ({
 			</header>
 			{activeDropdown && (
 				<div
-					className={bgcStyles['transparent-window']}
+					className={styles['transparent-background']}
 					onClick={handleCloseDropdown}
 					data-testid="transparentBgc"
 				/>
