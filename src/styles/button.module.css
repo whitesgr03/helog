@@ -25,6 +25,14 @@
 	}
 }
 
+.more {
+	display: flex;
+	column-gap: 10px;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--light-scheme-highlight);
+}
+
 .success {
 	composes: content;
 	position: relative;
@@ -162,6 +170,11 @@
 :global(.dark) .content {
 	border: 2px transparent;
 	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .more {
+	background-color: var(--dark-scheme-highlight);
+	color: var(--light-scheme-color);
 }
 
 :global(.dark) .cancel {
