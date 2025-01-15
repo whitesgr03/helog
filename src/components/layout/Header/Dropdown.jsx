@@ -48,7 +48,7 @@ export const Dropdown = ({
 		onCloseDropdown();
 	};
 
-	const handleActiveSettings = () => setActiveSettings(true);
+	const handleToggleSettingsMenu = () => setActiveSettings(true);
 	const handleCloseSettings = () => onCloseDropdown(false);
 	return (
 		<>
@@ -80,7 +80,7 @@ export const Dropdown = ({
 						</li>
 						{user && user.username && (
 							<li>
-								<button onClick={handleActiveSettings}>
+								<button onClick={handleToggleSettingsMenu}>
 									<span className={`${imageStyles.icon} ${styles.settings}`} />
 									Settings
 								</button>
