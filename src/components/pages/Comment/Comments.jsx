@@ -20,6 +20,7 @@ export const Comments = ({ post }) => {
 	const [error, setError] = useState(null);
 
 	const { pathname: previousPath } = useLocation();
+	const [fetching, setFetching] = useState(true);
 
 	const comments = post?.comments ?? [];
 
