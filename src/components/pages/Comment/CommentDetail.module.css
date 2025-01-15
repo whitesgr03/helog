@@ -90,8 +90,7 @@
 }
 
 .info-wrap strong {
-	overflow: hidden;
-	text-overflow: ellipsis;
+	overflow: scroll;
 	white-space: nowrap;
 }
 
