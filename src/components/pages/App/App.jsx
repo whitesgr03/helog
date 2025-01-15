@@ -1,6 +1,11 @@
 // Packages
-import { useState, useEffect } from 'react';
-import { Outlet, useSearchParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import {
+	Outlet,
+	useSearchParams,
+	useNavigate,
+	ScrollRestoration,
+} from 'react-router-dom';
 
 // Styles
 import styles from './App.module.css';
@@ -35,6 +40,7 @@ export const App = () => {
 	const [modal, setModal] = useState(null);
 	const [error, setError] = useState(false);
 	const [reGetUser, setReGetUser] = useState(false);
+	const headerRef = useRef(null);
 
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -153,11 +159,11 @@ export const App = () => {
 							{modal.component}
 						</Modal>
 					)}
-
 					<div className={styles['header-bar']}>
 						<Header
 							user={user}
 							darkTheme={darkTheme}
+							headerRef={headerRef}
 							onUser={setUser}
 							onAlert={handleAlert}
 							onColorTheme={handleColorTheme}
