@@ -17,10 +17,6 @@ export const Settings = ({
 	onToggleSettingsMenu,
 	onActiveModal,
 }) => {
-	const handleClick = e => {
-		e.target.dataset.closeSetting && onCloseSettings();
-	};
-
 	return (
 		<div
 			className={styles['blur-background']}
