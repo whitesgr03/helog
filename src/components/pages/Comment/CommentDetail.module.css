@@ -112,7 +112,10 @@
 }
 
 .content > a {
+	flex: 1 0 auto;
+	align-self: flex-start;
 	color: var(--light-scheme-highlight);
+	line-height: 1.5rem;
 }
 
 .reply-list-btn {
