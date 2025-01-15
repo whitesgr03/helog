@@ -18,12 +18,13 @@ export const Settings = ({
 	onActiveModal,
 }) => {
 	return (
-		<div
-			className={styles['blur-background']}
-			onClick={onToggleSettingsMenu}
-			data-close-setting
-			data-testid={'blurBgc'}
-		>
+		<div className={styles.settings}>
+			<div
+				className={styles['blur-background']}
+				onClick={onToggleSettingsMenu}
+				data-close-setting
+				data-testid={'blurBgc'}
+			/>
 			<div className={styles.wrap}>
 				<button
 					type="button"
