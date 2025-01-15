@@ -1,7 +1,7 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { useOutletContext, Navigate, useLocation } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 
 // Styles
 import styles from './Comments.module.css';
@@ -18,7 +18,6 @@ export const Comments = ({ post }) => {
 	const { onAlert, onUpdatePost } = useOutletContext();
 	const [loading, setLoading] = useState(true);
 
-	const { pathname: previousPath } = useLocation();
 	const [fetching, setFetching] = useState(true);
 
 	const comments = post?.comments ?? [];
