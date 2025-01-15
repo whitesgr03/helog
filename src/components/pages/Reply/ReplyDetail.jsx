@@ -71,7 +71,7 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 				)}
 				<div className={styles['info-wrap']}>
 					<div className={styles.info}>
-						<span>{index + 1}.</span>
+						<span className={styles.index}>{`[${index + 1}]`}</span>
 						<div className={styles.avatar}>
 							{!reply.deleted && (
 								<span>{reply.author.username.charAt(0).toUpperCase()}</span>

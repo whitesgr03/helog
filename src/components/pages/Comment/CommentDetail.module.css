@@ -95,6 +95,10 @@
 	white-space: nowrap;
 }
 
+.index {
+	flex: 1 0 auto;
+}
+
 .time {
 	display: flex;
 	flex: 1 0 auto;
