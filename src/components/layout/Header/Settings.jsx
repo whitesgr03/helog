@@ -28,7 +28,7 @@ export const Settings = ({
 			data-close-setting
 			data-testid={'blurBgc'}
 		>
-			<div className={styles.settings}>
+			<div className={styles.wrap}>
 				<button
 					type="button"
 					className={buttonStyles['close-btn']}

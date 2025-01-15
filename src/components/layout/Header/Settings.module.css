@@ -1,5 +1,6 @@
-.settings {
+.wrap {
 	position: relative;
+	z-index: 2;
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 8px;
 	background-color: var(--light-scheme-layout-bgc);
@@ -70,7 +71,7 @@
 
 /* Dark scheme classes */
 
-:global(.dark) .settings {
+:global(.dark) .wrap {
 	border: 2px solid var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);
 	color: var(--dark-scheme-color);
@@ -98,13 +99,13 @@
 }
 
 @media (width >= 600px) {
-	.settings {
+	.wrap {
 		width: 60%;
 	}
 }
 
 @media (width >= 700px) {
-	.settings {
+	.wrap {
 		width: 50%;
 	}
 }
@@ -146,7 +147,7 @@
 }
 
 @media (width >= 1300px) {
-	.settings {
+	.wrap {
 		width: 40%;
 	}
 }
