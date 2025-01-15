@@ -54,7 +54,7 @@ export const Comments = ({ post }) => {
 
 	return (
 		<div className={styles.comments}>
-			{loading ? (
+			{fetching ? (
 				<Loading text={'Loading comments...'} />
 			) : (
 				<>
