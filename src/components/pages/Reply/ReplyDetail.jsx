@@ -74,7 +74,7 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 						<span>{index + 1}.</span>
 						<div className={styles.avatar}>
 							{!reply.deleted && (
-								<>{reply.author.username.charAt(0).toUpperCase()}</>
+								<span>{reply.author.username.charAt(0).toUpperCase()}</span>
 							)}
 						</div>
 						<strong title={!reply.deleted ? reply?.author?.username : ''}>
