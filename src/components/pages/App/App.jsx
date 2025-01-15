@@ -203,8 +203,10 @@ export const App = () => {
 									context={{
 										user,
 										posts,
-										fetching,
+										countPosts,
+										headerRef,
 										onUser: setUser,
+										onUpdatePosts: handleUpdatePosts,
 										onActiveModal: handleActiveModal,
 										onAlert: handleAlert,
 										onUpdatePost: handleUpdatePost,
