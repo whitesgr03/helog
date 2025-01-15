@@ -28,19 +28,24 @@ export const Comments = ({ post }) => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const handleGetComments = async () => {
-			const result = await getComments({ postId: post._id, skip: 0, signal });
+		const handleFetchComments = async () => {
+			const result = await getComments({
+				postId: post._id,
+				skip: 0,
+				signal,
+			});
 			const handleResult = () => {
 				result.success
 					? onUpdatePost({ postId: post._id, newComments: result.data })
-					: setError(result.message);
-				setLoading(false);
+          : setError(result.message);
+        
+				setFetching(false);
 			};
 
 			result && handleResult();
 		};
 
-		post?.comments === undefined ? handleGetComments() : setLoading(false);
+		post?.comments === undefined ? handleFetchComments() : setFetching(false);
 
 		return () => controller.abort();
 	}, [post, onUpdatePost]);
