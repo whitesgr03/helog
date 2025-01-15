@@ -116,7 +116,7 @@ export const CommentDetail = ({ post, comment }) => {
 					<div className={styles.info}>
 						<div className={styles.avatar}>
 							{!comment.deleted && (
-								<>{comment.author.username.charAt(0).toUpperCase()}</>
+								<span>{comment.author.username.charAt(0).toUpperCase()}</span>
 							)}
 						</div>
 						<strong title={!comment.deleted ? comment?.author?.username : ''}>
