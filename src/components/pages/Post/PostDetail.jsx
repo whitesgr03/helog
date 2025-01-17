@@ -59,8 +59,8 @@ export const PostDetail = () => {
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<>
-					{(loading || loadContent) && <Loading text={'Loading post...'} />}
 					<div id="post-detail" className={styles['post-detail']}>
+						{(loading || loadContent) && <Loading text={'Loading post...'} />}
 						<div
 							className={`${styles.container} ${loading || loadContent ? styles.loading : ''}`}
 						>
