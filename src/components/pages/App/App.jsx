@@ -52,7 +52,6 @@ export const App = () => {
 		};
 		setAlert(alert.length < 2 ? alert.concat(newAlert) : [newAlert]);
 	};
-	const handleCloseAlert = () => setAlert(defaultAlert);
 
 	const handleActiveModal = ({ component, clickToClose = true }) => {
 		document.body.removeAttribute('style');
