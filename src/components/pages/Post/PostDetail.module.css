@@ -1,12 +1,12 @@
-.loading {
-	display: none;
-}
-
 .post-detail {
 	display: flex;
 	row-gap: 15px;
 	flex-direction: column;
 	padding: 5%;
+}
+
+.loading {
+	display: none;
 }
 
 .link {
