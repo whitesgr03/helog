@@ -30,10 +30,13 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 
 		const handleSetUser = () => {
 			onUser(result.data);
-			onAlert({ message: 'Set username successfully' });
+			onAlert({
+				message: 'Username has been set.',
+				error: false,
+				delay: 2000,
+			});
 			onActiveModal({ component: null });
 		};
-
 		result.success
 			? handleSetUser()
 			: result.fields

@@ -54,7 +54,11 @@ export const CommentCreate = ({ post }) => {
 					comments: [result.data, ...post.comments],
 				},
 			});
-			onAlert({ message: 'Add comment successfully' });
+			onAlert({
+				message: 'A new comment has been added.',
+				error: false,
+				delay: 2000,
+			});
 			setDebounce(false);
 			setShowSubmitButton(false);
 			setFormFields(DEFAULT_FIELDS);

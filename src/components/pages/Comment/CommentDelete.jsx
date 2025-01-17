@@ -33,7 +33,11 @@ export const CommentDelete = ({
 				comment._id === commentId ? result.data : comment,
 			);
 			onUpdatePost({ postId: post._id, newComments });
-			onAlert({ message: result.message });
+			onAlert({
+				message: 'Comment has been deleted.',
+				error: false,
+				delay: 2000,
+			});
 			onActiveModal({ component: null });
 		};
 

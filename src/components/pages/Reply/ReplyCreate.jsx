@@ -77,7 +77,11 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 				},
 			});
 
-			onAlert({ message: 'Add reply successfully' });
+			onAlert({
+				message: 'A new reply has been added.',
+				error: false,
+				delay: 2000,
+			});
 			onCloseReplyBox();
 		};
 

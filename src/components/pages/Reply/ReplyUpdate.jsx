@@ -66,7 +66,11 @@ export const ReplyUpdate = ({ post, commentId, reply, onCloseCommentBox }) => {
 				postId: post._id,
 				newComments,
 			});
-			onAlert({ message: 'Update reply successfully' });
+			onAlert({
+				message: 'Reply has been updated.',
+				error: false,
+				delay: 2000,
+			});
 			onCloseCommentBox();
 		};
 

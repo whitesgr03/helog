@@ -30,7 +30,7 @@ export const DeleteModel = ({
 
 		const handleSetUser = () => {
 			onUser(null);
-			onAlert({ message: result.message });
+			onAlert({ message: 'Your account has been deleted.', error: false, delay: 2000 });
 			onActiveModal({ component: null });
 			onCloseSettings();
 		};

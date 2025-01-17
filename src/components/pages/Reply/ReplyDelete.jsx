@@ -41,7 +41,11 @@ export const ReplyDelete = ({
 					: comment,
 			);
 			onUpdatePost({ postId: post._id, newComments });
-			onAlert({ message: result.message });
+			onAlert({
+				message: 'Reply has been deleted.',
+				error: false,
+				delay: 2000,
+			});
 			onActiveModal({ component: null });
 		};
 
