@@ -60,11 +60,10 @@ export const PostDetail = () => {
 			) : (
 				<>
 					{(loading || loadContent) && <Loading text={'Loading post...'} />}
-					<div
-						id="post-detail"
-						className={`${styles['post-detail']} ${loading || loadContent ? styles.loading : ''}`}
-					>
-						<div className={styles.container}>
+					<div id="post-detail" className={styles['post-detail']}>
+						<div
+							className={`${styles.container} ${loading || loadContent ? styles.loading : ''}`}
+						>
 							<Link to={-1} className={styles.link}>
 								<span
 									className={`${styles['left-arrow']} ${imageStyles.icon}`}
