@@ -1,4 +1,6 @@
 .post-detail {
+	position: relative;
+	flex: 1 1 100%;
 	padding: 5%;
 }
 
