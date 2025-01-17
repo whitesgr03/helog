@@ -1,6 +1,6 @@
 // Modules
 import { useState, useRef, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate, useLocation } from 'react-router-dom';
 
 // Styles
 import styles from './PostList.module.css';
@@ -14,11 +14,13 @@ import { Posts } from './Posts';
 import { getPosts } from '../../../utils/handlePost';
 
 export const PostList = () => {
-	const { posts, countPosts, headerRef, onUpdatePosts, onAlert } =
-		useOutletContext();
+	const { posts, countPosts, headerRef, onUpdatePosts } = useOutletContext();
 	const [skipPosts, setSkipPosts] = useState(10);
 	const [loading, setLoading] = useState(false);
 	const postListRef = useRef(null);
+
+	const navigate = useNavigate();
+	const { pathname: previousPath } = useLocation();
 
 	useEffect(() => {
 		const handleGetPosts = async () => {
@@ -27,9 +29,8 @@ export const PostList = () => {
 			setSkipPosts(skipPosts + 10);
 			result.success
 				? onUpdatePosts(result.data)
-				: onAlert({
-						message: 'There are some errors occur, please try again later.',
-						error: true,
+				: navigate('/error', {
+						state: { error: result.message, previousPath },
 					});
 			setLoading(false);
 		};
@@ -60,9 +61,10 @@ export const PostList = () => {
 		countPosts,
 		headerRef,
 		loading,
-		onAlert,
 		onUpdatePosts,
 		skipPosts,
+		navigate,
+		previousPath,
 	]);
 
 	return (
