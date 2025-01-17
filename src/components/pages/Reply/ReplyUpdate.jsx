@@ -81,6 +81,7 @@ export const ReplyUpdate = ({ post, commentId, reply, onCloseCommentBox }) => {
 				: onAlert({
 						message: 'There are some errors occur, please try again later.',
 						error: true,
+						delay: 3000,
 					});
 
 		setLoading(false);

@@ -45,6 +45,7 @@ export const Replies = ({ post, comment }) => {
 			: onAlert({
 					message: 'There are some errors occur, please try again later.',
 					error: true,
+					delay: 3000,
 				});
 
 		setLoading(false);
