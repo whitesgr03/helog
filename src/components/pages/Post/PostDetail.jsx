@@ -107,7 +107,7 @@ export const PostDetail = () => {
 							/>
 						</div>
 					</div>
-					<Comments post={post} />
+					{!loading && !loadContent && <Comments post={post} />}
 				</>
 			)}
 		</>
