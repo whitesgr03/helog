@@ -1,64 +1,72 @@
 // Packages
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Alert.module.css';
 
-export const Alert = ({ alert, onCloseAlert }) => {
-	const [activeAlert, setActiveAlert] = useState(false);
-	const [pauseAlert, setPauseAlert] = useState(false);
-	const timerId = useRef(null);
-	const start = useRef(null);
-	const remaining = useRef(null);
+export const Alert = ({ alert, onAlert }) => {
+	const [pause, setPause] = useState(false);
+	const timer = useRef('');
+	const startTime = useRef(0);
+	const remainingTime = useRef(0);
 
-	const handleTransitionend = () => !activeAlert && onCloseAlert();
-	const handlePause = e => {
-		const target = e.target.closest(`.${styles.alert}`);
-		e.type === 'mouseover' && target && setPauseAlert(true);
-		e.type === 'mouseout' && target && setPauseAlert(false);
+	// The lastAlert state will store the last alert data before the alert array is set to empty,
+	// to prevent the message and error class from disappearing before the alert block is hidden.
+	const [lastAlert, setLastAlert] = useState({});
+
+	const endAlert = () => {
+		remainingTime.current = 0;
+		clearTimeout(timer.current);
+
+		const nextAlert = alert[1] ? [alert[1]] : [];
+
+		nextAlert.length === 0 && setLastAlert(alert[0]);
+
+		onAlert(nextAlert);
 	};
 
-	useEffect(() => {
-		setTimeout(() => setActiveAlert(true), 50);
-	}, []);
+	const startTimer = () => {
+		startTime.current = Date.now();
+		remainingTime.current === 0 && (remainingTime.current = alert[0].delay);
+		timer.current && clearTimeout(timer.current);
+		timer.current = setTimeout(() => endAlert(), remainingTime.current);
+	};
 
-	useEffect(() => {
-		const setTimer = delay => {
-			start.current = Date.now();
-			!remaining.current && (remaining.current = delay);
-			timerId.current = setTimeout(
-				() => setActiveAlert(false),
-				remaining.current,
-			);
-		};
+	const handleTransitionend = () => {
+		alert.length === 1 && startTimer();
+		alert.length > 1 && endAlert();
+		alert.length === 0 && setLastAlert({});
+	};
+	const handlePauseTimer = () => {
+		setPause(true);
+		clearTimeout(timer.current);
+		remainingTime.current -= Date.now() - startTime.current;
+	};
+	const handleContinueTimer = e => {
+		const inAlertElement = e.relatedTarget?.closest(`.${styles.alert}`);
 
-		const pauseTimer = () => {
-			remaining.current -= Date.now() - start.current;
-			clearTimeout(timerId.current);
-		};
+		!inAlertElement && startTimer();
+		!inAlertElement && setPause(false);
+	};
 
-		pauseAlert ? pauseTimer() : setTimer(2000);
-
-		return () => {
-			clearTimeout(timerId.current);
-		};
-	}, [alert, pauseAlert]);
 	return (
-		<div
-			onTransitionEnd={handleTransitionend}
-			onMouseOver={handlePause}
-			onMouseOut={handlePause}
-			className={`${styles.alert} ${activeAlert ? styles.active : ''} ${
-				alert.error ? styles.error : ''
-			}`}
-		>
-			<p>{alert.message}</p>
-		</div>
+		<>
+			<div
+				onTransitionEnd={handleTransitionend}
+				onMouseOver={() => !pause && handlePauseTimer()}
+				onMouseOut={handleContinueTimer}
+				className={`${styles.alert} ${alert.length === 1 ? styles.active : ''} ${
+					lastAlert.error || alert[0]?.error ? styles.error : ''
+				}`}
+			>
+				<p>{lastAlert.message || alert[0]?.message}</p>
+			</div>
+		</>
 	);
 };
 
 Alert.propTypes = {
-	alert: PropTypes.object,
-	onCloseAlert: PropTypes.func,
+	alert: PropTypes.array,
+	onAlert: PropTypes.func,
 };
