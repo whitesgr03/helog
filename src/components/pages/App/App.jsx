@@ -178,9 +178,7 @@ export const App = () => {
 							onColorTheme={handleColorTheme}
 							onActiveModal={handleActiveModal}
 						/>
-						{alert.message !== '' && (
-							<Alert alert={alert} onCloseAlert={handleCloseAlert} />
-						)}
+						<Alert alert={alert} onCloseAlert={handleCloseAlert} />
 					</div>
 					<div className={styles.container}>
 						<main>
