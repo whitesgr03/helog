@@ -10,7 +10,9 @@
 	z-index: -1;
 	transition: transform 0.3s ease-in-out;
 	background-color: var(--light-scheme-highlight);
+	padding: 0 5%;
 	height: var(--icon-size-mobile);
+	overflow: hidden;
 	color: var(--dark-scheme-color);
 }
 
