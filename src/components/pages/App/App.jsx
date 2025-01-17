@@ -23,12 +23,6 @@ import { Error } from '../../utils/Error/Error';
 import { getUser } from '../../../utils/handleUser';
 import { getPosts } from '../../../utils/handlePost';
 
-// Variables
-const defaultAlert = {
-	message: '',
-	error: false,
-};
-
 export const App = () => {
 	const [user, setUser] = useState(null);
 	const [posts, setPosts] = useState([]);
@@ -36,7 +30,7 @@ export const App = () => {
 	const [darkTheme, setDarkTheme] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [fetching, setFetching] = useState(true);
-	const [alert, setAlert] = useState(defaultAlert);
+	const [alert, setAlert] = useState([]);
 	const [modal, setModal] = useState(null);
 	const [error, setError] = useState(false);
 	const [reGetUser, setReGetUser] = useState(false);
