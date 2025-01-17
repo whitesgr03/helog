@@ -1,7 +1,4 @@
 .post-detail {
-	display: flex;
-	row-gap: 15px;
-	flex-direction: column;
 	padding: 5%;
 }
 
