@@ -1,7 +1,7 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useLocation, useNavigate } from 'react-router-dom';
 
 // Styles
 import styles from './Comments.module.css';
@@ -21,6 +21,9 @@ export const Comments = ({ post }) => {
 	const [loading, setLoading] = useState(false);
 	const [skipComments, setSkipComments] = useState(10);
 	const [fetching, setFetching] = useState(true);
+
+	const navigate = useNavigate();
+	const { pathname: previousPath } = useLocation();
 
 	const comments = post?.comments ?? [];
 
@@ -55,9 +58,8 @@ export const Comments = ({ post }) => {
 			const handleResult = () => {
 				result.success
 					? onUpdatePost({ postId: post._id, newComments: result.data })
-					: onAlert({
-							message: 'There are some errors occur, please try again later.',
-							error: true,
+					: navigate('/error', {
+							state: { error: result.message, previousPath },
 						});
 
 				setFetching(false);
@@ -69,7 +71,7 @@ export const Comments = ({ post }) => {
 		post?.comments === undefined ? handleFetchComments() : setFetching(false);
 
 		return () => controller.abort();
-	}, [post, onUpdatePost, onAlert]);
+	}, [post, onUpdatePost, navigate, previousPath]);
 
 	return (
 		<div className={styles.comments}>
