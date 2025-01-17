@@ -44,8 +44,14 @@ export const App = () => {
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
 	};
 
-	const handleAlert = ({ message, error = false }) =>
-		setAlert({ message, error });
+	const handleAlert = ({ message, error, delay }) => {
+		const newAlert = {
+			message,
+			error,
+			delay,
+		};
+		setAlert(alert.length < 2 ? alert.concat(newAlert) : [newAlert]);
+	};
 	const handleCloseAlert = () => setAlert(defaultAlert);
 
 	const handleActiveModal = ({ component, clickToClose = true }) => {
