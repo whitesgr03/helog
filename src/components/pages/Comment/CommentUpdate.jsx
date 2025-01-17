@@ -60,7 +60,7 @@ export const CommentUpdate = ({ post, comment, onCloseCommentBox }) => {
 			});
 			onAlert({
 				message: 'Comment has been updated.',
-				error: true,
+				error: false,
 				delay: 2000,
 			});
 			onCloseCommentBox();
