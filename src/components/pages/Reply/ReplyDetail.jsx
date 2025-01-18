@@ -94,14 +94,11 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 					<>
 						<div className={styles.content}>
 							{!reply.deleted && reply?.reply && (
-								<a
-									title={reply.reply.author.username}
-									href={`#${reply.reply._id}`}
-								>
+								<button title={reply.reply.author.username}>
 									{reply.reply.deleted
 										? `@deleted`
 										: `@${reply.reply.author.username}`}
-								</a>
+								</button>
 							)}
 							<p className={styles.comment}>{reply.content}</p>
 						</div>
