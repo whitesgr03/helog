@@ -73,7 +73,7 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 	};
 
 	return (
-		<li id={reply._id}>
+		<li id={reply._id} onAnimationEnd={e => (e.target.className = '')}>
 			<div
 				className={`${styles.container} ${
 					!reply.deleted && isPostAuthor ? styles.author : ''
