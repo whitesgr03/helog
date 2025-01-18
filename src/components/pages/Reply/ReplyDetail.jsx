@@ -42,6 +42,36 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 		});
 	};
 
+	const handleScrollToReplier = () => {
+		const targetId = reply.reply._id;
+		const element = document.getElementById(targetId);
+		const target = element.getBoundingClientRect();
+
+		const windowTop = document.documentElement.scrollTop;
+
+		const windowHalfHeight = document.documentElement.clientHeight / 2;
+		const targetHalfHeight = target.height / 2;
+		const targetCenter =
+			windowTop + target.top - windowHalfHeight + targetHalfHeight;
+
+		const handleScroll = () => {
+			const currentTargetTop = element.getBoundingClientRect().top;
+			const isTargetCenter =
+				currentTargetTop - windowHalfHeight + targetHalfHeight >= 0;
+
+			isTargetCenter && element.classList.add(styles.shake);
+
+			isTargetCenter && window.removeEventListener('scroll', handleScroll);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		window.scrollTo({
+			top: targetCenter,
+			behavior: 'smooth',
+		});
+	};
+
 	return (
 		<li id={reply._id}>
 			<div
