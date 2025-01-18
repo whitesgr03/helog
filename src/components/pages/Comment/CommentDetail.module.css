@@ -140,7 +140,7 @@
 	padding: 10px;
 }
 
-.content > a {
+.content > button {
 	align-self: flex-start;
 	color: var(--light-scheme-highlight);
 	line-height: 1.5rem;
