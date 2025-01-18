@@ -182,6 +182,7 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 							value={formFields.content}
 							ref={textbox}
 							rows="1"
+							autoFocus={true}
 						/>
 					</label>
 					{!isEmpty(inputErrors) && (
