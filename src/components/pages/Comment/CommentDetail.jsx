@@ -133,7 +133,6 @@ export const CommentDetail = ({ index, post, comment }) => {
 							: ''}
 					</div>
 				</div>
-
 				{showEditBox ? (
 					<div className={styles['edit-box-wrap']}>
 						<CommentUpdate
