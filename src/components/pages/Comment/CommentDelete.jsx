@@ -30,7 +30,7 @@ export const CommentDelete = ({
 
 		const handleSuccess = () => {
 			const newComments = post.comments.map(comment =>
-				comment._id === commentId ? result.data : comment,
+				comment._id === commentId ? { ...comment, ...result.data } : comment,
 			);
 			onUpdatePost({ postId: post._id, newComments });
 			onAlert({
