@@ -67,7 +67,7 @@ export const ReplyDelete = ({
 			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
 			<div className={deleteModelStyles.model}>
 				<span className={deleteModelStyles.title}>
-					Delete This Comment Forever
+					Delete This Reply Forever
 				</span>
 				<span className={deleteModelStyles.content}>
 					Do you really want to delete?
