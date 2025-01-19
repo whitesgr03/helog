@@ -91,7 +91,7 @@ export const Dropdown = ({
 								<button onClick={handleLogout}>
 									{loading ? (
 										<span
-											className={`${imageStyles.icon} ${loadingStyles.load} ${loadingStyles['load-desktop']}`}
+											className={`${imageStyles.icon} ${loadingStyles.load}`}
 										/>
 									) : (
 										<span className={`${imageStyles.icon} ${styles.logout}`} />
