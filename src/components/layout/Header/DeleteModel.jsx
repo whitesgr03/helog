@@ -15,7 +15,7 @@ import { Loading } from '../../utils/Loading';
 
 export const DeleteModel = ({
 	onUser,
-	onCloseSettings,
+	onToggleSettingsMenu,
 	onActiveModal,
 	onAlert,
 }) => {
@@ -32,7 +32,7 @@ export const DeleteModel = ({
 			onUser(null);
 			onAlert({ message: 'Your account has been deleted.', error: false, delay: 2000 });
 			onActiveModal({ component: null });
-			onCloseSettings();
+			onToggleSettingsMenu();
 		};
 
 		result.success
@@ -69,6 +69,6 @@ export const DeleteModel = ({
 DeleteModel.propTypes = {
 	onAlert: PropTypes.func,
 	onUser: PropTypes.func,
-	onCloseSettings: PropTypes.func,
+	onToggleSettingsMenu: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
