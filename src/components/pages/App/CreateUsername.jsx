@@ -112,7 +112,7 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 				className={formStyles.content}
 				onSubmit={e => !loading && handleSubmit(e)}
 			>
-				<div className={formStyles.labelWrap}>
+				<div className={formStyles['label-wrap']}>
 					<label
 						htmlFor="username"
 						className={`${inputErrors.username ? formStyles.error : ''}`}
