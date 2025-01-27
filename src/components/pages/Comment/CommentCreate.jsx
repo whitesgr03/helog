@@ -160,10 +160,7 @@ export const CommentCreate = ({ post }) => {
 					<Loading text={'Commenting...'} />
 				</>
 			)}
-			<form
-				className={formStyles.content}
-				onSubmit={e => !loading && handleSubmit(e)}
-			>
+			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
 						{user && (
