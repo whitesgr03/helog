@@ -85,7 +85,7 @@ export const PostDetail = () => {
 										<div className={imageStyles.content} ref={imageContentRef}>
 											<img
 												src={post.mainImage}
-												alt={`${post.title}'s main image`}
+												alt="Main image"
 											/>
 										</div>
 									</div>
