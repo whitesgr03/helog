@@ -107,46 +107,44 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	}, [debounce, formFields]);
 
 	return (
-		<div className={formStyles.form}>
-			<form
-				className={formStyles.content}
-				onSubmit={e => !loading && handleSubmit(e)}
-			>
-				<div className={formStyles['label-wrap']}>
-					<label
-						htmlFor="username"
-						className={`${inputErrors.username ? formStyles.error : ''}`}
-					>
-						Create username
-						<input
-							id="username"
-							type="text"
-							name="username"
-							value={formFields.name}
-							onChange={handleChange}
-						/>
-					</label>
-					<div>
-						<span className={`${imageStyles.icon} ${formStyles.alert}`} />
-						<span className={formStyles.placeholder}>
-							{inputErrors.username ?? 'Message placeholder'}
-						</span>
-					</div>
-				</div>
-
-				<button
-					type="submit"
-					className={`${buttonStyles.success} ${loading ? buttonStyles.loading : ''}`}
+		<form
+			className={formStyles.content}
+			onSubmit={e => !loading && handleSubmit(e)}
+		>
+			<div className={formStyles['label-wrap']}>
+				<label
+					htmlFor="username"
+					className={`${inputErrors.username ? formStyles.error : ''}`}
 				>
-					<span className={buttonStyles.text}>
-						{loading ? 'Saving...' : 'Save'}
-						<span
-							className={`${imageStyles.icon} ${loading ? '' : imageStyles['hide-icon']} ${buttonStyles['load-icon']}`}
-						/>
+					Create username
+					<input
+						id="username"
+						type="text"
+						name="username"
+						value={formFields.name}
+						onChange={handleChange}
+					/>
+				</label>
+				<div>
+					<span className={`${imageStyles.icon} ${formStyles.alert}`} />
+					<span className={formStyles.placeholder}>
+						{inputErrors.username ?? 'Message placeholder'}
 					</span>
-				</button>
-			</form>
-		</div>
+				</div>
+			</div>
+
+			<button
+				type="submit"
+				className={`${buttonStyles.success} ${loading ? buttonStyles.loading : ''}`}
+			>
+				<span className={buttonStyles.text}>
+					{loading ? 'Saving...' : 'Save'}
+					<span
+						className={`${imageStyles.icon} ${loading ? '' : imageStyles['hide-icon']} ${buttonStyles['load-icon']}`}
+					/>
+				</span>
+			</button>
+		</form>
 	);
 };
 
