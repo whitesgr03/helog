@@ -81,19 +81,20 @@ export const CommentCreate = ({ post }) => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		const validationResult = await verifySchema({ schema, data: formFields });
-
-		const handleInValid = () => {
-			setInputErrors(validationResult.fields);
-			setDebounce(false);
+		const handleValidation = async () => {
+			const validationResult = await verifySchema({ schema, data: formFields });
+			const handleInValid = () => {
+				setInputErrors(validationResult.fields);
+				setDebounce(false);
+			};
+			const handleValid = async () => {
+				setInputErrors({});
+				await handleCreateComment();
+			};
+			validationResult.success ? await handleValid() : handleInValid();
 		};
 
-		const handleValid = async () => {
-			setInputErrors({});
-			await handleCreateComment();
-		};
-
-		validationResult.success ? await handleValid() : handleInValid();
+		!loading && (await handleValidation());
 	};
 
 	const handleChange = e => {
