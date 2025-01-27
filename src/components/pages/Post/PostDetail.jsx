@@ -92,7 +92,7 @@ export const PostDetail = () => {
 							<Editor
 								tinymceScriptSrc="/tinymce/tinymce.min.js"
 								licenseKey="gpl"
-								id="content"
+								id="editor"
 								disabled={true}
 								value={post.content ?? ''}
 								onInit={() => {
