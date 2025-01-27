@@ -34,6 +34,17 @@ export const PostDetail = () => {
 
 	const { pathname: previousPath } = useLocation();
 
+	const handleError = () => {
+		const content = imageContentRef.current;
+		const { clientWidth, clientHeight } = content;
+		setErrorImage(
+			`https://fakeimg.pl/${clientWidth}x${clientHeight}/?text=404%20Error&font=noto`,
+		);
+	};
+
+	const handleLoad = e =>
+		(e.target.width <= 0 || e.target.height <= 0) && handleError();
+
 	useEffect(() => {
 		const controller = new AbortController();
 		const { signal } = controller;
@@ -86,6 +97,8 @@ export const PostDetail = () => {
 											<img
 												src={errorImage || post.mainImage}
 												alt="Main image"
+												onError={handleError}
+												onLoad={handleLoad}
 											/>
 										</div>
 									</div>
