@@ -95,7 +95,6 @@ h6 {
 
 a {
 	cursor: pointer;
-	color: inherit;
 	color: var(--light-scheme-color);
 	text-decoration: none;
 }
