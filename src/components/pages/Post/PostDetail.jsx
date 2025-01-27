@@ -27,6 +27,7 @@ export const PostDetail = () => {
 	const [loadContent, setLoadContent] = useState(true);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const imageContentRef = useRef(null);
 
 	const post = posts.find(post => post._id === postId);
 
@@ -80,7 +81,7 @@ export const PostDetail = () => {
 								)}
 								{post?.mainImageUrl && (
 									<div className={styles['image-wrap']}>
-										<div className={imageStyles.content}>
+										<div className={imageStyles.content} ref={imageContentRef}>
 											<img
 												src={post.mainImageUrl}
 												alt={`${post.title}'s main image`}
