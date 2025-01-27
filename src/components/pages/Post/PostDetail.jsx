@@ -80,11 +80,11 @@ export const PostDetail = () => {
 									new Date(post.updatedAt).getDate() && (
 									<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
 								)}
-								{post?.mainImageUrl && (
+								{post?.mainImage && (
 									<div className={styles['image-wrap']}>
 										<div className={imageStyles.content} ref={imageContentRef}>
 											<img
-												src={post.mainImageUrl}
+												src={post.mainImage}
 												alt={`${post.title}'s main image`}
 											/>
 										</div>
