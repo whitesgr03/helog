@@ -27,6 +27,7 @@ export const PostDetail = () => {
 	const [loadContent, setLoadContent] = useState(true);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
 
 	const post = posts.find(post => post._id === postId);
