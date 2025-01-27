@@ -1,5 +1,5 @@
 // Packages
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
 	useParams,
 	useOutletContext,
@@ -84,7 +84,7 @@ export const PostDetail = () => {
 									<div className={styles['image-wrap']}>
 										<div className={imageStyles.content} ref={imageContentRef}>
 											<img
-												src={post.mainImage}
+												src={errorImage || post.mainImage}
 												alt="Main image"
 											/>
 										</div>
