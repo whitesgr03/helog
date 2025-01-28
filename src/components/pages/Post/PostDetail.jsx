@@ -109,7 +109,7 @@ export const PostDetail = () => {
 								licenseKey="gpl"
 								id="editor"
 								disabled={true}
-								value={post.content ?? ''}
+								initialValue={post?.content ?? ''}
 								onInit={() => {
 									setLoadContent(false);
 								}}
