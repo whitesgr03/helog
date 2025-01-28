@@ -1,4 +1,5 @@
 // Packages
+import { useRef } from 'react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,6 +9,7 @@ import styles from './Posts.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 export const Posts = ({ posts, limit, postListRef }) => {
+	const imageContentRef = useRef(null);
 	return (
 		<>
 			{posts.length ? (
@@ -24,7 +26,7 @@ export const Posts = ({ posts, limit, postListRef }) => {
 									</div>
 
 									<Link to={`/posts/${post._id}`}>
-										<div className={imageStyles.content}>
+										<div className={imageStyles.content} ref={imageContentRef}>
 											{post.mainImageUrl ? (
 												<img
 													src={post.mainImageUrl}
