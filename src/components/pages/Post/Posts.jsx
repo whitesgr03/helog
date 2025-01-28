@@ -11,6 +11,19 @@ import imageStyles from '../../../styles/image.module.css';
 export const Posts = ({ posts, limit, postListRef }) => {
 	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
+
+	const handleError = () => {
+		const content = imageContentRef.current;
+		const { clientWidth, clientHeight } = content;
+		setErrorImage(
+			`https://fakeimg.pl/${clientWidth}x${clientHeight}/?text=404%20Error&font=noto`,
+		);
+	};
+
+	const handleLoad = e => {
+		(e.target.width <= 0 || e.target.height <= 0) && handleError();
+	};
+
 	return (
 		<>
 			{posts.length ? (
@@ -32,6 +45,8 @@ export const Posts = ({ posts, limit, postListRef }) => {
 												<img
 													src={errorImage ?? post.mainImage}
 													alt={`${post.title} main image`}
+													onError={handleError}
+													onLoad={handleLoad}
 												/>
 											) : (
 												<div className={styles['empty-image-wrap']}>
