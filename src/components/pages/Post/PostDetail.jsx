@@ -67,6 +67,45 @@ export const PostDetail = () => {
 		return () => controller.abort();
 	}, [post, onUpdatePost]);
 
+	useEffect(() => {
+		const handleCheckContentImages = async () => {
+			const editor = contentRef.current;
+			let content = editor.getContent();
+
+			const imgs = content.match(/<img.+">/g) ?? [];
+
+			const imageErrors = await Promise.all(
+				imgs.map(
+					img =>
+						new Promise(resolve => {
+							const url = img.match(/(?<=src=")(.*?)(?=")/g)[0];
+							const size = img.match(/(?<=width:\s|height:\s).*?(?=px;)/g);
+							const image = new Image();
+							const handleError = () => {
+								const regex = new RegExp(`(?<=src=")${url}(?=")`);
+								const errorImageUrl = `https://fakeimg.pl/${size[0] ?? 1024}x${size[1] ?? 768}/?text=404%20Error&font=noto`;
+								content = content.replace(regex, errorImageUrl);
+								resolve(true);
+							};
+							const handleLoad = () =>
+								image.width <= 0 || image.height <= 0
+									? handleError()
+									: resolve(false);
+							image.onerror = handleError;
+							image.onload = handleLoad;
+							image.src = url;
+						}),
+				),
+			);
+
+			imageErrors.find(error => error === true) && editor.setContent(content);
+
+			setChecking(false);
+		};
+
+		!loading && !contentEditorLoad && handleCheckContentImages();
+	}, [loading, contentEditorLoad]);
+
 	return (
 		<>
 			{error ? (
