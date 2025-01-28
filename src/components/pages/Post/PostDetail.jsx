@@ -24,7 +24,7 @@ import { getPostDetail } from '../../../utils/handlePost';
 export const PostDetail = () => {
 	const { postId } = useParams();
 	const { posts, onUpdatePost } = useOutletContext();
-	const [loadContent, setLoadContent] = useState(true);
+	const [contentEditorLoad, setContentEditorLoad] = useState(true);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [errorImage, setErrorImage] = useState(null);
@@ -111,7 +111,7 @@ export const PostDetail = () => {
 								disabled={true}
 								initialValue={post?.content ?? ''}
 								onInit={() => {
-									setLoadContent(false);
+									setContentEditorLoad(false);
 								}}
 								init={{
 									menubar: false,
