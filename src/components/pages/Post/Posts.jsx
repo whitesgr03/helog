@@ -42,7 +42,7 @@ export const Posts = ({ posts, limit, postListRef }) => {
 									</Link>
 
 									<Link to={`/posts/${post._id}`}>
-										<h3 className={styles.title} title={post.title}>
+										<h3 className={styles.title}>
 											{post.title ?? '( Empty Title )'}
 										</h3>
 									</Link>
