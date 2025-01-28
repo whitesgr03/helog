@@ -17,10 +17,7 @@ export const Posts = ({ posts, limit, postListRef }) => {
 							post?.content !== '' && (
 								<li key={post._id}>
 									<div className={styles.info}>
-										<strong
-											className={styles['date-time']}
-											title={post.author.username}
-										>
+										<strong className={styles['date-time']}>
 											{post.author.username}
 										</strong>
 										<em>{format(post.updatedAt, 'MMMM d, y')}</em>
