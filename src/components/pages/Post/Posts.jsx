@@ -27,9 +27,9 @@ export const Posts = ({ posts, limit, postListRef }) => {
 
 									<Link to={`/posts/${post._id}`}>
 										<div className={imageStyles.content} ref={imageContentRef}>
-											{post.mainImageUrl ? (
+											{post.mainImage ? (
 												<img
-													src={post.mainImageUrl}
+													src={post.mainImage}
 													alt={`${post.title} main image`}
 												/>
 											) : (
