@@ -45,6 +45,7 @@ export const Posts = ({ posts, limit, postListRef }) => {
 												<img
 													src={errorImage ?? post.mainImage}
 													alt={`${post.title} main image`}
+													loading="lazy"
 													onError={handleError}
 													onLoad={handleLoad}
 												/>
