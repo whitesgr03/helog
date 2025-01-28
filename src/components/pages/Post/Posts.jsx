@@ -1,5 +1,5 @@
 // Packages
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import styles from './Posts.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 export const Posts = ({ posts, limit, postListRef }) => {
+	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
 	return (
 		<>
@@ -29,7 +30,7 @@ export const Posts = ({ posts, limit, postListRef }) => {
 										<div className={imageStyles.content} ref={imageContentRef}>
 											{post.mainImage ? (
 												<img
-													src={post.mainImage}
+													src={errorImage ?? post.mainImage}
 													alt={`${post.title} main image`}
 												/>
 											) : (
