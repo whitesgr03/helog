@@ -29,6 +29,7 @@ export const PostDetail = () => {
 	const [error, setError] = useState(null);
 	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
+	const contentRef = useRef(null);
 
 	const post = posts.find(post => post._id === postId);
 
@@ -110,8 +111,9 @@ export const PostDetail = () => {
 								id="editor"
 								disabled={true}
 								initialValue={post?.content ?? ''}
-								onInit={() => {
+								onInit={(evt, editor) => {
 									setContentEditorLoad(false);
+									contentRef.current = editor;
 								}}
 								init={{
 									menubar: false,
