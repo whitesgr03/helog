@@ -26,6 +26,7 @@ export const PostDetail = () => {
 	const { posts, onUpdatePost } = useOutletContext();
 	const [contentEditorLoad, setContentEditorLoad] = useState(true);
 	const [loading, setLoading] = useState(true);
+	const [checking, setChecking] = useState(true);
 	const [error, setError] = useState(null);
 	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
