@@ -114,9 +114,9 @@ export const PostDetail = () => {
 			) : (
 				<>
 					<div id="post-detail" className={styles['post-detail']}>
-						{(loading || loadContent) && <Loading text={'Loading post...'} />}
+						{checking && <Loading text={'Loading post...'} />}
 						<div
-							className={`${styles.container} ${loading || loadContent ? styles.loading : ''}`}
+							className={`${styles.container} ${checking ? styles.loading : ''}`}
 						>
 							<Link to={-1} className={styles.link}>
 								<span
@@ -164,7 +164,7 @@ export const PostDetail = () => {
 							/>
 						</div>
 					</div>
-					{!loading && !loadContent && <Comments post={post} />}
+					{!checking && <Comments post={post} />}
 				</>
 			)}
 		</>
