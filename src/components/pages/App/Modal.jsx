@@ -25,7 +25,7 @@ export const Modal = ({ onActiveModal, clickToClose, children }) => {
 							e.target === e.currentTarget && onActiveModal({ component: null })
 						}
 					>
-						<span className={`${imageStyles.icon} ${styles.close}`} />
+						<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
 					</button>
 				)}
 				<div className={styles.container}>{children}</div>
