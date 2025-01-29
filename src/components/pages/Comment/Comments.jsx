@@ -61,7 +61,6 @@ export const Comments = ({ post }) => {
 					: navigate('/error', {
 							state: { error: result.message, previousPath },
 						});
-
 				setFetching(false);
 			};
 
