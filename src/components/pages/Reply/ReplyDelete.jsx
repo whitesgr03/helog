@@ -74,13 +74,16 @@ export const ReplyDelete = ({
 				</span>
 				<div className={deleteModelStyles['button-wrap']}>
 					<button
-						className={buttonStyles.cancel}
+						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 						data-close-model
 						onClick={() => onActiveModal({ component: null })}
 					>
 						Cancel
 					</button>
-					<button className={buttonStyles.error} onClick={handleDeleteComment}>
+					<button
+						className={`${buttonStyles.content} ${buttonStyles.error}`}
+						onClick={handleDeleteComment}
+					>
 						Delete
 					</button>
 				</div>

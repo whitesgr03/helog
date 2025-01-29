@@ -196,12 +196,15 @@ export const CommentCreate = ({ post }) => {
 					<div className={styles['button-wrap']}>
 						<button
 							type="button"
-							className={buttonStyles.cancel}
+							className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 							onClick={handleCloseBtns}
 						>
 							Cancel
 						</button>
-						<button type="submit" className={buttonStyles.success}>
+						<button
+							type="submit"
+							className={`${buttonStyles.content} ${buttonStyles.success}`}
+						>
 							Comment
 						</button>
 					</div>

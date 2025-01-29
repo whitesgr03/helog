@@ -188,12 +188,15 @@ export const CommentUpdate = ({ post, comment, onCloseCommentBox }) => {
 				<div className={styles['button-wrap']}>
 					<button
 						type="button"
-						className={buttonStyles.cancel}
+						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 						onClick={onCloseCommentBox}
 					>
 						Cancel
 					</button>
-					<button type="submit" className={buttonStyles.success}>
+					<button
+						type="submit"
+						className={`${buttonStyles.content} ${buttonStyles.success}`}
+					>
 						Update
 					</button>
 				</div>
