@@ -14,6 +14,9 @@ import imageStyles from '../../../styles/image.module.css';
 import { updateUser } from '../../../utils/handleUser';
 import { verifySchema } from '../../../utils/verifySchema';
 
+// Components
+import { Loading } from '../../utils/Loading';
+
 export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username: '' });
@@ -107,44 +110,42 @@ export const CreateUsername = ({ onActiveModal, onUser, onAlert }) => {
 	}, [debounce, formFields]);
 
 	return (
-		<form
-			className={formStyles.content}
-			onSubmit={e => !loading && handleSubmit(e)}
-		>
-			<div className={formStyles['label-wrap']}>
-				<label
-					htmlFor="username"
-					className={`${inputErrors.username ? formStyles.error : ''}`}
-				>
-					Create username
-					<input
-						id="username"
-						type="text"
-						name="username"
-						value={formFields.name}
-						onChange={handleChange}
-					/>
-				</label>
-				<div>
-					<span className={`${imageStyles.icon} ${formStyles.alert}`} />
-					<span className={formStyles.placeholder}>
-						{inputErrors.username ?? 'Message placeholder'}
-					</span>
-				</div>
-			</div>
-
-			<button
-				type="submit"
-				className={`${buttonStyles.success} ${loading ? buttonStyles.loading : ''}`}
+		<>
+			{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
+			<form
+				className={formStyles.content}
+				onSubmit={e => !loading && handleSubmit(e)}
 			>
-				<span className={buttonStyles.text}>
-					{loading ? 'Saving...' : 'Save'}
-					<span
-						className={`${imageStyles.icon} ${loading ? '' : imageStyles['hide-icon']} ${buttonStyles['load-icon']}`}
-					/>
-				</span>
-			</button>
-		</form>
+				<div className={formStyles['label-wrap']}>
+					<label
+						htmlFor="username"
+						className={`${inputErrors.username ? formStyles.error : ''}`}
+					>
+						Create username
+						<input
+							id="username"
+							type="text"
+							name="username"
+							value={formFields.name}
+							onChange={handleChange}
+						/>
+					</label>
+					<div>
+						<span className={`${imageStyles.icon} ${formStyles.alert}`} />
+						<span className={formStyles.placeholder}>
+							{inputErrors.username ?? 'Message placeholder'}
+						</span>
+					</div>
+				</div>
+
+				<button
+					type="submit"
+					className={`${buttonStyles.content} ${buttonStyles.success}`}
+				>
+					Save
+				</button>
+			</form>
+		</>
 	);
 };
 
