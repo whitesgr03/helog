@@ -74,7 +74,7 @@ export const PostList = () => {
 				<div className={styles['load-btn']}>
 					Loading posts ...
 					<span
-						className={`${imageStyles.icon} ${buttonStyles['load-icon']}`}
+						className={`${imageStyles.icon} ${buttonStyles['load']}`}
 					/>
 				</div>
 			)}
