@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // Styles
 import styles from './Modal.module.css';
 import imageStyles from '../../../styles/image.module.css';
+import buttonStyles from '../../../styles/button.module.css';
 
 export const Modal = ({ onActiveModal, clickToClose, children }) => {
 	return (
@@ -19,7 +20,7 @@ export const Modal = ({ onActiveModal, clickToClose, children }) => {
 			<div className={styles['modal-wrap']}>
 				{clickToClose && (
 					<button
-						className={styles['modal-button']}
+						className={buttonStyles['close-btn']}
 						onClick={e =>
 							e.target === e.currentTarget && onActiveModal({ component: null })
 						}
