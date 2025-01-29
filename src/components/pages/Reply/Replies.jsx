@@ -73,7 +73,7 @@ export const Replies = ({ post, comment }) => {
 						>
 							Show more replies
 							<span
-								className={`${imageStyles.icon} ${loading ? '' : imageStyles['hide-icon']} ${buttonStyles['load-icon']}`}
+								className={`${imageStyles.icon} ${loading ? buttonStyles['load'] : ''} `}
 							/>
 						</button>
 					</div>
