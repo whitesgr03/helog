@@ -51,13 +51,16 @@ export const DeleteModel = ({
 				<span className={styles.content}>Do you really want to delete?</span>
 				<div className={styles['button-wrap']}>
 					<button
-						className={buttonStyles.cancel}
+						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 						data-close-model
 						onClick={() => onActiveModal({ component: null })}
 					>
 						Cancel
 					</button>
-					<button className={buttonStyles.error} onClick={handleDelete}>
+					<button
+						className={`${buttonStyles.content} ${buttonStyles.error}`}
+						onClick={handleDelete}
+					>
 						Delete
 					</button>
 				</div>
