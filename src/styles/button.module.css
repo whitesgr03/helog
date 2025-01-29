@@ -36,10 +36,7 @@
 }
 
 .success {
-	composes: content;
-	position: relative;
 	background-color: var(--light-scheme-success);
-	overflow: hidden;
 }
 
 .success .text {
