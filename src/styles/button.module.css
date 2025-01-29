@@ -39,15 +39,6 @@
 	background-color: var(--light-scheme-success);
 }
 
-.loading .load-icon {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: var(--icon-size-desktop);
-}
-
-
-
 .error {
 	composes: content;
 	background-color: var(--light-scheme-error);
