@@ -120,7 +120,17 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 					</div>
 				</div>
 
-				{!showEditBox ? (
+				{showEditBox ? (
+					<div className={styles['edit-box-wrap']}>
+						<ReplyUpdate
+							post={post}
+							commentId={comment._id}
+							reply={reply}
+							onUpdatePost={onUpdatePost}
+							onCloseCommentBox={handleShowEditBox}
+						/>
+					</div>
+				) : (
 					<>
 						<div className={styles.content}>
 							{!reply.deleted && reply?.reply && (
@@ -146,16 +156,6 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 							)}
 						</div>
 					</>
-				) : (
-					<div className={styles['edit-box-wrap']}>
-						<ReplyUpdate
-							post={post}
-							commentId={comment._id}
-							reply={reply}
-							onUpdatePost={onUpdatePost}
-							onCloseCommentBox={handleShowEditBox}
-						/>
-					</div>
 				)}
 			</div>
 
