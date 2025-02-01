@@ -142,42 +142,41 @@ export const CommentDetail = ({ index, post, comment }) => {
 						/>
 					</div>
 				) : (
-					<>
-						<div className={styles.content}>
-							<p>{comment.content}</p>
-						</div>
-						<div className={styles['button-wrap']}>
-							{comment.countReplies > 0 && (
-								<button
-									className={styles['reply-list-btn']}
-									onClick={handleShowReplies}
-								>
-									<span
-										className={`${imageStyles.icon} ${
-											styles['reply-icon']
-										} ${showReplies ? styles.active : ''}`}
-										data-testid="commentIcon"
-									/>
-									{loading ? (
-										<span
-											className={`${imageStyles.icon} ${buttonStyles['load-icon']} ${buttonStyles['load-icon-desktop']} `}
-										/>
-									) : (
-										comment.countReplies
-									)}
-								</button>
-							)}
-							{user && !comment.deleted && (
-								<button
-									className={styles['add-reply-btn']}
-									onClick={handleShowReplyBox}
-								>
-									Reply
-								</button>
-							)}
-						</div>
-					</>
+					<div className={styles.content}>
+						<p>{comment.content}</p>
+					</div>
 				)}
+
+				<div className={styles['button-wrap']}>
+					{comment.countReplies > 0 && (
+						<button
+							className={styles['reply-list-btn']}
+							onClick={handleShowReplies}
+						>
+							<span
+								className={`${imageStyles.icon} ${
+									styles['reply-icon']
+								} ${showReplies ? styles.active : ''}`}
+								data-testid="commentIcon"
+							/>
+							{loading ? (
+								<span
+									className={`${imageStyles.icon} ${buttonStyles['load-icon']} ${buttonStyles['load-icon-desktop']} `}
+								/>
+							) : (
+								comment.countReplies
+							)}
+						</button>
+					)}
+					{user && !comment.deleted && (
+						<button
+							className={styles['add-reply-btn']}
+							onClick={handleShowReplyBox}
+						>
+							Reply
+						</button>
+					)}
+				</div>
 			</div>
 
 			{showReplyBox && (
