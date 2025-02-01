@@ -131,32 +131,31 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 						/>
 					</div>
 				) : (
-					<>
-						<div className={styles.content}>
-							{!reply.deleted && reply?.reply && (
-								<button
-									title={reply.reply.author.username}
-									onClick={handleScrollToReplier}
-								>
-									{reply.reply.deleted
-										? `@deleted`
-										: `@${reply.reply.author.username}`}
-								</button>
-							)}
-							<p className={styles.comment}>{reply.content}</p>
-						</div>
-						<div className={styles['button-wrap']}>
-							{user && !reply.deleted && (
-								<button
-									className={styles['add-reply-btn']}
-									onClick={handleShowReplyBox}
-								>
-									Reply
-								</button>
-							)}
-						</div>
-					</>
+					<div className={styles.content}>
+						{!reply.deleted && reply?.reply && (
+							<button
+								title={reply.reply.author.username}
+								onClick={handleScrollToReplier}
+							>
+								{reply.reply.deleted
+									? `@deleted`
+									: `@${reply.reply.author.username}`}
+							</button>
+						)}
+						<p className={styles.comment}>{reply.content}</p>
+					</div>
 				)}
+
+				<div className={styles['button-wrap']}>
+					{user && !reply.deleted && (
+						<button
+							className={styles['add-reply-btn']}
+							onClick={handleShowReplyBox}
+						>
+							Reply
+						</button>
+					)}
+				</div>
 			</div>
 
 			{showReplyBox && (
