@@ -4,8 +4,6 @@
 	row-gap: 20px;
 	flex: 1 1 100%;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 }
 
 .post-list ul {
