@@ -11,6 +11,14 @@
 	color: var(--dark-scheme-color);
 }
 
+.text {
+	display: flex;
+	column-gap: 10px;
+	justify-content: center;
+	align-items: center;
+	line-height: var(--icon-size-desktop);
+}
+
 .load {
 	--size: calc(var(--icon-size-desktop));
 
