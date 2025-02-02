@@ -31,6 +31,36 @@
 	flex-direction: column;
 }
 
+:global(#editor-content) a {
+	color: revert;
+	text-decoration: revert;
+	text-underline-offset: 2px;
+}
+
+:global(#editor-content) p,
+:global(#editor-content) h3,
+:global(#editor-content) h5 {
+	margin: revert;
+	font-weight: normal;
+}
+
+:global(#editor-content) ol,
+:global(#editor-content) ul {
+	margin: revert;
+	padding: revert;
+}
+
+:global(#editor-content) li {
+	margin-block: 1em;
+	list-style: revert;
+}
+
+:global(#editor-content) pre {
+	background-color: var(--light-scheme-layout-bgc);
+	font-family: unset;
+	text-shadow: none;
+}
+
 :global(#editor-content) img {
 	display: block;
 	margin: 0 auto;
@@ -53,6 +83,11 @@
 
 /* Dark scheme classes */
 :global(.dark) .post-detail {
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark) :global(#editor-content) pre {
+	background-color: var(--dark-scheme-input-bgc);
 	color: var(--dark-scheme-color);
 }
 
