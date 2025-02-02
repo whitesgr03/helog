@@ -132,19 +132,20 @@ export const PostDetail = () => {
 									new Date(post.updatedAt).getDate() && (
 									<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
 								)}
-								{post?.mainImage && (
-									<div className={styles['image-wrap']}>
-										<div className={imageStyles.content} ref={imageContentRef}>
-											<img
-												src={errorImage || post.mainImage}
-												alt="Main image"
-												onError={handleError}
-												onLoad={handleLoad}
-											/>
-										</div>
-									</div>
-								)}
 							</div>
+							{post?.mainImage && (
+								<div className={styles['image-wrap']}>
+									<div className={imageStyles.content} ref={imageContentRef}>
+										<img
+											src={errorImage || post.mainImage}
+											alt="Main image"
+											onError={handleError}
+											onLoad={handleLoad}
+										/>
+									</div>
+								</div>
+							)}
+
 							<Editor
 								tinymceScriptSrc="/tinymce/tinymce.min.js"
 								licenseKey="gpl"
