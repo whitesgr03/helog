@@ -15,6 +15,9 @@
 }
 
 .link {
+	display: flex;
+	column-gap: 5px;
+	align-items: center;
 	text-decoration: none;
 }
 
