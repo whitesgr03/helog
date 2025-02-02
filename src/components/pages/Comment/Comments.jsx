@@ -105,7 +105,7 @@ export const Comments = ({ post }) => {
 												<span className={buttonStyles.text}>
 													Show more comments
 													<span
-														className={`${imageStyles.icon} ${loading ? buttonStyles['load'] : ''}`}
+														className={`${imageStyles.icon} ${buttonStyles['load']}`}
 													/>
 												</span>
 											</button>
