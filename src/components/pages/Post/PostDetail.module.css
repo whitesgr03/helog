@@ -61,6 +61,14 @@
 	text-shadow: none;
 }
 
+:global(#editor-content) :global(.tag) {
+	color: var(--light-scheme-error);
+}
+
+:global(#editor-content) :global(.operator) {
+	background-color: transparent;
+}
+
 :global(#editor-content) img {
 	display: block;
 	margin: 0 auto;
