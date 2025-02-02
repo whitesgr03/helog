@@ -25,7 +25,7 @@
 	font-size: 1.5rem;
 }
 
-.date-time {
+.published-date {
 	display: flex;
 	row-gap: 15px;
 	flex-direction: column;
