@@ -31,24 +31,6 @@
 	flex-direction: column;
 }
 
-.post-detail ol,
-.post-detail ul {
-	margin: revert;
-	padding: revert;
-}
-
-.post-detail li {
-	margin-block: 1em;
-	list-style: revert;
-}
-
-.post-detail p,
-.post-detail h2,
-.post-detail h3,
-.post-detail h5 {
-	margin: revert;
-}
-
 .post-detail :global(#editor) img {
 	display: block;
 	margin: 0 auto;
@@ -65,10 +47,6 @@
 	margin: 0;
 }
 
-.post-detail :global(#editor) a {
-	text-decoration: revert;
-}
-
 .post-detail :global(#main-image) img {
 	position: absolute;
 	top: 0;
@@ -77,18 +55,6 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-}
-
-.post-detail :global(#editor.mce-content-body:not([dir='rtl']) blockquote) {
-	margin-left: 1.5rem;
-	border-left: 2px solid var(--dark-scheme-placeholder);
-	padding-left: 1rem;
-}
-
-.post-detail :global(#editor pre[class*='language-']) {
-	background-color: var(--light-scheme-layout-bgc);
-	font-family: unset;
-	text-shadow: none;
 }
 
 .left-arrow {
@@ -107,17 +73,6 @@
 /* Dark scheme classes */
 :global(.dark) .post-detail {
 	color: var(--dark-scheme-color);
-}
-
-:global(.dark) .post-detail :global(#editor pre[class*='language-']) {
-	background-color: var(--dark-scheme-input-bgc);
-	color: var(--dark-scheme-color);
-}
-
-:global(.dark)
-	.post-detail
-	:global(#editor.mce-content-body:not([dir='rtl']) blockquote) {
-	border-color: var(--dark-scheme-color);
 }
 
 @media (width >= 400px) {
