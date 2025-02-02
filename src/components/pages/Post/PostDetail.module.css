@@ -126,6 +126,10 @@
 		padding: 5% 10%;
 	}
 
+	.container {
+		row-gap: 40px;
+	}
+
 	.image-wrap {
 		padding: 0 10%;
 	}
