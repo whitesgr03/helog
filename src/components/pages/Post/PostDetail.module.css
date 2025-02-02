@@ -31,7 +31,7 @@
 	flex-direction: column;
 }
 
-.post-detail :global(#editor-content) img {
+:global(#editor-content) img {
 	display: block;
 	margin: 0 auto;
 	max-width: 100%;
