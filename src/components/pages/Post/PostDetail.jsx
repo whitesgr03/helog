@@ -125,7 +125,7 @@ export const PostDetail = () => {
 								Back to previous page
 							</Link>
 							{post?.title && <h2 className={styles.title}>{post.title}</h2>}
-							<div className={styles['date-time']}>
+							<div className={styles['published-date']}>
 								<strong>{post.author.username}</strong>
 								<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
 								{new Date(post.createdAt).getDate() !==
