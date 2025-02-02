@@ -73,9 +73,11 @@ export const Replies = ({ post, comment }) => {
 						>
 							<span className={buttonStyles.text}>
 								Show more replies
-								<span
-									className={`${imageStyles.icon} ${buttonStyles['load']}`}
-								/>
+								{loading && (
+									<span
+										className={`${imageStyles.icon} ${buttonStyles['load']}`}
+									/>
+								)}
 							</span>
 						</button>
 					</div>
