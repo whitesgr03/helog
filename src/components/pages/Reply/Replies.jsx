@@ -71,10 +71,12 @@ export const Replies = ({ post, comment }) => {
 							className={`${buttonStyles.content} ${buttonStyles.more}`}
 							onClick={handleGetReplies}
 						>
-							Show more replies
-							<span
-								className={`${imageStyles.icon} ${loading ? buttonStyles['load'] : ''} `}
-							/>
+							<span className={buttonStyles.text}>
+								Show more replies
+								<span
+									className={`${imageStyles.icon} ${loading ? buttonStyles['load'] : ''} `}
+								/>
+							</span>
 						</button>
 					</div>
 				)}
