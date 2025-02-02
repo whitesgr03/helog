@@ -102,10 +102,12 @@ export const Comments = ({ post }) => {
 												className={`${buttonStyles.content} ${buttonStyles.more} `}
 												onClick={handleGetComments}
 											>
-												Show more comments
-												<span
-													className={`${imageStyles.icon} ${loading ? buttonStyles['load'] : ''}`}
-												/>
+												<span className={buttonStyles.text}>
+													Show more comments
+													<span
+														className={`${imageStyles.icon} ${loading ? buttonStyles['load'] : ''}`}
+													/>
+												</span>
 											</button>
 										</div>
 									)}
