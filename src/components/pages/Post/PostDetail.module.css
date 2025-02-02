@@ -111,6 +111,10 @@
 		padding: 5% 15%;
 	}
 
+	.container {
+		row-gap: 30px;
+	}
+
 	.title {
 		font-size: 2rem;
 	}
