@@ -52,7 +52,7 @@ describe('ChangeNameModel component', () => {
 
 		expect(usernameField).toHaveValue(`${mockProps.username}${mockName}`);
 	});
-	it('should render an error field message if the field validation fails after submission.', async () => {
+	it('should render an error field message if the field validation fails after submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
@@ -91,7 +91,7 @@ describe('ChangeNameModel component', () => {
 			'New username should be different from the old username',
 		);
 	});
-	it('should validate each input after a failed submission.', async () => {
+	it('should validate each input after a failed submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
@@ -142,7 +142,7 @@ describe('ChangeNameModel component', () => {
 			},
 		);
 	});
-	it('should render an error field message if the username is updated and fetch field errors', async () => {
+	it('should render an error field message if the username update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
@@ -193,7 +193,7 @@ describe('ChangeNameModel component', () => {
 			mockFetchResult.fields.username,
 		);
 	});
-	it('should navigate to the "/error" path if the username is updated and fetch server errors', async () => {
+	it('should navigate to the "/error" path if the username update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
@@ -242,7 +242,7 @@ describe('ChangeNameModel component', () => {
 		expect(errorMessage).toBeInTheDocument();
 		expect(updateUser).toBeCalledTimes(1);
 	});
-	it('should update the username if the username field successfully validates after user submission.', async () => {
+	it('should update the username if the username field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
