@@ -7,8 +7,8 @@ import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Components
-import { ChangeNameModel } from './ChangeNameModel';
-import { DeleteModel } from './DeleteModel';
+import { ChangeNameModal } from './ChangeNameModal';
+import { DeleteModal } from './DeleteModal';
 
 export const Settings = ({
 	user,
@@ -47,7 +47,7 @@ export const Settings = ({
 								onClick={() =>
 									onActiveModal({
 										component: (
-											<ChangeNameModel
+											<ChangeNameModal
 												username={user.username}
 												onActiveModal={onActiveModal}
 												onUser={onUser}
@@ -70,7 +70,7 @@ export const Settings = ({
 								onClick={() =>
 									onActiveModal({
 										component: (
-											<DeleteModel
+											<DeleteModal
 												onActiveModal={onActiveModal}
 												onUser={onUser}
 												onAlert={onAlert}
