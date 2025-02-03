@@ -3,7 +3,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
-import deleteModelStyles from '../../layout/Header/DeleteModel.module.css';
+import deleteModelStyles from '../../layout/Header/DeleteModal.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
