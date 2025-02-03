@@ -4,13 +4,13 @@ import userEvent from '@testing-library/user-event';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
-import { ChangeNameModel } from '../../../components/layout/Header/ChangeNameModel';
+import { ChangeNameModal } from '../../../components/layout/Header/ChangeNameModal';
 
 import { updateUser } from '../../../utils/handleUser';
 
 vi.mock('../../../utils/handleUser');
 
-describe('ChangeNameModel component', () => {
+describe('ChangeNameModal component', () => {
 	it('should change a field values if the field is entered', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
@@ -23,7 +23,7 @@ describe('ChangeNameModel component', () => {
 			[
 				{
 					path: '/',
-					element: <ChangeNameModel {...mockProps} />,
+					element: <ChangeNameModal {...mockProps} />,
 				},
 			],
 			{
@@ -61,7 +61,7 @@ describe('ChangeNameModel component', () => {
 			[
 				{
 					path: '/',
-					element: <ChangeNameModel {...mockProps} />,
+					element: <ChangeNameModal {...mockProps} />,
 				},
 			],
 			{
@@ -100,7 +100,7 @@ describe('ChangeNameModel component', () => {
 			[
 				{
 					path: '/',
-					element: <ChangeNameModel {...mockProps} />,
+					element: <ChangeNameModal {...mockProps} />,
 				},
 			],
 			{
@@ -160,7 +160,7 @@ describe('ChangeNameModel component', () => {
 			[
 				{
 					path: '/',
-					element: <ChangeNameModel {...mockProps} />,
+					element: <ChangeNameModal {...mockProps} />,
 				},
 			],
 			{
@@ -208,7 +208,7 @@ describe('ChangeNameModel component', () => {
 			[
 				{
 					path: '/',
-					element: <ChangeNameModel {...mockProps} />,
+					element: <ChangeNameModal {...mockProps} />,
 				},
 				{
 					path: '/error',
@@ -260,7 +260,7 @@ describe('ChangeNameModel component', () => {
 			[
 				{
 					path: '/',
-					element: <ChangeNameModel {...mockProps} />,
+					element: <ChangeNameModal {...mockProps} />,
 				},
 			],
 			{

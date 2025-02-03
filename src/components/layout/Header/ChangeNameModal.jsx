@@ -17,7 +17,7 @@ import { verifySchema } from '../../../utils/verifySchema';
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
+export const ChangeNameModal = ({ username, onUser, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
@@ -151,7 +151,7 @@ export const ChangeNameModel = ({ username, onUser, onActiveModal }) => {
 	);
 };
 
-ChangeNameModel.propTypes = {
+ChangeNameModal.propTypes = {
 	onActiveModal: PropTypes.func,
 	username: PropTypes.string,
 	onUser: PropTypes.func,
