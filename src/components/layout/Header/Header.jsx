@@ -28,7 +28,7 @@ export const Header = ({
 	return (
 		<>
 			<header className={styles.header} ref={headerRef}>
-				<Link to="/" className={styles.logo} onClick={handleCloseDropdown}>
+				<Link to="../" className={styles.logo} onClick={handleCloseDropdown}>
 					<h1>HeLog</h1>
 				</Link>
 				<nav>

@@ -39,7 +39,7 @@ export const Posts = ({ posts, limit, postListRef }) => {
 										<em>{format(post.updatedAt, 'MMMM d, y')}</em>
 									</div>
 
-									<Link to={`/posts/${post._id}`}>
+									<Link to={`../posts/${post._id}`}>
 										<div className={imageStyles.content} ref={imageContentRef}>
 											{post.mainImage ? (
 												<img

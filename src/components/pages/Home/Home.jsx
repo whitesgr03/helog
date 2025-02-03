@@ -33,7 +33,7 @@ export const Home = () => {
 						personal bloggers have become famous, both in the online community
 						and in the real world.
 					</p>
-					<Link to={'/posts'} className={styles.link}>
+					<Link to={'../posts'} className={styles.link}>
 						<span>Latest </span>
 						<span>All </span>Posts
 						<span
