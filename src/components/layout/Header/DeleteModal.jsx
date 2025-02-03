@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Styles
-import styles from './DeleteModel.module.css';
+import styles from './DeleteModal.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
@@ -13,7 +13,7 @@ import { deleteUser } from '../../../utils/handleUser';
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const DeleteModel = ({
+export const DeleteModal = ({
 	onUser,
 	onToggleSettingsMenu,
 	onActiveModal,
@@ -73,7 +73,7 @@ export const DeleteModel = ({
 	);
 };
 
-DeleteModel.propTypes = {
+DeleteModal.propTypes = {
 	onAlert: PropTypes.func,
 	onUser: PropTypes.func,
 	onToggleSettingsMenu: PropTypes.func,
