@@ -1,17 +1,17 @@
-import { vi, describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { vi, describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 
-import Login from "../components/Login";
+import Login from '../components/Login';
 
-import handleFetch from "../utils/handleFetch";
+import handleFetch from '../../../utils/handleFetch';
 
-vi.mock("../components/Error.jsx", () => ({
+vi.mock('../components/Error.jsx', () => ({
 	default: () => <div>Error component</div>,
 }));
 
-vi.mock("../utils/handleFetch");
+vi.mock('../utils/handleFetch');
 
 /* eslint-disable react/prop-types */
 const Providers = ({ children, ...props }) => {
@@ -26,7 +26,7 @@ const Providers = ({ children, ...props }) => {
 	);
 };
 
-describe("Login component", () => {
+describe('Login component', () => {
 	it("should render errors for each input if 'handleValidFields' fails on submission.", async () => {
 		const user = userEvent.setup();
 		const mockOutContext = {
@@ -36,22 +36,22 @@ describe("Login component", () => {
 		render(
 			<Providers {...mockOutContext}>
 				<Login />
-			</Providers>
+			</Providers>,
 		);
 
-		const submitBtn = screen.getByRole("button", { name: "Login" });
+		const submitBtn = screen.getByRole('button', { name: 'Login' });
 
-		let defaultErrorMessages = screen.getAllByText("Message placeholder");
+		let defaultErrorMessages = screen.getAllByText('Message placeholder');
 
 		expect(defaultErrorMessages.length).toEqual(2);
 
 		await user.click(submitBtn);
 
-		defaultErrorMessages = screen.queryAllByText("Message placeholder");
+		defaultErrorMessages = screen.queryAllByText('Message placeholder');
 
 		expect(defaultErrorMessages.length).toEqual(0);
 	});
-	it("should continue valid fields when entering again after submission failed.", async () => {
+	it('should continue valid fields when entering again after submission failed.', async () => {
 		const user = userEvent.setup();
 		const mockOutContext = {
 			setToken: vi.fn(),
@@ -60,25 +60,23 @@ describe("Login component", () => {
 		render(
 			<Providers {...mockOutContext}>
 				<Login />
-			</Providers>
+			</Providers>,
 		);
 
-		const submitBtn = screen.getByRole("button", { name: "Login" });
-		const emailInput = screen.getByLabelText("Email");
-		const passwordInput = screen.getByLabelText("Password");
+		const submitBtn = screen.getByRole('button', { name: 'Login' });
+		const emailInput = screen.getByLabelText('Email');
+		const passwordInput = screen.getByLabelText('Password');
 
 		await user.click(submitBtn);
 
-		let defaultErrorMessages = screen.queryAllByText("Message placeholder");
+		let defaultErrorMessages = screen.queryAllByText('Message placeholder');
 
 		expect(defaultErrorMessages.length).toEqual(0);
 
-		await user.type(emailInput, "example@gmail.com");
-		await user.type(passwordInput, "1!Qwerty");
+		await user.type(emailInput, 'example@gmail.com');
+		await user.type(passwordInput, '1!Qwerty');
 
-		defaultErrorMessages = await screen.findAllByText(
-			"Message placeholder"
-		);
+		defaultErrorMessages = await screen.findAllByText('Message placeholder');
 
 		expect(defaultErrorMessages.length).toEqual(2);
 	});
@@ -91,7 +89,7 @@ describe("Login component", () => {
 		const mockResult = {
 			success: true,
 			data: {
-				token: "exampleToken",
+				token: 'exampleToken',
 			},
 		};
 
@@ -100,15 +98,15 @@ describe("Login component", () => {
 		render(
 			<Providers {...mockOutletContext}>
 				<Login />
-			</Providers>
+			</Providers>,
 		);
 
-		const emailInput = screen.getByLabelText("Email");
-		const passwordInput = screen.getByLabelText("Password");
-		const submitBtn = screen.getByRole("button", { name: "Login" });
+		const emailInput = screen.getByLabelText('Email');
+		const passwordInput = screen.getByLabelText('Password');
+		const submitBtn = screen.getByRole('button', { name: 'Login' });
 
-		await user.type(emailInput, "example@gmail.com");
-		await user.type(passwordInput, "1!Qwerty");
+		await user.type(emailInput, 'example@gmail.com');
+		await user.type(passwordInput, '1!Qwerty');
 
 		await user.click(submitBtn);
 
@@ -125,12 +123,12 @@ describe("Login component", () => {
 			success: false,
 			errors: [
 				{
-					field: "email",
-					message: "error",
+					field: 'email',
+					message: 'error',
 				},
 				{
-					field: "password",
-					message: "error",
+					field: 'password',
+					message: 'error',
 				},
 			],
 		};
@@ -140,23 +138,23 @@ describe("Login component", () => {
 		render(
 			<Providers {...mockOutletContext}>
 				<Login />
-			</Providers>
+			</Providers>,
 		);
 
-		const emailInput = screen.getByLabelText("Email");
-		const passwordInput = screen.getByLabelText("Password");
-		const submitBtn = screen.getByRole("button", { name: "Login" });
+		const emailInput = screen.getByLabelText('Email');
+		const passwordInput = screen.getByLabelText('Password');
+		const submitBtn = screen.getByRole('button', { name: 'Login' });
 
-		await user.type(emailInput, "example@gmail.com");
-		await user.type(passwordInput, "1!Qwerty");
+		await user.type(emailInput, 'example@gmail.com');
+		await user.type(passwordInput, '1!Qwerty');
 
-		let defaultErrorMessages = screen.getAllByText("Message placeholder");
+		let defaultErrorMessages = screen.getAllByText('Message placeholder');
 
 		expect(defaultErrorMessages.length).toEqual(2);
 
 		await user.click(submitBtn);
 
-		defaultErrorMessages = screen.queryAllByText("Message placeholder");
+		defaultErrorMessages = screen.queryAllByText('Message placeholder');
 
 		expect(defaultErrorMessages.length).toEqual(0);
 		expect(handleFetch).toBeCalledTimes(1);
@@ -169,7 +167,7 @@ describe("Login component", () => {
 
 		const mockResult = {
 			success: false,
-			message: "error",
+			message: 'error',
 		};
 
 		handleFetch.mockReturnValueOnce(mockResult);
@@ -177,19 +175,19 @@ describe("Login component", () => {
 		render(
 			<Providers {...mockOutletContext}>
 				<Login />
-			</Providers>
+			</Providers>,
 		);
 
-		const emailInput = screen.getByLabelText("Email");
-		const passwordInput = screen.getByLabelText("Password");
-		const submitBtn = screen.getByRole("button", { name: "Login" });
+		const emailInput = screen.getByLabelText('Email');
+		const passwordInput = screen.getByLabelText('Password');
+		const submitBtn = screen.getByRole('button', { name: 'Login' });
 
-		await user.type(emailInput, "example@gmail.com");
-		await user.type(passwordInput, "1!Qwerty");
+		await user.type(emailInput, 'example@gmail.com');
+		await user.type(passwordInput, '1!Qwerty');
 
 		await user.click(submitBtn);
 
-		const element = screen.getByText("Error component");
+		const element = screen.getByText('Error component');
 
 		expect(handleFetch).toBeCalledTimes(1);
 		expect(element).toBeInTheDocument();
@@ -201,29 +199,26 @@ describe("Login component", () => {
 		};
 
 		handleFetch.mockImplementationOnce(() => {
-			throw new Error("Fetch Error");
+			throw new Error('Fetch Error');
 		});
 		render(
 			<Providers {...mockOutletContext}>
 				<Login />
-			</Providers>
+			</Providers>,
 		);
 
-		const emailInput = screen.getByLabelText("Email");
-		const passwordInput = screen.getByLabelText("Password");
-		const submitBtn = screen.getByRole("button", { name: "Login" });
+		const emailInput = screen.getByLabelText('Email');
+		const passwordInput = screen.getByLabelText('Password');
+		const submitBtn = screen.getByRole('button', { name: 'Login' });
 
-		await user.type(emailInput, "example@gmail.com");
-		await user.type(passwordInput, "1!Qwerty");
+		await user.type(emailInput, 'example@gmail.com');
+		await user.type(passwordInput, '1!Qwerty');
 
 		await user.click(submitBtn);
 
-		const element = screen.getByText("Error component");
+		const element = screen.getByText('Error component');
 
 		expect(handleFetch).toBeCalledTimes(1);
 		expect(element).toBeInTheDocument();
 	});
 });
-
-// 解決每次輸入時都會有多次 test 執行的問題
-// 再從 header 開始
