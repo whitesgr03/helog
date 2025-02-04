@@ -1,5 +1,5 @@
 import { vi, describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
@@ -95,11 +95,13 @@ describe('DeleteModal component', () => {
 
 		const loadingComponent = await screen.findByText('Loading component');
 
-		const errorComponent = await screen.findByText('Error component');
+		await waitFor(async () => {
+			const errorComponent = await screen.findByText('Error component');
 
-		expect(deleteUser).toBeCalledTimes(1);
-		expect(errorComponent).toBeInTheDocument();
-		expect(loadingComponent).not.toBeInTheDocument();
+			expect(deleteUser).toBeCalledTimes(1);
+			expect(errorComponent).toBeInTheDocument();
+			expect(loadingComponent).not.toBeInTheDocument();
+		});
 	});
 	it('should delete the user if delete button is clicked', async () => {
 		const user = userEvent.setup();
