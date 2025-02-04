@@ -246,7 +246,6 @@ describe('Dropdown component', () => {
 			user: {
 				username: 'example',
 			},
-			onUser: vi.fn(),
 			onCloseDropdown: vi.fn(),
 		};
 
