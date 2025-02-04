@@ -88,7 +88,7 @@ export const Dropdown = ({
 							</li>
 						)}
 						<li>
-							{user ? (
+							{user?.username ? (
 								<button onClick={handleLogout}>
 									{loading ? (
 										<span
