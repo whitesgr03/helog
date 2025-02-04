@@ -47,7 +47,7 @@ export const Header = ({
 							<button onClick={onColorTheme}>
 								<div className={buttonStyles.theme}>
 									<span
-										data-testid={'icon'}
+										data-testid="theme-icon"
 										className={`${imageStyles.icon} ${darkTheme ? styles.moon : styles.sun}`}
 									/>
 									<div>
