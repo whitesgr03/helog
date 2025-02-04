@@ -95,7 +95,6 @@ describe('Settings component', () => {
 			user: {
 				username: 'example',
 			},
-			onUser: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -133,15 +132,6 @@ describe('Settings component', () => {
 			'type',
 			ChangeNameModal,
 		);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('username', mockProps.user.username);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('onActiveModal', mockProps.onActiveModal);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('onUser', mockProps.onUser);
 	});
 	it('should active DeleteModal component, if the delete account button is clicked', async () => {
 		const user = userEvent.setup();
