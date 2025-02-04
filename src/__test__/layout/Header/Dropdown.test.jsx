@@ -345,9 +345,7 @@ describe('Dropdown component', () => {
 			expect(loadingIcon).toHaveClass(/load/);
 		});
 
-		await waitFor(() => {
-			expect(mockProps.onUser).toBeCalledTimes(1);
-			expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
-		});
+		expect(mockProps.onUser).toBeCalledTimes(1);
+		expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
 	});
 });
