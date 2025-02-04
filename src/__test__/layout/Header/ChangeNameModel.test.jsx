@@ -5,10 +5,12 @@ import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { ChangeNameModal } from '../../../components/layout/Header/ChangeNameModal';
+import { Loading } from '../../../components/utils/Loading';
 
 import { updateUser } from '../../../utils/handleUser';
 
 vi.mock('../../../utils/handleUser');
+vi.mock('../../../components/utils/Loading');
 
 describe('ChangeNameModal component', () => {
 	it('should change a field values if the field is entered', async () => {
@@ -155,6 +157,7 @@ describe('ChangeNameModal component', () => {
 		};
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
+		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
 			[
@@ -185,13 +188,16 @@ describe('ChangeNameModal component', () => {
 		const usernameErrorMessage = screen.getByText('Message placeholder');
 
 		await user.type(usernameField, '_new');
-		await user.click(submitButton);
+		user.click(submitButton);
+
+		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(updateUser).toBeCalledTimes(1);
 		expect(usernameLabel).toHaveClass(/error/);
 		expect(usernameErrorMessage).toHaveTextContent(
 			mockFetchResult.fields.username,
 		);
+		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should navigate to the "/error" path if the username update fails', async () => {
 		const user = userEvent.setup();
@@ -203,6 +209,7 @@ describe('ChangeNameModal component', () => {
 		};
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
+		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
 			[
@@ -235,12 +242,15 @@ describe('ChangeNameModal component', () => {
 		const usernameField = screen.getByLabelText('Change username');
 
 		await user.type(usernameField, '_new');
-		await user.click(submitButton);
+		user.click(submitButton);
 
-		const errorMessage = screen.getByText('Error page');
+		const loadingComponent = await screen.findByText('Loading component');
+
+		const errorMessage = await screen.findByText('Error page');
 
 		expect(errorMessage).toBeInTheDocument();
 		expect(updateUser).toBeCalledTimes(1);
+		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should update the username if the username field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -255,6 +265,8 @@ describe('ChangeNameModal component', () => {
 		};
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
+
+		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
 			[
@@ -283,11 +295,15 @@ describe('ChangeNameModal component', () => {
 		const usernameField = screen.getByLabelText('Change username');
 
 		await user.type(usernameField, '_new');
-		await user.click(submitButton);
+		user.click(submitButton);
+
+		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(mockProps.onUser).toBeCalledWith(mockFetchResult.data);
 		expect(mockProps.onUser).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 		expect(updateUser).toBeCalledTimes(1);
+
+		expect(loadingComponent).not.toBeInTheDocument();
 	});
 });
