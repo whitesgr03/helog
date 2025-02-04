@@ -60,7 +60,7 @@ describe('DeleteModal component', () => {
 
 		deleteUser.mockResolvedValueOnce(mockFetchResult);
 
-		Loading.mockImplementation(() => <div>Loading component</div>);
+		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
 			[
