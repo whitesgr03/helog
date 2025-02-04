@@ -90,13 +90,9 @@ export const Dropdown = ({
 						<li>
 							{user?.username ? (
 								<button onClick={handleLogout}>
-									{loading ? (
-										<span
-											className={`${imageStyles.icon} ${loadingStyles.load}`}
-										/>
-									) : (
-										<span className={`${imageStyles.icon} ${styles.logout}`} />
-									)}
+									<span
+										className={`${imageStyles.icon} ${loading ? loadingStyles.load : styles.logout}`}
+									/>
 									Logout
 								</button>
 							) : (
