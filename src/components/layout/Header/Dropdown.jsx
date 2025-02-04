@@ -36,8 +36,6 @@ export const Dropdown = ({
 	const handleLogout = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
-
 		const options = {
 			method: 'POST',
 			credentials: 'include',
