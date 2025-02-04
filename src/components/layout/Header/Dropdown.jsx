@@ -62,7 +62,7 @@ export const Dropdown = ({
 							<div className={styles.avatar}>
 								{user.username.charAt(0).toUpperCase()}
 							</div>
-							<span title={user.username}>{user.username}</span>
+							<span>{user.username}</span>
 						</div>
 					)}
 					<ul>
