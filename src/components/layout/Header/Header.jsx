@@ -33,7 +33,7 @@ export const Header = ({
 				</Link>
 				<nav>
 					<ul className={styles.list}>
-						{user && (
+						{user?.username && (
 							<li>
 								<a
 									href={`${import.meta.env.VITE_HELOG_EDITOR_URL}?theme=${darkTheme}`}
