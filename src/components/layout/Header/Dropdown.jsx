@@ -45,8 +45,8 @@ export const Dropdown = ({
 
 		result.success ? onUser(null) : setError(result.message);
 
-		setLoading(false);
 		onCloseDropdown();
+		setLoading(false);
 	};
 
 	const handleToggleSettingsMenu = () => setActiveSettings(!activeSettings);
