@@ -15,6 +15,9 @@ import { Settings } from './Settings.jsx';
 // Utils
 import { handleFetch } from '../../../utils/handleFetch.js';
 
+// Variables
+const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
+
 export const Dropdown = ({
 	user,
 	onUser,
@@ -40,7 +43,7 @@ export const Dropdown = ({
 			credentials: 'include',
 		};
 
-		const result = await handleFetch(url, options);
+		const result = await handleFetch(URL, options);
 
 		result.success ? onUser(null) : setError(result.message);
 
