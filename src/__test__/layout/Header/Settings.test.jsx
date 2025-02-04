@@ -19,28 +19,7 @@ describe('Settings component', () => {
 			},
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Settings {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<Settings {...mockProps} />);
 
 		const avatar = screen.getByText(
 			mockProps.user.username.charAt(0).toUpperCase(),
@@ -58,28 +37,7 @@ describe('Settings component', () => {
 			onToggleSettingsMenu: vi.fn(),
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Settings {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<Settings {...mockProps} />);
 
 		const closeButton = screen.getByTestId('close-btn');
 
@@ -96,28 +54,7 @@ describe('Settings component', () => {
 			onActiveModal: vi.fn(),
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Settings {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<Settings {...mockProps} />);
 
 		const changeNameBtn = screen.getByRole('button', {
 			name: 'Change username',
@@ -137,28 +74,7 @@ describe('Settings component', () => {
 			onActiveModal: vi.fn(),
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Settings {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<Settings {...mockProps} />);
 
 		const changeNameBtn = screen.getByRole('button', {
 			name: 'Delete account',
