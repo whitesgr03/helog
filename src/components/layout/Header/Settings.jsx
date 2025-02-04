@@ -36,13 +36,13 @@ export const Settings = ({
 				<div className={styles.container}>
 					<div className={styles['avatar-wrap']}>
 						<div className={styles.avatar}>
-							{user && user.username.charAt(0).toUpperCase()}
+							{user?.username && user.username.charAt(0).toUpperCase()}
 						</div>
 					</div>
 					<ul className={styles.list}>
 						<li>
 							<strong className={styles.title}>Username</strong>
-							{user && <span>{user.username}</span>}
+							{user?.username && <span>{user.username}</span>}
 							<button
 								className={styles['change-btn']}
 								onClick={() =>
