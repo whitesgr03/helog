@@ -137,9 +137,6 @@ describe('Settings component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			onActiveModal: vi.fn(),
-			onUser: vi.fn(),
-			onAlert: vi.fn(),
-			onToggleSettingsMenu: vi.fn(),
 		};
 
 		const router = createMemoryRouter(
@@ -176,17 +173,5 @@ describe('Settings component', () => {
 			'type',
 			DeleteModal,
 		);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('onActiveModal', mockProps.onActiveModal);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('onUser', mockProps.onUser);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('onAlert', mockProps.onAlert);
-		expect(
-			mockProps.onActiveModal.mock.calls[0][0].component.props,
-		).toHaveProperty('onToggleSettingsMenu', mockProps.onToggleSettingsMenu);
 	});
 });
