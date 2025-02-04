@@ -288,14 +288,12 @@ describe('Dropdown component', () => {
 
 		expect(loadingIcon).toHaveClass(/logout/);
 
-		user.click(button);
+		await user.click(button);
 
-		await waitFor(() => {
-			expect(loadingIcon).toHaveClass(/load/);
+		expect(loadingIcon).toHaveClass(/load/);
 
-			const errorComponent = screen.getByText('Error component');
-			expect(errorComponent).toBeInTheDocument();
-		});
+		const errorComponent = screen.getByText('Error component');
+		expect(errorComponent).toBeInTheDocument();
 	});
 	it('should logout, if the logout button is clicked', async () => {
 		const user = userEvent.setup();
