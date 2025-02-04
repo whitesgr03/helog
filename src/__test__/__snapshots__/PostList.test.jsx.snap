@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`PostList component > should render correctly 1`] = `
-<DocumentFragment>
-  <div
-    class="_postList_05bdc4"
-  />
-</DocumentFragment>
-`;
