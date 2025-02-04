@@ -69,6 +69,7 @@ export const Dropdown = ({
 						<li>
 							<button className={buttonStyles.theme} onClick={onColorTheme}>
 								<span
+									data-testid="theme-icon"
 									className={`${imageStyles.icon} ${
 										darkTheme ? styles.moon : styles.sun
 									}`}
@@ -91,6 +92,7 @@ export const Dropdown = ({
 							{user?.username ? (
 								<button onClick={handleLogout}>
 									<span
+										data-testid="loading-icon"
 										className={`${imageStyles.icon} ${loading ? loadingStyles.load : styles.logout}`}
 									/>
 									Logout
