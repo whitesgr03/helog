@@ -28,6 +28,7 @@ export const Settings = ({
 					type="button"
 					className={buttonStyles['close-btn']}
 					onClick={onToggleSettingsMenu}
+					data-testid="close-btn"
 				>
 					<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
 				</button>
