@@ -167,14 +167,12 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 			>
 				<div className={formStyles['label-wrap']}>
 					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
-						{user && (
-							<div className={styles.profile}>
-								<div className={styles.avatar}>
-									{user.username.charAt(0).toUpperCase()}
-								</div>
-								<h4 title={user.username}>{user.username}</h4>
+						<div className={styles.profile}>
+							<div className={styles.avatar}>
+								{user.username.charAt(0).toUpperCase()}
 							</div>
-						)}
+							<h4 title={user.username}>{user.username}</h4>
+						</div>
 						<textarea
 							name="content"
 							placeholder="write a comment..."
