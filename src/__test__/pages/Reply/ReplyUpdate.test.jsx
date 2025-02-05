@@ -17,6 +17,55 @@ vi.mock('../../../components/utils/Loading');
 vi.mock('../../../utils/handleReply');
 
 describe('ReplyUpdate component', () => {
+	it('should close this component if the cancel button is clicked', async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			reply: {
+				content: 'reply',
+			},
+			onCloseCommentBox: vi.fn(),
+		};
+
+		const mockContext = {
+			onAlert: vi.fn(),
+			onUpdatePost: vi.fn(),
+		};
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Outlet context={{ ...mockContext }} />,
+					children: [
+						{
+							index: true,
+							element: <ReplyUpdate {...mockProps} />,
+						},
+					],
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+
+		await user.click(cancelButton);
+
+		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
+	});
 	it('should change the reply field values if the reply field is entered', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
