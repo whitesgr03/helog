@@ -61,7 +61,6 @@ export const ReplyUpdate = ({ post, commentId, reply, onCloseCommentBox }) => {
 					: postComment,
 			);
 
-			// console.log(newComments);
 			onUpdatePost({
 				postId: post._id,
 				newComments,
