@@ -166,7 +166,10 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 				onSubmit={e => !loading && handleSubmit(e)}
 			>
 				<div className={formStyles['label-wrap']}>
-					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
+					<label
+						className={`${inputErrors.content ? formStyles.error : ''}`}
+						data-testid="label"
+					>
 						<div className={styles.profile}>
 							<div className={styles.avatar}>
 								{user.username.charAt(0).toUpperCase()}
@@ -184,7 +187,7 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 						/>
 					</label>
 					{!isEmpty(inputErrors) && (
-						<div>
+						<div data-testid="error-message">
 							<span className={`${imageStyles.icon} ${formStyles.alert}`} />
 							<span className={formStyles.placeholder}>
 								{inputErrors.content}
