@@ -166,7 +166,7 @@ export const CommentCreate = ({ post }) => {
 			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
-						{user && (
+						{user?.username && (
 							<div className={styles.profile}>
 								<div className={styles.avatar}>
 									{user.username.charAt(0).toUpperCase()}
