@@ -2,8 +2,6 @@ import { vi, describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-
 import { ReplyDelete } from '../../../components/pages/Reply/ReplyDelete';
 import { Loading } from '../../../components/utils/Loading';
 
