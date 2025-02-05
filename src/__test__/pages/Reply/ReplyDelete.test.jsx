@@ -11,7 +11,7 @@ vi.mock('../../../components/utils/Loading');
 vi.mock('../../../utils/handleReply');
 
 describe('ReplyDelete component', () => {
-	it('should render error message alert if delete a reply fails', async () => {
+	it('should render an error message alert if delete a reply fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			replyId: 'test',

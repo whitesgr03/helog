@@ -301,7 +301,7 @@ describe('ReplyUpdate component', () => {
 		);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
-	it('should navigate to the "/error" path if the reply update fails', async () => {
+	it('should render an error message alert if the reply update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			reply: {
