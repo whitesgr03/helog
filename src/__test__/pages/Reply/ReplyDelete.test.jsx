@@ -19,28 +19,7 @@ describe('ReplyDelete component', () => {
 			onActiveModal: vi.fn(),
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyDelete {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<ReplyDelete {...mockProps} />);
 
 		const closeButton = screen.getByRole('button', { name: 'Cancel' });
 
@@ -62,28 +41,7 @@ describe('ReplyDelete component', () => {
 		deleteReply.mockResolvedValueOnce(mockFetchResult);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyDelete {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<ReplyDelete {...mockProps} />);
 
 		const button = screen.getByRole('button', { name: 'Delete' });
 
@@ -127,28 +85,7 @@ describe('ReplyDelete component', () => {
 		deleteReply.mockResolvedValueOnce(mockFetchResult);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyDelete {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<ReplyDelete {...mockProps} />);
 
 		const button = screen.getByRole('button', { name: 'Delete' });
 
