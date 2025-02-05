@@ -25,7 +25,7 @@ describe('ReplyDelete component', () => {
 
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
-	it.only('should render error message alert if delete a reply fails', async () => {
+	it('should render error message alert if delete a reply fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			replyId: 'test',
