@@ -122,6 +122,8 @@ export const CommentCreate = ({ post }) => {
 			textbox.current.blur();
 			onAlert({
 				message: 'You need to be logged in to your account to post a comment.',
+				error: false,
+				delay: 2000,
 			});
 		};
 
