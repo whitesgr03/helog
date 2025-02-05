@@ -11,20 +11,6 @@ vi.mock('../../../components/utils/Loading');
 vi.mock('../../../utils/handleReply');
 
 describe('ReplyDelete component', () => {
-	it('should close modal if the cancel button is clicked', async () => {
-		const user = userEvent.setup();
-		const mockProps = {
-			onActiveModal: vi.fn(),
-		};
-
-		render(<ReplyDelete {...mockProps} />);
-
-		const closeButton = screen.getByRole('button', { name: 'Cancel' });
-
-		await user.click(closeButton);
-
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-	});
 	it('should render error message alert if delete a reply fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
@@ -51,6 +37,20 @@ describe('ReplyDelete component', () => {
 		expect(mockProps.onAlert).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
+	});
+	it('should close modal if the cancel button is clicked', async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			onActiveModal: vi.fn(),
+		};
+
+		render(<ReplyDelete {...mockProps} />);
+
+		const closeButton = screen.getByRole('button', { name: 'Cancel' });
+
+		await user.click(closeButton);
+
+		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
 	it('should delete a reply if the delete button is clicked', async () => {
 		const user = userEvent.setup();
