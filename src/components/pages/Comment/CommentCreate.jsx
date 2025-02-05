@@ -171,7 +171,7 @@ export const CommentCreate = ({ post }) => {
 								<div className={styles.avatar}>
 									{user.username.charAt(0).toUpperCase()}
 								</div>
-								<h4 title={user.username}>{user.username}</h4>
+								<h4>{user.username}</h4>
 							</div>
 						)}
 						<textarea
