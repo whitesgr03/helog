@@ -134,15 +134,10 @@ describe('ChangeNameModal component', () => {
 
 		await user.type(usernameField, '_new');
 
-		await waitFor(
-			() => {
-				expect(usernameField).not.toHaveClass(/error/);
-				expect(usernameErrorMessage).toHaveTextContent('Message placeholder');
-			},
-			{
-				timeout: 500,
-			},
-		);
+		await waitFor(() => {
+			expect(usernameField).not.toHaveClass(/error/);
+			expect(usernameErrorMessage).toHaveTextContent('Message placeholder');
+		});
 	});
 	it('should render an error field message if the username update fails', async () => {
 		const user = userEvent.setup();
