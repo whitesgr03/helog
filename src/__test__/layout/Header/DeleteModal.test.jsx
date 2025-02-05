@@ -13,41 +13,6 @@ vi.mock('../../../utils/handleUser');
 vi.mock('../../../components/utils/Loading');
 
 describe('DeleteModal component', () => {
-	it('should close modal if cancel button is clicked', async () => {
-		const user = userEvent.setup();
-		const mockProps = {
-			onActiveModal: vi.fn(),
-		};
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <DeleteModal {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
-
-		const closeButton = screen.getByRole('button', { name: 'Cancel' });
-
-		await user.click(closeButton);
-
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-	});
 	it('should navigate to the "/error" path if the user delete fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
@@ -102,6 +67,41 @@ describe('DeleteModal component', () => {
 			expect(errorComponent).toBeInTheDocument();
 			expect(loadingComponent).not.toBeInTheDocument();
 		});
+	});
+	it('should close modal if cancel button is clicked', async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			onActiveModal: vi.fn(),
+		};
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <DeleteModal {...mockProps} />,
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const closeButton = screen.getByRole('button', { name: 'Cancel' });
+
+		await user.click(closeButton);
+
+		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
 	it('should delete the user if delete button is clicked', async () => {
 		const user = userEvent.setup();
