@@ -156,7 +156,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 							<span
 								className={`${imageStyles.icon} ${
 									styles['reply-icon']
-								} ${showReplies ? styles.active : ''}`}
+								} ${showReplies && comment?.replies ? styles.active : ''}`}
 								data-testid="commentIcon"
 							/>
 							{loading ? (
@@ -179,7 +179,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 				</div>
 			</div>
 
-			{showReplyBox && (
+			{showReplyBox && comment?.replies && (
 				<div className={styles['comment-box-wrap']}>
 					<ReplyCreate
 						post={post}
@@ -189,7 +189,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 				</div>
 			)}
 
-			{showReplies && (
+			{showReplies && comment?.replies && (
 				<Replies post={post} comment={comment} onLoading={setLoading} />
 			)}
 		</li>
