@@ -1,5 +1,5 @@
 // Packages
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useOutletContext } from 'react-router-dom';
 
@@ -18,6 +18,10 @@ export const Replies = ({ post, comment }) => {
 	const { onAlert, onUpdatePost } = useOutletContext();
 	const [loading, setLoading] = useState(false);
 	const [skipReplies, setSkipReplies] = useState(10);
+	const [shakeTargetId, setShakeTargetId] = useState('');
+
+	const repliesRef = useRef([]);
+	const waitForScrollRef = useRef(null);
 
 	const replies = comment.replies;
 
@@ -51,17 +55,46 @@ export const Replies = ({ post, comment }) => {
 		setLoading(false);
 	};
 
+	const handleScroll = id => {
+		const target = repliesRef.current.find(reply => reply.id === id);
+
+		const handleShake = () => {
+			clearTimeout(waitForScrollRef.current);
+
+			waitForScrollRef.current = setTimeout(() => {
+				setShakeTargetId(id);
+				window.removeEventListener('scroll', handleShake);
+			}, 100);
+		};
+
+		window.addEventListener('scroll', handleShake);
+
+		target.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center',
+		});
+	};
+
+	const handleAnimationEnd = () => setShakeTargetId('');
+
 	return (
 		<div className={styles.replies}>
 			<div className={styles.content}>
 				<ul>
 					{replies.map((reply, index) => (
-						<div key={reply._id}>
+						<div
+							key={reply._id}
+							id={reply._id}
+							className={shakeTargetId === reply._id ? styles.shake : ''}
+							ref={element => (repliesRef.current[index] = element)}
+							onAnimationEnd={handleAnimationEnd}
+						>
 							<ReplyDetail
 								index={index}
 								post={post}
 								comment={comment}
 								reply={reply}
+								onScroll={handleScroll}
 							/>
 						</div>
 					))}

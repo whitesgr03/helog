@@ -13,7 +13,7 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 import { ReplyUpdate } from './ReplyUpdate';
 import { ReplyDelete } from './ReplyDelete';
 
-export const ReplyDetail = ({ index, post, comment, reply }) => {
+export const ReplyDetail = ({ index, post, comment, reply, onScroll }) => {
 	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
@@ -42,38 +42,10 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 		});
 	};
 
-	const handleScrollToReplier = () => {
-		const targetId = reply.reply._id;
-		const element = document.getElementById(targetId);
-		const target = element.getBoundingClientRect();
-
-		const windowTop = document.documentElement.scrollTop;
-
-		const windowHalfHeight = document.documentElement.clientHeight / 2;
-		const targetHalfHeight = target.height / 2;
-		const targetCenter =
-			windowTop + target.top - windowHalfHeight + targetHalfHeight;
-
-		const handleScroll = () => {
-			const currentTargetTop = element.getBoundingClientRect().top;
-			const isTargetCenter =
-				currentTargetTop - windowHalfHeight + targetHalfHeight >= 0;
-
-			isTargetCenter && element.classList.add(styles.shake);
-
-			isTargetCenter && window.removeEventListener('scroll', handleScroll);
-		};
-
-		window.addEventListener('scroll', handleScroll);
-
-		window.scrollTo({
-			top: targetCenter,
-			behavior: 'smooth',
-		});
-	};
+	const handleScrollToReplier = () => onScroll(reply.reply._id);
 
 	return (
-		<li id={reply._id} onAnimationEnd={e => (e.target.className = '')}>
+		<li>
 			<div
 				className={`${styles.container} ${
 					!reply.deleted && isPostAuthor ? styles.author : ''
@@ -168,4 +140,5 @@ ReplyDetail.propTypes = {
 	post: PropTypes.object,
 	comment: PropTypes.object,
 	reply: PropTypes.object,
+	onScroll: PropTypes.func,
 };
