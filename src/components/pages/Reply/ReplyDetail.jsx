@@ -141,17 +141,14 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 						<p className={styles.comment}>{reply.content}</p>
 					</div>
 				)}
-
-				<div className={styles['button-wrap']}>
-					{user && !reply.deleted && (
-						<button
-							className={styles['add-reply-btn']}
-							onClick={handleShowReplyBox}
-						>
-							Reply
-						</button>
-					)}
-				</div>
+				{user && !reply.deleted && (
+					<button
+						className={styles['add-reply-btn']}
+						onClick={handleShowReplyBox}
+					>
+						Reply
+					</button>
+				)}
 			</div>
 
 			{showReplyBox && (
