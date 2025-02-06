@@ -42,7 +42,7 @@ export const ReplyDetail = ({ index, post, comment, reply, onScroll }) => {
 		});
 	};
 
-	const handleScrollToReplier = () => onScroll(reply.reply._id);
+	const handleScrollToRepliedUser = () => onScroll(reply.reply._id);
 
 	return (
 		<li>
@@ -101,7 +101,7 @@ export const ReplyDetail = ({ index, post, comment, reply, onScroll }) => {
 				) : (
 					<div className={styles.content}>
 						{!reply.deleted && reply?.reply && (
-							<button onClick={handleScrollToReplier}>
+							<button onClick={handleScrollToRepliedUser}>
 								{reply.reply.deleted
 									? `@deleted`
 									: `@${reply.reply.author.username}`}
