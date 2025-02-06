@@ -57,10 +57,10 @@ export const ReplyDetail = ({ index, post, comment, reply, onScroll }) => {
 						{isPostAuthor && <em className={styles.highlight}>POST AUTHOR</em>}
 						{(isCommentOwner || user?.isAdmin) && (
 							<div className={styles['comment-button']}>
-								<button onClick={handleDelete}>
+								<button onClick={handleDelete} data-testid="delete-button">
 									<span className={`${imageStyles.icon} ${styles.delete}`} />
 								</button>
-								<button onClick={handleShowEditBox}>
+								<button onClick={handleShowEditBox} data-testid="edit-button">
 									<span className={`${imageStyles.icon} ${styles.edit}`} />
 								</button>
 							</div>
