@@ -1,10 +1,18 @@
 .account {
 	display: flex;
+	position: relative;
+	flex: 1 1 100%;
+	padding: 5%;
+}
+
+.wrap {
+	display: flex;
 	row-gap: 15px;
 	flex: 1 1 100%;
 	flex-direction: column;
 	justify-content: center;
-	padding: 5%;
+	margin: 0 auto;
+	max-width: 500px;
 }
 
 .title {
@@ -13,14 +21,12 @@
 
 .container {
 	display: flex;
-	position: relative;
 	row-gap: 20px;
 	flex-direction: column;
 	justify-content: center;
 	border: 1px solid var(--light-scheme-color);
 	border-radius: 10px;
 	padding: 20px;
-	width: 100%;
 	overflow: hidden;
 }
 
@@ -88,16 +94,17 @@
 
 @media (width >= 440px) {
 	.account {
-		row-gap: 20px;
 		padding: 40px 10%;
+	}
+
+	.wrap {
+		row-gap: 20px;
 	}
 }
 
 @media (width >= 500px) {
 	.account {
-		margin: 0 auto;
 		padding: 40px 5%;
-		max-width: 500px;
 	}
 }
 
@@ -115,7 +122,6 @@
 
 @media (width >= 900px) {
 	.account {
-		justify-content: center;
 		padding: 50px 0;
 	}
 }
