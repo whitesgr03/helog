@@ -19,7 +19,7 @@ export const Replies = ({ post, comment }) => {
 	const [loading, setLoading] = useState(false);
 	const [skipReplies, setSkipReplies] = useState(10);
 
-	const replies = comment?.replies ?? [];
+	const replies = comment.replies;
 
 	const handleGetReplies = async () => {
 		setLoading(true);
