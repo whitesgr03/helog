@@ -18,8 +18,8 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 
-	const isCommentOwner = user?.username === reply?.author?.username;
-	const isPostAuthor = post.author.username === reply?.author?.username;
+	const isCommentOwner = user?.username === reply.author.username;
+	const isPostAuthor = post.author.username === reply.author.username;
 
 	const handleShowEditBox = () => {
 		setShowEditBox(!showEditBox);
@@ -103,8 +103,8 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 								<span>{reply.author.username.charAt(0).toUpperCase()}</span>
 							)}
 						</div>
-						<strong title={!reply.deleted ? reply?.author?.username : ''}>
-							{!reply.deleted ? reply?.author?.username : '[deleted]'}
+						<strong>
+							{!reply.deleted ? reply.author.username : '[deleted]'}
 						</strong>
 					</div>
 					<div className={styles.time}>
