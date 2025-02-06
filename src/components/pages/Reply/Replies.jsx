@@ -56,13 +56,14 @@ export const Replies = ({ post, comment }) => {
 			<div className={styles.content}>
 				<ul>
 					{replies.map((reply, index) => (
-						<ReplyDetail
-							key={reply._id}
-							index={index}
-							post={post}
-							comment={comment}
-							reply={reply}
-						/>
+						<div key={reply._id}>
+							<ReplyDetail
+								index={index}
+								post={post}
+								comment={comment}
+								reply={reply}
+							/>
+						</div>
 					))}
 				</ul>
 				{comment?.countReplies > skipReplies && (
