@@ -129,10 +129,7 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 				) : (
 					<div className={styles.content}>
 						{!reply.deleted && reply?.reply && (
-							<button
-								title={reply.reply.author.username}
-								onClick={handleScrollToReplier}
-							>
+							<button onClick={handleScrollToReplier}>
 								{reply.reply.deleted
 									? `@deleted`
 									: `@${reply.reply.author.username}`}
