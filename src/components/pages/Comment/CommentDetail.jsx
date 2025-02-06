@@ -160,7 +160,9 @@ export const CommentDetail = ({ index, post, comment }) => {
 								data-testid="commentIcon"
 							/>
 							{loading ? (
-								<span className={`${imageStyles.icon}`} />
+								<span
+									className={`${imageStyles.icon} ${buttonStyles['load']}`}
+								/>
 							) : (
 								comment.countReplies
 							)}
