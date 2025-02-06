@@ -82,11 +82,7 @@ export const ReplyDetail = ({ index, post, comment, reply }) => {
 			>
 				{!reply.deleted && (
 					<div className={styles['button-wrap']}>
-						{isPostAuthor && (
-							<em className={`${isPostAuthor ? styles.highlight : ''}`}>
-								POST AUTHOR
-							</em>
-						)}
+						{isPostAuthor && <em className={styles.highlight}>POST AUTHOR</em>}
 						{(isCommentOwner || user?.isAdmin) && (
 							<div className={styles['comment-button']}>
 								<button onClick={handleDelete}>
