@@ -94,7 +94,7 @@ export const CommentCreate = ({ post }) => {
 			validationResult.success ? await handleValid() : handleInValid();
 		};
 
-		!loading && (await handleValidation());
+		!loading && user && (await handleValidation());
 	};
 
 	const handleChange = e => {
