@@ -87,6 +87,7 @@ export const Replies = ({ post, comment }) => {
 							className={shakeTargetId === reply._id ? styles.shake : ''}
 							ref={element => (repliesRef.current[index] = element)}
 							onAnimationEnd={handleAnimationEnd}
+							data-testid="reply"
 						>
 							<ReplyDetail
 								index={index}
@@ -108,6 +109,7 @@ export const Replies = ({ post, comment }) => {
 							{loading && (
 								<span
 									className={`${imageStyles.icon} ${buttonStyles['load']}`}
+									data-testid="loading-icon"
 								/>
 							)}
 						</span>
