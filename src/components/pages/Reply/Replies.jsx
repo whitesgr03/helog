@@ -98,7 +98,7 @@ export const Replies = ({ post, comment }) => {
 						</div>
 					))}
 				</ul>
-				{comment?.countReplies > skipReplies && (
+				{comment.countReplies > skipReplies && (
 					<button
 						className={`${buttonStyles.content} ${buttonStyles.more}`}
 						onClick={handleGetReplies}
