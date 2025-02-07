@@ -38,7 +38,7 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 		[],
 	);
 
-	const handleCreateComment = async () => {
+	const handleCreateReply = async () => {
 		setLoading(true);
 
 		const result = reply
@@ -110,7 +110,7 @@ export const ReplyCreate = ({ post, comment, reply, onCloseReplyBox }) => {
 
 		const handleValid = async () => {
 			setInputErrors({});
-			await handleCreateComment();
+			await handleCreateReply();
 		};
 
 		validationResult.success ? await handleValid() : handleInValid();
