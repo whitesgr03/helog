@@ -97,21 +97,19 @@ export const Comments = ({ post }) => {
 								</ul>
 								{post.countComments > skipComments &&
 									post.comments.length >= 10 && (
-										<div className={styles.load}>
-											<button
-												className={`${buttonStyles.content} ${buttonStyles.more} `}
-												onClick={handleGetComments}
-											>
-												<span className={buttonStyles.text}>
-													Show more comments
-													{loading && (
-														<span
-															className={`${imageStyles.icon} ${buttonStyles['load']}`}
-														/>
-													)}
-												</span>
-											</button>
-										</div>
+										<button
+											className={`${buttonStyles.content} ${buttonStyles.more} `}
+											onClick={handleGetComments}
+										>
+											<span className={buttonStyles.text}>
+												Show more comments
+												{loading && (
+													<span
+														className={`${imageStyles.icon} ${buttonStyles['load']}`}
+													/>
+												)}
+											</span>
+										</button>
 									)}
 							</>
 						) : (

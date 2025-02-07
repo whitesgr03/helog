@@ -100,21 +100,19 @@ export const Replies = ({ post, comment }) => {
 					))}
 				</ul>
 				{comment?.countReplies > skipReplies && (
-					<div className={styles.load}>
-						<button
-							className={`${buttonStyles.content} ${buttonStyles.more}`}
-							onClick={handleGetReplies}
-						>
-							<span className={buttonStyles.text}>
-								Show more replies
-								{loading && (
-									<span
-										className={`${imageStyles.icon} ${buttonStyles['load']}`}
-									/>
-								)}
-							</span>
-						</button>
-					</div>
+					<button
+						className={`${buttonStyles.content} ${buttonStyles.more}`}
+						onClick={handleGetReplies}
+					>
+						<span className={buttonStyles.text}>
+							Show more replies
+							{loading && (
+								<span
+									className={`${imageStyles.icon} ${buttonStyles['load']}`}
+								/>
+							)}
+						</span>
+					</button>
 				)}
 			</div>
 		</div>
