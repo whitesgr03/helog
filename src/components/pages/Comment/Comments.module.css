@@ -37,13 +37,6 @@
 	text-align: center;
 }
 
-.load {
-	display: flex;
-	position: relative;
-	justify-content: center;
-	align-items: center;
-}
-
 .shake {
 	animation: shake 0.3s;
 }
