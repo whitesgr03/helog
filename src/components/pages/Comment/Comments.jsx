@@ -31,12 +31,16 @@ export const Comments = ({ post }) => {
 		setLoading(true);
 		const result = await getComments({ postId: post._id, skip: skipComments });
 
-		setSkipComments(skipComments + 10);
+		const handleSuccess = () => {
+			onUpdatePost({
+				postId: post._id,
+				newComments: post.comments.concat(result.data),
+			});
+			setSkipComments(skipComments + 10);
+		};
+
 		result.success
-			? onUpdatePost({
-					postId: post._id,
-					newComments: post.comments.concat(result.data),
-				})
+			? handleSuccess()
 			: onAlert({
 					message: 'There are some errors occur, please try again later.',
 					error: true,
