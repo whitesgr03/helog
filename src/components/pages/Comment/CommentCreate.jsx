@@ -130,7 +130,7 @@ export const CommentCreate = ({ post }) => {
 		user ? setShowSubmitButton(true) : handleBlur();
 	};
 
-	const handleCloseBtns = () => {
+	const handleClose = () => {
 		textbox.current.style.height = 'auto';
 		setShowSubmitButton(false);
 		setFormFields(DEFAULT_FIELDS);
@@ -199,7 +199,7 @@ export const CommentCreate = ({ post }) => {
 						<button
 							type="button"
 							className={`${buttonStyles.content} ${buttonStyles.cancel}`}
-							onClick={handleCloseBtns}
+							onClick={handleClose}
 						>
 							Cancel
 						</button>
