@@ -165,7 +165,10 @@ export const CommentCreate = ({ post }) => {
 			)}
 			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
-					<label className={`${inputErrors.content ? formStyles.error : ''}`}>
+					<label
+						className={`${inputErrors.content ? formStyles.error : ''}`}
+						data-testid="label"
+					>
 						{user?.username && (
 							<div className={styles.profile}>
 								<div className={styles.avatar}>
@@ -184,8 +187,8 @@ export const CommentCreate = ({ post }) => {
 							rows="1"
 						/>
 					</label>
-					{!isEmpty(inputErrors) && showSubmitButton && (
-						<div>
+					{!isEmpty(inputErrors) && (
+						<div data-testid="error-message">
 							<span className={`${imageStyles.icon} ${formStyles.alert}`} />
 							<span className={formStyles.placeholder}>
 								{inputErrors.content}
