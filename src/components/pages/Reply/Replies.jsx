@@ -33,8 +33,6 @@ export const Replies = ({ post, comment }) => {
 			skip: skipReplies,
 		});
 
-		setSkipReplies(skipReplies + 10);
-
 		const handleSuccess = () => {
 			const newComments = post.comments.map(postComment =>
 				postComment._id === comment._id
@@ -42,6 +40,7 @@ export const Replies = ({ post, comment }) => {
 					: postComment,
 			);
 			onUpdatePost({ postId: post._id, newComments });
+			setSkipReplies(skipReplies + 10);
 		};
 
 		result.success
