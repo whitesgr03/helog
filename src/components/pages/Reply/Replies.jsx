@@ -123,5 +123,4 @@ export const Replies = ({ post, comment }) => {
 Replies.propTypes = {
 	post: PropTypes.object,
 	comment: PropTypes.object,
-	onLoading: PropTypes.func,
 };
