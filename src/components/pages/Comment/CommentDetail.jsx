@@ -87,7 +87,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 	};
 
 	return (
-		<li id={`item-${comment._id}`}>
+		<li>
 			<div
 				className={`${styles.container} ${
 					!comment.deleted && isPostAuthor ? styles.author : ''
