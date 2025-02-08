@@ -25,8 +25,8 @@ export const CommentDetail = ({ index, post, comment }) => {
 	const [showEditBox, setShowEditBox] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const isCommentOwner = user?.username === comment?.author?.username;
-	const isPostAuthor = post.author.username === comment?.author?.username;
+	const isCommentOwner = user?.username === comment.author.username;
+	const isPostAuthor = post.author.username === comment.author.username;
 
 	const handleDelete = () => {
 		setShowEditBox(false);
@@ -79,7 +79,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 		setShowEditBox(!showEditBox);
 	};
 	const handleShowReplyBox = async () => {
-		comment?.countReplies > 0 &&
+		comment.countReplies > 0 &&
 			comment?.replies === undefined &&
 			(await handleGetReplies());
 
@@ -121,8 +121,8 @@ export const CommentDetail = ({ index, post, comment }) => {
 								<span>{comment.author.username.charAt(0).toUpperCase()}</span>
 							)}
 						</div>
-						<strong title={!comment.deleted ? comment?.author?.username : ''}>
-							{!comment.deleted ? comment?.author?.username : '[deleted]'}
+						<strong title={!comment.deleted ? comment.author.username : ''}>
+							{!comment.deleted ? comment.author.username : '[deleted]'}
 						</strong>
 					</div>
 					<div className={styles.time}>
