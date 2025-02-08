@@ -121,7 +121,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 								<span>{comment.author.username.charAt(0).toUpperCase()}</span>
 							)}
 						</div>
-						<strong title={!comment.deleted ? comment.author.username : ''}>
+						<strong>
 							{!comment.deleted ? comment.author.username : '[deleted]'}
 						</strong>
 					</div>
