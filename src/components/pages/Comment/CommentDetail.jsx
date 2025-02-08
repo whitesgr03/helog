@@ -103,10 +103,10 @@ export const CommentDetail = ({ index, post, comment }) => {
 						)}
 						{(isCommentOwner || user?.isAdmin) && (
 							<div className={styles['comment-button']}>
-								<button onClick={handleDelete}>
+								<button onClick={handleDelete} data-testid="delete-button">
 									<span className={`${imageStyles.icon} ${styles.delete}`} />
 								</button>
-								<button onClick={handleShowEditBox}>
+								<button onClick={handleShowEditBox} data-testid="edit-button">
 									<span className={`${imageStyles.icon} ${styles.edit}`} />
 								</button>
 							</div>
@@ -152,6 +152,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 						<button
 							className={styles['reply-list-btn']}
 							onClick={handleShowReplies}
+							data-testid="reply-icon"
 						>
 							<span
 								className={`${imageStyles.icon} ${
@@ -161,6 +162,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 							{loading ? (
 								<span
 									className={`${imageStyles.icon} ${buttonStyles['load']}`}
+									data-testid="loading-icon"
 								/>
 							) : (
 								comment.countReplies
@@ -189,7 +191,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 			)}
 
 			{showReplies && comment?.replies && (
-				<Replies post={post} comment={comment} onLoading={setLoading} />
+				<Replies post={post} comment={comment} />
 			)}
 		</li>
 	);
