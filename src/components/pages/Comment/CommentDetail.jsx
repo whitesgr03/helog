@@ -157,7 +157,6 @@ export const CommentDetail = ({ index, post, comment }) => {
 								className={`${imageStyles.icon} ${
 									styles['reply-icon']
 								} ${showReplies && comment?.replies ? styles.active : ''}`}
-								data-testid="commentIcon"
 							/>
 							{loading ? (
 								<span
