@@ -50,7 +50,7 @@ export const CommentCreate = ({ post }) => {
 				postId: post._id,
 				newPost: {
 					...post,
-					countComments: post.countComments + 1,
+					totalComments: post.totalComments + 1,
 					comments: [result.data, ...post.comments],
 				},
 			});
