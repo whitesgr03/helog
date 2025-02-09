@@ -122,32 +122,38 @@ export const PostDetail = () => {
 						<div
 							className={`${styles.container} ${checking ? styles.hide : ''}`}
 						>
-							<Link to={-1} className={styles.link}>
-								<span
-									className={`${styles['left-arrow']} ${imageStyles.icon}`}
-								/>
-								Back to previous page
-							</Link>
-							{post?.title && <h2 className={styles.title}>{post.title}</h2>}
-							<div className={styles['published-date']}>
-								<strong>{post.author.username}</strong>
-								<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
-								{new Date(post.createdAt).getDate() !==
-									new Date(post.updatedAt).getDate() && (
-									<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
-								)}
-							</div>
-							{post?.mainImage && (
-								<div className={styles['image-wrap']}>
-									<div className={imageStyles.content} ref={imageContentRef}>
-										<img
-											src={errorImage || post.mainImage}
-											alt="Main image"
-											onError={handleError}
-											onLoad={handleLoad}
+							{post && (
+								<>
+									<Link to={-1} className={styles.link}>
+										<span
+											className={`${styles['left-arrow']} ${imageStyles.icon}`}
 										/>
+										Back to previous page
+									</Link>
+
+									<h2 className={styles.title}>{post.title}</h2>
+
+									<div className={styles['published-date']}>
+										<strong>{post.author.username}</strong>
+
+										<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
+										{new Date(post.createdAt).getDate() !==
+											new Date(post.updatedAt).getDate() && (
+											<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
+										)}
 									</div>
-								</div>
+
+									<div className={styles['image-wrap']}>
+										<div className={imageStyles.content} ref={imageContentRef}>
+											<img
+												src={errorImage || post.mainImage}
+												alt="Main image"
+												onError={handleError}
+												onLoad={handleLoad}
+											/>
+										</div>
+									</div>
+								</>
 							)}
 
 							<Editor
