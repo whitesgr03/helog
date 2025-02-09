@@ -56,7 +56,7 @@ export const PostDetail = () => {
 			const handleResult = () => {
 				result.success
 					? onUpdatePost({ postId, newPost: result.data })
-					: setError(result.message);
+					: setError(result);
 				setLoading(false);
 			};
 
@@ -110,7 +110,11 @@ export const PostDetail = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error, previousPath }} />
+				error.status === 404 ? (
+					<Navigate to="/error/404" />
+				) : (
+					<Navigate to="/error" state={{ error, previousPath }} />
+				)
 			) : (
 				<>
 					<div id="post-detail" className={styles['post-detail']}>
