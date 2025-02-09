@@ -99,22 +99,21 @@ export const Comments = ({ post }) => {
 										/>
 									))}
 								</ul>
-								{post.countComments > skipComments &&
-									post.comments.length >= 10 && (
-										<button
-											className={`${buttonStyles.content} ${buttonStyles.more} `}
-											onClick={handleGetComments}
-										>
-											<span className={buttonStyles.text}>
-												Show more comments
-												{loading && (
-													<span
-														className={`${imageStyles.icon} ${buttonStyles['load']}`}
-													/>
-												)}
-											</span>
-										</button>
-									)}
+								{post.countComments > skipComments && (
+									<button
+										className={`${buttonStyles.content} ${buttonStyles.more} `}
+										onClick={handleGetComments}
+									>
+										<span className={buttonStyles.text}>
+											Show more comments
+											{loading && (
+												<span
+													className={`${imageStyles.icon} ${buttonStyles['load']}`}
+												/>
+											)}
+										</span>
+									</button>
+								)}
 							</>
 						) : (
 							<p>There are not comments.</p>
