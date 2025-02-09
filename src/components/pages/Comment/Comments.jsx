@@ -82,7 +82,7 @@ export const Comments = ({ post }) => {
 				<Loading text={'Loading comments...'} />
 			) : (
 				<>
-					<h3>{post.countComments > 0 ? post.countComments : ''} Comments</h3>
+					<h3>{post.totalComments > 0 ? post.totalComments : ''} Comments</h3>
 					<div className={styles['comment-box-wrap']}>
 						<CommentCreate post={post} />
 					</div>
