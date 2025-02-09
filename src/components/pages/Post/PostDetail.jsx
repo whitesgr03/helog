@@ -52,10 +52,10 @@ export const PostDetail = () => {
 		const { signal } = controller;
 
 		const handleGetPostDetail = async () => {
-			const result = await getPostDetail({ postId: post._id, signal });
+			const result = await getPostDetail({ postId, signal });
 			const handleResult = () => {
 				result.success
-					? onUpdatePost({ postId: post._id, newPost: result.data })
+					? onUpdatePost({ postId, newPost: result.data })
 					: setError(result.message);
 				setLoading(false);
 			};
@@ -66,7 +66,7 @@ export const PostDetail = () => {
 		post?.content === undefined ? handleGetPostDetail() : setLoading(false);
 
 		return () => controller.abort();
-	}, [post, onUpdatePost]);
+	}, [post, postId, onUpdatePost]);
 
 	useEffect(() => {
 		const handleCheckContentImages = async () => {
