@@ -109,6 +109,7 @@ export const Comments = ({ post }) => {
 											{loading && (
 												<span
 													className={`${imageStyles.icon} ${buttonStyles['load']}`}
+													data-testid="loading-icon"
 												/>
 											)}
 										</span>
