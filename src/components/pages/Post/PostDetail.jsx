@@ -121,6 +121,7 @@ export const PostDetail = () => {
 						{checking && <Loading text={'Loading post...'} />}
 						<div
 							className={`${styles.container} ${checking ? styles.hide : ''}`}
+							data-testid="container"
 						>
 							{post && (
 								<>
