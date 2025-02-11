@@ -28,7 +28,7 @@ export const Posts = ({ posts, limit }) => {
 		<>
 			{posts.length ? (
 				<ul className={styles.posts}>
-					{posts.slice(0, limit).map(post => (
+					{posts.slice(0, limit).map((post, index) => (
 						<li key={post._id}>
 							<div className={styles.info}>
 								<strong className={styles['date-time']}>
@@ -41,7 +41,7 @@ export const Posts = ({ posts, limit }) => {
 								<div className={imageStyles.content} ref={imageContentRef}>
 									<img
 										src={errorImage ?? post.mainImage}
-										alt={`${post.title} main image`}
+										alt={`Main image of post ${index + 1}`}
 										loading="lazy"
 										onError={handleError}
 										onLoad={handleLoad}
