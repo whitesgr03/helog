@@ -105,7 +105,7 @@ describe('PostList component', () => {
 
 		fireEvent.scroll(window, { target: { scrollY: 100 } });
 
-		await screen.findByText('Loading posts...');
+		await screen.findByText('Loading posts ...');
 
 		const errorComponent = screen.getByText('Error component');
 
@@ -160,7 +160,7 @@ describe('PostList component', () => {
 
 		fireEvent.scroll(window, { target: { scrollY: 100 } });
 
-		await screen.findByText('Loading posts...');
+		await screen.findByText('Loading posts ...');
 
 		expect(getPosts).toBeCalledTimes(1);
 		expect(mockContext.onUpdatePosts).toBeCalledTimes(1);
