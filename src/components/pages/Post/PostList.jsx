@@ -23,49 +23,36 @@ export const PostList = () => {
 	const { pathname: previousPath } = useLocation();
 
 	useEffect(() => {
-		const handleGetPosts = async () => {
-			setLoading(true);
-			const result = await getPosts({ skip: skipPosts });
-			setSkipPosts(skipPosts + 10);
-			result.success
-				? onUpdatePosts(result.data)
-				: navigate('/error', {
-						state: { error: result.message, previousPath },
-					});
-			setLoading(false);
-		};
-
 		const handleScroll = async () => {
-			const postListHeight = postListRef.current.clientHeight;
-			const headerHeight = headerRef.current.clientHeight;
+			const targetRect = postListRef.current.getBoundingClientRect();
 
-			const isScrollToPostListBottom =
-				postListHeight +
-					headerHeight -
-					document.documentElement.scrollTop -
-					document.documentElement.clientHeight <=
-				0;
+			const isScrollToDivBottom = targetRect.bottom <= window.innerHeight;
 
-			!loading &&
-				countPosts > skipPosts &&
-				isScrollToPostListBottom &&
-				(await handleGetPosts());
+			const handleGetPosts = async () => {
+				setLoading(true);
+				const result = await getPosts({ skip: skipPosts });
+
+				const handleSuccess = () => {
+					onUpdatePosts(result.data);
+					setSkipPosts(skipPosts + 10);
+					setLoading(false);
+				};
+				result.success
+					? handleSuccess()
+					: navigate('/error', {
+							state: { error: result.message, previousPath },
+						});
+			};
+
+			isScrollToDivBottom && (await handleGetPosts());
 		};
 
-		posts.length < countPosts &&
-			document.addEventListener('scroll', handleScroll);
+		!loading &&
+			countPosts > skipPosts &&
+			window.addEventListener('scroll', handleScroll);
 
-		return () => document.removeEventListener('scroll', handleScroll);
-	}, [
-		posts,
-		countPosts,
-		headerRef,
-		loading,
-		onUpdatePosts,
-		skipPosts,
-		navigate,
-		previousPath,
-	]);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, [countPosts, loading, skipPosts, onUpdatePosts, navigate, previousPath]);
 
 	return (
 		<div className={styles['post-list']}>
