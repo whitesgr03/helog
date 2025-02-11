@@ -20,9 +20,8 @@ export const Posts = ({ posts, limit }) => {
 		);
 	};
 
-	const handleLoad = e => {
+	const handleLoad = e =>
 		(e.target.width <= 0 || e.target.height <= 0) && handleError();
-	};
 
 	return (
 		<>
