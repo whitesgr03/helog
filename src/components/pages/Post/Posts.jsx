@@ -49,7 +49,7 @@ export const Posts = ({ posts, limit }) => {
 								</div>
 							</Link>
 
-							<Link to={`/posts/${post._id}`}>
+							<Link to={`../posts/${post._id}`}>
 								<h3 className={styles.title}>{post.title}</h3>
 							</Link>
 						</li>
