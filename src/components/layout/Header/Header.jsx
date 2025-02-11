@@ -16,7 +16,6 @@ export const Header = ({
 	onUser,
 	onAlert,
 	darkTheme,
-	headerRef,
 	onColorTheme,
 	onActiveModal,
 }) => {
@@ -27,7 +26,7 @@ export const Header = ({
 
 	return (
 		<>
-			<header className={styles.header} ref={headerRef}>
+			<header className={styles.header}>
 				<Link to="../" className={styles.logo} onClick={handleCloseDropdown}>
 					<h1>HeLog</h1>
 				</Link>
@@ -90,7 +89,6 @@ export const Header = ({
 Header.propTypes = {
 	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
-	headerRef: PropTypes.object,
 	onColorTheme: PropTypes.func,
 	onActiveModal: PropTypes.func,
 	onUser: PropTypes.func,

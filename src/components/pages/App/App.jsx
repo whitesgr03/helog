@@ -1,5 +1,5 @@
 // Packages
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	Outlet,
 	useSearchParams,
@@ -34,7 +34,6 @@ export const App = () => {
 	const [modal, setModal] = useState(null);
 	const [error, setError] = useState(false);
 	const [reGetUser, setReGetUser] = useState(false);
-	const headerRef = useRef(null);
 
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -172,7 +171,6 @@ export const App = () => {
 						<Header
 							user={user}
 							darkTheme={darkTheme}
-							headerRef={headerRef}
 							onUser={setUser}
 							onAlert={handleAlert}
 							onColorTheme={handleColorTheme}
@@ -201,7 +199,6 @@ export const App = () => {
 										user,
 										posts,
 										countPosts,
-										headerRef,
 										onUser: setUser,
 										onUpdatePosts: handleUpdatePosts,
 										onActiveModal: handleActiveModal,

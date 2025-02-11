@@ -14,7 +14,7 @@ import { Posts } from './Posts';
 import { getPosts } from '../../../utils/handlePost';
 
 export const PostList = () => {
-	const { posts, countPosts, headerRef, onUpdatePosts } = useOutletContext();
+	const { posts, countPosts, onUpdatePosts } = useOutletContext();
 	const [skipPosts, setSkipPosts] = useState(10);
 	const [loading, setLoading] = useState(false);
 	const postListRef = useRef(null);
