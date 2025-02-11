@@ -69,7 +69,9 @@ export const PostList = () => {
 
 	return (
 		<div className={styles['post-list']}>
-			<Posts posts={posts} limit={posts.length} postListRef={postListRef} />
+			<div ref={postListRef}>
+				<Posts posts={posts} limit={posts.length} />
+			</div>
 			{loading && (
 				<div className={styles['load-btn']}>
 					Loading posts ...
