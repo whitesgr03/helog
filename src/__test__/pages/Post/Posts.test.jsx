@@ -1,92 +1,311 @@
-import { vi, describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { vi, describe, it, expect } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { faker } from '@faker-js/faker';
+import { format } from 'date-fns';
 
-import useFetch from "../hooks/useFetch";
+import userEvent from '@testing-library/user-event';
 
-import Posts from "../components/Posts";
+import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
 
-vi.mock("../hooks/useFetch");
+import { Posts } from '../../../components/pages/Post/Posts';
 
-vi.mock("../components/Loading.jsx", () => ({
-	default: () => <p>Loading component</p>,
-}));
+vi.mock('date-fns');
 
-vi.mock("../components/Error.jsx", () => ({
-	default: () => <p>Error component</p>,
-}));
+describe('Posts component', () => {
+	it(`should replace the invalid main image with the error image, if the main image is not a valid image resource.`, async () => {
+		const mockProps = {
+			posts: [
+				{
+					_id: '0',
+					title: 'title',
+					mainImage: 'error',
+					content: 'content',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+				},
+			],
+		};
 
-describe("Posts component", () => {
-	it("should render Loading component if loading state of useFetch is true", async () => {
-		useFetch.mockReturnValueOnce({
-			data: false,
-			error: false,
-			loading: true,
-		});
+		mockProps.limit = mockProps.posts.length;
 
-		render(<Posts />, { wrapper: BrowserRouter });
+		format.mockReturnValue('');
 
-		const element = screen.getByText("Loading component");
-
-		expect(element).toBeInTheDocument();
-	});
-	it("should render Error component if error state of useFetch is true", async () => {
-		useFetch.mockReturnValueOnce({
-			data: false,
-			error: true,
-			loading: false,
-		});
-
-		render(<Posts />, { wrapper: BrowserRouter });
-
-		const element = screen.getByText("Error component");
-
-		expect(element).toBeInTheDocument();
-	});
-	it("should render static content if loading and error states of useFetch are not true and data is not true.", async () => {
-		useFetch.mockReturnValueOnce({
-			data: false,
-			error: false,
-			loading: false,
-		});
-
-		render(<Posts />, { wrapper: BrowserRouter });
-
-		const element = screen.getByText("There are not posts.");
-
-		expect(element).toBeInTheDocument();
-	});
-	it("should render dynamic data if loading and error states of useFetch are not true and data length is greater then 0.", async () => {
-		const mockPosts = [
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Outlet />,
+					children: [
+						{
+							index: true,
+							element: <Posts {...mockProps} />,
+						},
+					],
+				},
+			],
 			{
-				_id: "1",
-				title: "This is title A",
-				content: "This is content A",
-				createdAt: new Date("2024/5/1"),
+				initialEntries: ['/'],
+				future: {
+					v7_relativeSplatPath: true,
+				},
 			},
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const image = screen.getByAltText(`Main image of post 1`);
+
+		fireEvent.load(image);
+
+		expect(image.src).toBe(
+			'https://fakeimg.pl/0x0/?text=404%20Error&font=noto',
+		);
+	});
+	it(`should render no posts if the provided posts are empty`, async () => {
+		const mockProps = {
+			posts: [],
+		};
+
+		mockProps.limit = mockProps.posts.length;
+
+		format.mockReturnValue('');
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Outlet />,
+					children: [
+						{
+							index: true,
+							element: <Posts {...mockProps} />,
+						},
+					],
+				},
+			],
 			{
-				_id: "2",
-				title: "This is title B",
-				content: "This is content B",
-				createdAt: new Date("2024/5/1"),
+				initialEntries: ['/'],
+				future: {
+					v7_relativeSplatPath: true,
+				},
 			},
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const noPosts = screen.getByText('There are not posts.');
+
+		expect(noPosts).toBeInTheDocument();
+	});
+	it(`should render posts if the posts are provided`, async () => {
+		const mockProps = {
+			posts: [
+				{
+					_id: '0',
+					title: 'title',
+					mainImage: faker.image.url({
+						width: 10,
+						height: 10,
+					}),
+					content: 'content',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+				},
+			],
+		};
+
+		mockProps.limit = mockProps.posts.length;
+
+		format.mockReturnValue('new date');
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Outlet />,
+					children: [
+						{
+							index: true,
+							element: <Posts {...mockProps} />,
+						},
+					],
+				},
+			],
 			{
-				_id: "3",
-				title: "This is title C",
-				content: "This is content C",
-				createdAt: new Date("2024/5/1"),
+				initialEntries: ['/'],
+				future: {
+					v7_relativeSplatPath: true,
+				},
 			},
-		];
-		useFetch.mockReturnValueOnce({
-			data: mockPosts,
-			error: false,
-			loading: false,
-		});
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
 
-		render(<Posts />, { wrapper: BrowserRouter });
+		const username = screen.getByText(mockProps.posts[0].author.username);
+		const dataTime = screen.getByText('new date');
+		const image = screen.getByAltText('Main image of post 1');
+		const title = screen.getByText(mockProps.posts[0].title);
 
-		const element = screen.getByRole("list");
+		expect(username).toBeInTheDocument();
+		expect(dataTime).toBeInTheDocument();
+		expect(title).toBeInTheDocument();
+		expect(image.src).toBe(mockProps.posts[0].mainImage);
+	});
+	it(`should render the limit the number of posts if the limit is provided`, async () => {
+		const mockProps = {
+			posts: [
+				{
+					_id: '0',
+					title: 'title',
+					mainImage: 'error',
+					content: 'content',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+				},
+				{
+					_id: '1',
+					title: 'title',
+					mainImage: 'error',
+					content: 'content',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+				},
+				{
+					_id: '2',
+					title: 'title',
+					mainImage: 'error',
+					content: 'content',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+				},
+			],
+		};
 
-		expect(element).toBeInTheDocument();
+		mockProps.limit = 2;
+
+		format.mockReturnValue('');
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Outlet />,
+					children: [
+						{
+							index: true,
+							element: <Posts {...mockProps} />,
+						},
+					],
+				},
+			],
+			{
+				initialEntries: ['/'],
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const items = screen.getAllByRole('listitem');
+
+		expect(items.length).toBe(2).not.toBe(mockProps.posts.length);
+	});
+	it(`should navigate to the specified post if the main image element or the title element is clicked`, async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			posts: [
+				{
+					_id: '0',
+					title: 'title',
+					mainImage: 'error',
+					content: 'content',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+				},
+			],
+		};
+
+		mockProps.limit = mockProps.posts.length;
+
+		format.mockReturnValue('');
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Outlet />,
+					children: [
+						{
+							index: true,
+							element: <Posts {...mockProps} />,
+						},
+						{
+							path: 'posts/:postId',
+							element: <div>A specified post page</div>,
+						},
+					],
+				},
+			],
+			{
+				initialEntries: ['/'],
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const link = screen.getByRole('link', { name: mockProps.posts[0].title });
+
+		await user.click(link);
+
+		const postPage = screen.getByText('A specified post page');
+
+		expect(postPage).toBeInTheDocument();
 	});
 });
