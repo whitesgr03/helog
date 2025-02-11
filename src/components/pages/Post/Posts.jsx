@@ -28,43 +28,32 @@ export const Posts = ({ posts, limit }) => {
 		<>
 			{posts.length ? (
 				<ul className={styles.posts}>
-					{posts.slice(0, limit).map(
-						post =>
-							post?.content !== '' && (
-								<li key={post._id}>
-									<div className={styles.info}>
-										<strong className={styles['date-time']}>
-											{post.author.username}
-										</strong>
-										<em>{format(post.updatedAt, 'MMMM d, y')}</em>
-									</div>
+					{posts.slice(0, limit).map(post => (
+						<li key={post._id}>
+							<div className={styles.info}>
+								<strong className={styles['date-time']}>
+									{post.author.username}
+								</strong>
+								<em>{format(post.updatedAt, 'MMMM d, y')}</em>
+							</div>
 
-									<Link to={`../posts/${post._id}`}>
-										<div className={imageStyles.content} ref={imageContentRef}>
-											{post.mainImage ? (
-												<img
-													src={errorImage ?? post.mainImage}
-													alt={`${post.title} main image`}
-													loading="lazy"
-													onError={handleError}
-													onLoad={handleLoad}
-												/>
-											) : (
-												<div className={styles['empty-image-wrap']}>
-													{'( Empty Main Image )'}
-												</div>
-											)}
-										</div>
-									</Link>
+							<Link to={`../posts/${post._id}`}>
+								<div className={imageStyles.content} ref={imageContentRef}>
+									<img
+										src={errorImage ?? post.mainImage}
+										alt={`${post.title} main image`}
+										loading="lazy"
+										onError={handleError}
+										onLoad={handleLoad}
+									/>
+								</div>
+							</Link>
 
-									<Link to={`/posts/${post._id}`}>
-										<h3 className={styles.title}>
-											{post.title ?? '( Empty Title )'}
-										</h3>
-									</Link>
-								</li>
-							),
-					)}
+							<Link to={`/posts/${post._id}`}>
+								<h3 className={styles.title}>{post.title}</h3>
+							</Link>
+						</li>
+					))}
 				</ul>
 			) : (
 				<p className={styles['no-posts']}>There are not posts.</p>
