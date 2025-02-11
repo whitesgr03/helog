@@ -24,6 +24,7 @@ export const Modal = ({ onActiveModal, clickToClose, children }) => {
 						onClick={e =>
 							e.target === e.currentTarget && onActiveModal({ component: null })
 						}
+						data-testid="close-btn"
 					>
 						<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
 					</button>
