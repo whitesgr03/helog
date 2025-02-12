@@ -49,20 +49,17 @@ export const Alert = ({ alert, onAlert }) => {
 		!inAlertElement && startTimer();
 		!inAlertElement && setPause(false);
 	};
-
 	return (
-		<>
-			<div
-				onTransitionEnd={handleTransitionend}
-				onMouseOver={() => !pause && handlePauseTimer()}
-				onMouseOut={handleContinueTimer}
-				className={`${styles.alert} ${alert.length === 1 ? styles.active : ''} ${
-					lastAlert.error || alert[0]?.error ? styles.error : ''
-				}`}
-			>
-				<p>{lastAlert.message || alert[0]?.message}</p>
-			</div>
-		</>
+		<div
+			onTransitionEnd={handleTransitionend}
+			onMouseOver={() => !pause && handlePauseTimer()}
+			onMouseOut={handleContinueTimer}
+			className={`${styles.alert} ${alert.length === 1 ? styles.active : ''} ${
+				lastAlert.error || alert[0]?.error ? styles.error : ''
+			}`}
+		>
+			<p>{lastAlert.message || alert[0]?.message}</p>
+		</div>
 	);
 };
 
