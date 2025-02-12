@@ -52,8 +52,8 @@ export const Alert = ({ alert, onAlert }) => {
 	return (
 		<div
 			onTransitionEnd={handleTransitionend}
-			onMouseOver={() => !pause && handlePauseTimer()}
-			onMouseOut={handleContinueTimer}
+			onMouseEnter={handlePauseTimer}
+			onMouseLeave={handleContinueTimer}
 			className={`${styles.alert} ${alert.length === 1 ? styles.active : ''} ${
 				lastAlert.error || alert[0]?.error ? styles.error : ''
 			}`}
