@@ -34,7 +34,7 @@ export const Alert = ({ alert, onAlert }) => {
 	};
 
 	const handleTransitionend = () => {
-		alert.length === 1 && startTimer();
+		alert.length === 1 && !pause && startTimer();
 		alert.length > 1 && endAlert();
 		alert.length === 0 && setLastAlert({});
 	};
