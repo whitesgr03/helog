@@ -87,7 +87,7 @@ export const App = () => {
 					? themeParams
 					: darkScheme !== null
 						? darkScheme
-						: browserDarkScheme;
+						: String(browserDarkScheme);
 
 			localStorage.setItem('darkTheme', theme);
 			setDarkTheme(theme === 'true');
