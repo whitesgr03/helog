@@ -50,7 +50,7 @@ describe('Alert component', () => {
 			expect(mockProps.onAlert).toBeCalledWith([]).toBeCalledTimes(1);
 		});
 	});
-	it.only(`should pause the alert timer if the user mouse over to alert element`, async () => {
+	it(`should pause the alert timer if the user mouse over to alert element`, async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			alert: [{ message: 'alert-message', error: false, delay: 100 }],
