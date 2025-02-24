@@ -139,6 +139,54 @@ describe('ChangeNameModal component', () => {
 			expect(usernameErrorMessage).toHaveTextContent('Message placeholder');
 		});
 	});
+	it('should render the corresponding error field message, if the input is still incorrect after a failed submission', async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			username: 'username',
+		};
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <ChangeNameModal {...mockProps} />,
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const submitButton = screen.getByRole('button', 'Save');
+		const usernameField = screen.getByText('Change username');
+		const usernameErrorMessage = screen.getByText('Message placeholder');
+
+		await user.click(submitButton);
+
+		expect(usernameField).toHaveClass(/error/);
+		expect(usernameErrorMessage).toHaveTextContent(
+			'New username should be different from the old username',
+		);
+
+		await user.type(usernameField, '#&@*($#$');
+
+		await waitFor(() => {
+			expect(usernameField).toHaveClass(/error/);
+			expect(usernameErrorMessage).toHaveTextContent(
+				'Username must be alphanumeric.',
+			);
+		});
+	});
 	it('should render an error field message if the username update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
