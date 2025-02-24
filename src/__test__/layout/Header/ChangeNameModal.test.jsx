@@ -93,7 +93,7 @@ describe('ChangeNameModal component', () => {
 			'New username should be different from the old username',
 		);
 	});
-	it('should validate each input after a failed submission', async () => {
+	it('should be verified successfully, if the input is correct after a failed submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
