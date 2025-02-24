@@ -54,7 +54,10 @@ export const ChangeNameModal = ({ username, onUser, onActiveModal }) => {
 			username: string()
 				.trim()
 				.max(30, ({ max }) => `Username must be less than ${max} long.`)
-				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.matches(
+					/^([a-zA-Z0-9](-|_|\s)?)*[a-zA-Z0-9]$/,
+					'Username must be alphanumeric.',
+				)
 				.notOneOf(
 					[username],
 					'New username should be different from the old username.',
@@ -92,7 +95,10 @@ export const ChangeNameModal = ({ username, onUser, onActiveModal }) => {
 			username: string()
 				.trim()
 				.max(30, ({ max }) => `Username must be less than ${max} long.`)
-				.matches(/^[a-zA-Z0-9]\w*$/, 'Username must be alphanumeric.')
+				.matches(
+					/^([a-zA-Z0-9](-|_|\s)?)*[a-zA-Z0-9]$/,
+					'Username must be alphanumeric.',
+				)
 				.notOneOf(
 					[username],
 					'New username should be different from the old username.',
