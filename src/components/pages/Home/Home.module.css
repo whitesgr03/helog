@@ -36,10 +36,6 @@
 	padding: 10px 20px;
 }
 
-.link span:nth-child(2) {
-	display: none;
-}
-
 .latest-posts {
 	display: none;
 }
@@ -98,14 +94,6 @@
 	.content {
 		row-gap: 40px;
 		height: auto;
-	}
-
-	.link span:nth-child(1) {
-		display: none;
-	}
-
-	.link span:nth-child(2) {
-		display: inline;
 	}
 
 	.loading-container {
