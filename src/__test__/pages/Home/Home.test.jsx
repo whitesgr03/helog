@@ -91,7 +91,7 @@ describe('Home component', () => {
 			/>,
 		);
 
-		const link = screen.getByRole('link', { name: 'Latest All Posts' });
+		const link = screen.getByRole('link', { name: 'All Posts' });
 
 		await user.click(link);
 
