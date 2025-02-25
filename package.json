@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite --open --port=9001",
 		"build": "npm run postinstall && vite build",
-		"test": "vitest",
+		"test:component": "vitest",
 		"coverage": "vitest --coverage",
 		"postinstall": "node ./postinstall.js",
 		"test:e2e": "npx playwright test",
