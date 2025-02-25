@@ -34,8 +34,7 @@ export const Home = () => {
 						and in the real world.
 					</p>
 					<Link to={'../posts'} className={styles.link}>
-						<span>Latest </span>
-						<span>All </span>Posts
+						All Posts
 						<span
 							className={`${imageStyles.icon} ${styles.doubleArrowRight}`}
 						/>
