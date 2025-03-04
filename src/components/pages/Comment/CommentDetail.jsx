@@ -181,7 +181,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 				)}
 			</div>
 
-			{showReplyBox && comment?.replies && (
+			{showReplyBox && (
 				<div className={styles['comment-box-wrap']}>
 					<ReplyCreate
 						post={post}
@@ -191,9 +191,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 				</div>
 			)}
 
-			{showReplies && comment?.replies && (
-				<Replies post={post} comment={comment} />
-			)}
+			{showReplies && <Replies post={post} comment={comment} />}
 		</li>
 	);
 };
