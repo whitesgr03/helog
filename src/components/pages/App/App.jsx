@@ -151,65 +151,69 @@ export const App = () => {
 		<>
 			{error ? (
 				<Error onReGetUser={setReGetUser} />
-			) : loading || fetching ? (
-				<Loading text={'Loading...'} />
 			) : (
 				<div
 					className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
 					data-testid="app"
 				>
 					<ScrollRestoration getKey={location => location.key} />
-					{modal && (
-						<Modal
-							onActiveModal={handleActiveModal}
-							clickToClose={modal.clickToClose}
-						>
-							{modal.component}
-						</Modal>
-					)}
-					<div className={styles['header-bar']}>
-						<Header
-							user={user}
-							darkTheme={darkTheme}
-							onUser={setUser}
-							onAlert={handleAlert}
-							onColorTheme={handleColorTheme}
-							onActiveModal={handleActiveModal}
-						/>
-						<Alert alert={alert} onAlert={setAlert} />
-					</div>
-					<div className={styles.container}>
-						<main>
-							{user && !user.username ? (
-								!modal &&
-								handleActiveModal({
-									component: (
-										<CreateUsername
-											onActiveModal={handleActiveModal}
-											onUser={setUser}
-											onAlert={handleAlert}
-											onError={setError}
-										/>
-									),
-									clickToClose: false,
-								})
-							) : (
-								<Outlet
-									context={{
-										user,
-										posts,
-										countPosts,
-										onUser: setUser,
-										onUpdatePosts: handleUpdatePosts,
-										onActiveModal: handleActiveModal,
-										onAlert: handleAlert,
-										onUpdatePost: handleUpdatePost,
-									}}
-								/>
+					{loading || fetching ? (
+						<Loading text={'Loading...'} />
+					) : (
+						<>
+							{modal && (
+								<Modal
+									onActiveModal={handleActiveModal}
+									clickToClose={modal.clickToClose}
+								>
+									{modal.component}
+								</Modal>
 							)}
-						</main>
-						<Footer />
-					</div>
+							<div className={styles['header-bar']}>
+								<Header
+									user={user}
+									darkTheme={darkTheme}
+									onUser={setUser}
+									onAlert={handleAlert}
+									onColorTheme={handleColorTheme}
+									onActiveModal={handleActiveModal}
+								/>
+								<Alert alert={alert} onAlert={setAlert} />
+							</div>
+							<div className={styles.container}>
+								<main>
+									{user && !user.username ? (
+										!modal &&
+										handleActiveModal({
+											component: (
+												<CreateUsername
+													onActiveModal={handleActiveModal}
+													onUser={setUser}
+													onAlert={handleAlert}
+													onError={setError}
+												/>
+											),
+											clickToClose: false,
+										})
+									) : (
+										<Outlet
+											context={{
+												user,
+												posts,
+												countPosts,
+												onUser: setUser,
+												onUpdatePosts: handleUpdatePosts,
+												onActiveModal: handleActiveModal,
+												onAlert: handleAlert,
+												onUpdatePost: handleUpdatePost,
+											}}
+										/>
+									)}
+								</main>
+								<Footer />
+							</div>
+						</>
+					)}
 				</div>
 			)}
 		</>
