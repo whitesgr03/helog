@@ -22,16 +22,18 @@ export const Home = () => {
 					</div>
 				</div>
 				<div className={styles.content}>
-					<h2 className={styles.title}>A Daily Stories For Reader</h2>
+					<h2 className={styles.title}>
+						Welcome to HeLog: A Daily Stories For Reader
+					</h2>
 					<p>
-						The personal blog is an ongoing online diary or commentary written
-						by an individual, rather than a corporation or organization. While
-						the vast majority of personal blogs attract very few readers, other
-						than the blogger{`'`}s immediate family and friends, a small number
-						of personal blogs have become popular, to the point that they have
-						attracted lucrative advertising sponsorship. A tiny number of
-						personal bloggers have become famous, both in the online community
-						and in the real world.
+						Ever felt like your daily experiences are worth sharing? Those
+						little moments that make you smile, the challenges that shaped you,
+						or the random thoughts that keep you up at night? Well, you're not
+						alone, and that's exactly why HeLog exists. Think of HeLog as your
+						digital diary that connects with others. It's where your everyday
+						experiences become part of a larger tapestry of human stories. No
+						filters, no pretense - just real people sharing real moments. Let us
+						make your story part of the world's story.
 					</p>
 					<Link to={'../posts'} className={styles.link}>
 						All Posts
