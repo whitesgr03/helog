@@ -56,7 +56,7 @@ export const PostList = () => {
 
 	return (
 		<div className={styles['post-list']}>
-			<div ref={postListRef}>
+			<div className={styles.container} ref={postListRef}>
 				<Posts posts={posts} limit={posts.length} />
 			</div>
 			{loading && (
