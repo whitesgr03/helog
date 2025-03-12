@@ -1,7 +1,7 @@
 // Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Navigate, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // Styles
 import styles from './Dropdown.module.css';
@@ -28,9 +28,9 @@ export const Dropdown = ({
 	onActiveModal,
 }) => {
 	const [loading, setLoading] = useState(null);
-	const [error, setError] = useState(null);
 	const [activeSettings, setActiveSettings] = useState(false);
 
+	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
 	const handleLogout = async () => {
@@ -43,8 +43,11 @@ export const Dropdown = ({
 
 		const result = await handleFetch(URL, options);
 
-		result.success ? onUser(null) : setError(result.message);
-
+		result.success
+			? onUser(null)
+			: navigate('/error', {
+					state: { error: result.message, previousPath },
+				});
 		onCloseDropdown();
 		setLoading(false);
 	};
@@ -52,71 +55,65 @@ export const Dropdown = ({
 	const handleToggleSettingsMenu = () => setActiveSettings(!activeSettings);
 
 	return (
-		<>
-			{error ? (
-				<Navigate to="/error" state={{ error, previousPath }} />
-			) : (
-				<div className={styles.dropdown}>
-					{user?.username && (
-						<div className={styles.profile}>
-							<div className={styles.avatar}>
-								{user.username.charAt(0).toUpperCase()}
-							</div>
-							<span>{user.username}</span>
-						</div>
-					)}
-					<ul>
-						<li>
-							<button className={buttonStyles.theme} onClick={onColorTheme}>
-								<span
-									data-testid="theme-icon"
-									className={`${imageStyles.icon} ${
-										darkTheme ? styles.moon : styles.sun
-									}`}
-								/>
-								{darkTheme ? 'Dark' : 'Light'} mode
-								<div>
-									<div />
-								</div>
-							</button>
-						</li>
-						{user?.username && (
-							<li>
-								<button onClick={handleToggleSettingsMenu}>
-									<span className={`${imageStyles.icon} ${styles.settings}`} />
-									Settings
-								</button>
-							</li>
-						)}
-						<li>
-							{user?.username ? (
-								<button onClick={handleLogout}>
-									<span
-										data-testid="loading-icon"
-										className={`${imageStyles.icon} ${loading ? loadingStyles.load : styles.logout}`}
-									/>
-									Logout
-								</button>
-							) : (
-								<Link to="../login" onClick={onCloseDropdown}>
-									<span className={`${imageStyles.icon} ${styles.login}`} />
-									Login
-								</Link>
-							)}
-						</li>
-					</ul>
-					{activeSettings && (
-						<Settings
-							user={user}
-							onUser={onUser}
-							onAlert={onAlert}
-							onActiveModal={onActiveModal}
-							onToggleSettingsMenu={handleToggleSettingsMenu}
-						/>
-					)}
+		<div className={styles.dropdown}>
+			{user?.username && (
+				<div className={styles.profile}>
+					<div className={styles.avatar}>
+						{user.username.charAt(0).toUpperCase()}
+					</div>
+					<span>{user.username}</span>
 				</div>
 			)}
-		</>
+			<ul>
+				<li>
+					<button className={buttonStyles.theme} onClick={onColorTheme}>
+						<span
+							data-testid="theme-icon"
+							className={`${imageStyles.icon} ${
+								darkTheme ? styles.moon : styles.sun
+							}`}
+						/>
+						{darkTheme ? 'Dark' : 'Light'} mode
+						<div>
+							<div />
+						</div>
+					</button>
+				</li>
+				{user?.username && (
+					<li>
+						<button onClick={handleToggleSettingsMenu}>
+							<span className={`${imageStyles.icon} ${styles.settings}`} />
+							Settings
+						</button>
+					</li>
+				)}
+				<li>
+					{user?.username ? (
+						<button onClick={handleLogout}>
+							<span
+								data-testid="loading-icon"
+								className={`${imageStyles.icon} ${loading ? loadingStyles.load : styles.logout}`}
+							/>
+							Logout
+						</button>
+					) : (
+						<Link to="../login" onClick={onCloseDropdown}>
+							<span className={`${imageStyles.icon} ${styles.login}`} />
+							Login
+						</Link>
+					)}
+				</li>
+			</ul>
+			{activeSettings && (
+				<Settings
+					user={user}
+					onUser={onUser}
+					onAlert={onAlert}
+					onActiveModal={onActiveModal}
+					onToggleSettingsMenu={handleToggleSettingsMenu}
+				/>
+			)}
+		</div>
 	);
 };
 
