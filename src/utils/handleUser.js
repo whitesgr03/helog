@@ -1,4 +1,5 @@
 import { handleFetch } from './handleFetch';
+import Cookies from 'js-cookie';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/user`;
 
@@ -6,6 +7,9 @@ export const getUser = async ({ signal }) => {
 	const options = {
 		method: 'GET',
 		signal,
+		headers: {
+			'X-CSRF-TOKEN': Cookies.get('token'),
+		},
 		credentials: 'include',
 	};
 
@@ -16,6 +20,7 @@ export const updateUser = async fields => {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': Cookies.get('token'),
 		},
 		credentials: 'include',
 		body: JSON.stringify(fields),
@@ -25,6 +30,9 @@ export const updateUser = async fields => {
 export const deleteUser = async () => {
 	const options = {
 		method: 'DELETE',
+		headers: {
+			'X-CSRF-TOKEN': Cookies.get('token'),
+		},
 		credentials: 'include',
 	};
 	return await handleFetch(url, options);

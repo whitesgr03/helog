@@ -1,4 +1,5 @@
 import { handleFetch } from './handleFetch';
+import Cookies from 'js-cookie';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
 
@@ -18,6 +19,7 @@ export const replyComment = async ({ commentId, data }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': Cookies.get('token'),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -30,6 +32,7 @@ export const createReply = async ({ replyId, data }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': Cookies.get('token'),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -42,6 +45,7 @@ export const updateReply = async ({ data, replyId }) => {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': Cookies.get('token'),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -52,6 +56,9 @@ export const updateReply = async ({ data, replyId }) => {
 export const deleteReply = async ({ replyId }) => {
 	const options = {
 		method: 'DELETE',
+		headers: {
+			'X-CSRF-TOKEN': Cookies.get('token'),
+		},
 		credentials: 'include',
 	};
 	return await handleFetch(`${url}/replies/${replyId}`, options);

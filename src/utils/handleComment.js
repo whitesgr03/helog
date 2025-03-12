@@ -1,4 +1,5 @@
 import { handleFetch } from './handleFetch';
+import Cookies from 'js-cookie';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
 
@@ -19,6 +20,7 @@ export const createComment = async ({ postId, data }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': Cookies.get('token'),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -31,6 +33,7 @@ export const updateComment = async ({ commentId, data }) => {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': Cookies.get('token'),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -41,6 +44,9 @@ export const updateComment = async ({ commentId, data }) => {
 export const deleteComment = async ({ commentId }) => {
 	const options = {
 		method: 'DELETE',
+		headers: {
+			'X-CSRF-TOKEN': Cookies.get('token'),
+		},
 		credentials: 'include',
 	};
 	return await handleFetch(`${url}/comments/${commentId}`, options);
