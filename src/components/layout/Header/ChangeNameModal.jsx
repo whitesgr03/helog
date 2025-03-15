@@ -138,6 +138,10 @@ export const ChangeNameModal = ({ username, onUser, onActiveModal }) => {
 							name="username"
 							value={formFields.username}
 							onChange={handleChange}
+							spellCheck="false"
+							autoCapitalize="off"
+							autoCorrect="off"
+							autoComplete="off"
 						/>
 					</label>
 					<div>
