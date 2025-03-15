@@ -132,7 +132,9 @@ export const PostDetail = () => {
 										Back to previous page
 									</Link>
 
-									<h2 className={styles.title}>{post.title}</h2>
+									<h2 className={styles.title} title={post.title}>
+										{post.title}
+									</h2>
 
 									<div className={styles['published-date']}>
 										<strong>{post.author.username}</strong>
@@ -147,6 +149,7 @@ export const PostDetail = () => {
 									<div className={styles['image-wrap']}>
 										<div className={imageStyles.content} ref={imageContentRef}>
 											<img
+												title={post.title}
 												src={errorImage || post.mainImage}
 												alt="Main image"
 												onError={handleError}
