@@ -17,7 +17,7 @@ const posts = [
 			username: faker.person.middleName(),
 		},
 		title: faker.lorem.words({ min: 1, max: 2 }),
-		mainImage: faker.image.url({
+		mainImage: faker.image.urlPicsumPhotos({
 			width: IMAGE_SIZES[0].width,
 			height: IMAGE_SIZES[0].height,
 		}),
@@ -35,7 +35,7 @@ const createParagraph = ({ line, IMAGE_SIZES, error }) => {
 
 		const src = error
 			? 'error-url'
-			: faker.image.url({
+			: faker.image.urlPicsumPhotos({
 					width: size.width,
 					height: size.height,
 				});
