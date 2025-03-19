@@ -41,11 +41,10 @@ describe('Comments component', () => {
 					{ _id: '10' },
 				],
 				totalComments: 11,
+				countComments: 20,
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.countComments = mockProps.post.comments.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
@@ -226,11 +225,10 @@ describe('Comments component', () => {
 					{ _id: '10' },
 				],
 				totalComments: 11,
+				countComments: 20,
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.countComments = mockProps.post.comments.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
@@ -307,11 +305,10 @@ describe('Comments component', () => {
 					{ _id: '10' },
 				],
 				totalComments: 11,
+				countComments: 20,
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.countComments = mockProps.post.comments.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
