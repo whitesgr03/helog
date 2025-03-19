@@ -15,12 +15,14 @@ import { getPosts } from '../../../utils/handlePost';
 
 export const PostList = () => {
 	const { posts, countPosts, onUpdatePosts } = useOutletContext();
-	const [skipPosts, setSkipPosts] = useState(10);
+
 	const [loading, setLoading] = useState(false);
 	const postListRef = useRef(null);
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
+
+	const skipPosts = posts.length;
 
 	useEffect(() => {
 		const handleScroll = async () => {
@@ -34,7 +36,6 @@ export const PostList = () => {
 
 				const handleSuccess = () => {
 					onUpdatePosts(result.data);
-					setSkipPosts(skipPosts + 10);
 					setLoading(false);
 				};
 				result.success
