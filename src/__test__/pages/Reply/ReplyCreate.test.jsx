@@ -18,12 +18,14 @@ vi.mock('../../../utils/handleReply');
 
 describe('ReplyCreate component', () => {
 	it('should render the username if the username state is provided', async () => {
+		const mockProps = {
+			onUpdatePost: vi.fn(),
+		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const router = createMemoryRouter(
@@ -34,7 +36,7 @@ describe('ReplyCreate component', () => {
 					children: [
 						{
 							index: true,
-							element: <ReplyCreate />,
+							element: <ReplyCreate {...mockProps} />,
 						},
 					],
 				},
@@ -61,6 +63,10 @@ describe('ReplyCreate component', () => {
 	});
 	it('should change the reply field values if the reply field is entered', async () => {
 		const user = userEvent.setup();
+
+		const mockProps = {
+			onUpdatePost: vi.fn(),
+		};
 		const mockContext = {
 			user: {
 				username: 'example',
@@ -79,7 +85,7 @@ describe('ReplyCreate component', () => {
 					children: [
 						{
 							index: true,
-							element: <ReplyCreate />,
+							element: <ReplyCreate {...mockProps} />,
 						},
 					],
 				},
@@ -108,15 +114,16 @@ describe('ReplyCreate component', () => {
 	});
 	it('should close this component if the cancel button is clicked', async () => {
 		const user = userEvent.setup();
+
 		const mockProps = {
 			onCloseReplyBox: vi.fn(),
+			onUpdatePost: vi.fn(),
 		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const router = createMemoryRouter(
@@ -156,12 +163,15 @@ describe('ReplyCreate component', () => {
 	});
 	it('should render an error field message if the field validation fails after submission', async () => {
 		const user = userEvent.setup();
+
+		const mockProps = {
+			onUpdatePost: vi.fn(),
+		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const router = createMemoryRouter(
@@ -172,7 +182,7 @@ describe('ReplyCreate component', () => {
 					children: [
 						{
 							index: true,
-							element: <ReplyCreate />,
+							element: <ReplyCreate {...mockProps} />,
 						},
 					],
 				},
@@ -205,12 +215,15 @@ describe('ReplyCreate component', () => {
 	});
 	it('should validate each input after a failed submission', async () => {
 		const user = userEvent.setup();
+
+		const mockProps = {
+			onUpdatePost: vi.fn(),
+		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockContent = '_changed';
@@ -223,7 +236,7 @@ describe('ReplyCreate component', () => {
 					children: [
 						{
 							index: true,
-							element: <ReplyCreate />,
+							element: <ReplyCreate {...mockProps} />,
 						},
 					],
 				},
@@ -267,13 +280,13 @@ describe('ReplyCreate component', () => {
 			comment: {
 				_id: '0',
 			},
+			onUpdatePost: vi.fn(),
 		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockContent = '_changed';
 
@@ -340,13 +353,13 @@ describe('ReplyCreate component', () => {
 			reply: {
 				_id: '0',
 			},
+			onUpdatePost: vi.fn(),
 		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockContent = '_changed';
 
@@ -413,13 +426,13 @@ describe('ReplyCreate component', () => {
 			reply: {
 				_id: '0',
 			},
+			onUpdatePost: vi.fn(),
 		};
 		const mockContext = {
 			user: {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockContent = '_changed';
 
@@ -487,6 +500,7 @@ describe('ReplyCreate component', () => {
 				content: '',
 			},
 			onCloseReplyBox: vi.fn(),
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -494,7 +508,6 @@ describe('ReplyCreate component', () => {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockFetchResult = {
@@ -546,7 +559,7 @@ describe('ReplyCreate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(createReply).toBeCalledTimes(1);
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 		expect(mockContext.onAlert).toBeCalledTimes(1);
 		expect(mockProps.onCloseReplyBox).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();

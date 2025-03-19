@@ -91,6 +91,7 @@ describe('Replies component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.comments[0].countReplies =
@@ -98,7 +99,6 @@ describe('Replies component', () => {
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		ReplyDetail.mockImplementation(() => <div>ReplyDetail component</div>);
@@ -115,6 +115,7 @@ describe('Replies component', () => {
 								<Replies
 									post={mockProps.post}
 									comment={mockProps.post.comments[0]}
+									onUpdatePost={mockProps.onUpdatePost}
 								/>
 							),
 						},
@@ -226,6 +227,7 @@ describe('Replies component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.comments[0].countReplies =
@@ -233,7 +235,6 @@ describe('Replies component', () => {
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockResolve = {
@@ -255,6 +256,7 @@ describe('Replies component', () => {
 								<Replies
 									post={mockProps.post}
 									comment={mockProps.post.comments[0]}
+									onUpdatePost={mockProps.onUpdatePost}
 								/>
 							),
 						},
@@ -312,6 +314,7 @@ describe('Replies component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.comments[0].countReplies =
@@ -319,7 +322,6 @@ describe('Replies component', () => {
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockScrollIntoView = vi.fn();
@@ -341,6 +343,7 @@ describe('Replies component', () => {
 								<Replies
 									post={mockProps.post}
 									comment={mockProps.post.comments[0]}
+									onUpdatePost={mockProps.onUpdatePost}
 								/>
 							),
 						},
@@ -457,6 +460,7 @@ describe('Replies component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.comments[0].countReplies =
@@ -464,7 +468,6 @@ describe('Replies component', () => {
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockResolve = {
@@ -487,6 +490,7 @@ describe('Replies component', () => {
 								<Replies
 									post={mockProps.post}
 									comment={mockProps.post.comments[0]}
+									onUpdatePost={mockProps.onUpdatePost}
 								/>
 							),
 						},
@@ -518,7 +522,7 @@ describe('Replies component', () => {
 		const loadIcon = await screen.findByTestId('loading-icon');
 
 		expect(getReplies).toBeCalledTimes(1);
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 		expect(showMoreButton).not.toBeInTheDocument();
 		expect(loadIcon).not.toBeInTheDocument();
 	});

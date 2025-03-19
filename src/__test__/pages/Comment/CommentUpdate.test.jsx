@@ -17,7 +17,7 @@ vi.mock('../../../components/utils/Loading');
 vi.mock('../../../utils/handlecomment');
 
 describe('CommentUpdate component', () => {
-	it.only('should close this component if the cancel button is clicked', async () => {
+	it('should close this component if the cancel button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			comment: {
@@ -66,7 +66,7 @@ describe('CommentUpdate component', () => {
 
 		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
 	});
-	it.only('should change the comment field values if the comment field is entered', async () => {
+	it('should change the comment field values if the comment field is entered', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			comment: {
@@ -118,7 +118,7 @@ describe('CommentUpdate component', () => {
 			`${mockProps.comment.content}${mockContent}`,
 		);
 	});
-	it.only('should render an error field message if the field validation fails after submission', async () => {
+	it('should render an error field message if the field validation fails after submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			comment: {
@@ -170,7 +170,7 @@ describe('CommentUpdate component', () => {
 		expect(labelElement).toHaveClass(/error/);
 		expect(commentErrorMessage).toBeInTheDocument();
 	});
-	it.only('should validate each input after a failed submission', async () => {
+	it('should validate each input after a failed submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			comment: {
@@ -230,7 +230,7 @@ describe('CommentUpdate component', () => {
 		await waitForElementToBeRemoved(() => screen.getByTestId('error-message'));
 		expect(labelElement).not.toHaveClass(/error/);
 	});
-	it.only('should render an error field message if the comment update fails', async () => {
+	it('should render an error field message if the comment update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			post: {
@@ -315,7 +315,7 @@ describe('CommentUpdate component', () => {
 		);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
-	it.only('should render an error message alert if the comment update fails', async () => {
+	it('should render an error message alert if the comment update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			post: {
@@ -391,7 +391,7 @@ describe('CommentUpdate component', () => {
 		expect(mockContext.onAlert).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
-	it.only('should update the comment if the comment field successfully validates after user submission', async () => {
+	it('should update the comment if the comment field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			post: {
@@ -404,11 +404,11 @@ describe('CommentUpdate component', () => {
 				],
 			},
 			onCloseCommentBox: vi.fn(),
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockResolve = {
@@ -466,7 +466,7 @@ describe('CommentUpdate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(updateComment).toBeCalledTimes(1);
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 		expect(mockContext.onAlert).toBeCalledTimes(1);
 		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();

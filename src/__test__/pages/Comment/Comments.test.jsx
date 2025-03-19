@@ -42,13 +42,13 @@ describe('Comments component', () => {
 				],
 				totalComments: 11,
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.countComments = mockProps.post.comments.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockResolve = {
 			success: false,
@@ -160,11 +160,11 @@ describe('Comments component', () => {
 				_id: '0',
 				countComments: 0,
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockResolve = {
 			success: true,
@@ -206,7 +206,7 @@ describe('Comments component', () => {
 			screen.getByText('Loading component'),
 		);
 
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 	});
 	it(`should render the list of comments and a CommentCreate component if the comments are provided`, async () => {
 		const mockProps = {
@@ -227,13 +227,13 @@ describe('Comments component', () => {
 				],
 				totalComments: 11,
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.countComments = mockProps.post.comments.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockResolve = {
 			success: true,
@@ -308,13 +308,13 @@ describe('Comments component', () => {
 				],
 				totalComments: 11,
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.countComments = mockProps.post.comments.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockResolve = {
 			success: true,
@@ -363,7 +363,7 @@ describe('Comments component', () => {
 		const loadIcon = await screen.findByTestId('loading-icon');
 
 		expect(getComments).toBeCalledTimes(1);
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 		expect(showMoreButton).not.toBeInTheDocument();
 		expect(loadIcon).not.toBeInTheDocument();
 		expect(showMoreButton).not.toBeInTheDocument();

@@ -481,6 +481,7 @@ describe('CommentCreate component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.countComments = mockProps.post.comments.length;
@@ -490,7 +491,6 @@ describe('CommentCreate component', () => {
 				username: 'example',
 			},
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 		const mockContent = '_changed';
 
@@ -540,7 +540,7 @@ describe('CommentCreate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(createComment).toBeCalledTimes(1);
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 		expect(mockContext.onAlert).toBeCalledTimes(1);
 
 		expect(submitButton).not.toBeInTheDocument();

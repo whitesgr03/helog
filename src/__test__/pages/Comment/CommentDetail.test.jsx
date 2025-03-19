@@ -41,6 +41,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 		const mockContext = {
 			user: {
@@ -49,7 +50,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -108,6 +108,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 		const mockContext = {
 			user: {
@@ -116,7 +117,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -188,6 +188,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -197,7 +198,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -256,6 +256,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -265,7 +266,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -324,6 +324,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -333,7 +334,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -393,6 +393,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -402,7 +403,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		CommentUpdate.mockImplementationOnce(() => (
@@ -472,6 +472,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -481,7 +482,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -546,6 +546,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -555,7 +556,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		formatDistanceToNow.mockReturnValueOnce('');
@@ -616,6 +616,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -625,7 +626,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockResolve = {
@@ -677,7 +677,7 @@ describe('CommentDetail component', () => {
 
 		await screen.findByTestId('loading-icon');
 
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 	});
 	it('should render the ReplyCreate component, if the reply button is clicked and comment replies is provided', async () => {
 		const user = userEvent.setup();
@@ -701,6 +701,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		mockProps.post.comments[0].countReplies =
@@ -713,7 +714,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		ReplyCreate.mockImplementationOnce(() => <div>ReplyCreate component</div>);
@@ -778,6 +778,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -787,7 +788,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockResolve = {
@@ -858,6 +858,7 @@ describe('CommentDetail component', () => {
 					},
 				],
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
@@ -867,7 +868,6 @@ describe('CommentDetail component', () => {
 			},
 			onAlert: vi.fn(),
 			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockResolve = {
@@ -919,7 +919,7 @@ describe('CommentDetail component', () => {
 
 		await screen.findByTestId('loading-icon');
 
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 	});
 	it('should render the replies component, if the reply icon button is clicked and the comment replies is provided', async () => {
 		const user = userEvent.setup();

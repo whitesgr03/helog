@@ -24,11 +24,11 @@ describe('ReplyUpdate component', () => {
 				content: 'reply',
 			},
 			onCloseCommentBox: vi.fn(),
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const router = createMemoryRouter(
@@ -72,11 +72,11 @@ describe('ReplyUpdate component', () => {
 			reply: {
 				content: 'reply',
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockContent = '_changed';
@@ -122,11 +122,11 @@ describe('ReplyUpdate component', () => {
 			reply: {
 				content: 'reply',
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const router = createMemoryRouter(
@@ -174,11 +174,11 @@ describe('ReplyUpdate component', () => {
 			reply: {
 				content: 'reply',
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockContent = '_changed';
@@ -235,11 +235,11 @@ describe('ReplyUpdate component', () => {
 				_id: '0',
 				content: 'reply',
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockFetchResult = {
@@ -308,11 +308,11 @@ describe('ReplyUpdate component', () => {
 				_id: '0',
 				content: 'reply',
 			},
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockFetchResult = {
@@ -388,11 +388,11 @@ describe('ReplyUpdate component', () => {
 				content: 'reply',
 			},
 			onCloseCommentBox: vi.fn(),
+			onUpdatePost: vi.fn(),
 		};
 
 		const mockContext = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
 
 		const mockFetchResult = {
@@ -443,7 +443,7 @@ describe('ReplyUpdate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(updateReply).toBeCalledTimes(1);
-		expect(mockContext.onUpdatePost).toBeCalledTimes(1);
+		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
 		expect(mockContext.onAlert).toBeCalledTimes(1);
 		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
