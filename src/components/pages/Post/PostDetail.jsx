@@ -31,8 +31,11 @@ export const PostDetail = () => {
 	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
 	const contentRef = useRef(null);
+	const [currentPost, setCurrentPost] = useState(null);
 
-	const post = posts.find(post => post._id === postId);
+	const appComponentPost = posts.find(post => post._id === postId);
+
+	const post = appComponentPost ?? currentPost;
 
 	const { pathname: previousPath } = useLocation();
 
@@ -55,7 +58,9 @@ export const PostDetail = () => {
 			const result = await getPostDetail({ postId, signal });
 			const handleResult = () => {
 				result.success
-					? onUpdatePost({ postId, newPost: result.data })
+					? appComponentPost
+						? onUpdatePost({ postId, newPost: result.data })
+						: setCurrentPost(result.data)
 					: setError(result);
 				setLoading(false);
 			};
@@ -63,10 +68,12 @@ export const PostDetail = () => {
 			result && handleResult();
 		};
 
-		post?.content === undefined ? handleGetPostDetail() : setLoading(false);
+		appComponentPost?.content || currentPost
+			? setLoading(false)
+			: handleGetPostDetail();
 
 		return () => controller.abort();
-	}, [post, postId, onUpdatePost]);
+	}, [currentPost, appComponentPost, postId, onUpdatePost]);
 
 	useEffect(() => {
 		const handleCheckContentImages = async () => {
