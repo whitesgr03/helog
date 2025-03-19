@@ -167,7 +167,7 @@ describe('Comments component', () => {
 		};
 		const mockResolve = {
 			success: true,
-			data: {},
+			data: [],
 		};
 
 		Loading.mockImplementation(() => <div>Loading component</div>);
