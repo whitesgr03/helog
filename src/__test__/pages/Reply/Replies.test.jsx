@@ -464,7 +464,18 @@ describe('Replies component', () => {
 
 		const mockResolve = {
 			success: true,
-			data: {},
+			data: [
+				{ _id: '10' },
+				{ _id: '11' },
+				{ _id: '12' },
+				{ _id: '13' },
+				{ _id: '14' },
+				{ _id: '15' },
+				{ _id: '16' },
+				{ _id: '17' },
+				{ _id: '18' },
+				{ _id: '19' },
+			],
 		};
 
 		ReplyDetail.mockImplementation(() => <div>ReplyDetail component</div>);
@@ -515,7 +526,9 @@ describe('Replies component', () => {
 
 		expect(getReplies).toBeCalledTimes(1);
 		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
-		expect(showMoreButton).not.toBeInTheDocument();
+		expect(
+			mockProps.onUpdatePost.mock.calls[0][0].newComments[0].replies,
+		).toHaveLength(mockProps.post.comments[0].replies.length + 10);
 		expect(loadIcon).not.toBeInTheDocument();
 	});
 });
