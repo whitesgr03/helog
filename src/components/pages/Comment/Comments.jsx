@@ -19,13 +19,14 @@ import { getComments } from '../../../utils/handleComment';
 export const Comments = ({ post, onUpdatePost }) => {
 	const { onAlert } = useOutletContext();
 	const [loading, setLoading] = useState(false);
-	const [skipComments, setSkipComments] = useState(10);
 	const [fetching, setFetching] = useState(true);
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
 	const comments = post?.comments ?? [];
+
+	const skipComments = comments?.length ?? 10;
 
 	const handleGetComments = async () => {
 		setLoading(true);
@@ -36,7 +37,6 @@ export const Comments = ({ post, onUpdatePost }) => {
 				postId: post._id,
 				newComments: post.comments.concat(result.data),
 			});
-			setSkipComments(skipComments + 10);
 		};
 
 		result.success

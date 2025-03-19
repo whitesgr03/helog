@@ -17,13 +17,14 @@ import { getReplies } from '../../../utils/handleReply';
 export const Replies = ({ post, comment, onUpdatePost }) => {
 	const { onAlert } = useOutletContext();
 	const [loading, setLoading] = useState(false);
-	const [skipReplies, setSkipReplies] = useState(10);
 	const [shakeTargetId, setShakeTargetId] = useState('');
 
 	const repliesRef = useRef([]);
 	const waitForScrollRef = useRef(null);
 
 	const replies = comment.replies;
+
+	const skipReplies = replies.length;
 
 	const handleGetReplies = async () => {
 		setLoading(true);
@@ -40,7 +41,6 @@ export const Replies = ({ post, comment, onUpdatePost }) => {
 					: postComment,
 			);
 			onUpdatePost({ postId: post._id, newComments });
-			setSkipReplies(skipReplies + 10);
 		};
 
 		result.success
