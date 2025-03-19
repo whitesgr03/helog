@@ -309,7 +309,18 @@ describe('Comments component', () => {
 		};
 		const mockResolve = {
 			success: true,
-			data: {},
+			data: [
+				{ _id: '10' },
+				{ _id: '11' },
+				{ _id: '12' },
+				{ _id: '13' },
+				{ _id: '14' },
+				{ _id: '15' },
+				{ _id: '16' },
+				{ _id: '17' },
+				{ _id: '18' },
+				{ _id: '19' },
+			],
 		};
 
 		CommentCreate.mockImplementation(() => <div>CommentCreate component</div>);
@@ -355,9 +366,10 @@ describe('Comments component', () => {
 
 		expect(getComments).toBeCalledTimes(1);
 		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
-		expect(showMoreButton).not.toBeInTheDocument();
+		expect(mockProps.onUpdatePost.mock.calls[0][0].newComments).toHaveLength(
+			mockProps.post.comments.length + 10,
+		);
 		expect(loadIcon).not.toBeInTheDocument();
-		expect(showMoreButton).not.toBeInTheDocument();
 	});
 	it(`should render no comments if the provided comments are empty`, async () => {
 		const mockProps = {
