@@ -88,14 +88,12 @@ describe('Replies component', () => {
 								},
 							},
 						],
+						countReplies: 20,
 					},
 				],
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.comments[0].countReplies =
-			mockProps.post.comments[0].replies.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
@@ -145,7 +143,7 @@ describe('Replies component', () => {
 		});
 
 		expect(replyDetailComponents.length).toBe(
-			mockProps.post.comments[0].countReplies,
+			mockProps.post.comments[0].replies.length,
 		);
 		expect(showMoreButton).toBeInTheDocument();
 	});
@@ -224,14 +222,12 @@ describe('Replies component', () => {
 								},
 							},
 						],
+						countReplies: 20,
 					},
 				],
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.comments[0].countReplies =
-			mockProps.post.comments[0].replies.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
@@ -311,14 +307,12 @@ describe('Replies component', () => {
 								},
 							},
 						],
+						countReplies: 20,
 					},
 				],
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.comments[0].countReplies =
-			mockProps.post.comments[0].replies.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
@@ -457,14 +451,12 @@ describe('Replies component', () => {
 								},
 							},
 						],
+						countReplies: 20,
 					},
 				],
 			},
 			onUpdatePost: vi.fn(),
 		};
-
-		mockProps.post.comments[0].countReplies =
-			mockProps.post.comments[0].replies.length;
 
 		const mockContext = {
 			onAlert: vi.fn(),
