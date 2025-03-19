@@ -16,8 +16,8 @@ import { CommentCreate } from './CommentCreate';
 // Utils
 import { getComments } from '../../../utils/handleComment';
 
-export const Comments = ({ post }) => {
-	const { onAlert, onUpdatePost } = useOutletContext();
+export const Comments = ({ post, onUpdatePost }) => {
+	const { onAlert } = useOutletContext();
 	const [loading, setLoading] = useState(false);
 	const [skipComments, setSkipComments] = useState(10);
 	const [fetching, setFetching] = useState(true);
@@ -61,7 +61,10 @@ export const Comments = ({ post }) => {
 			});
 			const handleResult = () => {
 				result.success
-					? onUpdatePost({ postId: post._id, newComments: result.data })
+					? onUpdatePost({
+							postId: post._id,
+							newComments: result.data,
+						})
 					: navigate('/error', {
 							state: { error: result.message, previousPath },
 						});
@@ -84,7 +87,7 @@ export const Comments = ({ post }) => {
 				<>
 					<h3>{`${post.totalComments > 0 ? post.totalComments : ''} Comments`}</h3>
 					<div className={styles['comment-box-wrap']}>
-						<CommentCreate post={post} />
+						<CommentCreate post={post} onUpdatePost={onUpdatePost} />
 					</div>
 					<div className={styles.content}>
 						{comments.length ? (
@@ -96,6 +99,7 @@ export const Comments = ({ post }) => {
 											index={index}
 											post={post}
 											comment={comment}
+											onUpdatePost={onUpdatePost}
 										/>
 									))}
 								</ul>

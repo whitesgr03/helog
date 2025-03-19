@@ -13,8 +13,15 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 import { ReplyUpdate } from './ReplyUpdate';
 import { ReplyDelete } from './ReplyDelete';
 
-export const ReplyDetail = ({ index, post, comment, reply, onScroll }) => {
-	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
+export const ReplyDetail = ({
+	index,
+	post,
+	comment,
+	reply,
+	onScroll,
+	onUpdatePost,
+}) => {
+	const { user, onAlert, onActiveModal } = useOutletContext();
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 

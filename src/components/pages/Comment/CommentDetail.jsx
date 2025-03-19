@@ -18,8 +18,8 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 // Utils
 import { getReplies } from '../../../utils/handleReply';
 
-export const CommentDetail = ({ index, post, comment }) => {
-	const { user, onAlert, onActiveModal, onUpdatePost } = useOutletContext();
+export const CommentDetail = ({ index, post, comment, onUpdatePost }) => {
+	const { user, onAlert, onActiveModal } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
@@ -139,6 +139,7 @@ export const CommentDetail = ({ index, post, comment }) => {
 							post={post}
 							comment={comment}
 							onCloseCommentBox={handleShowEditBox}
+							onUpdatePost={onUpdatePost}
 						/>
 					</div>
 				) : (
@@ -187,11 +188,14 @@ export const CommentDetail = ({ index, post, comment }) => {
 						post={post}
 						comment={comment}
 						onCloseReplyBox={handleShowReplyBox}
+						onUpdatePost={onUpdatePost}
 					/>
 				</div>
 			)}
 
-			{showReplies && <Replies post={post} comment={comment} />}
+			{showReplies && (
+				<Replies post={post} comment={comment} onUpdatePost={onUpdatePost} />
+			)}
 		</li>
 	);
 };

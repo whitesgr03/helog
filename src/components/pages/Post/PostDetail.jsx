@@ -186,7 +186,14 @@ export const PostDetail = () => {
 							/>
 						</div>
 					</div>
-					{!checking && <Comments post={post} />}
+					{!checking && (
+						<Comments
+							post={post}
+							onUpdatePost={
+								appComponentPost ? onUpdatePost : handleUpdateCurrentPost
+							}
+						/>
+					)}
 				</>
 			)}
 		</>

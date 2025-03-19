@@ -20,8 +20,8 @@ import { verifySchema } from '../../../utils/verifySchema';
 
 const DEFAULT_FIELDS = { content: '' };
 
-export const CommentCreate = ({ post }) => {
-	const { user, onAlert, onUpdatePost } = useOutletContext();
+export const CommentCreate = ({ post, onUpdatePost }) => {
+	const { user, onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState(DEFAULT_FIELDS);
 	const [loading, setLoading] = useState(false);

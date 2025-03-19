@@ -18,8 +18,14 @@ import { Loading } from '../../utils/Loading';
 import { updateReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
 
-export const ReplyUpdate = ({ post, commentId, reply, onCloseCommentBox }) => {
-	const { onAlert, onUpdatePost } = useOutletContext();
+export const ReplyUpdate = ({
+	post,
+	commentId,
+	reply,
+	onCloseCommentBox,
+	onUpdatePost,
+}) => {
+	const { onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ content: reply.content });
 	const [loading, setLoading] = useState(false);

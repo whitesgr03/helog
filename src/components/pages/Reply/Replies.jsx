@@ -14,8 +14,8 @@ import { ReplyDetail } from './ReplyDetail';
 // Utils
 import { getReplies } from '../../../utils/handleReply';
 
-export const Replies = ({ post, comment }) => {
-	const { onAlert, onUpdatePost } = useOutletContext();
+export const Replies = ({ post, comment, onUpdatePost }) => {
+	const { onAlert } = useOutletContext();
 	const [loading, setLoading] = useState(false);
 	const [skipReplies, setSkipReplies] = useState(10);
 	const [shakeTargetId, setShakeTargetId] = useState('');
@@ -95,6 +95,7 @@ export const Replies = ({ post, comment }) => {
 								comment={comment}
 								reply={reply}
 								onScroll={handleScroll}
+								onUpdatePost={onUpdatePost}
 							/>
 						</div>
 					))}

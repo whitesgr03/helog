@@ -18,8 +18,8 @@ import { Loading } from '../../utils/Loading';
 import { updateComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
 
-export const CommentUpdate = ({ post, comment, onCloseCommentBox }) => {
-	const { onAlert, onUpdatePost } = useOutletContext();
+export const CommentUpdate = ({ post, comment, onCloseCommentBox, onUpdatePost }) => {
+	const { onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ content: comment.content });
 	const [loading, setLoading] = useState(false);
