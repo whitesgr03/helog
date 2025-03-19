@@ -39,6 +39,10 @@ export const PostDetail = () => {
 
 	const { pathname: previousPath } = useLocation();
 
+	const handleUpdateCurrentPost = ({ newPost, newComments: comments }) => {
+		setCurrentPost(newPost ? newPost : { ...post, comments });
+	};
+
 	const handleError = () => {
 		const content = imageContentRef.current;
 		const { clientWidth, clientHeight } = content;
