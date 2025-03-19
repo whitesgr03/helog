@@ -233,15 +233,9 @@ describe('Comments component', () => {
 		const mockContext = {
 			onAlert: vi.fn(),
 		};
-		const mockResolve = {
-			success: true,
-			data: {},
-		};
 
 		CommentCreate.mockImplementation(() => <div>CommentCreate component</div>);
 		CommentDetail.mockImplementation(() => <div>CommentDetail component</div>);
-
-		getComments.mockResolvedValueOnce(mockResolve);
 
 		const router = createMemoryRouter(
 			[
