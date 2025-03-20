@@ -114,7 +114,7 @@
 	padding: 10px;
 }
 
-.content > button {
+.tag {
 	align-self: flex-start;
 	color: var(--light-scheme-highlight);
 	line-height: 1.5rem;
@@ -208,7 +208,7 @@
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-:global(.dark) .content > a {
+:global(.dark) .tag {
 	color: var(--dark-scheme-highlight);
 }
 
