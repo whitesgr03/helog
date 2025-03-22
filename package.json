@@ -15,7 +15,6 @@
 		"@tinymce/tinymce-react": "^5.1.1",
 		"date-fns": "^3.6.0",
 		"dotenv": "^16.4.7",
-		"fs-extra": "^11.3.0",
 		"js-cookie": "^3.0.5",
 		"lodash.isempty": "^4.4.0",
 		"normalize.css": "^8.0.1",
