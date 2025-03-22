@@ -7,12 +7,11 @@ HeLog is a public blog built with React. Allows users to post and comment. Hoste
 ## Links
 
 - Live Demo: [https://helog.whitesgr03.me](https://helog.whitesgr03.me)
-- Backend Repository: [https://github.com/whitesgr03/heLog-api](https://github.com/whitesgr03/heLog-api)
+- Backend Repository: [https://github.com/whitesgr03/helog](https://github.com/whitesgr03/helog)
 
 ## Features:
 
 - Google and Facebook social authentication.
-- Post any content and images.
 - Comment on any post.
 - Responsive design for mobile devices.
 
@@ -55,7 +54,7 @@ You can access posts or comment messages on the [Live Demo](https://helog.whites
 
 2. [Yup](https://github.com/jquense/yup) to validate any form's data and make sure that it matches the schemas that define how the data should look and the values expected to conform to them.
 
-3. [tinymce](https://www.tiny.cloud/) is a WYSIWYG rich text editor that has many content editing tools to let users create any content and images in the post.
+3. [tinyMCE](https://www.tiny.cloud/) used to view all posts created by users from HeLog-Editor.
 
 ## Additional info:
 
