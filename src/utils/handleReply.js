@@ -19,7 +19,9 @@ export const replyComment = async ({ commentId, data }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -32,7 +34,9 @@ export const createReply = async ({ replyId, data }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -45,7 +49,9 @@ export const updateReply = async ({ data, replyId }) => {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -57,7 +63,9 @@ export const deleteReply = async ({ replyId }) => {
 	const options = {
 		method: 'DELETE',
 		headers: {
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 	};

@@ -20,7 +20,9 @@ export const createComment = async ({ postId, data }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -33,7 +35,9 @@ export const updateComment = async ({ commentId, data }) => {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 		body: JSON.stringify(data),
@@ -45,7 +49,9 @@ export const deleteComment = async ({ commentId }) => {
 	const options = {
 		method: 'DELETE',
 		headers: {
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 	};

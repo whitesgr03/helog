@@ -40,7 +40,9 @@ export const Dropdown = ({
 		const options = {
 			method: 'POST',
 			headers: {
-				'X-CSRF-TOKEN': Cookies.get('token'),
+				'X-CSRF-TOKEN': Cookies.get(
+					import.meta.env.PROD ? '__Secure-token' : 'token',
+				),
 			},
 			credentials: 'include',
 		};

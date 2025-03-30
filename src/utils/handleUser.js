@@ -8,7 +8,9 @@ export const getUser = async ({ signal }) => {
 		method: 'GET',
 		signal,
 		headers: {
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 	};
@@ -20,7 +22,9 @@ export const updateUser = async fields => {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 		body: JSON.stringify(fields),
@@ -31,7 +35,9 @@ export const deleteUser = async () => {
 	const options = {
 		method: 'DELETE',
 		headers: {
-			'X-CSRF-TOKEN': Cookies.get('token'),
+			'X-CSRF-TOKEN': Cookies.get(
+				import.meta.env.PROD ? '__Secure-token' : 'token',
+			),
 		},
 		credentials: 'include',
 	};
