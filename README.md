@@ -61,3 +61,71 @@ You can access posts or comment messages on the [Live Demo](https://helog.whites
 - This project consists of a backend for API and two different front-ends for accessing and editing blog posts.
 
 - The backend's authentication is cookie-based to prevent the need to log in again when switching between two different front-ends.
+
+## Source folder structure
+
+```
+src/
+├─── __test__/                          # component and E2E tests
+│
+├─── assets/                            # Static assets (icons, images)
+│
+├─── components/                        # React components and each related css modules are placed in folders
+│     ├── layout/                       
+│     │    ├── Footer/                  
+│     │    │    └── Footer.jsx  
+│     │    └── Header/  
+│     │         ├── ChangNameModal.jsx
+│     │         ├── DeleteModel.jsx
+│     │         ├── Dropdown.jsx
+│     │         ├── Header.jsx
+│     │         └── Settings.jsx
+│     ├── pages/  
+│     │    ├── Account/                 
+│     │    │    └── Login.jsx  
+│     │    ├── App/                     
+│     │    │    ├── Alert.jsx
+│     │    │    ├── App.jsx
+│     │    │    ├── CreateUsername.jsx
+│     │    │    └── Modal.jsx  
+│     │    ├── Comment/                 
+│     │    │    ├── CommentCreate.jsx
+│     │    │    ├── CommentDelete.jsx
+│     │    │    ├── CommentDetail.jsx
+│     │    │    ├── Comments.jsx
+│     │    │    └── CommentUpdate.jsx  
+│     │    ├── Home/                    
+│     │    │    └── Home.jsx  
+│     │    ├── Post/                    
+│     │    │    ├── PostDetail.jsx
+│     │    │    ├── PostList.jsx
+│     │    │    └── Posts.jsx  
+│     │    └── Reply/
+│     │         ├── Replies.jsx
+│     │         ├── ReplyCreate.jsx
+│     │         ├── ReplyDelete.jsx
+│     │         ├── ReplyDetail.jsx
+│     │         └── ReplyUpdate.jsx  
+│     └── utils/  
+│          ├── Error/
+│          │    ├── Error.jsx    
+│          │    └── NotFound.jsx  
+│          └── Loading.jsx  
+│
+├─── styles/                            # Generic CSS Modules
+│     ├── button.module.css
+│     ├── form.module.css   
+│     ├── image.module.css  
+│     └── index.css                     # Index css module include main custom properties and type selectors styles
+│
+├─── utils/                             # Generic function
+│     ├── handleComment.jsx             # Handle comment API
+│     ├── handleFetch.jsx   
+│     ├── handlePost.jsx                # Handle post API
+│     ├── handleReply.jsx               # Handle reply API
+│     ├── handleUser.js                 # Handle user info API
+│     └── verifySchema.js               # Handle yup package validation values. 
+│
+├─── main.jsx 
+└──  Router.jsx                         # React router config
+```
