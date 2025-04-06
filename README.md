@@ -116,13 +116,13 @@ src/
 │     ├── button.module.css
 │     ├── form.module.css   
 │     ├── image.module.css  
-│     └── index.css                     # Index css module include main custom properties and type selectors styles
+│     └── index.css                     # Index CSS include main custom properties and type selectors styles
 │
 ├─── utils/                             # Generic function
-│     ├── handleComment.jsx             # Handle comment API
-│     ├── handleFetch.jsx   
-│     ├── handlePost.jsx                # Handle post API
-│     ├── handleReply.jsx               # Handle reply API
+│     ├── handleComment.js              # Handle comment API
+│     ├── handleFetch.js   
+│     ├── handlePost.js                 # Handle post API
+│     ├── handleReply.js                # Handle reply API
 │     ├── handleUser.js                 # Handle user info API
 │     └── verifySchema.js               # Handle yup package validation values. 
 │
