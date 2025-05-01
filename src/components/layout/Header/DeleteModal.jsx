@@ -13,13 +13,7 @@ import { deleteUser } from '../../../utils/handleUser';
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const DeleteModal = ({
-	onUser,
-	onToggleSettingsMenu,
-	onActiveModal,
-	onAlert,
-}) => {
-	const [loading, setLoading] = useState(false);
+export const DeleteModal = ({ onCloseDropdown, onActiveModal, onAlert }) => {
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
@@ -76,6 +70,6 @@ export const DeleteModal = ({
 DeleteModal.propTypes = {
 	onAlert: PropTypes.func,
 	onUser: PropTypes.func,
-	onToggleSettingsMenu: PropTypes.func,
+	onCloseDropdown: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };

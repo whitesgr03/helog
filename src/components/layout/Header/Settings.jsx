@@ -15,6 +15,7 @@ export const Settings = ({
 	onAlert,
 	onToggleSettingsMenu,
 	onActiveModal,
+	onCloseDropdown,
 }) => {
 	return (
 		<div className={styles.settings}>
@@ -72,7 +73,7 @@ export const Settings = ({
 											<DeleteModal
 												onActiveModal={onActiveModal}
 												onAlert={onAlert}
-												onToggleSettingsMenu={onToggleSettingsMenu}
+												onCloseDropdown={onCloseDropdown}
 											/>
 										),
 									})
@@ -93,4 +94,5 @@ Settings.propTypes = {
 	onToggleSettingsMenu: PropTypes.func,
 	onActiveModal: PropTypes.func,
 	onAlert: PropTypes.func,
+	onCloseDropdown: PropTypes.func,
 };

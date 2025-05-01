@@ -115,6 +115,7 @@ export const Dropdown = ({
 					onAlert={onAlert}
 					onActiveModal={onActiveModal}
 					onToggleSettingsMenu={handleToggleSettingsMenu}
+					onCloseDropdown={onCloseDropdown}
 				/>
 			)}
 		</div>
