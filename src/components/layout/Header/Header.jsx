@@ -13,7 +13,6 @@ import { Dropdown } from './Dropdown';
 
 export const Header = ({
 	user,
-	onUser,
 	onAlert,
 	darkTheme,
 	onColorTheme,
@@ -32,7 +31,7 @@ export const Header = ({
 				</Link>
 				<nav>
 					<ul className={styles.list}>
-						{user?.username && (
+						{user && (
 							<li>
 								<a
 									href={`${import.meta.env.VITE_HELOG_EDITOR_URL}?theme=${darkTheme}`}
@@ -68,7 +67,6 @@ export const Header = ({
 					<>
 						<Dropdown
 							user={user}
-							onUser={onUser}
 							onAlert={onAlert}
 							darkTheme={darkTheme}
 							onColorTheme={onColorTheme}
@@ -91,6 +89,5 @@ Header.propTypes = {
 	darkTheme: PropTypes.bool,
 	onColorTheme: PropTypes.func,
 	onActiveModal: PropTypes.func,
-	onUser: PropTypes.func,
 	onAlert: PropTypes.func,
 };

@@ -21,7 +21,6 @@ const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
 
 export const Dropdown = ({
 	user,
-	onUser,
 	onAlert,
 	darkTheme,
 	onColorTheme,
@@ -62,7 +61,7 @@ export const Dropdown = ({
 
 	return (
 		<div className={styles.dropdown}>
-			{user?.username && (
+			{user && (
 				<div className={styles.profile}>
 					<div className={styles.avatar}>
 						{user.username.charAt(0).toUpperCase()}
@@ -85,7 +84,7 @@ export const Dropdown = ({
 						</div>
 					</button>
 				</li>
-				{user?.username && (
+				{user && (
 					<li>
 						<button onClick={handleToggleSettingsMenu}>
 							<span className={`${imageStyles.icon} ${styles.settings}`} />
@@ -94,7 +93,7 @@ export const Dropdown = ({
 					</li>
 				)}
 				<li>
-					{user?.username ? (
+					{user ? (
 						<button onClick={handleLogout}>
 							<span
 								data-testid="loading-icon"
@@ -113,7 +112,6 @@ export const Dropdown = ({
 			{activeSettings && (
 				<Settings
 					user={user}
-					onUser={onUser}
 					onAlert={onAlert}
 					onActiveModal={onActiveModal}
 					onToggleSettingsMenu={handleToggleSettingsMenu}

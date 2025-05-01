@@ -1,9 +1,9 @@
 import { handleFetch } from './handleFetch';
 import Cookies from 'js-cookie';
 
-const url = `${import.meta.env.VITE_RESOURCE_URL}/user`;
+const URL = `${import.meta.env.VITE_RESOURCE_URL}/user`;
 
-export const getUser = async ({ signal }) => {
+export const getUserInfo = async ({ signal }) => {
 	const options = {
 		method: 'GET',
 		signal,
@@ -15,7 +15,7 @@ export const getUser = async ({ signal }) => {
 		credentials: 'include',
 	};
 
-	return await handleFetch(url, options);
+	return await handleFetch(URL, options);
 };
 export const updateUser = async fields => {
 	const options = {

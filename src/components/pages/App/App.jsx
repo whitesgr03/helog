@@ -1,11 +1,7 @@
 // Packages
 import { useState, useEffect } from 'react';
-import {
-	Outlet,
-	useSearchParams,
-	useNavigate,
-	ScrollRestoration,
-} from 'react-router-dom';
+import { Outlet, useSearchParams, ScrollRestoration } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 // Styles
 import 'normalize.css';
@@ -21,23 +17,26 @@ import { Loading } from '../../utils/Loading';
 import { Error } from '../../utils/Error/Error';
 
 // Utils
-import { getUser } from '../../../utils/handleUser';
+import { queryUserInfOption } from '../../../utils/queryOptions';
 import { getPosts } from '../../../utils/handlePost';
 
 export const App = () => {
-	const [user, setUser] = useState(null);
 	const [posts, setPosts] = useState([]);
 	const [countPosts, setCountPosts] = useState(0);
 	const [darkTheme, setDarkTheme] = useState(null);
-	const [loading, setLoading] = useState(true);
 	const [fetching, setFetching] = useState(true);
 	const [alert, setAlert] = useState([]);
 	const [modal, setModal] = useState(null);
-	const [error, setError] = useState(false);
-	const [reGetUser, setReGetUser] = useState(false);
 
-	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
+
+	const {
+		isPending,
+		isError,
+		data: user,
+		error,
+		refetch,
+	} = useQuery(queryUserInfOption);
 
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
@@ -100,34 +99,6 @@ export const App = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const handleGetUser = async () => {
-			const result = await getUser({ signal });
-
-			const handleResult = () => {
-				reGetUser && setReGetUser(false);
-
-				const handleSuccess = () => {
-					error && setError(false);
-					setUser(result.data);
-				};
-
-				result.success
-					? handleSuccess()
-					: result.status !== 404 && setError(result.message);
-
-				setLoading(false);
-			};
-
-			result && handleResult();
-		};
-		(reGetUser || !user) && handleGetUser();
-		return () => controller.abort();
-	}, [reGetUser, user, error]);
-
-	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-
 		const handleGetPosts = async () => {
 			const result = await getPosts({ skip: 0, signal });
 
@@ -147,76 +118,67 @@ export const App = () => {
 		handleGetPosts();
 		return () => controller.abort();
 	}, []);
-
 	return (
-		<>
-			{error ? (
-				<Error onReGetUser={setReGetUser} />
+		<div
+			className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
+			data-testid="app"
+		>
+			<ScrollRestoration getKey={location => location.key} />
+			{isPending ? (
+				<Loading text={'Loading...'} />
+			) : isError && error.message !== '404' ? (
+				<Error onReGetUser={refetch} />
 			) : (
-				<div
-					className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
-					data-testid="app"
-				>
-					<ScrollRestoration getKey={location => location.key} />
-					{loading || fetching ? (
-						<Loading text={'Loading...'} />
-					) : (
-						<>
-							{modal && (
-								<Modal
-									onActiveModal={handleActiveModal}
-									clickToClose={modal.clickToClose}
-								>
-									{modal.component}
-								</Modal>
-							)}
-							<div className={styles['header-bar']}>
-								<Header
-									user={user}
-									darkTheme={darkTheme}
-									onUser={setUser}
-									onAlert={handleAlert}
-									onColorTheme={handleColorTheme}
-									onActiveModal={handleActiveModal}
-								/>
-								<Alert alert={alert} onAlert={setAlert} />
-							</div>
-							<div className={styles.container}>
-								<main>
-									{user && !user.username ? (
-										!modal &&
-										handleActiveModal({
-											component: (
-												<CreateUsername
-													onActiveModal={handleActiveModal}
-													onUser={setUser}
-													onAlert={handleAlert}
-													onError={setError}
-												/>
-											),
-											clickToClose: false,
-										})
-									) : (
-										<Outlet
-											context={{
-												user,
-												posts,
-												countPosts,
-												onUser: setUser,
-												onUpdatePosts: handleUpdatePosts,
-												onActiveModal: handleActiveModal,
-												onAlert: handleAlert,
-												onUpdatePost: handleUpdatePost,
-											}}
-										/>
-									)}
-								</main>
-								<Footer />
-							</div>
-						</>
+				<>
+					{modal && (
+						<Modal
+							onActiveModal={handleActiveModal}
+							clickToClose={modal.clickToClose}
+						>
+							{modal.component}
+						</Modal>
 					)}
-				</div>
+					<div className={styles['header-bar']}>
+						<Header
+							user={user?.data}
+							darkTheme={darkTheme}
+							onAlert={handleAlert}
+							onColorTheme={handleColorTheme}
+							onActiveModal={handleActiveModal}
+						/>
+						<Alert alert={alert} onAlert={setAlert} />
+					</div>
+					<div className={styles.container}>
+						<main>
+							{user && !user.username ? (
+								!modal &&
+								handleActiveModal({
+									component: (
+										<CreateUsername
+											onActiveModal={handleActiveModal}
+											onAlert={handleAlert}
+										/>
+									),
+									clickToClose: false,
+								})
+							) : (
+								<Outlet
+									context={{
+										user: user?.data,
+										posts,
+										countPosts,
+										onUpdatePosts: handleUpdatePosts,
+										onActiveModal: handleActiveModal,
+										onAlert: handleAlert,
+										onUpdatePost: handleUpdatePost,
+									}}
+								/>
+							)}
+						</main>
+						<Footer />
+					</div>
+				</>
 			)}
-		</>
+		</div>
 	);
 };

@@ -12,7 +12,6 @@ import { DeleteModal } from './DeleteModal';
 
 export const Settings = ({
 	user,
-	onUser,
 	onAlert,
 	onToggleSettingsMenu,
 	onActiveModal,
@@ -36,13 +35,13 @@ export const Settings = ({
 				<div className={styles.container}>
 					<div className={styles['avatar-wrap']}>
 						<div className={styles.avatar}>
-							{user?.username && user.username.charAt(0).toUpperCase()}
+							{user.username.charAt(0).toUpperCase()}
 						</div>
 					</div>
 					<ul className={styles.list}>
 						<li>
 							<strong className={styles.title}>Username</strong>
-							{user?.username && <span>{user.username}</span>}
+							{<span>{user.username}</span>}
 							<button
 								className={styles['change-btn']}
 								onClick={() =>
@@ -51,7 +50,6 @@ export const Settings = ({
 											<ChangeNameModal
 												username={user.username}
 												onActiveModal={onActiveModal}
-												onUser={onUser}
 											/>
 										),
 									})
@@ -73,7 +71,6 @@ export const Settings = ({
 										component: (
 											<DeleteModal
 												onActiveModal={onActiveModal}
-												onUser={onUser}
 												onAlert={onAlert}
 												onToggleSettingsMenu={onToggleSettingsMenu}
 											/>
@@ -95,6 +92,5 @@ Settings.propTypes = {
 	user: PropTypes.object,
 	onToggleSettingsMenu: PropTypes.func,
 	onActiveModal: PropTypes.func,
-	onUser: PropTypes.func,
 	onAlert: PropTypes.func,
 };

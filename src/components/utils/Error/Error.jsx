@@ -31,7 +31,7 @@ export const Error = ({ onReGetUser }) => {
 			<Link
 				to="/"
 				className={styles.link}
-				onClick={() => onReGetUser && onReGetUser(true)}
+				onClick={() => onReGetUser && onReGetUser()}
 			>
 				Back to Home Page
 			</Link>
