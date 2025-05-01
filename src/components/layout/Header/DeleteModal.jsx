@@ -1,7 +1,8 @@
 // Packages
-import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../../../utils/queryOptions';
 
 // Styles
 import styles from './DeleteModal.module.css';
@@ -17,33 +18,29 @@ export const DeleteModal = ({ onCloseDropdown, onActiveModal, onAlert }) => {
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
-	const handleDelete = async () => {
-		setLoading(true);
-
-		const result = await deleteUser();
-
-		const handleSetUser = () => {
-			onUser(null);
+	const { isPending, mutate } = useMutation({
+		mutationFn: deleteUser,
+		onError: error =>
+			navigate('/error', {
+				state: { error: error.message, previousPath },
+			}),
+		onSuccess: () => {
+			queryClient.setQueryData(['userInfo'], null);
 			onAlert({
 				message: 'Your account has been deleted.',
 				error: false,
 				delay: 2000,
 			});
 			onActiveModal({ component: null });
-			onToggleSettingsMenu();
-		};
+			onCloseDropdown();
+		},
+	});
 
-		result.success
-			? handleSetUser()
-			: navigate('/error', {
-					state: { error: result.message, previousPath },
-				});
+	const handleDelete = () => mutate();
 
-		setLoading(false);
-	};
 	return (
 		<>
-			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
+			{isPending && <Loading text={'Deleting...'} light={true} shadow={true} />}
 			<div className={styles.model}>
 				<span className={styles.title}>Delete Your Account Forever</span>
 				<span className={styles.content}>Do you really want to delete?</span>
