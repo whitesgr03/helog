@@ -17,7 +17,8 @@ export const getUserInfo = async ({ signal }) => {
 
 	return await handleFetch(URL, options);
 };
-export const updateUser = async fields => {
+
+export const updateUserInfo = async fields => {
 	const options = {
 		method: 'PATCH',
 		headers: {
@@ -29,7 +30,15 @@ export const updateUser = async fields => {
 		credentials: 'include',
 		body: JSON.stringify(fields),
 	};
-	return await handleFetch(url, options);
+
+	const response = await fetch(URL, options).catch(error => {
+		throw new Error(error);
+	});
+
+	if (!response.ok && (response.status !== 400 || response.status !== 409))
+		throw new Error(response.status);
+
+	return await response.json();
 };
 
 export const deleteUser = async () => {

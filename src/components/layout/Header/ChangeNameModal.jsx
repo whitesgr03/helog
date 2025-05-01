@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../../../utils/queryOptions';
 
 // Styles
 import formStyles from '../../../styles/form.module.css';
@@ -11,7 +13,7 @@ import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Utils
-import { updateUser } from '../../../utils/handleUser';
+import { updateUserInfo } from '../../../utils/handleUser';
 import { verifySchema } from '../../../utils/verifySchema';
 
 // Components
@@ -21,31 +23,25 @@ export const ChangeNameModal = ({ username, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
-	const [loading, setLoading] = useState(false);
+
 	const timer = useRef(null);
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
-	const handleUpdate = async () => {
-		setLoading(true);
-
-		const result = await updateUser(formFields);
-
-		const handleSetUser = () => {
-			onUser(result.data);
-			onActiveModal({ component: null });
-		};
-
-		result.success
-			? handleSetUser()
-			: result.fields
-				? setInputErrors({ ...result.fields })
-				: navigate('/error', {
-						state: { error: result.message, previousPath },
-					});
-
-		setLoading(false);
-	};
+	const { isPending, mutate } = useMutation({
+		mutationFn: updateUserInfo,
+		onError: error =>
+			navigate('/error', {
+				state: { error: error.message, previousPath },
+			}),
+		onSuccess: data => {
+			const handleSetUser = data => {
+				queryClient.setQueryData(['userInfo'], data);
+				onActiveModal({ component: null });
+			};
+			data.success ? handleSetUser(data) : setInputErrors({ ...data.fields });
+		},
+	});
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -72,12 +68,12 @@ export const ChangeNameModal = ({ username, onActiveModal }) => {
 			setDebounce(false);
 		};
 
-		const handleValid = async () => {
+		const handleValid = () => {
 			setInputErrors({});
-			await handleUpdate();
+			mutate(formFields);
 		};
 
-		validationResult.success ? await handleValid() : handleInValid();
+		validationResult.success ? handleValid() : handleInValid();
 	};
 
 	const handleChange = e => {
@@ -121,10 +117,10 @@ export const ChangeNameModal = ({ username, onActiveModal }) => {
 
 	return (
 		<>
-			{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
+			{isPending && <Loading text={'Saving...'} light={true} shadow={true} />}
 			<form
 				className={formStyles.content}
-				onSubmit={e => !loading && handleSubmit(e)}
+				onSubmit={e => !isPending && handleSubmit(e)}
 			>
 				<div className={formStyles['label-wrap']}>
 					<label
