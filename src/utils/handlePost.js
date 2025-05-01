@@ -1,21 +1,25 @@
 import { handleFetch } from './handleFetch';
 
-const url = `${import.meta.env.VITE_RESOURCE_URL}/blog/posts`;
+const URL = `${import.meta.env.VITE_RESOURCE_URL}/blog/posts`;
 
-export const getPosts = async ({ skip, signal }) => {
+export const getPosts = async ({ pageParam: skip, signal }) => {
 	const options = {
 		method: 'GET',
 		signal,
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}?skip=${skip}`, options);
+
+	return await handleFetch(`${URL}?skip=${skip}`, options);
 };
 
-export const getPostDetail = async ({ postId, signal }) => {
+export const getPostDetail = async ({ queryKey, signal }) => {
+	const [, postId] = queryKey;
+
 	const options = {
 		method: 'GET',
 		signal,
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}/${postId}`, options);
+
+	return await handleFetch(`${URL}/${postId}`, options);
 };

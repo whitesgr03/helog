@@ -1,6 +1,7 @@
 // Modules
-import { useState, useRef, useEffect } from 'react';
-import { useOutletContext, useNavigate, useLocation } from 'react-router-dom';
+import { useRef, useEffect } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from './PostList.module.css';
@@ -9,62 +10,58 @@ import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { Posts } from './Posts';
+import { Loading } from '../../utils/Loading';
 
 // Utils
-import { getPosts } from '../../../utils/handlePost';
+import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
 export const PostList = () => {
-	const { posts, countPosts, onUpdatePosts } = useOutletContext();
+	const { isPending, isError, data, fetchNextPage, isFetchingNextPage } =
+		useInfiniteQuery(infiniteQueryPostsOption);
 
-	const [loading, setLoading] = useState(false);
 	const postListRef = useRef(null);
 
-	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
-	const skipPosts = posts.length;
+	const posts = data?.pages.reduce(
+		(accumulator, current) => accumulator.concat(current.data.posts),
+		[],
+	);
 
 	useEffect(() => {
+		const countPosts = data?.pages.at(-1).data.countPosts;
+		const skipPosts = data?.pageParams.at(-1) + 10;
+
 		const handleScroll = async () => {
 			const targetRect = postListRef.current.getBoundingClientRect();
 
 			const isScrollToDivBottom = targetRect.bottom <= window.innerHeight;
 
-			const handleGetPosts = async () => {
-				setLoading(true);
-				const result = await getPosts({ skip: skipPosts });
-
-				const handleSuccess = () => {
-					onUpdatePosts(result.data);
-					setLoading(false);
-				};
-				result.success
-					? handleSuccess()
-					: navigate('/error', {
-							state: { error: result.message, previousPath },
-						});
-			};
-
-			isScrollToDivBottom && (await handleGetPosts());
+			!isFetchingNextPage && isScrollToDivBottom && fetchNextPage();
 		};
 
-		!loading &&
-			countPosts > skipPosts &&
-			window.addEventListener('scroll', handleScroll);
-
+		countPosts > skipPosts && window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, [countPosts, loading, skipPosts, onUpdatePosts, navigate, previousPath]);
+	}, [isFetchingNextPage, data, fetchNextPage]);
 
 	return (
 		<div className={styles['post-list']}>
-			<div className={styles.container} ref={postListRef}>
-				<Posts posts={posts} limit={posts.length} />
-			</div>
-			{loading && (
-				<div className={styles['load-btn']}>
-					Loading posts ...
-					<span className={`${imageStyles.icon} ${buttonStyles['load']}`} />
-				</div>
+			{isError ? (
+				<Navigate to="/error" state={{ previousPath }} />
+			) : isPending ? (
+				<Loading text="Loading Posts..." />
+			) : (
+				<>
+					<div className={styles.container} ref={postListRef}>
+						<Posts posts={posts} />
+					</div>
+					{isFetchingNextPage && (
+						<div className={styles['load-btn']}>
+							Loading posts ...
+							<span className={`${imageStyles.icon} ${buttonStyles['load']}`} />
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);

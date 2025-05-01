@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import styles from './Posts.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
-export const Posts = ({ posts, limit }) => {
+export const Posts = ({ posts }) => {
 	const [errorImage, setErrorImage] = useState(null);
 	const imageContentRef = useRef(null);
 
@@ -25,9 +25,9 @@ export const Posts = ({ posts, limit }) => {
 
 	return (
 		<>
-			{posts.length ? (
+			{posts.length > 0 ? (
 				<ul className={styles.posts}>
-					{posts.slice(0, limit).map((post, index) => (
+					{posts.map((post, index) => (
 						<li key={post._id}>
 							<div className={styles.info}>
 								<strong className={styles['date-time']}>
@@ -65,5 +65,4 @@ export const Posts = ({ posts, limit }) => {
 
 Posts.propTypes = {
 	posts: PropTypes.array,
-	limit: PropTypes.number,
 };
