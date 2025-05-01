@@ -12,7 +12,6 @@ import { Header } from '../../layout/Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
 import { Alert } from './Alert';
 import { Modal } from './Modal';
-import { CreateUsername } from './CreateUsername';
 import { Loading } from '../../utils/Loading';
 import { Error } from '../../utils/Error/Error';
 
@@ -150,30 +149,17 @@ export const App = () => {
 					</div>
 					<div className={styles.container}>
 						<main>
-							{user && !user.username ? (
-								!modal &&
-								handleActiveModal({
-									component: (
-										<CreateUsername
-											onActiveModal={handleActiveModal}
-											onAlert={handleAlert}
-										/>
-									),
-									clickToClose: false,
-								})
-							) : (
-								<Outlet
-									context={{
-										user: user?.data,
-										posts,
-										countPosts,
-										onUpdatePosts: handleUpdatePosts,
-										onActiveModal: handleActiveModal,
-										onAlert: handleAlert,
-										onUpdatePost: handleUpdatePost,
-									}}
-								/>
-							)}
+							<Outlet
+								context={{
+									user: user?.data,
+									posts,
+									countPosts,
+									onUpdatePosts: handleUpdatePosts,
+									onActiveModal: handleActiveModal,
+									onAlert: handleAlert,
+									onUpdatePost: handleUpdatePost,
+								}}
+							/>
 						</main>
 						<Footer />
 					</div>
