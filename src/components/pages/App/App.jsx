@@ -71,7 +71,7 @@ export const App = () => {
 			setDarkTheme(theme === 'true');
 		};
 		darkTheme === null && getColorTheme();
-	}, [navigate, darkTheme, searchParams]);
+	}, [darkTheme, searchParams]);
 
 	return (
 		<div
