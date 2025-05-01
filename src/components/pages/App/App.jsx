@@ -17,13 +17,9 @@ import { Error } from '../../utils/Error/Error';
 
 // Utils
 import { queryUserInfOption } from '../../../utils/queryOptions';
-import { getPosts } from '../../../utils/handlePost';
 
 export const App = () => {
-	const [posts, setPosts] = useState([]);
-	const [countPosts, setCountPosts] = useState(0);
 	const [darkTheme, setDarkTheme] = useState(null);
-	const [fetching, setFetching] = useState(true);
 	const [alert, setAlert] = useState([]);
 	const [modal, setModal] = useState(null);
 
@@ -57,23 +53,6 @@ export const App = () => {
 		component ? setModal({ component, clickToClose }) : setModal(null);
 	};
 
-	const handleUpdatePost = ({ postId, newPost, newComments: comments }) => {
-		setPosts(
-			posts.map(post => {
-				return post._id === postId
-					? newPost
-						? newPost
-						: { ...post, comments }
-					: post;
-			}),
-		);
-	};
-
-	const handleUpdatePosts = data => {
-		setPosts(posts.concat(data.posts));
-		setCountPosts(data.countPosts);
-	};
-
 	useEffect(() => {
 		const getColorTheme = () => {
 			const themeParams = searchParams.get('theme');
@@ -94,29 +73,6 @@ export const App = () => {
 		darkTheme === null && getColorTheme();
 	}, [navigate, darkTheme, searchParams]);
 
-	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-
-		const handleGetPosts = async () => {
-			const result = await getPosts({ skip: 0, signal });
-
-			const handleSuccess = () => {
-				setPosts(result.data.posts);
-				setCountPosts(result.data.countPosts);
-			};
-
-			const handleResult = () => {
-				result.success ? handleSuccess(result.data) : setError(result.message);
-				setFetching(false);
-			};
-
-			result && handleResult();
-		};
-
-		handleGetPosts();
-		return () => controller.abort();
-	}, []);
 	return (
 		<div
 			className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
@@ -152,12 +108,8 @@ export const App = () => {
 							<Outlet
 								context={{
 									user: user?.data,
-									posts,
-									countPosts,
-									onUpdatePosts: handleUpdatePosts,
 									onActiveModal: handleActiveModal,
 									onAlert: handleAlert,
-									onUpdatePost: handleUpdatePost,
 								}}
 							/>
 						</main>
