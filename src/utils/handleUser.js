@@ -31,6 +31,7 @@ export const updateUser = async fields => {
 	};
 	return await handleFetch(url, options);
 };
+
 export const deleteUser = async () => {
 	const options = {
 		method: 'DELETE',
@@ -41,5 +42,6 @@ export const deleteUser = async () => {
 		},
 		credentials: 'include',
 	};
-	return await handleFetch(url, options);
+
+	return await handleFetch(URL, options);
 };

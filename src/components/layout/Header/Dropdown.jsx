@@ -3,6 +3,8 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../../../utils/queryOptions.js';
 
 // Styles
 import styles from './Dropdown.module.css';
@@ -27,35 +29,33 @@ export const Dropdown = ({
 	onCloseDropdown,
 	onActiveModal,
 }) => {
-	const [loading, setLoading] = useState(null);
 	const [activeSettings, setActiveSettings] = useState(false);
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
-	const handleLogout = async () => {
-		setLoading(true);
+	const { isPending, mutate } = useMutation({
+		mutationFn: async () => {
+			const options = {
+				method: 'POST',
+				headers: {
+					'X-CSRF-TOKEN': Cookies.get(
+						import.meta.env.PROD ? '__Secure-token' : 'token',
+					),
+				},
+				credentials: 'include',
+			};
+			return await handleFetch(URL, options);
+		},
+		onError: error =>
+			navigate('/error', {
+				state: { error: error.message, previousPath },
+			}),
+		onSuccess: () => queryClient.setQueryData(['userInfo'], null),
+		onSettled: () => onCloseDropdown(),
+	});
 
-		const options = {
-			method: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': Cookies.get(
-					import.meta.env.PROD ? '__Secure-token' : 'token',
-				),
-			},
-			credentials: 'include',
-		};
-
-		const result = await handleFetch(URL, options);
-
-		result.success
-			? onUser(null)
-			: navigate('/error', {
-					state: { error: result.message, previousPath },
-				});
-		onCloseDropdown();
-		setLoading(false);
-	};
+	const handleLogout = () => mutate();
 
 	const handleToggleSettingsMenu = () => setActiveSettings(!activeSettings);
 
@@ -97,7 +97,7 @@ export const Dropdown = ({
 						<button onClick={handleLogout}>
 							<span
 								data-testid="loading-icon"
-								className={`${imageStyles.icon} ${loading ? loadingStyles.load : styles.logout}`}
+								className={`${imageStyles.icon} ${isPending ? loadingStyles.load : styles.logout}`}
 							/>
 							Logout
 						</button>
@@ -123,7 +123,6 @@ export const Dropdown = ({
 
 Dropdown.propTypes = {
 	user: PropTypes.object,
-	onUser: PropTypes.func,
 	darkTheme: PropTypes.bool,
 	onColorTheme: PropTypes.func,
 	onCloseDropdown: PropTypes.func,
