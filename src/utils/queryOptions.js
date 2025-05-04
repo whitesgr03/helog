@@ -30,4 +30,5 @@ export const queryUserInfOption = queryOptions({
 	retry: (_failureCount, error) => error.message !== '404',
 	staleTime: Infinity,
 	gcTime: Infinity,
+	select: response => response.data,
 });
