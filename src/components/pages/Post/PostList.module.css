@@ -44,7 +44,6 @@
 		grid-template-columns: 1fr 1fr;
 		grid-auto-rows: 1fr;
 		gap: 40px;
-		padding: 5% 10%;
 	}
 
 	.post-list li:not(:only-of-type) {
