@@ -82,7 +82,9 @@ export const App = () => {
 			{isError && error.cause.status !== 404 ? (
 				<Error onReGetUser={refetch} />
 			) : isPending ? (
-				<Loading text={'Loading ...'} />
+				<div className={styles.loading}>
+					<Loading text={'Loading ...'} />
+				</div>
 			) : (
 				<>
 					{modal && (
