@@ -12,8 +12,8 @@ export const Loading = ({ text, dark, light, shadow }) => {
 				light ? styles.light : ''
 			} ${shadow ? styles.shadow : ''}`}
 		>
-			<span className={`${imageStyles.icon} ${styles.load}`} />
 			{text}
+			<span className={`${imageStyles.icon} ${styles.load}`} />
 		</div>
 	);
 };
