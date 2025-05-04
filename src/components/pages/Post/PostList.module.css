@@ -34,6 +34,11 @@
 }
 
 @media (width >= 1000px) {
+	.post-list {
+		row-gap: 30px;
+		padding: 5% 10%;
+	}
+
 	.post-list ul {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
