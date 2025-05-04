@@ -25,6 +25,7 @@ export const PostList = () => {
 		refetch,
 		fetchNextPage,
 		isFetchingNextPage,
+		hasNextPage,
 	} = useInfiniteQuery({
 		...infiniteQueryPostsOption,
 		retry: (failureCount, error) => {
@@ -48,9 +49,6 @@ export const PostList = () => {
 	);
 
 	useEffect(() => {
-		const countPosts = data?.pages.at(-1).data.countPosts;
-		const skipPosts = data?.pageParams.at(-1) + 10;
-
 		const handleScroll = async () => {
 			const targetRect = postListRef.current.getBoundingClientRect();
 
@@ -59,9 +57,9 @@ export const PostList = () => {
 			!isFetchingNextPage && isScrollToDivBottom && fetchNextPage();
 		};
 
-		countPosts > skipPosts && window.addEventListener('scroll', handleScroll);
+		!isError && hasNextPage && window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, [isFetchingNextPage, data, fetchNextPage]);
+	}, [isError, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
 	return (
 		<div className={styles['post-list']}>
