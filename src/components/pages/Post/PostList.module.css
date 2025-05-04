@@ -2,6 +2,8 @@
 	display: flex;
 	flex: 1 1 100%;
 	flex-direction: column;
+	justify-content: center;
+	padding-bottom: 5%;
 }
 
 .post-list ul {
