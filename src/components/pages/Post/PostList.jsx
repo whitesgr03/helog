@@ -16,8 +16,23 @@ import { Loading } from '../../utils/Loading';
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
 export const PostList = () => {
+	const { onAlert } = useOutletContext();
+
 	const { isPending, isError, data, fetchNextPage, isFetchingNextPage } =
-		useInfiniteQuery(infiniteQueryPostsOption);
+		useInfiniteQuery({
+			...infiniteQueryPostsOption,
+			retry: (failureCount, error) => {
+				failureCount >= 3 &&
+					error &&
+					onAlert({
+						message:
+							'Loading the posts has some errors occur, please try again later.',
+						error: false,
+						delay: 4000,
+					});
+				return failureCount < 3;
+			},
+		});
 
 	const postListRef = useRef(null);
 
