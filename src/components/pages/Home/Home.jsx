@@ -1,5 +1,5 @@
 // Packages
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loading } from '../../utils/Loading';
 
@@ -17,9 +17,22 @@ import url from '../../../assets/hero.jpg';
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
 export const Home = () => {
-	const { isPending, isError, data } = useInfiniteQuery(
-		infiniteQueryPostsOption,
-	);
+	const { onAlert } = useOutletContext();
+
+	const { isPending, isError, data, refetch } = useInfiniteQuery({
+		...infiniteQueryPostsOption,
+		retry: (failureCount, error) => {
+			failureCount >= 3 &&
+				error &&
+				onAlert({
+					message:
+						'Loading the latest posts has some errors occur, please try again later.',
+					error: false,
+					delay: 4000,
+				});
+			return failureCount < 3;
+		},
+	});
 
 	const { pathname: previousPath } = useLocation();
 
