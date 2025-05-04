@@ -52,9 +52,9 @@ export const PostList = () => {
 		const handleScroll = async () => {
 			const targetRect = postListRef.current.getBoundingClientRect();
 
-			const isScrollToDivBottom = targetRect.bottom <= window.innerHeight;
+			const isScrollToBottom = targetRect.bottom <= window.innerHeight;
 
-			!isFetchingNextPage && isScrollToDivBottom && fetchNextPage();
+			!isFetchingNextPage && isScrollToBottom && fetchNextPage();
 		};
 
 		!isError && hasNextPage && window.addEventListener('scroll', handleScroll);
