@@ -76,7 +76,18 @@ export const PostList = () => {
 					<div className={styles.container} ref={postListRef}>
 						<Posts posts={posts} />
 					</div>
-					{isFetchingNextPage && <Loading text={'Loading more posts ...'} />}
+					{isFetchingNextPage ? (
+						<Loading text={'Loading more posts ...'} />
+					) : (
+						isError && (
+							<button
+								className={`${buttonStyles.content} ${buttonStyles.more}`}
+								onClick={() => fetchNextPage()}
+							>
+								Click here to show more posts
+							</button>
+						)
+					)}
 				</>
 			)}
 		</div>
