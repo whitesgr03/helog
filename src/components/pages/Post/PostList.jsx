@@ -5,7 +5,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from './PostList.module.css';
-import imageStyles from '../../../styles/image.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Components
@@ -77,12 +76,7 @@ export const PostList = () => {
 					<div className={styles.container} ref={postListRef}>
 						<Posts posts={posts} />
 					</div>
-					{isFetchingNextPage && (
-						<div className={styles['load-btn']}>
-							Loading posts ...
-							<span className={`${imageStyles.icon} ${buttonStyles['load']}`} />
-						</div>
-					)}
+					{isFetchingNextPage && <Loading text={'Loading more posts ...'} />}
 				</>
 			)}
 		</div>
