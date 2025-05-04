@@ -24,7 +24,7 @@ export const queryPostDetailOption = id =>
 		staleTime: 1000 * 60 * 10,
 	});
 
-export const queryUserInfOption = queryOptions({
+export const queryUserInfoOption = queryOptions({
 	queryKey: ['userInfo'],
 	queryFn: getUserInfo,
 	retry: (_failureCount, error) => error.message !== '404',

@@ -16,7 +16,7 @@ import { Loading } from '../../utils/Loading';
 import { Error } from '../../utils/Error/Error';
 
 // Utils
-import { queryUserInfOption } from '../../../utils/queryOptions';
+import { queryUserInfoOption } from '../../../utils/queryOptions';
 
 export const App = () => {
 	const [darkTheme, setDarkTheme] = useState(null);
@@ -31,7 +31,7 @@ export const App = () => {
 		data: user,
 		error,
 		refetch,
-	} = useQuery(queryUserInfOption);
+	} = useQuery(queryUserInfoOption);
 
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
