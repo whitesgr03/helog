@@ -79,10 +79,10 @@ export const App = () => {
 			data-testid="app"
 		>
 			<ScrollRestoration getKey={location => location.key} />
-			{isPending ? (
-				<Loading text={'Loading...'} />
-			) : isError && error.message !== '404' ? (
+			{isError && error.cause.status !== 404 ? (
 				<Error onReGetUser={refetch} />
+			) : isPending ? (
+				<Loading text={'Loading ...'} />
 			) : (
 				<>
 					{modal && (
