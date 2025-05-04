@@ -1,7 +1,5 @@
 .post-list {
 	display: flex;
-	position: relative;
-	row-gap: 20px;
 	flex: 1 1 100%;
 	flex-direction: column;
 }
