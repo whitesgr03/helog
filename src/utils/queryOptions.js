@@ -27,7 +27,8 @@ export const queryPostDetailOption = id =>
 export const queryUserInfoOption = queryOptions({
 	queryKey: ['userInfo'],
 	queryFn: getUserInfo,
-	retry: (_failureCount, error) => error.message !== '404',
+	retry: (failureCount, error) =>
+		error.cause.status !== 404 && failureCount < 3,
 	staleTime: Infinity,
 	gcTime: Infinity,
 	select: response => response.data,
