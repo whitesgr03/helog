@@ -97,7 +97,7 @@ export const App = () => {
 					)}
 					<div className={styles['header-bar']}>
 						<Header
-							user={user?.data}
+							user={user}
 							darkTheme={darkTheme}
 							onAlert={handleAlert}
 							onColorTheme={handleColorTheme}
@@ -109,7 +109,7 @@ export const App = () => {
 						<main>
 							<Outlet
 								context={{
-									user: user?.data,
+									user: user,
 									onActiveModal: handleActiveModal,
 									onAlert: handleAlert,
 								}}
