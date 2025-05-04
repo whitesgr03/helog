@@ -23,15 +23,6 @@
 	align-items: center;
 }
 
-.load-btn {
-	display: flex;
-	column-gap: 10px;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 20px;
-	font-style: italic;
-}
-
 /* Dark scheme classes */
 
 :global(.dark) .post-list {
