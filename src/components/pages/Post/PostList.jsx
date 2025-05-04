@@ -1,6 +1,6 @@
 // Modules
 import { useRef, useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -18,25 +18,29 @@ import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 export const PostList = () => {
 	const { onAlert } = useOutletContext();
 
-	const { isPending, isError, data, fetchNextPage, isFetchingNextPage } =
-		useInfiniteQuery({
-			...infiniteQueryPostsOption,
-			retry: (failureCount, error) => {
-				failureCount >= 3 &&
-					error &&
-					onAlert({
-						message:
-							'Loading the posts has some errors occur, please try again later.',
-						error: false,
-						delay: 4000,
-					});
-				return failureCount < 3;
-			},
-		});
+	const {
+		isPending,
+		isError,
+		data,
+		refetch,
+		fetchNextPage,
+		isFetchingNextPage,
+	} = useInfiniteQuery({
+		...infiniteQueryPostsOption,
+		retry: (failureCount, error) => {
+			failureCount >= 3 &&
+				error &&
+				onAlert({
+					message:
+						'Loading the posts has some errors occur, please try again later.',
+					error: false,
+					delay: 4000,
+				});
+			return failureCount < 3;
+		},
+	});
 
 	const postListRef = useRef(null);
-
-	const { pathname: previousPath } = useLocation();
 
 	const posts = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data.posts),
@@ -61,8 +65,13 @@ export const PostList = () => {
 
 	return (
 		<div className={styles['post-list']}>
-			{isError ? (
-				<Navigate to="/error" state={{ previousPath }} />
+			{isError && !data?.pages.length ? (
+				<button
+					className={`${buttonStyles.content} ${buttonStyles.more}`}
+					onClick={() => refetch()}
+				>
+					Click here to load posts
+				</button>
 			) : isPending ? (
 				<Loading text="Loading Posts..." />
 			) : (
