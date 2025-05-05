@@ -120,17 +120,17 @@ export const PostDetail = () => {
 
 	return (
 		<>
-			{error ? (
-				error.status === 404 ? (
-					<Navigate to="/error/404" />
+			<div id="post-detail" className={styles['post-detail']}>
+				{error ? (
+					error.status === 404 ? (
+						<Navigate to="/error/404" />
+					) : (
+						<Navigate to="/error" state={{ error, previousPath }} />
+					)
 				) : (
-					<Navigate to="/error" state={{ error, previousPath }} />
-				)
-			) : (
-				<>
-					<div id="post-detail" className={styles['post-detail']}>
-						{checking && <Loading text={'Loading post...'} />}
-						<div
+					checking && <Loading text={'Loading post ...'} />
+				)}
+				<div
 							className={`${styles.container} ${checking ? styles.hide : ''}`}
 							data-testid="container"
 						>
@@ -186,15 +186,13 @@ export const PostDetail = () => {
 							/>
 						</div>
 					</div>
-					{!checking && (
-						<Comments
-							post={post}
-							onUpdatePost={
-								appComponentPost ? onUpdatePost : handleUpdateCurrentPost
-							}
-						/>
-					)}
-				</>
+			{!checking && (
+				<Comments
+					post={post}
+					onUpdatePost={
+						appComponentPost ? onUpdatePost : handleUpdateCurrentPost
+					}
+				/>
 			)}
 		</>
 	);
