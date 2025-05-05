@@ -1,6 +1,6 @@
 // Modules
 import { useRef, useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useOutletContext } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -15,6 +15,7 @@ import { Loading } from '../../utils/Loading';
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
 export const PostList = () => {
+	const { onAlert } = useOutletContext();
 	const { pathname: previousPath } = useLocation();
 
 	const {
@@ -23,8 +24,23 @@ export const PostList = () => {
 		data,
 		fetchNextPage,
 		isFetchingNextPage,
+		isFetchNextPageError,
 		hasNextPage,
-	} = useInfiniteQuery(infiniteQueryPostsOption);
+	} = useInfiniteQuery({
+		...infiniteQueryPostsOption,
+		refetchOnWindowFocus: true,
+		meta: {
+			errorAlert: () => {
+				hasNextPage &&
+					onAlert({
+						message:
+							'Loading the posts has some errors occur, please try again later.',
+						error: false,
+						delay: 4000,
+					});
+			},
+		},
+	});
 
 	const postListRef = useRef(null);
 
@@ -65,7 +81,7 @@ export const PostList = () => {
 					{isFetchingNextPage ? (
 						<Loading text={'Loading more posts ...'} />
 					) : (
-						isError && (
+						isFetchNextPageError && (
 							<button
 								className={`${buttonStyles.content} ${buttonStyles.more}`}
 								onClick={() => fetchNextPage()}
