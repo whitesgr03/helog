@@ -14,8 +14,13 @@ export const NotFound = () => {
 				<p>The page you are looking for could not be found.</p>
 				<p>You may surf over to our other pages.</p>
 			</div>
+
+			<Link to="/posts" className={styles.link}>
+				Back to Post List
+			</Link>
+
 			<Link to="/" className={styles.link}>
-				Back to Home Page.
+				Back to Home Page
 			</Link>
 		</div>
 	);
