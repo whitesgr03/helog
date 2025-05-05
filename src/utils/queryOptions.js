@@ -23,6 +23,9 @@ export const queryPostDetailOption = id =>
 		queryKey: ['post', id],
 		queryFn: getPostDetail,
 		staleTime: 1000 * 60 * 10,
+		retry: (failureCount, error) =>
+			error.cause.status !== 404 && failureCount < 3,
+		select: response => response.data,
 	});
 
 export const queryUserInfoOption = queryOptions({
