@@ -1,4 +1,5 @@
 // Packages
+import { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loading } from '../../utils/Loading';
@@ -19,23 +20,30 @@ import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
 export const Home = () => {
 	const { onAlert } = useOutletContext();
+	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 
 	const { isPending, isError, data, refetch } = useInfiniteQuery({
 		...infiniteQueryPostsOption,
-		retry: (failureCount, error) => {
-			failureCount >= 3 &&
-				error &&
-				onAlert({
-					message:
-						'Loading the latest posts has some errors occur, please try again later.',
-					error: false,
-					delay: 4000,
-				});
-			return failureCount < 3;
+		meta: {
+			errorAlert: () => {
+				isManuallyRefetch &&
+					onAlert({
+						message:
+							'Loading the latest posts has some errors occur, please try again later.',
+						error: false,
+						delay: 4000,
+					});
+				setIsManuallyRefetch(false);
+			},
 		},
 	});
 
 	const posts = data?.pages[0].data.posts.slice(0, 4);
+
+	const handleManuallyRefetch = () => {
+		refetch();
+		setIsManuallyRefetch(true);
+	};
 
 	return (
 		<div className={styles.home}>
@@ -72,7 +80,7 @@ export const Home = () => {
 				{isError && !data?.pages.length ? (
 					<button
 						className={`${buttonStyles.content} ${buttonStyles.more}`}
-						onClick={() => refetch()}
+						onClick={handleManuallyRefetch}
 					>
 						Click here to load posts
 					</button>
