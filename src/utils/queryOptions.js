@@ -2,11 +2,21 @@ import {
 	QueryClient,
 	queryOptions,
 	infiniteQueryOptions,
+	QueryCache,
 } from '@tanstack/react-query';
 import { getPosts, getPostDetail } from './handlePost';
 import { getUserInfo } from './handleUser';
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+	queryCache: new QueryCache({
+		onError: (_error, query) => query?.meta?.errorAlert(),
+	}),
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
+	},
+});
 
 export const infiniteQueryPostsOption = infiniteQueryOptions({
 	queryKey: ['posts'],
@@ -35,7 +45,6 @@ export const queryUserInfoOption = queryOptions({
 		error.cause.status !== 404 && failureCount < 3,
 	staleTime: Infinity,
 	gcTime: Infinity,
-	refetchOnWindowFocus: false,
 	refetchOnReconnect: false,
 	select: response => response.data,
 });
