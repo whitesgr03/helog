@@ -32,5 +32,7 @@ export const queryUserInfoOption = queryOptions({
 		error.cause.status !== 404 && failureCount < 3,
 	staleTime: Infinity,
 	gcTime: Infinity,
+	refetchOnWindowFocus: false,
+	refetchOnReconnect: false,
 	select: response => response.data,
 });
