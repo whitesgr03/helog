@@ -13,7 +13,7 @@ export const infiniteQueryPostsOption = infiniteQueryOptions({
 	queryFn: getPosts,
 	initialPageParam: 0,
 	getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-		lastPage.data.countPosts > lastPageParam ? lastPageParam + 10 : null,
+		lastPage.data.postsCount > lastPageParam + 10 ? lastPageParam + 10 : null,
 	staleTime: 1000 * 60 * 30,
 	gcTime: Infinity,
 });
