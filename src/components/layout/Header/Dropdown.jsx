@@ -51,7 +51,7 @@ export const Dropdown = ({
 			navigate('/error', {
 				state: { error: error.message, previousPath },
 			}),
-		onSuccess: () => queryClient.setQueryData(['userInfo'], null),
+		onSuccess: () => queryClient.resetQueries(['userInfo']),
 		onSettled: () => onCloseDropdown(),
 	});
 
