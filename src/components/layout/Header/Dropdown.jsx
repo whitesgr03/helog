@@ -47,10 +47,7 @@ export const Dropdown = ({
 			};
 			return await handleFetch(URL, options);
 		},
-		onError: error =>
-			navigate('/error', {
-				state: { error: error.message, previousPath },
-			}),
+		onError: () => navigate('/error', { state: { previousPath } }),
 		onSuccess: () => queryClient.resetQueries(['userInfo']),
 		onSettled: () => onCloseDropdown(),
 	});
