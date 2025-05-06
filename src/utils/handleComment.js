@@ -1,19 +1,22 @@
 import { handleFetch } from './handleFetch';
 import Cookies from 'js-cookie';
 
-const url = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
+const URL = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
 
-export const getComments = async ({ skip, signal, postId }) => {
-	const options = {
-		method: 'GET',
-		signal,
-		credentials: 'include',
+export const getComments =
+	postId =>
+	async ({ pageParam: skip, signal }) => {
+		const options = {
+			method: 'GET',
+			signal,
+			credentials: 'include',
+		};
+
+		return await handleFetch(
+			`${URL}/posts/${postId}/comments?skip=${skip}`,
+			options,
+		);
 	};
-	return await handleFetch(
-		`${url}/posts/${postId}/comments?skip=${skip}`,
-		options,
-	);
-};
 
 export const createComment = async ({ postId, data }) => {
 	const options = {
@@ -27,7 +30,7 @@ export const createComment = async ({ postId, data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(`${url}/posts/${postId}/comments`, options);
+	return await handleFetch(`${URL}/posts/${postId}/comments`, options);
 };
 
 export const updateComment = async ({ commentId, data }) => {
@@ -42,7 +45,7 @@ export const updateComment = async ({ commentId, data }) => {
 		credentials: 'include',
 		body: JSON.stringify(data),
 	};
-	return await handleFetch(`${url}/comments/${commentId}`, options);
+	return await handleFetch(`${URL}/comments/${commentId}`, options);
 };
 
 export const deleteComment = async ({ commentId }) => {
@@ -55,5 +58,5 @@ export const deleteComment = async ({ commentId }) => {
 		},
 		credentials: 'include',
 	};
-	return await handleFetch(`${url}/comments/${commentId}`, options);
+	return await handleFetch(`${URL}/comments/${commentId}`, options);
 };

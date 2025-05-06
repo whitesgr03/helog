@@ -6,6 +6,12 @@
 	padding: 10% 5%;
 }
 
+.container {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+}
+
 .replies {
 	display: flex;
 	row-gap: 15px;
@@ -80,6 +86,10 @@
 		padding: 10% 15%;
 	}
 
+	.container {
+		row-gap: 25px;
+	}
+
 	.replies {
 		row-gap: 25px;
 	}
@@ -98,6 +108,10 @@
 	.comments {
 		row-gap: 35px;
 		padding: 5% 10%;
+	}
+
+	.container {
+		row-gap: 35px;
 	}
 
 	.replies {

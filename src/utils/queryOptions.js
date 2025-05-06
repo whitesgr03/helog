@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { getPosts, getPostDetail } from './handlePost';
 import { getUserInfo } from './handleUser';
+import { getComments } from './handleComment';
 
 export const queryClient = new QueryClient({
 	queryCache: new QueryCache({
@@ -36,6 +37,18 @@ export const queryPostDetailOption = id =>
 		retry: (failureCount, error) =>
 			error.cause.status !== 404 && failureCount < 3,
 		select: response => response.data,
+	});
+
+export const infiniteQueryCommentsOption = id =>
+	infiniteQueryOptions({
+		queryKey: ['comments', id],
+		queryFn: getComments(id),
+		initialPageParam: 0,
+		getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+			lastPage.data.commentsCount > lastPageParam + 10
+				? lastPageParam + 10
+				: null,
+		staleTime: 1000 * 60 * 10,
 	});
 
 export const queryUserInfoOption = queryOptions({
