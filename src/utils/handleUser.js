@@ -31,14 +31,9 @@ export const updateUserInfo = async fields => {
 		body: JSON.stringify(fields),
 	};
 
-	const response = await fetch(URL, options).catch(error => {
-		throw new Error(error);
-	});
+	const validStatus = [400, 409];
 
-	if (!response.ok && (response.status !== 400 || response.status !== 409))
-		throw new Error(response.status);
-
-	return await response.json();
+	return await handleFetch(URL, options, validStatus);
 };
 
 export const deleteUser = async () => {
