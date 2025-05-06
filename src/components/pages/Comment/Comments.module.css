@@ -1,8 +1,7 @@
 .comments {
 	display: flex;
-	position: relative;
-	row-gap: 15px;
-	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	padding: 10% 5%;
 }
 
@@ -82,7 +81,6 @@
 
 @media (width >= 700px) {
 	.comments {
-		row-gap: 25px;
 		padding: 10% 15%;
 	}
 
@@ -106,7 +104,6 @@
 
 @media (width >= 1000px) {
 	.comments {
-		row-gap: 35px;
 		padding: 5% 10%;
 	}
 
