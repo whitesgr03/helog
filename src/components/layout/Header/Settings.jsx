@@ -61,7 +61,7 @@ export const Settings = ({
 						</li>
 						<li>
 							<strong className={styles.title}>Email</strong>
-							{user?.email && <span>{user.email}</span>}
+							<span>{user.email}</span>
 						</li>
 						<li>
 							<strong className={styles.title}>Delete</strong>
