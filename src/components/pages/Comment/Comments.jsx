@@ -36,7 +36,7 @@ export const Comments = () => {
 					onAlert({
 						message:
 							'Loading the comments has some errors occur, please try again later.',
-						error: false,
+						error: true,
 						delay: 4000,
 					});
 				isManuallyRefetch && setIsManuallyRefetch(false);

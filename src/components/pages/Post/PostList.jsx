@@ -35,7 +35,7 @@ export const PostList = () => {
 					onAlert({
 						message:
 							'Loading the posts has some errors occur, please try again later.',
-						error: false,
+						error: true,
 						delay: 4000,
 					});
 			},

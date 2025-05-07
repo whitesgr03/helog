@@ -30,7 +30,7 @@ export const Home = () => {
 					onAlert({
 						message:
 							'Loading the latest posts has some errors occur, please try again later.',
-						error: false,
+						error: true,
 						delay: 4000,
 					});
 				setIsManuallyRefetch(false);
