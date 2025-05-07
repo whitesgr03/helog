@@ -39,14 +39,14 @@ export const queryPostDetailOption = id =>
 		select: response => response.data,
 	});
 
-export const infiniteQueryCommentsOption = id =>
+export const infiniteQueryCommentsOption = postId =>
 	infiniteQueryOptions({
-		queryKey: ['comments', id],
-		queryFn: getComments(id),
+		queryKey: ['comments', postId],
+		queryFn: getComments(postId),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-			lastPage.data.commentsCount > lastPageParam + 10
-				? lastPageParam + 10
+			lastPage.data.commentsCount > lastPageParam + 100
+				? lastPageParam + 100
 				: null,
 		staleTime: 1000 * 60 * 10,
 	});
