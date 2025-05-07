@@ -1,5 +1,5 @@
 // Modules
-import { useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Navigate, useLocation, useOutletContext } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -17,6 +17,8 @@ import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 export const PostList = () => {
 	const { onAlert } = useOutletContext();
 	const { pathname: previousPath } = useLocation();
+	const [renderPostsCount, setRenderPostsCount] = useState(10);
+	const postListRef = useRef(null);
 
 	const {
 		isPending,
@@ -42,25 +44,36 @@ export const PostList = () => {
 		},
 	});
 
-	const postListRef = useRef(null);
-
 	const posts = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data.posts),
 		[],
 	);
 
 	useEffect(() => {
+		const handleRenderNextPage = () => {
+			posts.length <= renderPostsCount && fetchNextPage();
+			setRenderPostsCount(renderPostsCount + 10);
+		};
 		const handleScroll = async () => {
 			const targetRect = postListRef.current.getBoundingClientRect();
 
 			const isScrollToBottom = targetRect.bottom <= window.innerHeight;
 
-			!isFetchingNextPage && isScrollToBottom && fetchNextPage();
+			!isFetchingNextPage && isScrollToBottom && handleRenderNextPage();
 		};
 
-		!isError && hasNextPage && window.addEventListener('scroll', handleScroll);
+		!isError &&
+			(posts?.length > renderPostsCount || hasNextPage) &&
+			window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, [isError, hasNextPage, isFetchingNextPage, fetchNextPage]);
+	}, [
+		isError,
+		posts,
+		renderPostsCount,
+		hasNextPage,
+		isFetchingNextPage,
+		fetchNextPage,
+	]);
 
 	return (
 		<div className={styles['post-list']}>
@@ -76,7 +89,7 @@ export const PostList = () => {
 			) : (
 				<>
 					<div className={styles.container} ref={postListRef}>
-						<Posts posts={posts} />
+						<Posts posts={posts.slice(0, renderPostsCount)} />
 					</div>
 					{isFetchingNextPage ? (
 						<Loading text={'Loading more posts ...'} />
