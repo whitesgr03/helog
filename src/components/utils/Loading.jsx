@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import styles from './Loading.module.css';
 import imageStyles from '../../styles/image.module.css';
 
-export const Loading = ({ text, dark, light, shadow }) => {
+export const Loading = ({ text, dark, light, shadow, blur }) => {
 	return (
 		<div
 			className={`${styles.loading} ${dark ? styles.dark : ''} ${
 				light ? styles.light : ''
-			} ${shadow ? styles.shadow : ''}`}
+			} ${shadow ? styles.shadow : ''} ${blur ? styles.blur : ''}`}
 		>
 			{text}
 			<span className={`${imageStyles.icon} ${styles.load}`} />
@@ -23,4 +23,5 @@ Loading.propTypes = {
 	dark: PropTypes.bool,
 	light: PropTypes.bool,
 	shadow: PropTypes.bool,
+	blur: PropTypes.bool,
 };
