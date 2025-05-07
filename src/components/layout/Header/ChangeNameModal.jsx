@@ -30,9 +30,9 @@ export const ChangeNameModal = ({ username, onActiveModal }) => {
 
 	const { isPending, mutate } = useMutation({
 		mutationFn: updateUserInfo,
-		onError: error =>
+		onError: () =>
 			navigate('/error', {
-				state: { error: error.message, previousPath },
+				state: { previousPath },
 			}),
 		onSuccess: data => {
 			const handleSetUser = data => {
