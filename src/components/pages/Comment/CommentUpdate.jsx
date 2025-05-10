@@ -143,7 +143,7 @@ export const CommentUpdate = ({ commentId, content, onCloseCommentBox }) => {
 	}, [schema, debounce, formFields]);
 
 	useEffect(() => {
-		const setTextboxHeight = () => {
+		const setTextareaHeight = () => {
 			const ref = textbox.current;
 
 			const height =
@@ -157,7 +157,7 @@ export const CommentUpdate = ({ commentId, content, onCloseCommentBox }) => {
 			ref.setSelectionRange(lastTextPosition, lastTextPosition);
 		};
 
-		setTextboxHeight();
+		setTextareaHeight();
 	}, []);
 
 	return (
