@@ -78,20 +78,9 @@ export const CommentDetail = ({ index, comment }) => {
 		setLoading(false);
 	};
 
-	const handleShowReplies = async () => {
-		comment?.replies === undefined && (await handleGetReplies());
-		setShowReplies(!showReplies);
-	};
-	const handleShowEditBox = () => {
-		setShowEditBox(!showEditBox);
-	};
-	const handleShowReplyBox = async () => {
-		comment.countReplies > 0 &&
-			comment?.replies === undefined &&
-			(await handleGetReplies());
-
-		setShowReplyBox(!showReplyBox);
-	};
+	const handleShowReplies = async () => setShowReplies(!showReplies);
+	const handleShowEditBox = () => setShowEditBox(!showEditBox);
+	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
 
 	return (
 		<li>
