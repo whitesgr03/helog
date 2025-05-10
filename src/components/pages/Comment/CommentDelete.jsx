@@ -1,59 +1,58 @@
 // Packages
-import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
 // Styles
-import deleteModelStyles from '../../layout/Header/DeleteModal.module.css';
+import headerDeleteModelStyles from '../../layout/Header/DeleteModal.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
 import { deleteComment } from '../../../utils/handleComment';
+import { queryClient } from '../../../utils/queryOptions';
 
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const CommentDelete = ({
-	post,
-	commentId,
-	onUpdatePost,
-	onAlert,
-	onActiveModal,
-}) => {
-	const [loading, setLoading] = useState(false);
+export const CommentDelete = ({ commentId, onAlert, onActiveModal }) => {
+	const { postId } = useParams();
 
-	const handleDeleteComment = async () => {
-		setLoading(true);
-
-		const result = await deleteComment({
-			commentId,
-		});
-
-		const handleSuccess = () => {
-			const newComments = post.comments.map(comment =>
-				comment._id === commentId ? { ...comment, ...result.data } : comment,
-			);
-			onUpdatePost({ postId: post._id, newComments });
+	const { isPending, mutate } = useMutation({
+		mutationFn: deleteComment(commentId),
+		onError: () =>
+			onAlert({
+				message:
+					'Delete the comment has some errors occur, please try again later.',
+				error: true,
+				delay: 4000,
+			}),
+		onSuccess: response => {
+			queryClient.setQueryData(['comments', postId], data => {
+				const newPages = data.pages.map(page => ({
+					...page,
+					data: {
+						...page.data,
+						comments: page.data.comments.map(comment =>
+							comment._id === commentId ? response.data : comment,
+						),
+					},
+				}));
+				return {
+					pages: newPages,
+					pageParams: data.pageParams,
+				};
+			});
 			onAlert({
 				message: 'Comment has been deleted.',
 				error: false,
-				delay: 2000,
+				delay: 4000,
 			});
-			onActiveModal({ component: null });
-		};
+		},
+		onSettled: () => onActiveModal({ component: null }),
+	});
 
-		const handleFail = () => {
-			onAlert({
-				message: 'There are some errors occur, please try again later.',
-				error: true,
-				delay: 3000,
-			});
-			onActiveModal({ component: null });
-		};
+	const handleDeleteComment = () => mutate();
 
-		result.success ? handleSuccess() : handleFail();
-
-		setLoading(false);
-	};
 	return (
 		<>
 			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
@@ -85,9 +84,7 @@ export const CommentDelete = ({
 };
 
 CommentDelete.propTypes = {
-	post: PropTypes.object,
 	commentId: PropTypes.string,
-	onUpdatePost: PropTypes.func,
 	onAlert: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
