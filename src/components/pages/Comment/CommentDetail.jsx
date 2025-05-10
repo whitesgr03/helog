@@ -1,9 +1,8 @@
-// Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
-import { useQuery} from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from './CommentDetail.module.css';
@@ -20,6 +19,7 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 import {
 	queryPostDetailOption,
 	queryClient,
+	infiniteQueryRepliesOption,
 } from '../../../utils/queryOptions';
 
 export const CommentDetail = ({ index, comment }) => {
@@ -29,6 +29,11 @@ export const CommentDetail = ({ index, comment }) => {
 	const [showEditBox, setShowEditBox] = useState(false);
 
 	const { postId } = useParams();
+
+	const { data: replies, isFetching } = useInfiniteQuery({
+		...infiniteQueryRepliesOption(comment._id, comment.child.length),
+		enabled: false,
+	});
 
 	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
 	const { data: post } = useQuery(queryPostDetailOption(postId));
@@ -48,34 +53,6 @@ export const CommentDetail = ({ index, comment }) => {
 				/>
 			),
 		});
-	};
-
-	const handleGetReplies = async () => {
-		setLoading(true);
-
-		const result = await getReplies({
-			commentId: comment._id,
-			skip: 0,
-		});
-
-		const handleSuccess = () => {
-			const newComments = post.comments.map(postComment =>
-				postComment._id === comment._id
-					? { ...postComment, replies: result.data }
-					: postComment,
-			);
-			onUpdatePost({ postId: post._id, newComments });
-		};
-
-		result.success
-			? handleSuccess()
-			: onAlert({
-					message: 'There are some errors occur, please try again later.',
-					error: true,
-					delay: 3000,
-				});
-
-		setLoading(false);
 	};
 
 	const handleShowReplies = async () => setShowReplies(!showReplies);
