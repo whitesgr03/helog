@@ -1,12 +1,13 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
+import { useMutation } from '@tanstack/react-query';
 
 // Styles
-import styles from './CommentBox.module.css';
+import commentBoxStyles from './CommentBox.module.css';
 import formStyles from '../../../styles/form.module.css';
 import imageStyles from '../../../styles/image.module.css';
 import buttonStyles from '../../../styles/button.module.css';
@@ -17,15 +18,17 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { updateComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
+import { queryClient } from '../../../utils/queryOptions';
 
-export const CommentUpdate = ({ post, comment, onCloseCommentBox, onUpdatePost }) => {
+export const CommentUpdate = ({ commentId, content, onCloseCommentBox }) => {
 	const { onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
-	const [formFields, setFormFields] = useState({ content: comment.content });
-	const [loading, setLoading] = useState(false);
+	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef(null);
 	const timer = useRef(null);
+
+	const { postId } = useParams();
 
 	const schema = useMemo(
 		() => ({
@@ -33,68 +36,75 @@ export const CommentUpdate = ({ post, comment, onCloseCommentBox, onUpdatePost }
 				.trim()
 				.required('Content is required.')
 				.notOneOf(
-					[comment.content],
+					[content],
 					'New content should be different from the old content.',
 				)
 				.max(500, ({ max }) => `Content must be less than ${max} long.`),
 		}),
-		[comment.content],
+		[content],
 	);
 
-	const handleUpdateComment = async () => {
-		setLoading(true);
-
-		const result = await updateComment({
-			postId: post._id,
-			commentId: comment._id,
-			data: formFields,
-		});
-
-		const handleSuccess = () => {
-			const newComments = post.comments.map(postComment =>
-				postComment._id === comment._id ? result.data : postComment,
-			);
-			onUpdatePost({
-				postId: post._id,
-				newComments,
-			});
+	const { isPending, mutate } = useMutation({
+		mutationFn: updateComment(commentId),
+		onError: () =>
 			onAlert({
-				message: 'Comment has been updated.',
-				error: false,
-				delay: 2000,
-			});
-			onCloseCommentBox();
-		};
-
-		result.success
-			? handleSuccess()
-			: result.fields
-				? setInputErrors({ ...result.fields })
-				: onAlert({
-						message: 'There are some errors occur, please try again later.',
-						error: true,
-						delay: 3000,
-					});
-
-		setLoading(false);
-	};
+				message:
+					'Edit the comment has some errors occur, please try again later.',
+				error: true,
+				delay: 4000,
+			}),
+		onSuccess: response => {
+			const handleUpdateComment = () => {
+				queryClient.setQueryData(['comments', postId], data => {
+					const newPages = data.pages.map(page => ({
+						...page,
+						data: {
+							...page.data,
+							comments: page.data.comments.map(comment =>
+								comment._id === commentId ? response.data : comment,
+							),
+						},
+					}));
+					return {
+						pages: newPages,
+						pageParams: data.pageParams,
+					};
+				});
+				onAlert({
+					message: 'Comment has been updated.',
+					error: false,
+					delay: 4000,
+				});
+				onCloseCommentBox();
+			};
+			response.success
+				? handleUpdateComment()
+				: setInputErrors({ ...response.fields });
+		},
+	});
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		const validationResult = await verifySchema({ schema, data: formFields });
+		const handleValidation = async () => {
+			const validationResult = await verifySchema({
+				schema,
+				data: formFields,
+			});
 
-		const handleInValid = () => {
-			setInputErrors(validationResult.fields);
-			setDebounce(false);
+			const handleInValid = () => {
+				setInputErrors(validationResult.fields);
+				setDebounce(false);
+			};
+
+			const handleValid = async () => {
+				setInputErrors({});
+				mutate(formFields);
+			};
+			validationResult.success ? handleValid() : handleInValid();
 		};
 
-		const handleValid = async () => {
-			setInputErrors({});
-			await handleUpdateComment();
-		};
-
-		validationResult.success ? await handleValid() : handleInValid();
+		!isPending && (await handleValidation());
 	};
 
 	const handleChange = e => {
@@ -129,9 +139,7 @@ export const CommentUpdate = ({ post, comment, onCloseCommentBox, onUpdatePost }
 					: setInputErrors(validationResult.fields);
 			}, 500));
 
-		return () => {
-			clearTimeout(timer.current);
-		};
+		return () => clearTimeout(timer.current);
 	}, [schema, debounce, formFields]);
 
 	useEffect(() => {
@@ -209,7 +217,7 @@ export const CommentUpdate = ({ post, comment, onCloseCommentBox, onUpdatePost }
 };
 
 CommentUpdate.propTypes = {
-	post: PropTypes.object,
-	comment: PropTypes.object,
+	commentId: PropTypes.string,
+	content: PropTypes.string,
 	onCloseCommentBox: PropTypes.func,
 };
