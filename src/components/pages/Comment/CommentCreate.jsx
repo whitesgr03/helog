@@ -92,14 +92,16 @@ export const CommentCreate = () => {
 	};
 
 	const handleChange = e => {
-		const ref = textbox.current;
+		const textboxRef = textbox.current;
 
-		ref.style.height = 'auto';
+		textboxRef.style.height = 'auto';
 
 		const height =
-			ref.offsetHeight > ref.scrollHeight ? ref.offsetHeight : ref.scrollHeight;
+			textboxRef.offsetHeight > textboxRef.scrollHeight
+				? textboxRef.offsetHeight
+				: textboxRef.scrollHeight;
 
-		ref.style.height = `${height}px`;
+		textboxRef.style.height = `${height}px`;
 
 		const { name, value } = e.target;
 
