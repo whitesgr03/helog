@@ -115,6 +115,11 @@
 	padding: 10px;
 }
 
+.reply-tag {
+	margin-right: auto;
+	color: var(--light-scheme-highlight);
+}
+
 .content-bottom {
 	display: flex;
 	flex-direction: row-reverse;
@@ -207,7 +212,7 @@
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-:global(.dark) .tag {
+:global(.dark) .reply-tag {
 	color: var(--dark-scheme-highlight);
 }
 

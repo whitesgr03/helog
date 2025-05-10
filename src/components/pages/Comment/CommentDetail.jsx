@@ -30,9 +30,24 @@ export const CommentDetail = ({ index, comment }) => {
 
 	const { postId } = useParams();
 
-	const { data: replies, isFetching } = useInfiniteQuery({
+	const {
+		data: replies,
+		isFetching,
+		isFetchNextPageError,
+	} = useInfiniteQuery({
 		...infiniteQueryRepliesOption(comment._id, comment.child.length),
-		enabled: false,
+		meta: {
+			errorAlert: () => {
+				onAlert({
+					message:
+						'Loading the replies has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				});
+				!isFetchNextPageError && setShowReplies(false);
+			},
+		},
+		enabled: showReplies,
 	});
 
 	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
@@ -46,7 +61,6 @@ export const CommentDetail = ({ index, comment }) => {
 		onActiveModal({
 			component: (
 				<CommentDelete
-					post={post}
 					commentId={comment._id}
 					onAlert={onAlert}
 					onActiveModal={onActiveModal}
@@ -120,7 +134,6 @@ export const CommentDetail = ({ index, comment }) => {
 				</div>
 				{showEditBox ? (
 					<CommentUpdate
-						postId={postId}
 						commentId={comment._id}
 						content={comment.content}
 						onCloseCommentBox={handleShowEditBox}
@@ -128,9 +141,8 @@ export const CommentDetail = ({ index, comment }) => {
 				) : (
 					<p className={styles.content}>{comment.content}</p>
 				)}
-
 				<div
-					className={`${styles['content-bottom']} ${(showReplyBox || showReplies) && styles['reply-active']}`}
+					className={`${styles['content-bottom']} ${showReplyBox && styles['reply-active']}`}
 				>
 					{user && !comment.deleted && (
 						<>
@@ -168,16 +180,13 @@ export const CommentDetail = ({ index, comment }) => {
 									comment.child.length
 								)}
 							</button>
-							{showReplies && (
-								<Replies
-									repliesCount={comment.child.length}
-									commentId={comment._id}
-								/>
-							)}
 						</>
 					)}
 				</div>
 			</div>
+			{showReplies && (
+				<Replies repliesCount={comment.child.length} commentId={comment._id} />
+			)}
 		</li>
 	);
 };

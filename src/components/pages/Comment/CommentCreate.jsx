@@ -146,28 +146,24 @@ export const CommentCreate = () => {
 	}, [schema, debounce, formFields]);
 
 	return (
-		<div className={styles['comment-box']}>
-			{loading && (
-				<>
-					<div className={styles.blur} />
-					<Loading text={'Commenting...'} />
-				</>
-			)}
+		<div className={commentBoxStyles.container}>
+			{isPending && <Loading text={'Commenting ...'} blur={true} />}
 			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label
 						className={`${inputErrors.content ? formStyles.error : ''}`}
 						data-testid="label"
 					>
-						{user?.username && (
-							<div className={styles.profile}>
-								<div className={styles.avatar}>
+						{user && (
+							<div className={commentBoxStyles.profile}>
+								<div className={commentBoxStyles.avatar}>
 									{user.username.charAt(0).toUpperCase()}
 								</div>
-								<h4>{user.username}</h4>
+								<h4 className={commentBoxStyles.name}>{user.username}</h4>
 							</div>
 						)}
 						<textarea
+							className={commentBoxStyles.box}
 							name="content"
 							placeholder="write a comment..."
 							onChange={handleChange}
@@ -188,17 +184,17 @@ export const CommentCreate = () => {
 				</div>
 
 				{showSubmitButton && (
-					<div className={styles['button-wrap']}>
+					<div className={commentBoxStyles.interactive}>
 						<button
 							type="button"
-							className={`${buttonStyles.content} ${buttonStyles.cancel}`}
+							className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.cancel}`}
 							onClick={handleClose}
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
-							className={`${buttonStyles.content} ${buttonStyles.success}`}
+							className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.success}`}
 						>
 							Comment
 						</button>

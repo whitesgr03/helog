@@ -161,25 +161,18 @@ export const CommentUpdate = ({ commentId, content, onCloseCommentBox }) => {
 	}, []);
 
 	return (
-		<div className={styles['comment-box']}>
-			{loading && (
-				<>
-					<div className={styles.blur} />
-					<Loading text={'Updating...'} />
-				</>
-			)}
-			<form
-				className={formStyles.content}
-				onSubmit={e => !loading && handleSubmit(e)}
-			>
+		<div className={commentBoxStyles.container}>
+			{isPending && <Loading text={'Saving ...'} blur={true} />}
+			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label
 						className={`${inputErrors.content ? formStyles.error : ''}`}
 						data-testid="label"
 					>
 						<textarea
+							className={commentBoxStyles.box}
 							name="content"
-							placeholder="write a comment..."
+							placeholder="edit your comment..."
 							onChange={handleChange}
 							value={formFields.content}
 							ref={textbox}
@@ -196,19 +189,19 @@ export const CommentUpdate = ({ commentId, content, onCloseCommentBox }) => {
 						</div>
 					)}
 				</div>
-				<div className={styles['button-wrap']}>
+				<div className={commentBoxStyles.interactive}>
 					<button
 						type="button"
-						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
+						className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.cancel}`}
 						onClick={onCloseCommentBox}
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						className={`${buttonStyles.content} ${buttonStyles.success}`}
+						className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.success}`}
 					>
-						Update
+						Save
 					</button>
 				</div>
 			</form>
