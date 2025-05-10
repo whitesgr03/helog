@@ -111,17 +111,13 @@ export const CommentCreate = () => {
 		!isEmpty(inputErrors) && setDebounce(true);
 	};
 
-	const handleFocus = () => {
-		const handleBlur = () => {
-			textbox.current.blur();
-			onAlert({
-				message: 'You need to be logged in to your account to post a comment.',
-				error: false,
-				delay: 2000,
-			});
-		};
-
-		user ? setShowSubmitButton(true) : handleBlur();
+	const triggerBlur = () => {
+		onAlert({
+			message: 'You need to be logged in to your account to post a comment.',
+			error: false,
+			delay: 4000,
+		});
+		textbox.current.blur();
 	};
 
 	const handleClose = () => {
@@ -173,7 +169,7 @@ export const CommentCreate = () => {
 							name="content"
 							placeholder="write a comment..."
 							onChange={handleChange}
-							onFocus={handleFocus}
+							onFocus={() => (user ? setShowSubmitButton(true) : triggerBlur())}
 							value={formFields.content}
 							ref={textbox}
 							rows="1"
