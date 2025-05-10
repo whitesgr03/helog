@@ -109,7 +109,6 @@ export const App = () => {
 						<main>
 							<Outlet
 								context={{
-									user: user,
 									onActiveModal: handleActiveModal,
 									onAlert: handleAlert,
 								}}
