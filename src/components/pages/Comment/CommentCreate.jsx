@@ -1,12 +1,13 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
+import { useMutation } from '@tanstack/react-query';
 
 // Styles
-import styles from './CommentBox.module.css';
+import commentBoxStyles from './CommentBox.module.css';
 import formStyles from '../../../styles/form.module.css';
 import imageStyles from '../../../styles/image.module.css';
 import buttonStyles from '../../../styles/button.module.css';
@@ -17,18 +18,21 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { createComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
+import { queryClient } from '../../../utils/queryOptions';
 
-const DEFAULT_FIELDS = { content: '' };
+const defaultFields = { content: '' };
 
-export const CommentCreate = ({ post, onUpdatePost }) => {
-	const { user, onAlert } = useOutletContext();
+export const CommentCreate = () => {
+	const { onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
-	const [formFields, setFormFields] = useState(DEFAULT_FIELDS);
-	const [loading, setLoading] = useState(false);
+	const [formFields, setFormFields] = useState(defaultFields);
 	const [showSubmitButton, setShowSubmitButton] = useState(false);
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef(null);
 	const timer = useRef(null);
+
+	const { postId } = useParams();
+	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
 
 	const schema = useMemo(
 		() => ({
@@ -40,43 +44,33 @@ export const CommentCreate = ({ post, onUpdatePost }) => {
 		[],
 	);
 
-	const handleCreateComment = async () => {
-		setLoading(true);
-
-		const result = await createComment({ postId: post._id, data: formFields });
-
-		const handleSuccess = () => {
-			onUpdatePost({
-				postId: post._id,
-				newPost: {
-					...post,
-					totalComments: post.totalComments + 1,
-					comments: [result.data, ...post.comments],
-				},
-			});
+	const { isPending, mutate } = useMutation({
+		mutationFn: createComment(postId),
+		onError: () =>
 			onAlert({
-				message: 'A new comment has been added.',
-				error: false,
-				delay: 2000,
-			});
-			setDebounce(false);
-			setShowSubmitButton(false);
-			setFormFields(DEFAULT_FIELDS);
-			textbox.current.style.height = 'auto';
-		};
-
-		result.success
-			? handleSuccess()
-			: result.fields
-				? setInputErrors({ ...result.fields })
-				: onAlert({
-						message: 'There are some errors occur, please try again later.',
-						error: true,
-						delay: 3000,
-					});
-
-		setLoading(false);
-	};
+				message:
+					'Add new comment has some errors occur, please try again later.',
+				error: true,
+				delay: 4000,
+			}),
+		onSuccess: response => {
+			const handleRefetchComments = () => {
+				queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+				onAlert({
+					message: 'Add new comment completed.',
+					error: false,
+					delay: 4000,
+				});
+				setDebounce(false);
+				setShowSubmitButton(false);
+				setFormFields(defaultFields);
+				textbox.current.style.height = 'auto';
+			};
+			response.success
+				? handleRefetchComments()
+				: setInputErrors({ ...response.fields });
+		},
+	});
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -89,12 +83,12 @@ export const CommentCreate = ({ post, onUpdatePost }) => {
 			};
 			const handleValid = async () => {
 				setInputErrors({});
-				await handleCreateComment();
+				mutate(formFields);
 			};
-			validationResult.success ? await handleValid() : handleInValid();
+			validationResult.success ? handleValid() : handleInValid();
 		};
 
-		!loading && user && (await handleValidation());
+		!isPending && user && (await handleValidation());
 	};
 
 	const handleChange = e => {
@@ -133,7 +127,7 @@ export const CommentCreate = ({ post, onUpdatePost }) => {
 	const handleClose = () => {
 		textbox.current.style.height = 'auto';
 		setShowSubmitButton(false);
-		setFormFields(DEFAULT_FIELDS);
+		setFormFields(defaultFields);
 		setInputErrors({});
 		setDebounce(false);
 	};
@@ -150,9 +144,7 @@ export const CommentCreate = ({ post, onUpdatePost }) => {
 					: setInputErrors(validationResult.fields);
 			}, 500));
 
-		return () => {
-			clearTimeout(timer.current);
-		};
+		return () => clearTimeout(timer.current);
 	}, [schema, debounce, formFields]);
 
 	return (
@@ -217,8 +209,4 @@ export const CommentCreate = ({ post, onUpdatePost }) => {
 			</form>
 		</div>
 	);
-};
-
-CommentCreate.propTypes = {
-	post: PropTypes.object,
 };
