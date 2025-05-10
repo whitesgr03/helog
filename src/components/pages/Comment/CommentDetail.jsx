@@ -67,114 +67,122 @@ export const CommentDetail = ({ index, comment }) => {
 				} ${!comment.deleted && isCommentOwner ? styles.user : ''}`}
 				data-testid="container"
 			>
-				{!comment.deleted && (
-					<div className={styles['button-wrap']}>
-						{isPostAuthor && (
-							<em className={`${isPostAuthor ? styles.highlight : ''}`}>
-								POST AUTHOR
-							</em>
-						)}
-						{(isCommentOwner || user?.isAdmin) && (
-							<div className={styles['comment-button']}>
-								<button onClick={handleDelete} data-testid="delete-button">
-									<span className={`${imageStyles.icon} ${styles.delete}`} />
-								</button>
-								<button onClick={handleShowEditBox} data-testid="edit-button">
-									<span className={`${imageStyles.icon} ${styles.edit}`} />
-								</button>
-							</div>
-						)}
-					</div>
-				)}
-				<div className={styles['info-wrap']}>
-					<div className={styles.info}>
-						<span>{`[${index + 1}]`}</span>
-						<div className={styles.avatar}>
-							{!comment.deleted && (
-								<span>{comment.author.username.charAt(0).toUpperCase()}</span>
+				<div className={styles['content-top']}>
+					{!comment.deleted && (
+						<div className={styles['interactive-bar']}>
+							{!isPostAuthor && (
+								<em className={styles.highlight}>POST AUTHOR</em>
+							)}
+							{(isCommentOwner || user?.isAdmin) && (
+								<div className={styles['interactive-button-wrap']}>
+									<button
+										className={styles['interactive-button']}
+										onClick={handleDelete}
+										data-testid="delete-button"
+									>
+										<span
+											className={`${imageStyles.icon} ${styles['delete-icon']}`}
+										/>
+									</button>
+									<button
+										className={styles['interactive-button']}
+										onClick={handleShowEditBox}
+										data-testid="edit-button"
+									>
+										<span
+											className={`${imageStyles.icon} ${styles['edit-icon']}`}
+										/>
+									</button>
+								</div>
 							)}
 						</div>
-						<strong>
-							{!comment.deleted ? comment.author.username : '[deleted]'}
-						</strong>
-					</div>
-					<div className={styles.time}>
-						{`${formatDistanceToNow(comment.updatedAt)} ago `}
-						{new Date(comment.createdAt).getTime() !==
-						new Date(comment.updatedAt).getTime()
-							? '(edited)'
-							: ''}
+					)}
+					<div className={styles['info-bar']}>
+						<div className={styles.info}>
+							<span>{`[${index + 1}]`}</span>
+							<div className={styles.avatar}>
+								{!comment.deleted && (
+									<span>{comment.author.username.charAt(0).toUpperCase()}</span>
+								)}
+							</div>
+							<span className={styles.username}>
+								{!comment.deleted ? comment.author.username : '[deleted]'}
+							</span>
+						</div>
+						<div className={styles.time}>
+							{`${formatDistanceToNow(comment.updatedAt)} ago `}
+							{new Date(comment.createdAt).getTime() !==
+							new Date(comment.updatedAt).getTime()
+								? '(edited)'
+								: ''}
+						</div>
 					</div>
 				</div>
 				{showEditBox ? (
-					<div className={styles['edit-box-wrap']}>
-						<CommentUpdate
-							post={post}
-							comment={comment}
-							onCloseCommentBox={handleShowEditBox}
-							onUpdatePost={onUpdatePost}
-						/>
-					</div>
+					<CommentUpdate
+						postId={postId}
+						commentId={comment._id}
+						content={comment.content}
+						onCloseCommentBox={handleShowEditBox}
+					/>
 				) : (
-					<div className={styles.content}>
-						<p>{comment.content}</p>
-					</div>
+					<p className={styles.content}>{comment.content}</p>
 				)}
-				{(comment.countReplies > 0 || !comment.deleted) && (
-					<div className={styles['button-wrap']}>
-						{comment.countReplies > 0 && (
+
+				<div
+					className={`${styles['content-bottom']} ${(showReplyBox || showReplies) && styles['reply-active']}`}
+				>
+					{user && !comment.deleted && (
+						<>
+							{!showReplyBox ? (
+								<button
+									className={styles['reply-btn']}
+									onClick={handleShowReplyBox}
+								>
+									Reply
+								</button>
+							) : (
+								<ReplyCreate
+									commentId={comment._id}
+									onShowReplyBox={handleShowReplyBox}
+								/>
+							)}
+						</>
+					)}
+					{!!comment.child.length && (
+						<>
 							<button
 								className={styles['reply-list-btn']}
 								onClick={handleShowReplies}
 								data-testid="reply-icon"
 							>
 								<span
-									className={`${imageStyles.icon} ${
-										styles['reply-icon']
-									} ${showReplies && comment?.replies ? styles.active : ''}`}
+									className={`${showReplies && replies ? styles.active : ''} ${styles['reply-list-icon']} ${imageStyles.icon}`}
 								/>
-								{loading ? (
+								{isFetching ? (
 									<span
 										className={`${imageStyles.icon} ${buttonStyles['load']}`}
 										data-testid="loading-icon"
 									/>
 								) : (
-									comment.countReplies
+									comment.child.length
 								)}
 							</button>
-						)}
-						{user && !comment.deleted && (
-							<button
-								className={styles['add-reply-btn']}
-								onClick={handleShowReplyBox}
-							>
-								Reply
-							</button>
-						)}
-					</div>
-				)}
-			</div>
-
-			{showReplyBox && (
-				<div className={styles['comment-box-wrap']}>
-					<ReplyCreate
-						post={post}
-						comment={comment}
-						onCloseReplyBox={handleShowReplyBox}
-						onUpdatePost={onUpdatePost}
-					/>
+							{showReplies && (
+								<Replies
+									repliesCount={comment.child.length}
+									commentId={comment._id}
+								/>
+							)}
+						</>
+					)}
 				</div>
-			)}
-
-			{showReplies && (
-				<Replies post={post} comment={comment} onUpdatePost={onUpdatePost} />
-			)}
+			</div>
 		</li>
 	);
 };
 
 CommentDetail.propTypes = {
 	index: PropTypes.number,
-	post: PropTypes.object,
 	comment: PropTypes.object,
 };
