@@ -18,7 +18,7 @@ import { infiniteQueryCommentsOption } from '../../../utils/queryOptions';
 export const Comments = () => {
 	const { postId } = useParams();
 	const { onAlert } = useOutletContext();
-	const [isManuallyRefetch, setIsManuallyRefetch] = useState();
+	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 	const [renderCommentsCount, setRenderCommentsCount] = useState(10);
 
 	const commentListRef = useRef(null);
