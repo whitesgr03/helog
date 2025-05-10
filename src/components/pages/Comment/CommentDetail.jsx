@@ -1,8 +1,9 @@
 // Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { useQuery} from '@tanstack/react-query';
 
 // Styles
 import styles from './CommentDetail.module.css';
@@ -16,18 +17,24 @@ import { CommentDelete } from './CommentDelete';
 import { ReplyCreate } from '../Reply/ReplyCreate';
 
 // Utils
-import { getReplies } from '../../../utils/handleReply';
+import {
+	queryPostDetailOption,
+	queryClient,
+} from '../../../utils/queryOptions';
 
 export const CommentDetail = ({ index, comment }) => {
-	const { user, onAlert, onActiveModal } = useOutletContext();
+	const { onAlert, onActiveModal } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 
+	const { postId } = useParams();
+
 	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
+	const { data: post } = useQuery(queryPostDetailOption(postId));
 
 	const isCommentOwner = user?.username === comment.author.username;
-	const isPostAuthor = post.author.username === comment.author.username;
+	const isPostAuthor = post?.author.username === comment.author.username;
 
 	const handleDelete = () => {
 		setShowEditBox(false);
@@ -36,7 +43,6 @@ export const CommentDetail = ({ index, comment }) => {
 				<CommentDelete
 					post={post}
 					commentId={comment._id}
-					onUpdatePost={onUpdatePost}
 					onAlert={onAlert}
 					onActiveModal={onActiveModal}
 				/>
