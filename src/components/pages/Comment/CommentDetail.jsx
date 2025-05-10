@@ -18,12 +18,13 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 // Utils
 import { getReplies } from '../../../utils/handleReply';
 
-export const CommentDetail = ({ index, post, comment, onUpdatePost }) => {
+export const CommentDetail = ({ index, comment }) => {
 	const { user, onAlert, onActiveModal } = useOutletContext();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
-	const [loading, setLoading] = useState(false);
+
+	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
 
 	const isCommentOwner = user?.username === comment.author.username;
 	const isPostAuthor = post.author.username === comment.author.username;
