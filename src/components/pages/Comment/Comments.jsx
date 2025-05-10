@@ -101,9 +101,7 @@ export const Comments = () => {
 				<>
 					<div className={styles.container}>
 						<h3>{!!comments.length && commentAndReplyCounts} Comments</h3>
-						<div className={styles['comment-box-wrap']}>
-							<CommentCreate />
-						</div>
+						<CommentCreate />
 						<div className={styles.content}>
 							{comments.length ? (
 								<>
