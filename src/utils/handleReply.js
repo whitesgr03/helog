@@ -73,7 +73,7 @@ export const updateReply = replyId => async fields => {
 	return await handleFetch(`${url}/replies/${replyId}`, options, validStatus);
 };
 
-export const deleteReply = async ({ replyId }) => {
+export const deleteReply = replyId => async () => {
 	const options = {
 		method: 'DELETE',
 		headers: {
@@ -83,5 +83,6 @@ export const deleteReply = async ({ replyId }) => {
 		},
 		credentials: 'include',
 	};
+
 	return await handleFetch(`${url}/replies/${replyId}`, options);
 };

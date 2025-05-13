@@ -1,6 +1,6 @@
 // Packages
-import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation } from '@tanstack/react-query';
 
 // Styles
 import deleteModelStyles from '../../layout/Header/DeleteModal.module.css';
@@ -8,60 +8,58 @@ import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
 import { deleteReply } from '../../../utils/handleReply';
+import { queryClient } from '../../../utils/queryOptions';
 
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const ReplyDelete = ({
-	post,
-	commentId,
-	replyId,
-	onUpdatePost,
-	onAlert,
-	onActiveModal,
-}) => {
-	const [loading, setLoading] = useState(false);
-
-	const handleDeleteComment = async () => {
-		setLoading(true);
-
-		const result = await deleteReply({
-			replyId,
-		});
-
-		const handleSuccess = () => {
-			const newComments = post.comments.map(comment =>
-				comment._id === commentId
-					? {
-							...comment,
-							replies: comment.replies.map(reply =>
-								reply._id === replyId ? result.data : reply,
-							),
-						}
-					: comment,
-			);
-			onUpdatePost({ postId: post._id, newComments });
+export const ReplyDelete = ({ commentId, replyId, onAlert, onActiveModal }) => {
+	const { isPending, mutate } = useMutation({
+		mutationFn: deleteReply(replyId),
+		onError: () =>
+			onAlert({
+				message:
+					'Delete the reply has some errors occur, please try again later.',
+				error: true,
+				delay: 4000,
+			}),
+		onSuccess: response => {
+			queryClient.setQueryData(['replies', commentId], data => {
+				const newPages = data.pages.map(page => ({
+					...page,
+					data: page.data.map(reply =>
+						reply._id === replyId ? response.data : reply,
+					),
+				}));
+				return {
+					pages: newPages,
+					pageParams: data.pageParams,
+				};
+			});
 			onAlert({
 				message: 'Reply has been deleted.',
 				error: false,
-				delay: 2000,
+				delay: 4000,
 			});
-			onActiveModal({ component: null });
-		};
+		},
+		onSettled: () => onActiveModal({ component: null }),
+	});
 
-		const handleFail = () => {
-			onAlert({
-				message: 'There are some errors occur, please try again later.',
-				error: true,
-				delay: 3000,
-			});
-			onActiveModal({ component: null });
-		};
-
-		result.success ? handleSuccess() : handleFail();
-
-		setLoading(false);
+	const handleDeleteComment = () => {
+		onActiveModal({
+			component: (
+				<ReplyDelete
+					commentId={commentId}
+					replyId={replyId}
+					onAlert={onAlert}
+					onActiveModal={onActiveModal}
+				/>
+			),
+			clickToClose: false,
+		});
+		mutate();
 	};
+
 	return (
 		<>
 			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
@@ -93,10 +91,8 @@ export const ReplyDelete = ({
 };
 
 ReplyDelete.propTypes = {
-	post: PropTypes.object,
 	commentId: PropTypes.string,
 	replyId: PropTypes.string,
-	onUpdatePost: PropTypes.func,
 	onAlert: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
