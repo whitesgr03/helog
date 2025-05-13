@@ -18,7 +18,7 @@ export const getReplies =
 		);
 	};
 
-export const replyComment = async ({ commentId, data }) => {
+export const replyComment = commentId => async fields => {
 	const options = {
 		method: 'POST',
 		headers: {
@@ -28,12 +28,17 @@ export const replyComment = async ({ commentId, data }) => {
 			),
 		},
 		credentials: 'include',
-		body: JSON.stringify(data),
+		body: JSON.stringify(fields),
 	};
-	return await handleFetch(`${url}/comments/${commentId}/replies`, options);
+	const validStatus = [400];
+	return await handleFetch(
+		`${url}/comments/${commentId}/replies`,
+		options,
+		validStatus,
+	);
 };
 
-export const createReply = async ({ replyId, data }) => {
+export const createReply = replyId => async fields => {
 	const options = {
 		method: 'POST',
 		headers: {
@@ -43,9 +48,11 @@ export const createReply = async ({ replyId, data }) => {
 			),
 		},
 		credentials: 'include',
-		body: JSON.stringify(data),
+		body: JSON.stringify(fields),
 	};
-	return await handleFetch(`${url}/replies/${replyId}`, options);
+
+	const validStatus = [400];
+	return await handleFetch(`${url}/replies/${replyId}`, options, validStatus);
 };
 
 export const updateReply = async ({ data, replyId }) => {
