@@ -31,21 +31,23 @@ export const Replies = ({ commentId, repliesCount }) => {
 		[],
 	);
 
-	const handleScroll = id => {
-		const target = repliesRef.current.find(reply => reply.id === id);
+	const handleScroll = targetReplyId => {
+		const replyDetailWrap = repliesRef.current.find(
+			reply => reply.id === targetReplyId,
+		);
 
 		const handleShake = () => {
 			clearTimeout(waitForScrollRef.current);
 
 			waitForScrollRef.current = setTimeout(() => {
-				setShakeTargetId(id);
+				setShakeTargetId(targetReplyId);
 				window.removeEventListener('scroll', handleShake);
 			}, 100);
 		};
 
 		window.addEventListener('scroll', handleShake);
 
-		target.scrollIntoView({
+		replyDetailWrap.scrollIntoView({
 			behavior: 'smooth',
 			block: 'center',
 		});
