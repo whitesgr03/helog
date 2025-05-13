@@ -87,19 +87,25 @@ export const ReplyUpdate = ({
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		const validationResult = await verifySchema({ schema, data: formFields });
+		const handleValidation = async () => {
+			const validationResult = await verifySchema({
+				schema,
+				data: formFields,
+			});
 
-		const handleInValid = () => {
-			setInputErrors(validationResult.fields);
-			setDebounce(false);
+			const handleInValid = () => {
+				setInputErrors(validationResult.fields);
+				setDebounce(false);
+			};
+
+			const handleValid = async () => {
+				setInputErrors({});
+				mutate(formFields);
+			};
+			validationResult.success ? handleValid() : handleInValid();
 		};
 
-		const handleValid = async () => {
-			setInputErrors({});
-			await handleUpdateComment();
-		};
-
-		validationResult.success ? await handleValid() : handleInValid();
+		!isPending && (await handleValidation());
 	};
 
 	const handleChange = e => {
@@ -165,10 +171,7 @@ export const ReplyUpdate = ({
 					<Loading text={'Updating...'} />
 				</>
 			)}
-			<form
-				className={formStyles.content}
-				onSubmit={e => !loading && handleSubmit(e)}
-			>
+			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label
 						className={`${inputErrors.content ? formStyles.error : ''}`}
