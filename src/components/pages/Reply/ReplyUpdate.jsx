@@ -7,7 +7,7 @@ import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
 
 // Styles
-import styles from '../Comment/CommentBox.module.css';
+import commentBoxStyles from '../Comment/CommentBox.module.css';
 import formStyles from '../../../styles/form.module.css';
 import imageStyles from '../../../styles/image.module.css';
 import buttonStyles from '../../../styles/button.module.css';
@@ -164,13 +164,8 @@ export const ReplyUpdate = ({
 	}, []);
 
 	return (
-		<div className={styles['comment-box']}>
-			{loading && (
-				<>
-					<div className={styles.blur} />
-					<Loading text={'Updating...'} />
-				</>
-			)}
+		<div className={commentBoxStyles.container}>
+			{isPending && <Loading text={'Saving ...'} blur={true} />}
 			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label
@@ -178,6 +173,7 @@ export const ReplyUpdate = ({
 						data-testid="label"
 					>
 						<textarea
+							className={commentBoxStyles.box}
 							name="content"
 							placeholder="write a comment..."
 							onChange={handleChange}
@@ -196,19 +192,19 @@ export const ReplyUpdate = ({
 						</div>
 					)}
 				</div>
-				<div className={styles['button-wrap']}>
+				<div className={commentBoxStyles.interactive}>
 					<button
 						type="button"
-						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
+						className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.cancel}`}
 						onClick={onCloseCommentBox}
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						className={`${buttonStyles.content} ${buttonStyles.success}`}
+						className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.success}`}
 					>
-						Update
+						Save
 					</button>
 				</div>
 			</form>
