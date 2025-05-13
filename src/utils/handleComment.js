@@ -61,7 +61,7 @@ export const updateComment = commentId => async fields => {
 	);
 };
 
-export const deleteComment = async ({ commentId }) => {
+export const deleteComment = commentId => async () => {
 	const options = {
 		method: 'DELETE',
 		headers: {
