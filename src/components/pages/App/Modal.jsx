@@ -18,17 +18,15 @@ export const Modal = ({ onActiveModal, clickToClose, children }) => {
 			data-testid="modal"
 		>
 			<div className={styles['modal-wrap']}>
-				{clickToClose && (
-					<button
-						className={buttonStyles['close-btn']}
-						onClick={e =>
-							e.target === e.currentTarget && onActiveModal({ component: null })
-						}
-						data-testid="close-btn"
-					>
-						<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
-					</button>
-				)}
+				<button
+					className={buttonStyles['close-btn']}
+					onClick={e =>
+						e.target === e.currentTarget && onActiveModal({ component: null })
+					}
+					data-testid="close-btn"
+				>
+					<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
+				</button>
 				<div className={styles.container}>{children}</div>
 			</div>
 		</div>
