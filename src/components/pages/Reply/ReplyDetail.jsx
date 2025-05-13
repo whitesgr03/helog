@@ -6,7 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 
 // Styles
-import styles from '../Comment/CommentDetail.module.css';
+import commentDetailStyles from '../Comment/CommentDetail.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 // Components
@@ -40,12 +40,10 @@ export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
 		onActiveModal({
 			component: (
 				<ReplyDelete
-					post={post}
-					commentId={comment._id}
+					commentId={commentId}
 					replyId={reply._id}
 					onActiveModal={onActiveModal}
 					onAlert={onAlert}
-					onUpdatePost={onUpdatePost}
 				/>
 			),
 		});
@@ -56,62 +54,75 @@ export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
 	return (
 		<li>
 			<div
-				className={`${styles.container} ${
-					!reply.deleted && isPostAuthor ? styles.author : ''
-				} ${!reply.deleted && isCommentOwner ? styles.user : ''}`}
+				className={`${commentDetailStyles.container} ${
+					!reply.deleted && isPostAuthor ? commentDetailStyles.author : ''
+				} ${!reply.deleted && isCommentOwner ? commentDetailStyles.user : ''}`}
 				data-testid="container"
 			>
-				{!reply.deleted && (
-					<div className={styles['button-wrap']}>
-						{isPostAuthor && <em className={styles.highlight}>POST AUTHOR</em>}
-						{(isCommentOwner || user?.isAdmin) && (
-							<div className={styles['comment-button']}>
-								<button onClick={handleDelete} data-testid="delete-button">
-									<span className={`${imageStyles.icon} ${styles.delete}`} />
-								</button>
-								<button onClick={handleShowEditBox} data-testid="edit-button">
-									<span className={`${imageStyles.icon} ${styles.edit}`} />
-								</button>
-							</div>
-						)}
-					</div>
-				)}
-				<div className={styles['info-wrap']}>
-					<div className={styles.info}>
-						<span className={styles.index}>{`[${index + 1}]`}</span>
-						<div className={styles.avatar}>
-							{!reply.deleted && (
-								<span>{reply.author.username.charAt(0).toUpperCase()}</span>
+				<div className={commentDetailStyles['content-top']}>
+					{!reply.deleted && (
+						<div className={commentDetailStyles['interactive-bar']}>
+							{!isPostAuthor && (
+								<em className={commentDetailStyles.highlight}>POST AUTHOR</em>
+							)}
+							{(isCommentOwner || user?.isAdmin) && (
+								<div className={commentDetailStyles['interactive-button-wrap']}>
+									<button
+										className={commentDetailStyles['interactive-button']}
+										onClick={handleDelete}
+										data-testid="delete-button"
+									>
+										<span
+											className={`${imageStyles.icon} ${commentDetailStyles['delete-icon']}`}
+										/>
+									</button>
+									<button
+										className={commentDetailStyles['interactive-button']}
+										onClick={handleShowEditBox}
+										data-testid="edit-button"
+									>
+										<span
+											className={`${imageStyles.icon} ${commentDetailStyles['edit-icon']}`}
+										/>
+									</button>
+								</div>
 							)}
 						</div>
-						<strong>
-							{!reply.deleted ? reply.author.username : '[deleted]'}
-						</strong>
-					</div>
-					<div className={styles.time}>
-						{`${formatDistanceToNow(reply.updatedAt)} ago `}
-						{new Date(reply.createdAt).getTime() !==
-						new Date(reply.updatedAt).getTime()
-							? '(edited)'
-							: ''}
+					)}
+					<div className={commentDetailStyles['info-bar']}>
+						<div className={commentDetailStyles.info}>
+							<span>{`[${index + 1}]`}</span>
+							<div className={commentDetailStyles.avatar}>
+								{!reply.deleted && (
+									<span>{reply.author.username.charAt(0).toUpperCase()}</span>
+								)}
+							</div>
+							<span className={commentDetailStyles.username}>
+								{!reply.deleted ? reply.author.username : '[deleted]'}
+							</span>
+						</div>
+						<div className={commentDetailStyles.time}>
+							{`${formatDistanceToNow(reply.updatedAt)} ago `}
+							{new Date(reply.createdAt).getTime() !==
+							new Date(reply.updatedAt).getTime()
+								? '(edited)'
+								: ''}
+						</div>
 					</div>
 				</div>
 
 				{showEditBox ? (
-					<div className={styles['edit-box-wrap']}>
-						<ReplyUpdate
-							post={post}
-							commentId={comment._id}
-							reply={reply}
-							onUpdatePost={onUpdatePost}
-							onCloseCommentBox={handleShowEditBox}
-						/>
-					</div>
+					<ReplyUpdate
+						commentId={commentId}
+						replyId={reply._id}
+						content={reply.content}
+						onCloseCommentBox={handleShowEditBox}
+					/>
 				) : (
-					<div className={styles.content}>
+					<div className={commentDetailStyles.content}>
 						{!reply.deleted && reply?.reply && (
 							<button
-								className={styles.tag}
+								className={commentDetailStyles['reply-tag']}
 								onClick={handleScrollToRepliedUser}
 							>
 								{reply.reply.deleted
@@ -119,30 +130,32 @@ export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
 									: `@${reply.reply.author.username}`}
 							</button>
 						)}
-						<p className={styles.comment}>{reply.content}</p>
+						<p>{reply.content}</p>
 					</div>
 				)}
-				{user && !reply.deleted && (
-					<button
-						className={styles['add-reply-btn']}
-						onClick={handleShowReplyBox}
-					>
-						Reply
-					</button>
-				)}
-			</div>
-
-			{showReplyBox && (
-				<div className={styles['comment-box-wrap']}>
-					<ReplyCreate
-						post={post}
-						comment={comment}
-						reply={reply}
-						onUpdatePost={onUpdatePost}
-						onCloseReplyBox={handleShowReplyBox}
-					/>
+				<div
+					className={`${commentDetailStyles['content-bottom']} ${showReplyBox && commentDetailStyles['reply-active']}`}
+				>
+					{user && !reply.deleted && (
+						<>
+							{!showReplyBox ? (
+								<button
+									className={commentDetailStyles['reply-btn']}
+									onClick={handleShowReplyBox}
+								>
+									Reply
+								</button>
+							) : (
+								<ReplyCreate
+									commentId={commentId}
+									replyId={reply._id}
+									onShowReplyBox={handleShowReplyBox}
+								/>
+							)}
+						</>
+					)}
 				</div>
-			)}
+			</div>
 		</li>
 	);
 };
