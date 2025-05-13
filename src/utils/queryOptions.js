@@ -7,6 +7,7 @@ import {
 import { getPosts, getPostDetail } from './handlePost';
 import { getUserInfo } from './handleUser';
 import { getComments } from './handleComment';
+import { getReplies } from './handleReply';
 
 export const queryClient = new QueryClient({
 	queryCache: new QueryCache({
@@ -48,7 +49,15 @@ export const infiniteQueryCommentsOption = postId =>
 			lastPage.data.commentsCount > lastPageParam + 100
 				? lastPageParam + 100
 				: null,
-		staleTime: 1000 * 60 * 10,
+
+export const infiniteQueryRepliesOption = (commentId, repliesCount) =>
+	infiniteQueryOptions({
+		queryKey: ['replies', commentId],
+		queryFn: getReplies(commentId),
+		initialPageParam: 0,
+		getNextPageParam: (_lastPage, _allPages, lastPageParam) =>
+			repliesCount > lastPageParam + 100 ? lastPageParam + 100 : null,
+		staleTime: 1000 * 60 * 30,
 	});
 
 export const queryUserInfoOption = queryOptions({

@@ -3,16 +3,20 @@ import Cookies from 'js-cookie';
 
 const url = `${import.meta.env.VITE_RESOURCE_URL}/blog`;
 
-export const getReplies = async ({ skip, commentId }) => {
-	const options = {
-		method: 'GET',
-		credentials: 'include',
+export const getReplies =
+	commentId =>
+	async ({ pageParam: skip, signal }) => {
+		const options = {
+			method: 'GET',
+			credentials: 'include',
+			signal,
+		};
+
+		return await handleFetch(
+			`${url}/comments/${commentId}/replies?skip=${skip}`,
+			options,
+		);
 	};
-	return await handleFetch(
-		`${url}/comments/${commentId}/replies?skip=${skip}`,
-		options,
-	);
-};
 
 export const replyComment = async ({ commentId, data }) => {
 	const options = {

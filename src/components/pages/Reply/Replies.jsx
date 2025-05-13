@@ -1,58 +1,35 @@
 // Packages
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useOutletContext } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from '../Comment/Comments.module.css';
 import buttonStyles from '../../../styles/button.module.css';
-import imageStyles from '../../../styles/image.module.css';
 
 // Components
 import { ReplyDetail } from './ReplyDetail';
+import { Loading } from '../../utils/Loading';
 
 // Utils
-import { getReplies } from '../../../utils/handleReply';
+import { infiniteQueryRepliesOption } from '../../../utils/queryOptions';
 
-export const Replies = ({ post, comment, onUpdatePost }) => {
-	const { onAlert } = useOutletContext();
-	const [loading, setLoading] = useState(false);
+export const Replies = ({ commentId, repliesCount }) => {
 	const [shakeTargetId, setShakeTargetId] = useState('');
+	const [renderRepliesCount, setRenderRepliesCount] = useState(10);
 
 	const repliesRef = useRef([]);
 	const waitForScrollRef = useRef(null);
 
-	const replies = comment.replies;
-
-	const skipReplies = replies.length;
-
-	const handleGetReplies = async () => {
-		setLoading(true);
-
-		const result = await getReplies({
-			commentId: comment._id,
-			skip: skipReplies,
+	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+		useInfiniteQuery({
+			...infiniteQueryRepliesOption(commentId, repliesCount),
 		});
 
-		const handleSuccess = () => {
-			const newComments = post.comments.map(postComment =>
-				postComment._id === comment._id
-					? { ...postComment, replies: postComment.replies.concat(result.data) }
-					: postComment,
-			);
-			onUpdatePost({ postId: post._id, newComments });
-		};
-
-		result.success
-			? handleSuccess()
-			: onAlert({
-					message: 'There are some errors occur, please try again later.',
-					error: true,
-					delay: 3000,
-				});
-
-		setLoading(false);
-	};
+	const replies = data?.pages.reduce(
+		(accumulator, current) => accumulator.concat(current.data),
+		[],
+	);
 
 	const handleScroll = id => {
 		const target = repliesRef.current.find(reply => reply.id === id);
@@ -76,52 +53,55 @@ export const Replies = ({ post, comment, onUpdatePost }) => {
 
 	const handleAnimationEnd = () => setShakeTargetId('');
 
+	const handleRenderNextPage = () => {
+		replies.length <= renderRepliesCount && fetchNextPage();
+		setRenderRepliesCount(renderRepliesCount + 10);
+	};
+
 	return (
-		<div className={styles.replies}>
-			<div className={styles.content}>
-				<ul>
-					{replies.map((reply, index) => (
-						<div
-							key={reply._id}
-							id={reply._id}
-							className={shakeTargetId === reply._id ? styles.shake : ''}
-							ref={element => (repliesRef.current[index] = element)}
-							onAnimationEnd={handleAnimationEnd}
-							data-testid="reply"
-						>
-							<ReplyDetail
-								index={index}
-								post={post}
-								comment={comment}
-								reply={reply}
-								onScroll={handleScroll}
-								onUpdatePost={onUpdatePost}
-							/>
-						</div>
-					))}
-				</ul>
-				{comment.countReplies > skipReplies && (
-					<button
-						className={`${buttonStyles.content} ${buttonStyles.more}`}
-						onClick={handleGetReplies}
-					>
-						<span className={buttonStyles.text}>
-							Show more replies
-							{loading && (
-								<span
-									className={`${imageStyles.icon} ${buttonStyles['load']}`}
-									data-testid="loading-icon"
-								/>
-							)}
-						</span>
-					</button>
-				)}
-			</div>
-		</div>
+		<>
+			{replies && (
+				<div className={styles.replies}>
+					<div className={styles.content}>
+						<ul>
+							{replies.slice(0, renderRepliesCount).map((reply, index) => (
+								<div
+									key={reply._id}
+									id={reply._id}
+									className={shakeTargetId === reply._id ? styles.shake : ''}
+									ref={element => (repliesRef.current[index] = element)}
+									onAnimationEnd={handleAnimationEnd}
+									data-testid="reply"
+								>
+									<ReplyDetail
+										index={index}
+										commentId={commentId}
+										reply={reply}
+										onScroll={handleScroll}
+									/>
+								</div>
+							))}
+						</ul>
+						{isFetchingNextPage ? (
+							<Loading text={'Loading more replies ...'} />
+						) : (
+							(replies?.length > renderRepliesCount || hasNextPage) && (
+								<button
+									className={`${buttonStyles.content} ${buttonStyles.more}`}
+									onClick={handleRenderNextPage}
+								>
+									Show more replies
+								</button>
+							)
+						)}
+					</div>
+				</div>
+			)}
+		</>
 	);
 };
 
 Replies.propTypes = {
-	post: PropTypes.object,
-	comment: PropTypes.object,
+	commentId: PropTypes.string,
+	repliesCount: PropTypes.number,
 };
