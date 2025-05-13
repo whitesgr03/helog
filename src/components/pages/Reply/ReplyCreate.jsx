@@ -1,9 +1,10 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
+import { useMutation } from '@tanstack/react-query';
 
 // Styles
 import styles from '../Comment/CommentBox.module.css';
@@ -18,21 +19,20 @@ import { Loading } from '../../utils/Loading';
 import { replyComment } from '../../../utils/handleReply';
 import { createReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
+import { queryClient } from '../../../utils/queryOptions';
 
-export const ReplyCreate = ({
-	post,
-	comment,
-	reply,
-	onCloseReplyBox,
-	onUpdatePost,
-}) => {
-	const { user, onAlert } = useOutletContext();
+export const ReplyCreate = ({ commentId, replyId, onShowReplyBox }) => {
+	const { onAlert } = useOutletContext();
+
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ content: '' });
-	const [loading, setLoading] = useState(false);
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef(null);
 	const timer = useRef(null);
+
+	const { postId } = useParams();
+
+	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
 
 	const schema = useMemo(
 		() => ({
@@ -44,65 +44,47 @@ export const ReplyCreate = ({
 		[],
 	);
 
-	const handleCreateReply = async () => {
-		setLoading(true);
-
-		const result = reply
-			? await createReply({
-					data: formFields,
-					replyId: reply._id,
-				})
-			: await replyComment({
-					data: formFields,
-					commentId: comment._id,
+	const { isPending, mutate } = useMutation({
+		mutationFn: replyId ? createReply(replyId) : replyComment(commentId),
+		onError: () =>
+			onAlert({
+				message: 'Add new reply has some errors occur, please try again later.',
+				error: true,
+				delay: 4000,
+			}),
+		onSuccess: response => {
+			const handleRefetchComments = () => {
+				queryClient.invalidateQueries({ queryKey: ['replies', commentId] });
+				queryClient.setQueryData(['comments', postId], data => {
+					const newPages = data.pages.map(page => ({
+						...page,
+						data: {
+							...page.data,
+							comments: page.data.comments.map(comment =>
+								comment._id === commentId
+									? { ...comment, child: [...comment.child, response.data._id] }
+									: comment,
+							),
+						},
+					}));
+					return {
+						pages: newPages,
+						pageParams: data.pageParams,
+					};
 				});
 
-		const handleSuccess = () => {
-			const newComments = post.comments.map(postComment =>
-				postComment._id === comment._id
-					? {
-							...postComment,
-							countReplies: postComment?.countReplies
-								? postComment.countReplies + 1
-								: 1,
-							replies: postComment?.replies
-								? reply
-									? [...postComment.replies, result.data]
-									: [result.data, ...postComment.replies]
-								: [result.data],
-						}
-					: postComment,
-			);
-
-			onUpdatePost({
-				postId: post._id,
-				newPost: {
-					...post,
-					countComments: post.countComments + 1,
-					comments: newComments,
-				},
-			});
-
-			onAlert({
-				message: 'A new reply has been added.',
-				error: false,
-				delay: 2000,
-			});
-			onCloseReplyBox();
-		};
-
-		result.success
-			? handleSuccess()
-			: result.fields
-				? setInputErrors({ ...result.fields })
-				: onAlert({
-						message: 'There are some errors occur, please try again later.',
-						error: true,
-						delay: 3000,
-					});
-
-		setLoading(false);
-	};
+				onAlert({
+					message: 'Add new reply completed.',
+					error: false,
+					delay: 4000,
+				});
+				onShowReplyBox(false);
+			};
+			response.success
+				? handleRefetchComments()
+				: setInputErrors({ ...response.fields });
+		},
+	});
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -223,8 +205,7 @@ export const ReplyCreate = ({
 };
 
 ReplyCreate.propTypes = {
-	post: PropTypes.object,
-	comment: PropTypes.object,
-	reply: PropTypes.object,
-	onCloseReplyBox: PropTypes.func,
+	commentId: PropTypes.string,
+	replyId: PropTypes.string,
+	onShowReplyBox: PropTypes.func,
 };
