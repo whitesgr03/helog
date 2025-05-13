@@ -15,17 +15,22 @@ import { ReplyUpdate } from './ReplyUpdate';
 import { ReplyDelete } from './ReplyDelete';
 
 // Utils
-import { queryPostDetailOption } from '../../../utils/queryOptions';
+import {
+	queryPostDetailOption,
+	queryClient,
+} from '../../../utils/queryOptions';
 
 export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
+	const { onAlert, onActiveModal } = useOutletContext();
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 
 	const { postId } = useParams();
 	const { data: post } = useQuery(queryPostDetailOption(postId));
+	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
 
 	const isCommentOwner = user?.username === reply.author.username;
-	const isPostAuthor = post.author.username === reply.author.username;
+	const isPostAuthor = post?.author.username === reply.author.username;
 
 	const handleShowEditBox = () => setShowEditBox(!showEditBox);
 	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
