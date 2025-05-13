@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useMutation } from '@tanstack/react-query';
 
 // Styles
-import deleteModelStyles from '../../layout/Header/DeleteModal.module.css';
+import headerDeleteModelStyles from '../../layout/Header/DeleteModal.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
@@ -62,15 +62,17 @@ export const ReplyDelete = ({ commentId, replyId, onAlert, onActiveModal }) => {
 
 	return (
 		<>
-			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
-			<div className={deleteModelStyles.model}>
-				<span className={deleteModelStyles.title}>
+			{isPending && (
+				<Loading text={'Deleting ...'} light={true} shadow={true} />
+			)}
+			<div className={headerDeleteModelStyles.model}>
+				<span className={headerDeleteModelStyles.title}>
 					Delete This Reply Forever
 				</span>
-				<span className={deleteModelStyles.content}>
+				<span className={headerDeleteModelStyles.content}>
 					Do you really want to delete?
 				</span>
-				<div className={deleteModelStyles['button-wrap']}>
+				<div className={headerDeleteModelStyles['button-wrap']}>
 					<button
 						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 						data-close-model
