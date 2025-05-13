@@ -18,7 +18,7 @@ export const getComments =
 		);
 	};
 
-export const createComment = async ({ postId, data }) => {
+export const createComment = postId => async fields => {
 	const options = {
 		method: 'POST',
 		headers: {
@@ -28,9 +28,15 @@ export const createComment = async ({ postId, data }) => {
 			),
 		},
 		credentials: 'include',
-		body: JSON.stringify(data),
+		body: JSON.stringify(fields),
 	};
-	return await handleFetch(`${URL}/posts/${postId}/comments`, options);
+	const validStatus = [400];
+
+	return await handleFetch(
+		`${URL}/posts/${postId}/comments`,
+		options,
+		validStatus,
+	);
 };
 
 export const updateComment = async ({ commentId, data }) => {
