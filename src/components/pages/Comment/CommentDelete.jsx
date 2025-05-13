@@ -51,7 +51,19 @@ export const CommentDelete = ({ commentId, onAlert, onActiveModal }) => {
 		onSettled: () => onActiveModal({ component: null }),
 	});
 
-	const handleDeleteComment = () => mutate();
+	const handleDeleteComment = () => {
+		onActiveModal({
+			component: (
+				<CommentDelete
+					commentId={commentId}
+					onAlert={onAlert}
+					onActiveModal={onActiveModal}
+				/>
+			),
+			clickToClose: false,
+		});
+		mutate();
+	};
 
 	return (
 		<>
