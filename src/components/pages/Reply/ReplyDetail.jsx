@@ -1,8 +1,9 @@
 // Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from '../Comment/CommentDetail.module.css';
@@ -13,24 +14,20 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 import { ReplyUpdate } from './ReplyUpdate';
 import { ReplyDelete } from './ReplyDelete';
 
-export const ReplyDetail = ({
-	index,
-	post,
-	comment,
-	reply,
-	onScroll,
-	onUpdatePost,
-}) => {
-	const { user, onAlert, onActiveModal } = useOutletContext();
+// Utils
+import { queryPostDetailOption } from '../../../utils/queryOptions';
+
+export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
+
+	const { postId } = useParams();
+	const { data: post } = useQuery(queryPostDetailOption(postId));
 
 	const isCommentOwner = user?.username === reply.author.username;
 	const isPostAuthor = post.author.username === reply.author.username;
 
-	const handleShowEditBox = () => {
-		setShowEditBox(!showEditBox);
-	};
+	const handleShowEditBox = () => setShowEditBox(!showEditBox);
 	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
 
 	const handleDelete = () => {
@@ -147,8 +144,7 @@ export const ReplyDetail = ({
 
 ReplyDetail.propTypes = {
 	index: PropTypes.number,
-	post: PropTypes.object,
-	comment: PropTypes.object,
+	commentId: PropTypes.string,
 	reply: PropTypes.object,
 	onScroll: PropTypes.func,
 };
