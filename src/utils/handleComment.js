@@ -39,7 +39,7 @@ export const createComment = postId => async fields => {
 	);
 };
 
-export const updateComment = async ({ commentId, data }) => {
+export const updateComment = commentId => async fields => {
 	const options = {
 		method: 'PATCH',
 		headers: {
@@ -49,9 +49,16 @@ export const updateComment = async ({ commentId, data }) => {
 			),
 		},
 		credentials: 'include',
-		body: JSON.stringify(data),
+		body: JSON.stringify(fields),
 	};
-	return await handleFetch(`${URL}/comments/${commentId}`, options);
+
+	const validStatus = [400];
+
+	return await handleFetch(
+		`${URL}/comments/${commentId}`,
+		options,
+		validStatus,
+	);
 };
 
 export const deleteComment = async ({ commentId }) => {
