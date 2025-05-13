@@ -7,7 +7,7 @@ import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
 
 // Styles
-import styles from '../Comment/CommentBox.module.css';
+import commentBoxStyles from '../Comment/CommentBox.module.css';
 import formStyles from '../../../styles/form.module.css';
 import imageStyles from '../../../styles/image.module.css';
 import buttonStyles from '../../../styles/button.module.css';
@@ -142,29 +142,24 @@ export const ReplyCreate = ({ commentId, replyId, onShowReplyBox }) => {
 	}, [schema, debounce, formFields]);
 
 	return (
-		<div className={styles['comment-box']}>
-			{loading && (
-				<>
-					<div className={styles.blur} />
-					<Loading text={'Commenting...'} />
-				</>
-			)}
-			<form
-				className={formStyles.content}
-				onSubmit={e => !loading && handleSubmit(e)}
-			>
+		<div
+			className={`${commentBoxStyles['reply-box']} ${commentBoxStyles.container}`}
+		>
+			{isPending && <Loading text={'Commenting ...'} blur={true} />}
+			<form className={formStyles.content} onSubmit={handleSubmit}>
 				<div className={formStyles['label-wrap']}>
 					<label
 						className={`${inputErrors.content ? formStyles.error : ''}`}
 						data-testid="label"
 					>
-						<div className={styles.profile}>
-							<div className={styles.avatar}>
+						<div className={commentBoxStyles.profile}>
+							<div className={commentBoxStyles.avatar}>
 								{user.username.charAt(0).toUpperCase()}
 							</div>
-							<h4>{user.username}</h4>
+							<h4 className={commentBoxStyles.name}>{user.username}</h4>
 						</div>
 						<textarea
+							className={commentBoxStyles.box}
 							name="content"
 							placeholder="write a comment..."
 							onChange={handleChange}
@@ -184,17 +179,17 @@ export const ReplyCreate = ({ commentId, replyId, onShowReplyBox }) => {
 					)}
 				</div>
 
-				<div className={styles['button-wrap']}>
+				<div className={commentBoxStyles.interactive}>
 					<button
 						type="button"
-						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
-						onClick={onCloseReplyBox}
+						className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.cancel}`}
+						onClick={onShowReplyBox}
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						className={`${buttonStyles.content} ${buttonStyles.success}`}
+						className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.success}`}
 					>
 						Comment
 					</button>
