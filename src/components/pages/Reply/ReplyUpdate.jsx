@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
+import { useMutation } from '@tanstack/react-query';
 
 // Styles
 import styles from '../Comment/CommentBox.module.css';
@@ -17,18 +18,17 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { updateReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
+import { queryClient } from '../../../utils/queryOptions';
 
 export const ReplyUpdate = ({
-	post,
 	commentId,
-	reply,
+	replyId,
+	content,
 	onCloseCommentBox,
-	onUpdatePost,
 }) => {
 	const { onAlert } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
-	const [formFields, setFormFields] = useState({ content: reply.content });
-	const [loading, setLoading] = useState(false);
+	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef(null);
 	const timer = useRef(null);
@@ -39,58 +39,50 @@ export const ReplyUpdate = ({
 				.trim()
 				.required('Content is required.')
 				.notOneOf(
-					[reply.content],
+					[content],
 					'New content should be different from the old content.',
 				)
 				.max(500, ({ max }) => `Content must be less than ${max} long.`),
 		}),
-		[reply.content],
+		[content],
 	);
 
-	const handleUpdateComment = async () => {
-		setLoading(true);
-
-		const result = await updateReply({
-			replyId: reply._id,
-			data: formFields,
-		});
-
-		const handleSuccess = () => {
-			const newComments = post.comments.map(postComment =>
-				postComment._id === commentId
-					? {
-							...postComment,
-							replies: postComment.replies.map(commentReply =>
-								commentReply._id === reply._id ? result.data : commentReply,
-							),
-						}
-					: postComment,
-			);
-
-			onUpdatePost({
-				postId: post._id,
-				newComments,
-			});
+	const { isPending, mutate } = useMutation({
+		mutationFn: updateReply(replyId),
+		onError: () =>
 			onAlert({
-				message: 'Reply has been updated.',
-				error: false,
-				delay: 2000,
-			});
-			onCloseCommentBox();
-		};
+				message:
+					'Edit the reply has some errors occur, please try again later.',
+				error: true,
+				delay: 4000,
+			}),
+		onSuccess: response => {
+			const handleUpdateComment = () => {
+				queryClient.setQueryData(['replies', commentId], data => {
+					const newPages = data.pages.map(page => ({
+						...page,
+						data: page.data.map(reply =>
+							reply._id === replyId ? response.data : reply,
+						),
+					}));
 
-		result.success
-			? handleSuccess()
-			: result.fields
-				? setInputErrors({ ...result.fields })
-				: onAlert({
-						message: 'There are some errors occur, please try again later.',
-						error: true,
-						delay: 3000,
-					});
-
-		setLoading(false);
-	};
+					return {
+						pages: newPages,
+						pageParams: data.pageParams,
+					};
+				});
+				onAlert({
+					message: 'Reply has been updated.',
+					error: false,
+					delay: 4000,
+				});
+				onCloseCommentBox();
+			};
+			response.success
+				? handleUpdateComment()
+				: setInputErrors({ ...response.fields });
+		},
+	});
 
 	const handleSubmit = async e => {
 		e.preventDefault();

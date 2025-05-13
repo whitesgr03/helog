@@ -55,7 +55,7 @@ export const createReply = replyId => async fields => {
 	return await handleFetch(`${url}/replies/${replyId}`, options, validStatus);
 };
 
-export const updateReply = async ({ data, replyId }) => {
+export const updateReply = replyId => async fields => {
 	const options = {
 		method: 'PATCH',
 		headers: {
@@ -65,9 +65,12 @@ export const updateReply = async ({ data, replyId }) => {
 			),
 		},
 		credentials: 'include',
-		body: JSON.stringify(data),
+		body: JSON.stringify(fields),
 	};
-	return await handleFetch(`${url}/replies/${replyId}`, options);
+
+	const validStatus = [400];
+
+	return await handleFetch(`${url}/replies/${replyId}`, options, validStatus);
 };
 
 export const deleteReply = async ({ replyId }) => {
