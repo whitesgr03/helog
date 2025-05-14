@@ -14,8 +14,12 @@ import { queryClient } from '../../../utils/queryOptions';
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const CommentDelete = ({ commentId, onAlert, onActiveModal }) => {
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
+export const CommentDelete = ({ commentId }) => {
 	const { postId } = useParams();
+	const { onAlert, onModal } = useAppDataAPI();
 
 	const { isPending, mutate } = useMutation({
 		mutationFn: deleteComment(commentId),
@@ -48,19 +52,13 @@ export const CommentDelete = ({ commentId, onAlert, onActiveModal }) => {
 				delay: 4000,
 			});
 		},
-		onSettled: () => onActiveModal({ component: null }),
+		onSettled: () => onModal({ component: null }),
 	});
 
 	const handleDeleteComment = () => {
-		onActiveModal({
-			component: (
-				<CommentDelete
-					commentId={commentId}
-					onAlert={onAlert}
-					onActiveModal={onActiveModal}
-				/>
-			),
-			clickToClose: false,
+		onModal({
+			component: <CommentDelete commentId={commentId} />,
+			clickBgToClose: false,
 		});
 		mutate();
 	};
@@ -81,7 +79,7 @@ export const CommentDelete = ({ commentId, onAlert, onActiveModal }) => {
 					<button
 						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 						data-close-model
-						onClick={() => onActiveModal({ component: null })}
+						onClick={() => onModal({ component: null })}
 					>
 						Cancel
 					</button>
@@ -99,6 +97,5 @@ export const CommentDelete = ({ commentId, onAlert, onActiveModal }) => {
 
 CommentDelete.propTypes = {
 	commentId: PropTypes.string,
-	onAlert: PropTypes.func,
-	onActiveModal: PropTypes.func,
+	onModal: PropTypes.func,
 };
