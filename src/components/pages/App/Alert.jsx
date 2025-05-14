@@ -1,11 +1,15 @@
 // Packages
 import { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Alert.module.css';
 
-export const Alert = ({ alert, onAlert }) => {
+// Context
+import { useAlert, useAppDataAPI } from './AppContext';
+
+export const Alert = () => {
+	const alert = useAlert();
+	const { onAlert } = useAppDataAPI();
 	const [pause, setPause] = useState(false);
 	const timer = useRef('');
 	const startTime = useRef(0);
@@ -63,9 +67,4 @@ export const Alert = ({ alert, onAlert }) => {
 			<p data-testid="message">{lastAlert.message || alert[0]?.message}</p>
 		</div>
 	);
-};
-
-Alert.propTypes = {
-	alert: PropTypes.array,
-	onAlert: PropTypes.func,
 };
