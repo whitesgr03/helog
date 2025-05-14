@@ -40,7 +40,13 @@ export const DeleteModal = ({ onCloseDropdown }) => {
 		},
 	});
 
-	const handleDelete = () => mutate();
+	const handleDelete = () => {
+		onModal({
+			component: <DeleteModal onCloseDropdown={onCloseDropdown} />,
+			clickBgToClose: false,
+		});
+		mutate();
+	};
 
 	return (
 		<>
