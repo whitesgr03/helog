@@ -1,7 +1,6 @@
 // Packages
-import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
@@ -20,10 +19,13 @@ import { createComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
 import { queryClient } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 const defaultFields = { content: '' };
 
 export const CommentCreate = () => {
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState(defaultFields);
 	const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -47,20 +49,24 @@ export const CommentCreate = () => {
 	const { isPending, mutate } = useMutation({
 		mutationFn: createComment(postId),
 		onError: () =>
-			onAlert({
-				message:
-					'Add new comment has some errors occur, please try again later.',
-				error: true,
-				delay: 4000,
-			}),
+			onAlert([
+				{
+					message:
+						'Add new comment has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]),
 		onSuccess: response => {
 			const handleRefetchComments = () => {
 				queryClient.invalidateQueries({ queryKey: ['comments', postId] });
-				onAlert({
-					message: 'Add new comment completed.',
-					error: false,
-					delay: 4000,
-				});
+				onAlert([
+					{
+						message: 'Add new comment completed.',
+						error: false,
+						delay: 4000,
+					},
+				]);
 				setDebounce(false);
 				setShowSubmitButton(false);
 				setFormFields(defaultFields);
@@ -114,11 +120,13 @@ export const CommentCreate = () => {
 	};
 
 	const triggerBlur = () => {
-		onAlert({
-			message: 'You need to be logged in to your account to post a comment.',
-			error: false,
-			delay: 4000,
-		});
+		onAlert([
+			{
+				message: 'You need to be logged in to your account to post a comment.',
+				error: false,
+				delay: 4000,
+			},
+		]);
 		textbox.current.blur();
 	};
 

@@ -1,7 +1,7 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
@@ -20,8 +20,11 @@ import { updateComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
 import { queryClient } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const CommentUpdate = ({ commentId, content, onCloseCommentBox }) => {
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);

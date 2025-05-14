@@ -1,7 +1,6 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
@@ -20,13 +19,16 @@ import { updateReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
 import { queryClient } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const ReplyUpdate = ({
 	commentId,
 	replyId,
 	content,
 	onCloseCommentBox,
 }) => {
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);

@@ -1,6 +1,6 @@
 // Modules
 import { useState, useRef, useEffect } from 'react';
-import { Navigate, useLocation, useOutletContext } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -14,8 +14,11 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const PostList = () => {
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 	const { pathname: previousPath } = useLocation();
 	const [renderPostsCount, setRenderPostsCount] = useState(10);
 	const postListRef = useRef(null);

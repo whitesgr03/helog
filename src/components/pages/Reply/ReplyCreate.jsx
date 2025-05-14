@@ -1,7 +1,7 @@
 // Packages
 import PropTypes from 'prop-types';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
@@ -21,8 +21,11 @@ import { createReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
 import { queryClient } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const ReplyCreate = ({ commentId, replyId, onShowReplyBox }) => {
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ content: '' });

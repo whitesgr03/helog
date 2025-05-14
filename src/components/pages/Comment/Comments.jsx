@@ -1,6 +1,6 @@
 // Packages
 import { useState, useRef, useEffect } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -15,9 +15,12 @@ import { CommentCreate } from './CommentCreate';
 // Utils
 import { infiniteQueryCommentsOption } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const Comments = () => {
 	const { postId } = useParams();
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 	const [renderCommentsCount, setRenderCommentsCount] = useState(10);
 

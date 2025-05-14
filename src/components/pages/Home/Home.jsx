@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loading } from '../../utils/Loading';
 
@@ -18,8 +18,11 @@ import url from '../../../assets/hero.jpg';
 // Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const Home = () => {
-	const { onAlert } = useOutletContext();
+	const { onAlert } = useAppDataAPI();
 	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 
 	const { isPending, isError, data, refetch } = useInfiniteQuery({
