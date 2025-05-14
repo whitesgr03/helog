@@ -29,12 +29,7 @@ export const DeleteModal = ({ onCloseDropdown }) => {
 				state: { error: error.message, previousPath },
 			}),
 		onSuccess: () => {
-			queryClient.setQueryData(['userInfo'], null);
-			onAlert({
-				message: 'Your account has been deleted.',
-				error: false,
-				delay: 2000,
-			});
+			queryClient.resetQueries(['userInfo']);
 			onModal({ component: null });
 			onCloseDropdown();
 		},
