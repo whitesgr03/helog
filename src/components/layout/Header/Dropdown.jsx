@@ -23,11 +23,9 @@ const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
 
 export const Dropdown = ({
 	user,
-	onAlert,
 	darkTheme,
 	onColorTheme,
 	onCloseDropdown,
-	onActiveModal,
 }) => {
 	const [activeSettings, setActiveSettings] = useState(false);
 
@@ -109,8 +107,6 @@ export const Dropdown = ({
 			{activeSettings && (
 				<Settings
 					user={user}
-					onAlert={onAlert}
-					onActiveModal={onActiveModal}
 					onToggleSettingsMenu={handleToggleSettingsMenu}
 					onCloseDropdown={onCloseDropdown}
 				/>
@@ -124,6 +120,4 @@ Dropdown.propTypes = {
 	darkTheme: PropTypes.bool,
 	onColorTheme: PropTypes.func,
 	onCloseDropdown: PropTypes.func,
-	onActiveModal: PropTypes.func,
-	onAlert: PropTypes.func,
 };
