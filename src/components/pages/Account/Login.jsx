@@ -1,5 +1,5 @@
 // Packages
-import { Navigate, useOutletContext } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 
 // styles
@@ -12,8 +12,11 @@ import { Loading } from '../../utils/Loading';
 import googleIcon from '../../../assets/google.png';
 import facebookIcon from '../../../assets/facebook.png';
 
+// Utils
+import { queryClient } from '../../../utils/queryOptions';
+
 export const Login = () => {
-	const { user } = useOutletContext();
+	const { data: user } = queryClient.getQueryData(['userInfo']) ?? {};
 
 	const [loading, setLoading] = useState(false);
 
