@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 
@@ -22,8 +22,11 @@ import {
 	infiniteQueryRepliesOption,
 } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const CommentDetail = ({ index, comment }) => {
-	const { onAlert, onActiveModal } = useOutletContext();
+	const { onAlert, onModal } = useAppDataAPI();
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
@@ -58,14 +61,9 @@ export const CommentDetail = ({ index, comment }) => {
 
 	const handleDelete = () => {
 		setShowEditBox(false);
-		onActiveModal({
-			component: (
-				<CommentDelete
-					commentId={comment._id}
-					onAlert={onAlert}
-					onActiveModal={onActiveModal}
-				/>
-			),
+		onModal({
+			component: <CommentDelete commentId={comment._id} />,
+			clickBgToClose: true,
 		});
 	};
 
