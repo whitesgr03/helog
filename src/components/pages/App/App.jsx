@@ -18,10 +18,11 @@ import { Error } from '../../utils/Error/Error';
 // Utils
 import { queryUserInfoOption } from '../../../utils/queryOptions';
 
+// Provider
+import { AppDataProvider } from './AppDataProvider';
+
 export const App = () => {
 	const [darkTheme, setDarkTheme] = useState(null);
-	const [alert, setAlert] = useState([]);
-	const [modal, setModal] = useState(null);
 
 	const [searchParams] = useSearchParams();
 
@@ -36,21 +37,6 @@ export const App = () => {
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
-	};
-
-	const handleAlert = ({ message, error, delay }) => {
-		const newAlert = {
-			message,
-			error,
-			delay,
-		};
-		setAlert(alert.length < 2 ? alert.concat(newAlert) : [newAlert]);
-	};
-
-	const handleActiveModal = ({ component, clickToClose = true }) => {
-		document.body.removeAttribute('style');
-		component && (document.body.style.overflow = 'hidden');
-		component ? setModal({ component, clickToClose }) : setModal(null);
 	};
 
 	useEffect(() => {
@@ -74,50 +60,38 @@ export const App = () => {
 	}, [darkTheme, searchParams]);
 
 	return (
-		<div
-			className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
-			data-testid="app"
-		>
-			<ScrollRestoration getKey={location => location.key} />
-			{isError && error.cause.status !== 404 ? (
-				<Error onReGetUser={refetch} />
-			) : isPending ? (
-				<div className={styles.loading}>
-					<Loading text={'Loading ...'} />
-				</div>
-			) : (
-				<>
-					{modal && (
-						<Modal
-							onActiveModal={handleActiveModal}
-							clickToClose={modal.clickToClose}
-						>
-							{modal.component}
-						</Modal>
-					)}
-					<div className={styles['header-bar']}>
-						<Header
-							user={user}
-							darkTheme={darkTheme}
-							onAlert={handleAlert}
-							onColorTheme={handleColorTheme}
-							onActiveModal={handleActiveModal}
-						/>
-						<Alert alert={alert} onAlert={setAlert} />
+		<AppDataProvider>
+			<div
+				className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
+				data-testid="app"
+			>
+				<ScrollRestoration getKey={location => location.key} />
+				{isError && error.cause.status !== 404 ? (
+					<Error onReGetUser={refetch} />
+				) : isPending ? (
+					<div className={styles.loading}>
+						<Loading text={'Loading ...'} />
 					</div>
-					<div className={styles.container}>
-						<main>
-							<Outlet
-								context={{
-									onActiveModal: handleActiveModal,
-									onAlert: handleAlert,
-								}}
+				) : (
+					<>
+						<Modal />
+						<div className={styles['header-bar']}>
+							<Header
+								user={user}
+								darkTheme={darkTheme}
+								onColorTheme={handleColorTheme}
 							/>
-						</main>
-						<Footer />
-					</div>
-				</>
-			)}
-		</div>
+							<Alert />
+						</div>
+						<div className={styles.container}>
+							<main>
+								<Outlet />
+							</main>
+							<Footer />
+						</div>
+					</>
+				)}
+			</div>
+		</AppDataProvider>
 	);
 };
