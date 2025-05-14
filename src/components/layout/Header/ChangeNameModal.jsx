@@ -19,7 +19,11 @@ import { verifySchema } from '../../../utils/verifySchema';
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const ChangeNameModal = ({ username, onActiveModal }) => {
+// Context
+import { useAppDataAPI } from '../../pages/App/AppContext';
+
+export const ChangeNameModal = ({ username }) => {
+	const { onModal } = useAppDataAPI();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
@@ -37,7 +41,7 @@ export const ChangeNameModal = ({ username, onActiveModal }) => {
 		onSuccess: data => {
 			const handleSetUser = data => {
 				queryClient.setQueryData(['userInfo'], data);
-				onActiveModal({ component: null });
+				onModal({ component: null });
 			};
 			data.success ? handleSetUser(data) : setInputErrors({ ...data.fields });
 		},
@@ -158,6 +162,5 @@ export const ChangeNameModal = ({ username, onActiveModal }) => {
 };
 
 ChangeNameModal.propTypes = {
-	onActiveModal: PropTypes.func,
 	username: PropTypes.string,
 };

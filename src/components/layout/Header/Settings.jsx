@@ -10,8 +10,11 @@ import imageStyles from '../../../styles/image.module.css';
 import { ChangeNameModal } from './ChangeNameModal';
 import { DeleteModal } from './DeleteModal';
 
-export const Settings = ({ user, onToggleSettingsMenu, onCloseDropdown }) => {
+// Context
+import { useAppDataAPI } from '../../pages/App/AppContext';
 
+export const Settings = ({ user, onToggleSettingsMenu, onCloseDropdown }) => {
+	const { onModal } = useAppDataAPI();
 
 	return (
 		<div className={styles.settings}>
@@ -42,13 +45,8 @@ export const Settings = ({ user, onToggleSettingsMenu, onCloseDropdown }) => {
 							<button
 								className={styles['change-btn']}
 								onClick={() =>
-									onActiveModal({
-										component: (
-											<ChangeNameModal
-												username={user.username}
-												onActiveModal={onActiveModal}
-											/>
-										),
+									onModal({
+										component: <ChangeNameModal username={user.username} />,
 									})
 								}
 							>
@@ -64,13 +62,9 @@ export const Settings = ({ user, onToggleSettingsMenu, onCloseDropdown }) => {
 							<button
 								className={styles['delete-btn']}
 								onClick={() =>
-									onActiveModal({
+									onModal({
 										component: (
-											<DeleteModal
-												onActiveModal={onActiveModal}
-												onAlert={onAlert}
-												onCloseDropdown={onCloseDropdown}
-											/>
+											<DeleteModal onCloseDropdown={onCloseDropdown} />
 										),
 									})
 								}

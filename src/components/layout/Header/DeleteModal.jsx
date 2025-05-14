@@ -14,9 +14,13 @@ import { deleteUser } from '../../../utils/handleUser';
 // Components
 import { Loading } from '../../utils/Loading';
 
-export const DeleteModal = ({ onCloseDropdown, onActiveModal, onAlert }) => {
+// Context
+import { useAppDataAPI } from '../../pages/App/AppContext';
+
+export const DeleteModal = ({ onCloseDropdown }) => {
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
+	const { onModal } = useAppDataAPI();
 
 	const { isPending, mutate } = useMutation({
 		mutationFn: deleteUser,
@@ -31,7 +35,7 @@ export const DeleteModal = ({ onCloseDropdown, onActiveModal, onAlert }) => {
 				error: false,
 				delay: 2000,
 			});
-			onActiveModal({ component: null });
+			onModal({ component: null });
 			onCloseDropdown();
 		},
 	});
@@ -48,7 +52,7 @@ export const DeleteModal = ({ onCloseDropdown, onActiveModal, onAlert }) => {
 					<button
 						className={`${buttonStyles.content} ${buttonStyles.cancel}`}
 						data-close-model
-						onClick={() => onActiveModal({ component: null })}
+						onClick={() => onModal({ component: null })}
 					>
 						Cancel
 					</button>
@@ -65,8 +69,5 @@ export const DeleteModal = ({ onCloseDropdown, onActiveModal, onAlert }) => {
 };
 
 DeleteModal.propTypes = {
-	onAlert: PropTypes.func,
-	onUser: PropTypes.func,
 	onCloseDropdown: PropTypes.func,
-	onActiveModal: PropTypes.func,
 };
