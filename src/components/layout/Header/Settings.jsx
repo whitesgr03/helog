@@ -10,13 +10,9 @@ import imageStyles from '../../../styles/image.module.css';
 import { ChangeNameModal } from './ChangeNameModal';
 import { DeleteModal } from './DeleteModal';
 
-export const Settings = ({
-	user,
-	onAlert,
-	onToggleSettingsMenu,
-	onActiveModal,
-	onCloseDropdown,
-}) => {
+export const Settings = ({ user, onToggleSettingsMenu, onCloseDropdown }) => {
+
+
 	return (
 		<div className={styles.settings}>
 			<div
@@ -92,7 +88,5 @@ export const Settings = ({
 Settings.propTypes = {
 	user: PropTypes.object,
 	onToggleSettingsMenu: PropTypes.func,
-	onActiveModal: PropTypes.func,
-	onAlert: PropTypes.func,
 	onCloseDropdown: PropTypes.func,
 };
