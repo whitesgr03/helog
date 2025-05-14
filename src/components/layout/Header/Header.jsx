@@ -11,13 +11,7 @@ import imageStyles from '../../../styles/image.module.css';
 // Components
 import { Dropdown } from './Dropdown';
 
-export const Header = ({
-	user,
-	onAlert,
-	darkTheme,
-	onColorTheme,
-	onActiveModal,
-}) => {
+export const Header = ({ user, darkTheme, onColorTheme }) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
 	const handleActiveDropdown = () => setActiveDropdown(!activeDropdown);
@@ -67,10 +61,8 @@ export const Header = ({
 					<>
 						<Dropdown
 							user={user}
-							onAlert={onAlert}
 							darkTheme={darkTheme}
 							onColorTheme={onColorTheme}
-							onActiveModal={onActiveModal}
 							onCloseDropdown={handleCloseDropdown}
 						/>
 						<div
@@ -88,6 +80,4 @@ Header.propTypes = {
 	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
 	onColorTheme: PropTypes.func,
-	onActiveModal: PropTypes.func,
-	onAlert: PropTypes.func,
 };
