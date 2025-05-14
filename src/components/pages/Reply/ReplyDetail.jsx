@@ -1,7 +1,7 @@
 // Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 
@@ -20,8 +20,11 @@ import {
 	queryClient,
 } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
-	const { onAlert, onActiveModal } = useOutletContext();
+	const { onModal } = useAppDataAPI();
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
 
@@ -37,15 +40,9 @@ export const ReplyDetail = ({ index, commentId, reply, onScroll }) => {
 
 	const handleDelete = () => {
 		setShowEditBox(false);
-		onActiveModal({
-			component: (
-				<ReplyDelete
-					commentId={commentId}
-					replyId={reply._id}
-					onActiveModal={onActiveModal}
-					onAlert={onAlert}
-				/>
-			),
+		onModal({
+			component: <ReplyDelete commentId={commentId} replyId={reply._id} />,
+			clickBgToClose: true,
 		});
 	};
 
