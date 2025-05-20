@@ -28,7 +28,5 @@ export const getPostDetail = async ({
 		credentials: 'include',
 	};
 
-	// if (skip && skip === 100)
-	// throw Error();
 	return await handleFetch(`${URL}/${postId}`, options);
 };
