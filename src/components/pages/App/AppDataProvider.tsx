@@ -5,9 +5,8 @@ import {
 	AppDataAPIContext,
 	reducer,
 	initialData,
+	State,
 } from './AppContext.tsx';
-
-import { State } from './AppContext.tsx';
 
 export const AppDataProvider = ({
 	children,
