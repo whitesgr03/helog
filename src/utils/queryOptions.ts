@@ -36,7 +36,7 @@ export const queryPostDetailOption = (id: string) =>
 		queryKey: ['post', id],
 		queryFn: getPostDetail,
 		staleTime: 1000 * 60 * 30,
-		retry: (failureCount, error: { cause: { status: number } }) =>
+		retry: (failureCount, error: { cause: { status?: number } }) =>
 			error?.cause?.status !== 404 && failureCount < 3,
 		select: response => response.data,
 	});
