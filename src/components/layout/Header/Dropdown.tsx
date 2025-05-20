@@ -59,7 +59,10 @@ export const Dropdown = ({
 			};
 			return await handleFetch(URL, options);
 		},
-		onError: () => navigate('/error', { state: { previousPath } }),
+		onError: () => {
+			navigate('/error', { state: { previousPath } });
+			onCloseDropdown();
+		},
 		onSuccess: () => {
 			queryClient.removeQueries({ queryKey: ['userInfo'] });
 			onAlert([
