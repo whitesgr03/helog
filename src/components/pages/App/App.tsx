@@ -66,7 +66,7 @@ export const App = () => {
 					<Error onReGetUser={refetch} />
 				) : isPending ? (
 					<div className={styles.loading}>
-						<Loading text={'Loading ...'} />
+						<Loading text={'Loading data ...'} />
 					</div>
 				) : (
 					<>
