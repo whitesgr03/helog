@@ -12,10 +12,10 @@ import buttonStyles from '../../../styles/button.module.css';
 import { Posts } from '../Post/Posts';
 import { Loading } from '../../utils/Loading';
 
-// // Variables
+// Variables
 import url from '../../../assets/hero.jpg';
 
-// // Utils
+// Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 
 // Context
