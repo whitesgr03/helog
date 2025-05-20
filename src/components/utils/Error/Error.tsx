@@ -1,6 +1,5 @@
 // Packages
 import { Link, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Error.module.css';
@@ -31,8 +30,4 @@ export const Error = ({ onReGetUser }: { onReGetUser?: () => void }) => {
 			</Link>
 		</div>
 	);
-};
-
-Error.propTypes = {
-	onReGetUser: PropTypes.func,
 };
