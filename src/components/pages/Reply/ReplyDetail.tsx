@@ -76,7 +76,7 @@ export const ReplyDetail = ({
 				<div className={commentDetailStyles['content-top']}>
 					{!reply.deleted && (
 						<div className={commentDetailStyles['interactive-bar']}>
-							{!isPostAuthor && (
+							{isPostAuthor && (
 								<em className={commentDetailStyles.highlight}>POST AUTHOR</em>
 							)}
 							{(isCommentOwner || user?.isAdmin) && (

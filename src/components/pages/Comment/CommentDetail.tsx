@@ -101,7 +101,7 @@ export const CommentDetail = ({
 				<div className={styles['content-top']}>
 					{!comment.deleted && (
 						<div className={styles['interactive-bar']}>
-							{!isPostAuthor && (
+							{isPostAuthor && (
 								<em className={styles.highlight}>POST AUTHOR</em>
 							)}
 							{(isCommentOwner || user?.isAdmin) && (
