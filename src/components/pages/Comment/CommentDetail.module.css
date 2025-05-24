@@ -31,7 +31,7 @@
 	color: var(--light-scheme-highlight);
 }
 
-.interactive-wrap {
+.interactive-button-wrap {
 	display: flex;
 	column-gap: 15px;
 	flex: 1 1 100%;
