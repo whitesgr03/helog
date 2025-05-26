@@ -26,10 +26,10 @@ export default defineConfig({
 		globals: true,
 		environment: 'jsdom',
 		setupFiles: './src/setup.ts',
-		include: ['src/__test__/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+		include: ['src/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
 		exclude: [
-			'src/__test__/**/delete_*.{test,spec}.?(c|m)[jt]s?(x)',
-			'src/__test__/E2E',
+      'src/**/delete_*.{test,spec}.?(c|m)[jt]s?(x)',
+			'src/E2E',
 		],
 		coverage: {
 			include: ['src/**'],
