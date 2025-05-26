@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 // Styles
 import commentBoxStyles from '../Comment/CommentBox.module.css';
@@ -17,13 +17,11 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { createReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
-import { queryClient } from '../../../utils/queryOptions';
+import { queryUserInfoOption } from '../../../utils/queryOptions';
 
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
-// Type
-import { User } from '../../layout/Header/Header';
 import { CommentData } from '../Comment/Comments';
 
 interface ReplyCreateProps {
@@ -51,8 +49,7 @@ export const ReplyCreate = ({
 
 	const { postId } = useParams();
 
-	const { data: user }: { data?: User } =
-		queryClient.getQueryData(['userInfo']) ?? {};
+	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
 
 	const schema = useMemo(
 		() => ({

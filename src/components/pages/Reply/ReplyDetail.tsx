@@ -15,14 +15,13 @@ import { ReplyDelete } from './ReplyDelete';
 // Utils
 import {
 	queryPostDetailOption,
-	queryClient,
+	queryUserInfoOption,
 } from '../../../utils/queryOptions';
 
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { User } from '../../layout/Header/Header';
 import { Reply } from './Replies';
 
 interface ReplyDetailProps {
@@ -45,8 +44,7 @@ export const ReplyDetail = ({
 	const [showEditBox, setShowEditBox] = useState(false);
 
 	const { data: post } = useQuery(queryPostDetailOption(postId));
-	const { data: user }: { data?: User } =
-		queryClient.getQueryData(['userInfo']) ?? {};
+	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
 
 	const isCommentOwner = user?.username === reply.author.username;
 	const isPostAuthor = post?.author.username === reply.author.username;

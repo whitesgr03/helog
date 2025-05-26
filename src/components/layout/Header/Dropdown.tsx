@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from './Dropdown.module.css';
@@ -15,8 +15,7 @@ import { Settings } from './Settings.jsx';
 
 // Utils
 import { handleFetch } from '../../../utils/handleFetch.js';
-import { queryClient } from '../../../utils/queryOptions.js';
-
+import { queryUserInfoOption } from '../../../utils/queryOptions.js';
 import { useAppDataAPI } from '../../pages/App/AppContext.js';
 
 // Variables
@@ -24,7 +23,6 @@ const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
 
 // Type
 import { DarkTheme } from '../../pages/App/App.js';
-import { User } from './Header.js';
 
 interface DropdownProps {
 	darkTheme: DarkTheme;
@@ -40,8 +38,9 @@ export const Dropdown = ({
 	const { onAlert } = useAppDataAPI();
 	const [activeSettings, setActiveSettings] = useState(false);
 
-	const { data: user }: { data?: User } =
-		queryClient.getQueryData(['userInfo']) ?? {};
+	const queryClient = useQueryClient();
+
+	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();

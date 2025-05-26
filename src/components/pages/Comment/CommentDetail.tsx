@@ -17,15 +17,13 @@ import { ReplyCreate } from '../Reply/ReplyCreate';
 // Utils
 import {
 	queryPostDetailOption,
-	queryClient,
 	infiniteQueryRepliesOption,
+	queryUserInfoOption,
 } from '../../../utils/queryOptions';
 
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
-// Type
-import { User } from '../../layout/Header/Header';
 import { Comment } from './Comments';
 
 interface CommentDetailProps {
@@ -68,8 +66,7 @@ export const CommentDetail = ({
 		enabled: showReplies,
 	});
 
-	const { data: user }: { data?: User } =
-		queryClient.getQueryData(['userInfo']) ?? {};
+	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
 	const { data: post } = useQuery(queryPostDetailOption(postId));
 
 	const isCommentOwner = user?.username === comment.author.username;
