@@ -10,11 +10,12 @@ import { DeleteModal } from './DeleteModal';
 // Context
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
-// Type
-import { User } from './Header.js';
-
 interface SettingsProps {
-	user: User;
+	user: {
+		email: string;
+		username: string;
+		isAdmin: boolean;
+	};
 	onToggleSettingsMenu: () => void;
 	onCloseDropdown: () => void;
 }
