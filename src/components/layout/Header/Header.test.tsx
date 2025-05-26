@@ -8,12 +8,12 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { Header } from './Header';
 import { Dropdown } from './Dropdown';
 
-vi.mock('../../../components/layout/Header/Dropdown');
+vi.mock('./Dropdown');
 
 describe('Header component', () => {
 	it('should navigate to the "../" path, if the HeLog link is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {};
+		const mockProps = { darkTheme: false, onColorTheme: () => {} };
 		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
@@ -56,9 +56,8 @@ describe('Header component', () => {
 	});
 	it('should render the post editor link, if the username of user prop is provided', async () => {
 		const mockProps = {
-			data: {
-				username: 'example',
-			},
+			darkTheme: false,
+			onColorTheme: () => {},
 		};
 
 		const queryClient = new QueryClient({
@@ -70,13 +69,17 @@ describe('Header component', () => {
 			},
 		});
 
-		queryClient.setQueryData(['userInfo'], mockProps);
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'example',
+			},
+		});
 
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Header />,
+					element: <Header {...mockProps} />,
 				},
 			],
 			{
@@ -102,7 +105,9 @@ describe('Header component', () => {
 	it("should render the dark mode icon and text, if the 'darkTheme' prop is provided", () => {
 		const mockProps = {
 			darkTheme: true,
+			onColorTheme: () => {},
 		};
+
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
@@ -125,7 +130,7 @@ describe('Header component', () => {
 					future={{
 						v7_startTransition: true,
 					}}
-				/>{' '}
+				/>
 			</QueryClientProvider>,
 		);
 
@@ -138,8 +143,10 @@ describe('Header component', () => {
 	it('should switch color theme, if the color theme button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
+			darkTheme: false,
 			onColorTheme: vi.fn(),
 		};
+
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
@@ -177,9 +184,16 @@ describe('Header component', () => {
 	});
 	it('should render Dropdown component and transparent bgc, if the account button is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {};
+		const mockProps = {
+			darkTheme: false,
+			onColorTheme: () => {},
+		};
+
 		const queryClient = new QueryClient();
-		Dropdown.mockImplementationOnce(() => <div>Dropdown component</div>);
+
+		vi.mocked(Dropdown).mockImplementationOnce(() => (
+			<div>Dropdown component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -218,9 +232,15 @@ describe('Header component', () => {
 	});
 	it('should close Dropdown component and transparent bgc, if the transparent bgc is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {};
+		const mockProps = {
+			darkTheme: false,
+			onColorTheme: () => {},
+		};
 		const queryClient = new QueryClient();
-		Dropdown.mockImplementationOnce(() => <div>Dropdown component</div>);
+
+		vi.mocked(Dropdown).mockImplementationOnce(() => (
+			<div>Dropdown component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
