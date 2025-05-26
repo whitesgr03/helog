@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../../utils/queryOptions';
+import { useQueryClient } from '@tanstack/react-query';
 
 // Styles
 import formStyles from '../../../styles/form.module.css';
@@ -21,15 +21,12 @@ import { Loading } from '../../utils/Loading';
 // Context
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
-// Type
-import { User } from './Header';
-
 interface ChangeNameModalProps {
-	username: User['username'];
+	username: string;
 }
 
 interface inputErrors {
-	username?: User['username'];
+	username?: string;
 }
 
 export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
@@ -42,6 +39,8 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
+	const queryClient = useQueryClient();
+
 	const { isPending, mutate } = useMutation({
 		mutationFn: updateUserInfo,
 		onError: () =>
@@ -49,11 +48,11 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 				state: { previousPath },
 			}),
 		onSuccess: data => {
-			const handleSetUser = (data: User) => {
+			const handleSetUser = () => {
 				queryClient.setQueryData(['userInfo'], data);
 				onModal({ component: null });
 			};
-			data.success ? handleSetUser(data) : setInputErrors({ ...data.fields });
+			data.success ? handleSetUser() : setInputErrors({ ...data.fields });
 		},
 	});
 

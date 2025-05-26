@@ -1,7 +1,7 @@
 // Packages
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../../utils/queryOptions';
+import { useQueryClient } from '@tanstack/react-query';
 
 // Styles
 import styles from './DeleteModal.module.css';
@@ -24,6 +24,8 @@ export const DeleteModal = ({ onCloseDropdown }: DeleteModalProps) => {
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 	const { onModal, onAlert } = useAppDataAPI();
+
+	const queryClient = useQueryClient();
 
 	const { isPending, mutate } = useMutation({
 		mutationFn: deleteUser,

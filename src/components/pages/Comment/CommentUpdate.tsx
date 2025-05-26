@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Styles
 import commentBoxStyles from './CommentBox.module.css';
@@ -17,7 +17,6 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { updateComment } from '../../../utils/handleComment';
 import { verifySchema } from '../../../utils/verifySchema';
-import { queryClient } from '../../../utils/queryOptions';
 
 // Context
 import { useAppDataAPI } from '../App/AppContext';
@@ -62,7 +61,7 @@ export const CommentUpdate = ({
 		}),
 		[content],
 	);
-
+	const queryClient = useQueryClient();
 	const { isPending, mutate } = useMutation({
 		mutationFn: updateComment,
 		onError: () =>

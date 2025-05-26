@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
 // Styles
 import commentBoxStyles from './CommentBox.module.css';
@@ -36,6 +36,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 	const textbox = useRef<HTMLTextAreaElement>(null);
 	const timer = useRef<NodeJS.Timeout>();
 
+	const queryClient = useQueryClient();
 	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
 
 	const schema = useMemo(

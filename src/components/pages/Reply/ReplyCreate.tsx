@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
 // Styles
 import commentBoxStyles from '../Comment/CommentBox.module.css';
@@ -48,6 +48,7 @@ export const ReplyCreate = ({
 	const timer = useRef<NodeJS.Timeout>();
 
 	const { postId } = useParams();
+	const queryClient = useQueryClient();
 
 	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
 

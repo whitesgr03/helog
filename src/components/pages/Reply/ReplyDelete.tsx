@@ -1,5 +1,5 @@
 // Packages
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Styles
 import headerDeleteModelStyles from '../../layout/Header/DeleteModal.module.css';
@@ -7,7 +7,6 @@ import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
 import { deleteReply } from '../../../utils/handleReply';
-import { queryClient } from '../../../utils/queryOptions';
 
 // Components
 import { Loading } from '../../utils/Loading';
@@ -25,6 +24,7 @@ interface ReplyDeleteProps {
 
 export const ReplyDelete = ({ commentId, replyId }: ReplyDeleteProps) => {
 	const { onAlert, onModal } = useAppDataAPI();
+	const queryClient = useQueryClient();
 	const { isPending, mutate } = useMutation({
 		mutationFn: deleteReply,
 		onError: () =>

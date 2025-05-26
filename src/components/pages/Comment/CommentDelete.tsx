@@ -1,14 +1,13 @@
 // Packages
 import { useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-
+import { useQueryClient } from '@tanstack/react-query';
 // Styles
 import headerDeleteModelStyles from '../../layout/Header/DeleteModal.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Utils
 import { deleteComment } from '../../../utils/handleComment';
-import { queryClient } from '../../../utils/queryOptions';
 
 // Components
 import { Loading } from '../../utils/Loading';
@@ -23,6 +22,7 @@ export const CommentDelete = ({ commentId }: { commentId: string }) => {
 	const { postId } = useParams();
 	const { onAlert, onModal } = useAppDataAPI();
 
+	const queryClient = useQueryClient();
 	const { isPending, mutate } = useMutation({
 		mutationFn: deleteComment,
 		onError: () =>

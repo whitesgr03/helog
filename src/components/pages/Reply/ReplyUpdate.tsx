@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Styles
 import commentBoxStyles from '../Comment/CommentBox.module.css';
@@ -16,7 +16,6 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { updateReply } from '../../../utils/handleReply';
 import { verifySchema } from '../../../utils/verifySchema';
-import { queryClient } from '../../../utils/queryOptions';
 
 // Context
 import { useAppDataAPI } from '../App/AppContext';
@@ -61,7 +60,7 @@ export const ReplyUpdate = ({
 		}),
 		[content],
 	);
-
+	const queryClient = useQueryClient();
 	const { isPending, mutate } = useMutation({
 		mutationFn: updateReply,
 		onError: () =>
