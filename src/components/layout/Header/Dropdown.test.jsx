@@ -18,7 +18,7 @@ vi.mock('../../../utils/handleFetch');
 vi.mock('../../pages/App/AppContext');
 
 describe('Dropdown component', () => {
-	it('should render the user profile, settings button and logout button if the username of user prop is provided', () => {
+	it('should render the user profile, settings button and logout button if the username of user data is provided', () => {
 		const mockProps = {
 			user: {
 				username: 'example',
@@ -75,7 +75,7 @@ describe('Dropdown component', () => {
 		expect(settingsBtn).toBeInTheDocument();
 		expect(logoutBtn).toBeInTheDocument();
 	});
-	it('should render the login button if the user prop is not provided', () => {
+	it('should render the login button if the user data is not provided', () => {
 		const mockProps = {};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
