@@ -35,6 +35,7 @@ describe('Home component', () => {
 					{ title: 'post4' },
 					{ title: 'post5' },
 				],
+				postsCount: 0,
 			},
 		};
 		mockData.data.postsCount = mockData.data.posts.length;
@@ -45,11 +46,7 @@ describe('Home component', () => {
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(getPosts).mockResolvedValue(mockData);
@@ -96,6 +93,7 @@ describe('Home component', () => {
 	it('should render refetch button if fetching posts data fails', async () => {
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: vi.fn(),
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
