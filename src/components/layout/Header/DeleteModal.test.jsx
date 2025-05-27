@@ -2,6 +2,7 @@ import { vi, describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { DeleteModal } from './DeleteModal';
@@ -22,10 +23,7 @@ describe('DeleteModal component', () => {
 		const mockFetchResult = {
 			success: false,
 		};
-
-		deleteUser.mockResolvedValueOnce(mockFetchResult);
-
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
 			[
@@ -46,12 +44,14 @@ describe('DeleteModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const deleteButton = screen.getByRole('button', { name: 'Delete' });
@@ -72,6 +72,7 @@ describe('DeleteModal component', () => {
 			onActiveModal: vi.fn(),
 		};
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -87,12 +88,14 @@ describe('DeleteModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const closeButton = screen.getByRole('button', { name: 'Cancel' });
@@ -109,6 +112,13 @@ describe('DeleteModal component', () => {
 			onActiveModal: vi.fn(),
 			onAlert: vi.fn(),
 		};
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'example',
+			},
+		});
 
 		const mockFetchResult = {
 			success: true,
@@ -133,12 +143,14 @@ describe('DeleteModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const deleteButton = screen.getByRole('button', { name: 'Delete' });
