@@ -42,7 +42,7 @@ describe('Header component', () => {
 					future={{
 						v7_startTransition: true,
 					}}
-				/>{' '}
+				/>
 			</QueryClientProvider>,
 		);
 
@@ -162,7 +162,7 @@ describe('Header component', () => {
 					future={{
 						v7_startTransition: true,
 					}}
-				/>{' '}
+				/>
 			</QueryClientProvider>,
 		);
 
@@ -209,7 +209,7 @@ describe('Header component', () => {
 					future={{
 						v7_startTransition: true,
 					}}
-				/>{' '}
+				/>
 			</QueryClientProvider>,
 		);
 
