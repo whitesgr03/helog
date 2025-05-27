@@ -60,7 +60,6 @@ export const Dropdown = ({
 		},
 		onError: () => {
 			navigate('/error', { state: { previousPath } });
-			onCloseDropdown();
 		},
 		onSuccess: () => {
 			queryClient.removeQueries({ queryKey: ['userInfo'] });
