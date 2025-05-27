@@ -361,6 +361,10 @@ describe('Dropdown component', () => {
 	it('should logout, if the logout button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
+			darkTheme: false,
+			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
+		};
 		const queryClient = new QueryClient();
 		queryClient.setQueryData(['userInfo'], {
 			data: {
