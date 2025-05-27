@@ -7,13 +7,13 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { DeleteModal } from './DeleteModal';
 import { Loading } from '../../utils/Loading';
-import { handleFetch } from '../../../utils/handleFetch';
+import { deleteUser } from '../../../utils/handleUser';
 
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
 vi.mock('../../pages/App/AppContext');
 vi.mock('../../utils/Loading');
-vi.mock('../../../utils/handleFetch');
+vi.mock('../../../utils/handleUser');
 
 describe('DeleteModal component', () => {
 	it('should navigate to the "/error" path if delete the user fails', async () => {
@@ -28,7 +28,7 @@ describe('DeleteModal component', () => {
 		};
 		const queryClient = new QueryClient();
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-		vi.mocked(handleFetch).mockImplementationOnce(
+		vi.mocked(deleteUser).mockImplementationOnce(
 			async () =>
 				await new Promise((r, reject) =>
 					setTimeout(() => {
@@ -77,7 +77,7 @@ describe('DeleteModal component', () => {
 
 		const errorComponent = await screen.findByText('Error component');
 
-		expect(handleFetch).toBeCalledTimes(1);
+		expect(deleteUser).toBeCalledTimes(1);
 		expect(errorComponent).toBeInTheDocument();
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
@@ -149,7 +149,7 @@ describe('DeleteModal component', () => {
 			success: true,
 		};
 
-		vi.mocked(handleFetch).mockResolvedValueOnce(mockFetchResult);
+		vi.mocked(deleteUser).mockResolvedValueOnce(mockFetchResult);
 
 		const router = createMemoryRouter(
 			[
@@ -180,7 +180,7 @@ describe('DeleteModal component', () => {
 
 		await user.click(deleteButton);
 
-		expect(handleFetch).toBeCalledTimes(1);
+		expect(deleteUser).toBeCalledTimes(1);
 		expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
 		expect(mockCustomHook.onModal).toBeCalledTimes(2);
 		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
