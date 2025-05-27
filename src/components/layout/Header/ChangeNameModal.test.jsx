@@ -9,6 +9,7 @@ import { ChangeNameModal } from './ChangeNameModal';
 import { Loading } from '../../utils/Loading';
 
 import { updateUser } from '../../../utils/handleUser';
+import { useAppDataAPI } from '../../pages/App/AppContext';
 
 vi.mock('../../../utils/handleUser');
 vi.mock('../../../components/utils/Loading');
@@ -19,9 +20,13 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
-
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const mockName = '_changed';
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const router = createMemoryRouter(
 			[
@@ -63,7 +68,12 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const router = createMemoryRouter(
 			[
@@ -106,7 +116,12 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const router = createMemoryRouter(
 			[
@@ -156,7 +171,12 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const router = createMemoryRouter(
 			[
@@ -208,12 +228,18 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const mockFetchResult = {
 			success: false,
 			fields: {
 				username: 'error',
 			},
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
 		const queryClient = new QueryClient();
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
@@ -269,7 +295,12 @@ describe('ChangeNameModal component', () => {
 		const mockFetchResult = {
 			success: false,
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
@@ -328,7 +359,12 @@ describe('ChangeNameModal component', () => {
 			success: true,
 			data: 'success',
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
 
