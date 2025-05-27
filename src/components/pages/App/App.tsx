@@ -19,7 +19,7 @@ import { Error } from '../../utils/Error/Error';
 import { queryUserInfoOption } from '../../../utils/queryOptions';
 
 // Provider
-import { AppDataProvider } from './AppDataProvider';
+import { AppProvider } from './AppContext';
 
 export type DarkTheme = boolean | null;
 
@@ -56,7 +56,7 @@ export const App = () => {
 	}, [darkTheme, searchParams]);
 
 	return (
-		<AppDataProvider>
+		<AppProvider>
 			<div
 				className={`${darkTheme ? 'dark' : ''} ${styles.app}`}
 				data-testid="app"
@@ -84,6 +84,6 @@ export const App = () => {
 					</>
 				)}
 			</div>
-		</AppDataProvider>
+		</AppProvider>
 	);
 };
