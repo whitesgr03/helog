@@ -7,23 +7,38 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { DeleteModal } from './DeleteModal';
 import { Loading } from '../../utils/Loading';
+import { handleFetch } from '../../../utils/handleFetch';
 
-import { deleteUser } from '../../../utils/handleUser';
+import { useAppDataAPI } from '../../pages/App/AppContext';
 
-vi.mock('../../../utils/handleUser');
-vi.mock('../../../components/utils/Loading');
+vi.mock('../../pages/App/AppContext');
+vi.mock('../../utils/Loading');
+vi.mock('../../../utils/handleFetch');
 
 describe('DeleteModal component', () => {
 	it('should navigate to the "/error" path if the user delete fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			onActiveModal: vi.fn(),
+			onCloseDropdown: vi.fn(),
 		};
 
-		const mockFetchResult = {
-			success: false,
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
 		};
 		const queryClient = new QueryClient();
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(handleFetch).mockImplementationOnce(
+			async () =>
+				await new Promise((r, reject) =>
+					setTimeout(() => {
+						reject(Error());
+					}, 100),
+				),
+		);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -56,22 +71,28 @@ describe('DeleteModal component', () => {
 
 		const deleteButton = screen.getByRole('button', { name: 'Delete' });
 
-		user.click(deleteButton);
+		await user.click(deleteButton);
 
 		const loadingComponent = await screen.findByText('Loading component');
 
 		const errorComponent = await screen.findByText('Error component');
 
-		expect(deleteUser).toBeCalledTimes(1);
+		expect(handleFetch).toBeCalledTimes(1);
 		expect(errorComponent).toBeInTheDocument();
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should close modal if cancel button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			onActiveModal: vi.fn(),
+			onCloseDropdown: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
@@ -102,16 +123,20 @@ describe('DeleteModal component', () => {
 
 		await user.click(closeButton);
 
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toBeCalledTimes(1);
 	});
 	it('should delete the user if delete button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			onUser: vi.fn(),
-			onToggleSettingsMenu: vi.fn(),
-			onActiveModal: vi.fn(),
-			onAlert: vi.fn(),
+			onCloseDropdown: vi.fn(),
 		};
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], {
@@ -124,9 +149,7 @@ describe('DeleteModal component', () => {
 			success: true,
 		};
 
-		deleteUser.mockResolvedValueOnce(mockFetchResult);
-
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		handleFetch.mockResolvedValueOnce(mockFetchResult);
 
 		const router = createMemoryRouter(
 			[
@@ -155,15 +178,12 @@ describe('DeleteModal component', () => {
 
 		const deleteButton = screen.getByRole('button', { name: 'Delete' });
 
-		user.click(deleteButton);
+		await user.click(deleteButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
-
-		expect(deleteUser).toBeCalledTimes(1);
-		expect(mockProps.onUser).toBeCalledTimes(1);
-		expect(mockProps.onToggleSettingsMenu).toBeCalledTimes(1);
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-		expect(mockProps.onAlert).toBeCalledTimes(1);
-		expect(loadingComponent).not.toBeInTheDocument();
+		expect(handleFetch).toBeCalledTimes(1);
+		expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toBeCalledTimes(2);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(queryClient.getQueryData(['userInfo'])).toBeUndefined();
 	});
 });
