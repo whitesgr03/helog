@@ -1,5 +1,10 @@
 import { vi, describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitFor,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -8,11 +13,12 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { ChangeNameModal } from './ChangeNameModal';
 import { Loading } from '../../utils/Loading';
 
-import { updateUser } from '../../../utils/handleUser';
 import { useAppDataAPI } from '../../pages/App/AppContext';
+import { updateUserInfo } from '../../../utils/handleUser';
 
+vi.mock('../../pages/App/AppContext');
+vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handleUser');
-vi.mock('../../../components/utils/Loading');
 
 describe('ChangeNameModal component', () => {
 	it('should change a field values if the field is entered', async () => {
@@ -238,11 +244,16 @@ describe('ChangeNameModal component', () => {
 				username: 'error',
 			},
 		};
-		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
 
-		updateUser.mockResolvedValueOnce(mockFetchResult);
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(updateUserInfo).mockImplementationOnce(
+			async () =>
+				await new Promise(resolve =>
+					setTimeout(() => resolve(mockFetchResult), 100),
+				),
+		);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
@@ -276,33 +287,35 @@ describe('ChangeNameModal component', () => {
 		const usernameErrorMessage = screen.getByText('Message placeholder');
 
 		await user.type(usernameField, '_new');
-		user.click(submitButton);
+		await user.click(submitButton);
 
 		const loadingComponent = await screen.findByText('Loading component');
 
-		expect(updateUser).toBeCalledTimes(1);
+		expect(loadingComponent).toBeInTheDocument();
+		expect(updateUserInfo).toBeCalledTimes(1);
+
+		await waitForElementToBeRemoved(() =>
+			screen.queryByText('Loading component'),
+		);
+
 		expect(usernameLabel).toHaveClass(/error/);
 		expect(usernameErrorMessage).toHaveTextContent(
 			mockFetchResult.fields.username,
 		);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should navigate to the "/error" path if the username update fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			username: 'username',
 		};
-		const mockFetchResult = {
-			success: false,
-		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
 		};
 		const queryClient = new QueryClient();
-		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
-		updateUser.mockResolvedValueOnce(mockFetchResult);
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(updateUserInfo).mockRejectedValueOnce(Error());
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
@@ -338,15 +351,12 @@ describe('ChangeNameModal component', () => {
 		const usernameField = screen.getByLabelText('Change username');
 
 		await user.type(usernameField, '_new');
-		user.click(submitButton);
+		await user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
-
-		const errorMessage = await screen.findByText('Error page');
+		const errorMessage = screen.getByText('Error page');
 
 		expect(errorMessage).toBeInTheDocument();
-		expect(updateUser).toBeCalledTimes(1);
-		expect(loadingComponent).not.toBeInTheDocument();
+		expect(updateUserInfo).toBeCalledTimes(1);
 	});
 	it('should update the username if the username field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -357,17 +367,16 @@ describe('ChangeNameModal component', () => {
 		};
 		const mockFetchResult = {
 			success: true,
-			data: 'success',
+			data: 'new_username',
 		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
 		};
 		const queryClient = new QueryClient();
+
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-
-		updateUser.mockResolvedValueOnce(mockFetchResult);
-
+		updateUserInfo.mockResolvedValueOnce(mockFetchResult);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
@@ -399,15 +408,10 @@ describe('ChangeNameModal component', () => {
 		const usernameField = screen.getByLabelText('Change username');
 
 		await user.type(usernameField, '_new');
-		user.click(submitButton);
+		await user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
-
-		expect(mockProps.onUser).toBeCalledWith(mockFetchResult.data);
-		expect(mockProps.onUser).toBeCalledTimes(1);
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-		expect(updateUser).toBeCalledTimes(1);
-
-		expect(loadingComponent).not.toBeInTheDocument();
+		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(updateUserInfo).toBeCalledTimes(1);
+		expect(queryClient.getQueryData(['userInfo'])).toEqual(mockFetchResult);
 	});
 });
