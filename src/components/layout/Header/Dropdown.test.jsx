@@ -423,7 +423,10 @@ describe('Dropdown component', () => {
 			expect(loadingIcon).toHaveClass(/load/);
 		});
 
-		expect(mockProps.onUser).toBeCalledTimes(1);
+		const loginLink = await screen.findByRole('link', { name: 'Login' });
+
+		expect(loginLink).toBeInTheDocument();
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
 	});
 });
