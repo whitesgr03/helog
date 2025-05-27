@@ -106,7 +106,7 @@ describe('ChangeNameModal component', () => {
 			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', 'Save');
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 		const usernameField = screen.getByText('Change username');
 		const usernameErrorMessage = screen.getByText('Message placeholder');
 
@@ -154,7 +154,7 @@ describe('ChangeNameModal component', () => {
 			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', 'Save');
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 		const usernameField = screen.getByText('Change username');
 		const usernameErrorMessage = screen.getByText('Message placeholder');
 
@@ -209,7 +209,7 @@ describe('ChangeNameModal component', () => {
 			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', 'Save');
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 		const usernameField = screen.getByText('Change username');
 		const usernameErrorMessage = screen.getByText('Message placeholder');
 
@@ -254,7 +254,9 @@ describe('ChangeNameModal component', () => {
 					setTimeout(() => resolve(mockFetchResult), 100),
 				),
 		);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -281,7 +283,7 @@ describe('ChangeNameModal component', () => {
 			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', 'Save');
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 		const usernameLabel = screen.getByText('Change username');
 		const usernameField = screen.getByLabelText('Change username');
 		const usernameErrorMessage = screen.getByText('Message placeholder');
@@ -316,7 +318,9 @@ describe('ChangeNameModal component', () => {
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(updateUserInfo).mockRejectedValueOnce(Error());
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -347,7 +351,7 @@ describe('ChangeNameModal component', () => {
 			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', 'Save');
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 		const usernameField = screen.getByLabelText('Change username');
 
 		await user.type(usernameField, '_new');
@@ -376,8 +380,10 @@ describe('ChangeNameModal component', () => {
 		const queryClient = new QueryClient();
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-		updateUserInfo.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(updateUserInfo).mockResolvedValueOnce(mockFetchResult);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -404,7 +410,7 @@ describe('ChangeNameModal component', () => {
 			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', 'Save');
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 		const usernameField = screen.getByLabelText('Change username');
 
 		await user.type(usernameField, '_new');
