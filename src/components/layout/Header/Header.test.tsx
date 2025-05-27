@@ -54,7 +54,7 @@ describe('Header component', () => {
 
 		expect(homeComponent).toBeInTheDocument();
 	});
-	it('should render the post editor link, if the username of user prop is provided', async () => {
+	it('should render the post editor link, if the username of user data is provided', async () => {
 		const mockProps = {
 			darkTheme: false,
 			onColorTheme: () => {},
