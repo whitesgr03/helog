@@ -376,7 +376,12 @@ describe('Dropdown component', () => {
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
-		handleFetch.mockResolvedValueOnce(mockFetchResult);
+		vi.mocked(handleFetch).mockImplementationOnce(
+			async () =>
+				await new Promise(resolve =>
+					setTimeout(() => resolve(mockFetchResult), 500),
+				),
+		);
 
 		const router = createMemoryRouter(
 			[
