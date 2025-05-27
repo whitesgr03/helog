@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
-		"test:component": "vitest",
+		"test": "vitest",
 		"coverage": "vitest --coverage",
 		"test:e2e": "npx playwright test",
 		"test:ui": "npx playwright test --ui"
