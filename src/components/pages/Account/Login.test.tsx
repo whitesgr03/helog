@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Login } from './Login';
 import { Loading } from '../../utils/Loading';
@@ -63,7 +63,9 @@ describe('Login component', () => {
 			},
 		});
 		const queryClient = new QueryClient();
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -110,7 +112,9 @@ describe('Login component', () => {
 			},
 		});
 
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
