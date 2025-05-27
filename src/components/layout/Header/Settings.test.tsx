@@ -3,12 +3,14 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Settings } from './Settings';
-
 import { ChangeNameModal } from './ChangeNameModal';
 import { DeleteModal } from './DeleteModal';
 
-vi.mock('../../../components/layout/Header/ChangeNameModal');
-vi.mock('../../../components/layout/Header/DeleteModal');
+import { useAppDataAPI } from '../../pages/App/AppContext';
+
+vi.mock('../../pages/App/AppContext');
+vi.mock('./ChangeNameModal');
+vi.mock('./DeleteModal');
 
 describe('Settings component', () => {
 	it('should render the user name, email and avatar, if the user prop is provided', () => {
@@ -16,8 +18,18 @@ describe('Settings component', () => {
 			user: {
 				username: 'example',
 				email: 'example@gmail.com',
+				isAdmin: true,
 			},
+			onCloseDropdown: vi.fn(),
+			onToggleSettingsMenu: vi.fn(),
 		};
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValueOnce(mockCustomHook);
 
 		render(<Settings {...mockProps} />);
 
@@ -34,8 +46,20 @@ describe('Settings component', () => {
 	it('should close Settings component, if the close button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
+			user: {
+				username: 'example',
+				email: 'example@gmail.com',
+				isAdmin: true,
+			},
+			onCloseDropdown: vi.fn(),
 			onToggleSettingsMenu: vi.fn(),
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValueOnce(mockCustomHook);
 
 		render(<Settings {...mockProps} />);
 
@@ -50,9 +74,18 @@ describe('Settings component', () => {
 		const mockProps = {
 			user: {
 				username: 'example',
+				email: 'example@gmail.com',
+				isAdmin: true,
 			},
-			onActiveModal: vi.fn(),
+			onCloseDropdown: vi.fn(),
+			onToggleSettingsMenu: vi.fn(),
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValueOnce(mockCustomHook);
 
 		render(<Settings {...mockProps} />);
 
@@ -62,8 +95,8 @@ describe('Settings component', () => {
 
 		await user.click(changeNameBtn);
 
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-		expect(mockProps.onActiveModal.mock.calls[0][0].component).toHaveProperty(
+		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			ChangeNameModal,
 		);
@@ -71,8 +104,20 @@ describe('Settings component', () => {
 	it('should active DeleteModal component, if the delete account button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			onActiveModal: vi.fn(),
+			user: {
+				username: 'example',
+				email: 'example@gmail.com',
+				isAdmin: true,
+			},
+			onCloseDropdown: vi.fn(),
+			onToggleSettingsMenu: vi.fn(),
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValueOnce(mockCustomHook);
 
 		render(<Settings {...mockProps} />);
 
@@ -82,8 +127,8 @@ describe('Settings component', () => {
 
 		await user.click(changeNameBtn);
 
-		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-		expect(mockProps.onActiveModal.mock.calls[0][0].component).toHaveProperty(
+		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			DeleteModal,
 		);
