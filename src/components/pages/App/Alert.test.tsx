@@ -5,12 +5,13 @@ import userEvent from '@testing-library/user-event';
 
 import { Alert } from './Alert';
 import { useAlert, useAppDataAPI } from './AppContext';
+import { State } from './AppContext';
 
 vi.mock('./AppContext');
 
 describe('Alert component', () => {
 	it(`should render no alert message if the alert data is empty`, () => {
-		const mockAlertData = [];
+		const mockAlertData = [] as State['alert'];
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
@@ -22,12 +23,9 @@ describe('Alert component', () => {
 		render(<Alert />);
 
 		const alert = screen.getByTestId('alert');
-		const message = screen.getByTestId('message');
 
-		expect(alert)
-			.not.toHaveClass(/active/)
-			.not.toHaveClass(/error/);
-		expect(message).not.toHaveTextContent();
+		expect(alert).not.toHaveClass(/active/);
+		expect(alert).not.toHaveClass(/error/);
 	});
 	it(`should render the alert message if the alert data is provided`, () => {
 		const mockAlertData = [
@@ -46,9 +44,8 @@ describe('Alert component', () => {
 		const alert = screen.getByTestId('alert');
 		const message = screen.getByTestId('message');
 
-		expect(alert)
-			.toHaveClass(/active/)
-			.toHaveClass(/error/);
+		expect(alert).toHaveClass(/active/);
+		expect(alert).toHaveClass(/error/);
 		expect(message).toHaveTextContent(mockAlertData[0].message);
 	});
 	it(`should remove the alert message if the alert message is expires`, async () => {
@@ -72,16 +69,16 @@ describe('Alert component', () => {
 		expect(message).toHaveTextContent(mockAlertData[0].message);
 
 		await waitFor(() => {
-			expect(mockCustomHook.onAlert).toBeCalledWith([]).toBeCalledTimes(1);
+			expect(mockCustomHook.onAlert).toBeCalledWith([]);
+			expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 			mockAlertData.pop();
 		});
 
 		fireEvent.transitionEnd(alert);
 
-		expect(alert)
-			.not.toHaveClass(/active/)
-			.not.toHaveClass(/error/);
-		expect(message).not.toHaveTextContent();
+		expect(alert).not.toHaveClass(/active/);
+		expect(alert).not.toHaveClass(/error/);
+		expect(message).toHaveTextContent('');
 	});
 	it(`should pause the alert timer if the user mouse over to alert element`, async () => {
 		const user = userEvent.setup();
@@ -114,7 +111,8 @@ describe('Alert component', () => {
 		user.unhover(alert);
 
 		await waitFor(() => {
-			expect(mockCustomHook.onAlert).toBeCalledWith([]).toBeCalledTimes(1);
+			expect(mockCustomHook.onAlert).toBeCalledWith([]);
+			expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		});
 	});
 	it(`should render the second alert message if a second alert message is added`, async () => {
@@ -148,9 +146,8 @@ describe('Alert component', () => {
 		fireEvent.transitionEnd(alert);
 
 		await waitFor(() => {
-			expect(mockCustomHook.onAlert)
-				.toBeCalledWith([mockAlertData[1]])
-				.toBeCalledTimes(1);
+			expect(mockCustomHook.onAlert).toBeCalledWith([mockAlertData[1]]);
+			expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		});
 	});
 });
