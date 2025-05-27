@@ -60,14 +60,7 @@ describe('Header component', () => {
 			onColorTheme: () => {},
 		};
 
-		const queryClient = new QueryClient({
-			defaultOptions: {
-				queries: {
-					retry: false,
-					gcTime: Infinity,
-				},
-			},
-		});
+		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], {
 			data: {
