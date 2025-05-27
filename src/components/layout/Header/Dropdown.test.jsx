@@ -12,7 +12,7 @@ import { useAppDataAPI } from '../../pages/App/AppContext';
 
 import { handleFetch } from '../../../utils/handleFetch';
 
-vi.mock('../../../components/layout/Header/Settings');
+vi.mock('./Settings');
 
 vi.mock('../../../utils/handleFetch');
 vi.mock('../../pages/App/AppContext');
@@ -157,6 +157,7 @@ describe('Dropdown component', () => {
 	});
 	it('should render the Settings component, if the settings button is clicked', async () => {
 		const user = userEvent.setup();
+		const mockProps = {};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 		};
@@ -169,6 +170,9 @@ describe('Dropdown component', () => {
 		});
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(Settings).mockImplementationOnce(() => (
+			<div>Settings component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
