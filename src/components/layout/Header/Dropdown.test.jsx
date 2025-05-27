@@ -1,6 +1,7 @@
 import { vi, describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
@@ -20,6 +21,13 @@ describe('Dropdown component', () => {
 				username: 'example',
 			},
 		};
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'example',
+			},
+		});
 
 		const router = createMemoryRouter(
 			[
@@ -36,12 +44,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const avatar = screen.getByText(
@@ -59,6 +69,7 @@ describe('Dropdown component', () => {
 	it('should render the login button if the user prop is not provided', () => {
 		const mockProps = {};
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -74,12 +85,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const loginBtn = screen.getByRole('link', { name: 'Login' });
@@ -91,6 +104,7 @@ describe('Dropdown component', () => {
 			darkTheme: true,
 		};
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -106,12 +120,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const button = screen.getByRole('button', { name: 'Dark mode' });
@@ -122,11 +138,12 @@ describe('Dropdown component', () => {
 	});
 	it('should render the Settings component, if the settings button is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			user: {
-				username: ' example',
+		const queryClient = new QueryClient();
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'example',
 			},
-		};
+		});
 
 		Settings.mockImplementationOnce(() => <div>Settings component</div>);
 
@@ -145,12 +162,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const settingBtn = screen.getByRole('button', { name: 'Settings' });
@@ -170,6 +189,7 @@ describe('Dropdown component', () => {
 			onColorTheme: vi.fn(),
 		};
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -185,12 +205,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const button = screen.getByRole('button', { name: 'Light mode' });
@@ -205,6 +227,7 @@ describe('Dropdown component', () => {
 	it('should navigate to the "../login" path, if the login link is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {};
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -224,12 +247,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const button = screen.getByRole('link', { name: 'Login' });
@@ -243,16 +268,14 @@ describe('Dropdown component', () => {
 	it('should navigate to the "/error" path if logout fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			user: {
-				username: 'example',
-			},
 			onCloseDropdown: vi.fn(),
 		};
-
-		const mockFetchResult = {
-			success: false,
-			message: 'error',
-		};
+		const queryClient = new QueryClient();
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'example',
+			},
+		});
 
 		handleFetch.mockResolvedValueOnce(mockFetchResult);
 
@@ -275,12 +298,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const button = screen.getByRole('button', { name: 'Logout' });
@@ -294,13 +319,12 @@ describe('Dropdown component', () => {
 	it('should logout, if the logout button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			user: {
+		const queryClient = new QueryClient();
+		queryClient.setQueryData(['userInfo'], {
+			data: {
 				username: 'example',
 			},
-			onUser: vi.fn(),
-			onCloseDropdown: vi.fn(),
-		};
-
+		});
 		const mockFetchResult = {
 			success: true,
 		};
@@ -322,12 +346,14 @@ describe('Dropdown component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const button = screen.getByRole('button', { name: 'Logout' });
