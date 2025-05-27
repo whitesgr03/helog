@@ -320,6 +320,7 @@ describe('Dropdown component', () => {
 		});
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(handleFetch).mockRejectedValueOnce();
 
 		const router = createMemoryRouter(
 			[
@@ -352,6 +353,8 @@ describe('Dropdown component', () => {
 
 		const button = screen.getByRole('button', { name: 'Logout' });
 		const loadingIcon = screen.getByTestId('loading-icon');
+
+		expect(loadingIcon).toHaveClass(/logout/);
 
 		await user.click(button);
 
