@@ -149,7 +149,7 @@ describe('DeleteModal component', () => {
 			success: true,
 		};
 
-		handleFetch.mockResolvedValueOnce(mockFetchResult);
+		vi.mocked(handleFetch).mockResolvedValueOnce(mockFetchResult);
 
 		const router = createMemoryRouter(
 			[
