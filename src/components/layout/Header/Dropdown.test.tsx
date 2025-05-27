@@ -20,23 +20,26 @@ vi.mock('../../pages/App/AppContext');
 describe('Dropdown component', () => {
 	it('should render the user profile, settings button and logout button if the username of user data is provided', () => {
 		const mockProps = {
-			user: {
-				username: 'example',
-			},
+			darkTheme: false,
+			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
 		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
 
-		queryClient.setQueryData(['userInfo'], {
+		const mockUserInfo = {
 			data: {
 				username: 'example',
 			},
-		});
+		};
+
+		queryClient.setQueryData(['userInfo'], mockUserInfo);
 
 		const router = createMemoryRouter(
 			[
@@ -64,9 +67,9 @@ describe('Dropdown component', () => {
 		);
 
 		const avatar = screen.getByText(
-			mockProps.user.username.charAt(0).toUpperCase(),
+			mockUserInfo.data.username.charAt(0).toUpperCase(),
 		);
-		const username = screen.getByText(mockProps.user.username);
+		const username = screen.getByText(mockUserInfo.data.username);
 		const settingsBtn = screen.getByRole('button', { name: 'Settings' });
 		const logoutBtn = screen.getByRole('button', { name: 'Logout' });
 
@@ -76,9 +79,14 @@ describe('Dropdown component', () => {
 		expect(logoutBtn).toBeInTheDocument();
 	});
 	it('should render the login button if the user data is not provided', () => {
-		const mockProps = {};
+		const mockProps = {
+			darkTheme: false,
+			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
+		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
@@ -116,9 +124,12 @@ describe('Dropdown component', () => {
 	it("should render the dark mode icon and text, if the 'darkTheme' prop is provided", () => {
 		const mockProps = {
 			darkTheme: true,
+			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
 		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
@@ -157,11 +168,15 @@ describe('Dropdown component', () => {
 	});
 	it('should render the Settings component, if the settings button is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {};
+		const mockProps = {
+			darkTheme: false,
+			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
+		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
-
 		const queryClient = new QueryClient();
 		queryClient.setQueryData(['userInfo'], {
 			data: {
@@ -210,13 +225,13 @@ describe('Dropdown component', () => {
 	it('should switch color theme, if the color theme button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			user: {
-				username: ' example',
-			},
+			darkTheme: false,
 			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
 		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
@@ -258,11 +273,15 @@ describe('Dropdown component', () => {
 	});
 	it('should navigate to the "../login" path, if the login link is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {};
+		const mockProps = {
+			darkTheme: false,
+			onColorTheme: vi.fn(),
+			onCloseDropdown: vi.fn(),
+		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
-
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
@@ -306,10 +325,13 @@ describe('Dropdown component', () => {
 	it('should navigate to the "/error" path if logout fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
+			darkTheme: false,
+			onColorTheme: vi.fn(),
 			onCloseDropdown: vi.fn(),
 		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
 
 		const queryClient = new QueryClient();
@@ -320,7 +342,7 @@ describe('Dropdown component', () => {
 		});
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-		vi.mocked(handleFetch).mockRejectedValueOnce();
+		vi.mocked(handleFetch).mockRejectedValueOnce(Error());
 
 		const router = createMemoryRouter(
 			[
@@ -379,6 +401,7 @@ describe('Dropdown component', () => {
 		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: () => {},
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
@@ -386,7 +409,7 @@ describe('Dropdown component', () => {
 		vi.mocked(handleFetch).mockImplementationOnce(
 			async () =>
 				await new Promise(resolve =>
-					setTimeout(() => resolve(mockFetchResult), 500),
+					setTimeout(() => resolve(mockFetchResult), 100),
 				),
 		);
 
