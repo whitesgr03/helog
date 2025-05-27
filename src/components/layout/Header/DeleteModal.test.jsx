@@ -16,7 +16,7 @@ vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handleFetch');
 
 describe('DeleteModal component', () => {
-	it('should navigate to the "/error" path if the user delete fails', async () => {
+	it('should navigate to the "/error" path if delete the user fails', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			onCloseDropdown: vi.fn(),
