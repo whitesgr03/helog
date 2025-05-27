@@ -2,6 +2,7 @@ import { vi, describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { ChangeNameModal } from './ChangeNameModal';
@@ -20,6 +21,7 @@ describe('ChangeNameModal component', () => {
 		};
 
 		const mockName = '_changed';
+		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
 			[
@@ -36,12 +38,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const usernameField = screen.getByLabelText('Change username', {
@@ -59,6 +63,8 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const queryClient = new QueryClient();
+
 		const router = createMemoryRouter(
 			[
 				{
@@ -74,12 +80,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const submitButton = screen.getByRole('button', 'Save');
@@ -98,6 +106,8 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const queryClient = new QueryClient();
+
 		const router = createMemoryRouter(
 			[
 				{
@@ -113,12 +123,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const submitButton = screen.getByRole('button', 'Save');
@@ -144,6 +156,8 @@ describe('ChangeNameModal component', () => {
 		const mockProps = {
 			username: 'username',
 		};
+		const queryClient = new QueryClient();
+
 		const router = createMemoryRouter(
 			[
 				{
@@ -159,12 +173,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const submitButton = screen.getByRole('button', 'Save');
@@ -198,6 +214,7 @@ describe('ChangeNameModal component', () => {
 				username: 'error',
 			},
 		};
+		const queryClient = new QueryClient();
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
@@ -217,12 +234,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const submitButton = screen.getByRole('button', 'Save');
@@ -250,6 +269,7 @@ describe('ChangeNameModal component', () => {
 		const mockFetchResult = {
 			success: false,
 		};
+		const queryClient = new QueryClient();
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
 		Loading.mockImplementationOnce(() => <div>Loading component</div>);
@@ -273,12 +293,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const submitButton = screen.getByRole('button', 'Save');
@@ -306,6 +328,7 @@ describe('ChangeNameModal component', () => {
 			success: true,
 			data: 'success',
 		};
+		const queryClient = new QueryClient();
 
 		updateUser.mockResolvedValueOnce(mockFetchResult);
 
@@ -326,12 +349,14 @@ describe('ChangeNameModal component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const submitButton = screen.getByRole('button', 'Save');
