@@ -82,7 +82,7 @@ export const Home = () => {
 			</div>
 			<div className={styles['latest-posts']}>
 				<h2>Latest Posts</h2>
-				{isError && !data?.pages.length ? (
+				{isError && !posts ? (
 					<button
 						className={`${buttonStyles.content} ${buttonStyles.more}`}
 						onClick={handleManuallyRefetch}
