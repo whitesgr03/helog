@@ -26,7 +26,6 @@ export const Item = ({ post, index }: PostProps) => {
 	const errorImageUrl = `https://fakeimg.pl/${clientWidth}x${clientHeight}/?text=404%20Image%20Error&font=noto`;
 
 	const handleError = () => {
-		console.log('error', post.title);
 		setError(true);
 	};
 	const handleLoad = (e: React.SyntheticEvent<HTMLImageElement>) =>
