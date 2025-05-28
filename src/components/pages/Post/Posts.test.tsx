@@ -14,8 +14,6 @@ describe('Posts component', () => {
 			posts: [],
 		};
 
-		mockProps.limit = mockProps.posts.length;
-
 		const router = createMemoryRouter(
 			[
 				{
@@ -45,8 +43,28 @@ describe('Posts component', () => {
 	it(`should render posts if the posts are provided`, () => {
 		const mockProps = {
 			posts: [
-				{ _id: '0', title: 'post1' },
-				{ _id: '1', title: 'post2' },
+				{
+					_id: '0',
+					title: 'title1',
+					mainImage: 'image1',
+					content: 'content1',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+					createdAt: new Date(),
+				},
+				{
+					_id: '1',
+					title: 'title2',
+					mainImage: 'image2',
+					content: 'content2',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+					createdAt: new Date(),
+				},
 			],
 		};
 
