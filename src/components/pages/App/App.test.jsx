@@ -6,34 +6,32 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import {
-	RouterProvider,
-	createMemoryRouter,
-	useOutletContext,
-} from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { App } from './App';
 
 import { Header } from '../../layout/Header/Header';
-import { Alert } from './Alert';
-import { Modal } from './Modal';
-import { CreateUsername } from '../../../components/pages/App/CreateUsername';
 import { Loading } from '../../utils/Loading';
-import { Error } from '../../utils/Error/Error';
+import { Error as ErrorComponent } from '../../utils/Error/Error';
+import { Modal } from './Modal';
+import { Alert } from './Alert';
+import { Footer } from '../../layout/Footer/Footer';
 
-import { getUser } from '../../../utils/handleUser';
-import { getPosts } from '../../../utils/handlePost';
-import { useEffect } from 'react';
+import { queryUserInfoOption } from '../../../utils/queryOptions';
 
-vi.mock('../../../components/layout/Header/Header');
+import { getUserInfo } from '../../../utils/handleUser';
+
+vi.mock('../../layout/Header/Header');
 vi.mock('../../../components/layout/Footer/Footer');
-vi.mock('../../../components/pages/App/Alert');
-vi.mock('../../../components/pages/App/Modal');
-vi.mock('../../../components/pages/App/CreateUsername');
-vi.mock('../../../components/utils/Loading');
-vi.mock('../../../components/utils/Error/Error');
+vi.mock('../../utils/Loading');
+vi.mock('../../utils/Error/Error');
 vi.mock('../../../utils/handleUser');
-vi.mock('../../../utils/handlePost');
+vi.mock('../../../utils/queryOptions');
+vi.mock('./Modal');
+vi.mock('./Alert');
+vi.mock('../../layout/Footer/Footer');
 
 describe('App component', () => {
 	beforeAll(() => {
@@ -44,24 +42,20 @@ describe('App component', () => {
 		});
 	});
 	it('should render the dark theme if browser prefers color scheme is dark.', async () => {
-		const mockResolve = {
-			getUser: {
-				success: true,
-				data: {},
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
+		const mockFetchResult = {};
 
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(getUserInfo).mockResolvedValue(mockFetchResult);
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
+		});
 
 		const mockMatchMedia = vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
 			matches: true,
 		});
+		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
 			[
@@ -77,12 +71,14 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -97,20 +93,15 @@ describe('App component', () => {
 			.toBeCalledWith('(prefers-color-scheme: dark)');
 	});
 	it('should render the dark theme if the dark theme of localstorage is set.', async () => {
-		const mockResolve = {
-			getUser: {
-				success: true,
-				data: {},
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
+		const mockFetchResult = {};
 
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(getUserInfo).mockResolvedValue(mockFetchResult);
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
+		});
 
 		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
 			matches: false,
@@ -122,7 +113,7 @@ describe('App component', () => {
 				.spyOn(Storage.prototype, 'getItem')
 				.mockReturnValueOnce('true'),
 		};
-
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -137,12 +128,14 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -156,27 +149,20 @@ describe('App component', () => {
 		expect(localstorage.setItem).toBeCalledWith('darkTheme', 'true');
 	});
 	it('should render the dark theme if the dark theme of url search params is set.', async () => {
-		const mockResolve = {
-			getUser: {
-				success: true,
-				data: {},
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
+		const mockFetchResult = {};
 
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
-
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(getUserInfo).mockResolvedValue(mockFetchResult);
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
 		});
+
+		vi.spyOn(window, 'matchMedia').mockReturnValueOnce(undefined);
 		vi.spyOn(Storage.prototype, 'setItem');
 		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
-
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -192,12 +178,14 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -342,22 +330,19 @@ describe('App component', () => {
 		expect(countPosts).toBeInTheDocument();
 	});
 	it('should render the Error component if fetching the user data fails and the retrieved response status is not 404', async () => {
-		const mockResolve = {
-			getUser: {
-				success: false,
-				status: 500,
-				message: 'error',
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(ErrorComponent).mockImplementation(() => (
+			<div>Error component</div>
+		));
+		vi.mocked(getUserInfo).mockRejectedValue(
+			Error('', { cause: { status: 400 } }),
+		);
 
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		Error.mockImplementation(() => <div>Error component</div>);
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
+		});
 
 		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
 			matches: false,
@@ -365,6 +350,7 @@ describe('App component', () => {
 		vi.spyOn(Storage.prototype, 'setItem');
 		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -379,12 +365,14 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -395,23 +383,18 @@ describe('App component', () => {
 
 		expect(errorComponent).toBeInTheDocument();
 	});
-	it('should update the user state if fetching the user data is successfully', async () => {
-		const mockResolve = {
-			getUser: {
-				success: true,
-				data: {
-					username: 'new_user',
-				},
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
-
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
+	it('should render the main components if fetching the user data successful', async () => {
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(Header).mockImplementation(() => <div>Header component</div>);
+		vi.mocked(Modal).mockImplementation(() => <div>Modal component</div>);
+		vi.mocked(Alert).mockImplementation(() => <div>Alert component</div>);
+		vi.mocked(Footer).mockImplementation(() => <div>Footer component</div>);
+		vi.mocked(getUserInfo).mockResolvedValue({ username: 'example' });
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
+		});
 
 		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
 			matches: false,
@@ -419,11 +402,7 @@ describe('App component', () => {
 		vi.spyOn(Storage.prototype, 'setItem');
 		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
 
-		const MockComponent = () => {
-			const { user } = useOutletContext();
-			return <div>{user.username}</div>;
-		};
-
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -432,7 +411,7 @@ describe('App component', () => {
 					children: [
 						{
 							index: true,
-							element: <MockComponent />,
+							element: <div>Children component</div>,
 						},
 					],
 				},
@@ -444,46 +423,40 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
 			screen.getByText('Loading component'),
 		);
 
-		const username = screen.getByText('new_user');
-
-		expect(username).toBeInTheDocument();
+		expect(screen.getByText('Header component')).toBeInTheDocument();
+		expect(screen.getByText('Modal component')).toBeInTheDocument();
+		expect(screen.getByText('Alert component')).toBeInTheDocument();
+		expect(screen.getByText('Footer component')).toBeInTheDocument();
+		expect(screen.getByText('Children component')).toBeInTheDocument();
 	});
-	it('should render the CreateUsername component if the user is first logged in', async () => {
-		const mockResolve = {
-			getUser: {
-				success: true,
-				data: {},
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
-
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		Modal.mockImplementation(({ children }) => (
-			<div>
-				<p>Modal component</p>
-				{children}
-			</div>
-		));
-		CreateUsername.mockImplementation(() => (
-			<div>CreateUsername component</div>
-		));
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
+	it('should render the main components if fetching retrieved response status is 404', async () => {
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(Header).mockImplementation(() => <div>Header component</div>);
+		vi.mocked(Modal).mockImplementation(() => <div>Modal component</div>);
+		vi.mocked(Alert).mockImplementation(() => <div>Alert component</div>);
+		vi.mocked(Footer).mockImplementation(() => <div>Footer component</div>);
+		vi.mocked(getUserInfo).mockRejectedValue(
+			Error('', { cause: { status: 404 } }),
+		);
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
+		});
 
 		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
 			matches: false,
@@ -491,11 +464,7 @@ describe('App component', () => {
 		vi.spyOn(Storage.prototype, 'setItem');
 		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
 
-		const MockComponent = () => {
-			const { user } = useOutletContext();
-			return <div>{user.username}</div>;
-		};
-
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -504,7 +473,7 @@ describe('App component', () => {
 					children: [
 						{
 							index: true,
-							element: <MockComponent />,
+							element: <div>Children component</div>,
 						},
 					],
 				},
@@ -516,57 +485,56 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
 			screen.getByText('Loading component'),
 		);
 
-		const modalComponent = screen.getByText('Modal component');
-		const createUsernameComponent = screen.getByText(
-			'CreateUsername component',
-		);
+		expect(screen.getByText('Header component')).toBeInTheDocument();
+		expect(screen.getByText('Modal component')).toBeInTheDocument();
+		expect(screen.getByText('Alert component')).toBeInTheDocument();
+		expect(screen.getByText('Footer component')).toBeInTheDocument();
+		expect(screen.getByText('Children component')).toBeInTheDocument();
+	});
 
 		expect(modalComponent).toBeInTheDocument();
 		expect(createUsernameComponent).toBeInTheDocument();
 	});
-	it('should toggle the color theme if the switch is clicked', async () => {
+	it('should toggle the color theme if the switch is clicked in the Header component', async () => {
 		const user = userEvent.setup();
-		const mockResolve = {
-			getUser: {
-				success: true,
-				data: {
-					username: 'new_user',
-				},
-			},
-			getPosts: {
-				success: true,
-				data: {},
-			},
-		};
-		const mockDarkTheme = 'true';
+		const mockDarkTheme = 'false';
 
-		Loading.mockImplementation(() => <div>Loading component</div>);
-		Header.mockImplementation(({ onColorTheme }) => (
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(Header).mockImplementation(({ onColorTheme }) => (
 			<div>
-				<button onClick={onColorTheme}>Header button</button>
+				<div>Header component</div>
+				<button onClick={onColorTheme}>Switch color theme</button>
 			</div>
 		));
-		getUser.mockResolvedValueOnce(mockResolve.getUser);
-		getPosts.mockResolvedValueOnce(mockResolve.getPosts);
+		vi.mocked(getUserInfo).mockResolvedValue({ username: 'example' });
+		vi.mocked(queryUserInfoOption).mockReturnValue({
+			queryKey: ['userInfo'],
+			queryFn: getUserInfo,
+			retry: false,
+		});
 
 		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
 			matches: false,
 		});
-		const mockSetItem = vi.spyOn(Storage.prototype, 'setItem');
+
+		const mockLocalStorageSetItem = vi.spyOn(Storage.prototype, 'setItem');
 		vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(mockDarkTheme);
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -581,23 +549,30 @@ describe('App component', () => {
 			},
 		);
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
 			screen.getByText('Loading component'),
 		);
 
-		const headerButton = screen.getByRole('button', { name: 'Header button' });
+		const button = screen.getByRole('button', {
+			name: 'Switch color theme',
+		});
 
-		await user.click(headerButton);
+		await user.click(button);
 
-		expect(mockSetItem).toBeCalledWith(
+		const app = screen.getByTestId('app');
+
+		expect(app).toHaveClass(/dark/);
+		expect(mockLocalStorageSetItem).toBeCalledWith(
 			'darkTheme',
 			JSON.stringify(!mockDarkTheme),
 		);
