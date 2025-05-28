@@ -28,7 +28,9 @@ export const App = () => {
 
 	const [searchParams] = useSearchParams();
 
-	const { isPending, isError, error, refetch } = useQuery(queryUserInfoOption);
+	const { isPending, isError, error, refetch } = useQuery(
+		queryUserInfoOption(),
+	);
 
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
