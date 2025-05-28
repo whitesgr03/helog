@@ -21,15 +21,18 @@ export const queryClient = new QueryClient({
 	},
 });
 
-export const infiniteQueryPostsOption = infiniteQueryOptions({
-	queryKey: ['posts'],
-	queryFn: getPosts,
-	initialPageParam: 0,
-	getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-		lastPage.data.postsCount > lastPageParam + 100 ? lastPageParam + 100 : null,
-	staleTime: 1000 * 60 * 30,
-	gcTime: Infinity,
-});
+export const infiniteQueryPostsOption = () =>
+	infiniteQueryOptions({
+		queryKey: ['posts'],
+		queryFn: getPosts,
+		initialPageParam: 0,
+		getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+			lastPage.data.postsCount > lastPageParam + 100
+				? lastPageParam + 100
+				: null,
+		staleTime: 1000 * 60 * 30,
+		gcTime: Infinity,
+	});
 
 export const queryPostDetailOption = (id: string) =>
 	queryOptions({

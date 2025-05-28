@@ -32,7 +32,7 @@ export const PostList = () => {
 		isFetchNextPageError,
 		hasNextPage,
 	} = useInfiniteQuery({
-		...infiniteQueryPostsOption,
+		...infiniteQueryPostsOption(),
 		refetchOnWindowFocus: true,
 		meta: {
 			errorAlert: () => {

@@ -26,7 +26,7 @@ export const Home = () => {
 	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 
 	const { isPending, isError, data, refetch } = useInfiniteQuery({
-		...infiniteQueryPostsOption,
+		...infiniteQueryPostsOption(),
 		meta: {
 			errorAlert: () => {
 				isManuallyRefetch &&
