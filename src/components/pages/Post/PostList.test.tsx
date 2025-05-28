@@ -63,11 +63,7 @@ describe('PostList component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts).mockResolvedValue(mockData);
 
@@ -129,11 +125,7 @@ describe('PostList component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts).mockRejectedValue(Error());
 
@@ -227,11 +219,7 @@ describe('PostList component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
 			.mockResolvedValueOnce(mockFirstFetchData)
@@ -321,11 +309,7 @@ describe('PostList component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
 			.mockResolvedValueOnce(mockFirstFetchData)
@@ -432,11 +416,7 @@ describe('PostList component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
 			.mockResolvedValueOnce(mockFirstFetchData)
@@ -534,11 +514,7 @@ describe('PostList component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Posts).mockImplementation(({ posts }) => (
-			<ul>
-				{posts?.map(post => (
-					<li key={post.title}>{post.title}</li>
-				))}
-			</ul>
+			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
 			.mockResolvedValueOnce(mockFirstFetchData)
