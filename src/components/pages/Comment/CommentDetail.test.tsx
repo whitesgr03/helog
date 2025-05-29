@@ -43,6 +43,8 @@ describe('CommentDetail component', () => {
 				createdAt: new Date(),
 				author: { username: 'example' },
 				child: [],
+				post: '',
+				content: '',
 			},
 			postId: '1',
 		};
@@ -106,6 +108,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'self' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -185,6 +188,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'example' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -248,6 +252,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'example' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -311,6 +316,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'example' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -377,6 +383,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'self' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -453,6 +460,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'self' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -525,6 +533,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'self' },
 				child: [],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -593,6 +602,7 @@ describe('CommentDetail component', () => {
 				author: { username: 'self' },
 				child: [],
 				content: 'content',
+				post: '',
 				countReplies: 0,
 				replies: [
 					{
@@ -675,8 +685,9 @@ describe('CommentDetail component', () => {
 				updatedAt: new Date(),
 				createdAt: new Date(),
 				author: { username: 'self' },
-				child: [{}],
+				child: ['1'],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -753,8 +764,9 @@ describe('CommentDetail component', () => {
 				updatedAt: new Date(),
 				createdAt: new Date(),
 				author: { username: 'self' },
-				child: [{}],
+				child: ['1'],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
@@ -841,8 +853,9 @@ describe('CommentDetail component', () => {
 				updatedAt: new Date(),
 				createdAt: new Date(),
 				author: { username: 'self' },
-				child: [{}],
+				child: ['1'],
 				content: 'content',
+				post: '',
 			},
 			postId: '1',
 		};
