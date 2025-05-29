@@ -66,7 +66,7 @@ export const CommentDetail = ({
 		enabled: showReplies,
 	});
 
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 	const { data: post } = useQuery(queryPostDetailOption(postId));
 
 	const isCommentOwner = user?.username === comment.author.username;
