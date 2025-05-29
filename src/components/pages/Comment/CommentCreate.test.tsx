@@ -408,7 +408,10 @@ describe('CommentCreate component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(createComment).mockRejectedValue(Error());
+		vi.mocked(createComment).mockImplementationOnce(
+			() => new Promise((_r, reject) => setTimeout(() => reject(Error()), 300)),
+		);
+
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
@@ -449,11 +452,12 @@ describe('CommentCreate component', () => {
 		await user.type(commentField, mockContent);
 		user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
+		await waitForElementToBeRemoved(() =>
+			screen.getByText('Loading component'),
+		);
 
 		expect(createComment).toBeCalledTimes(1);
 		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should create a new comment if the comment field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
