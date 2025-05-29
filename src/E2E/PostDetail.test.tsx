@@ -130,7 +130,7 @@ test.describe('PostDetail component', () => {
 				message: 'Get post successfully.',
 				data: {
 					...posts[0],
-					content: createParagraph({ line: 1, IMAGE_SIZES }),
+					content: createParagraph({ line: 1, IMAGE_SIZES, error: false }),
 				},
 			};
 			await route.fulfill({ json });
@@ -179,7 +179,7 @@ test.describe('PostDetail component', () => {
 				message: 'Get post successfully.',
 				data: {
 					...posts[0],
-					content: createParagraph({ line: 1, IMAGE_SIZES }),
+					content: createParagraph({ line: 1, IMAGE_SIZES, error: false }),
 					mainImage: 'error_url',
 				},
 			};
