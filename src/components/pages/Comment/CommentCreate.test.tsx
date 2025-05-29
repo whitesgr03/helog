@@ -165,11 +165,6 @@ describe('CommentCreate component', () => {
 		expect(commentButton).toBeInTheDocument();
 	});
 	it('should render an error alert and blur the comment field if the user data is not provided and comment field is focused', async () => {
-		const userData = {
-			data: {
-				username: 'example',
-			},
-		};
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
