@@ -66,7 +66,7 @@ describe('Comments component', () => {
 			[
 				{
 					path: '/',
-					element: <Comments />,
+					element: <Comments postId={'1'} />,
 				},
 			],
 			{
@@ -109,9 +109,12 @@ describe('Comments component', () => {
 					{ _id: '4', content: 'comment5' },
 				],
 				commentsCount: 0,
+				commentAndReplyCounts: 0,
 			},
 		};
 		mockFetchData.data.commentsCount = mockFetchData.data.comments.length;
+		mockFetchData.data.commentAndReplyCounts =
+			mockFetchData.data.comments.length;
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
@@ -151,7 +154,7 @@ describe('Comments component', () => {
 			[
 				{
 					path: '/',
-					element: <Comments />,
+					element: <Comments postId={'1'} />,
 				},
 			],
 			{
@@ -182,10 +185,12 @@ describe('Comments component', () => {
 
 		await userEvent.setup().click(button);
 
+		screen.debug();
+
 		const headingElement = screen.getByRole('heading', { level: 3 });
 
-		expect(headingElement).not.toHaveTextContent(
-			mockFetchData.data.comments.commentsCount,
+		expect(headingElement).toHaveTextContent(
+			String(mockFetchData.data.commentAndReplyCounts),
 		);
 		expect(screen.getByText('CommentCreate component'));
 		mockFetchData.data.comments.forEach(comment => {
@@ -229,7 +234,7 @@ describe('Comments component', () => {
 			[
 				{
 					path: '/',
-					element: <Comments />,
+					element: <Comments postId={'1'} />,
 				},
 			],
 			{
@@ -323,7 +328,7 @@ describe('Comments component', () => {
 			[
 				{
 					path: '/',
-					element: <Comments />,
+					element: <Comments postId={'1'} />,
 				},
 			],
 			{
@@ -432,7 +437,7 @@ describe('Comments component', () => {
 			[
 				{
 					path: '/',
-					element: <Comments />,
+					element: <Comments postId={'1'} />,
 				},
 			],
 			{
@@ -516,7 +521,7 @@ describe('Comments component', () => {
 			[
 				{
 					path: '/',
-					element: <Comments />,
+					element: <Comments postId={'1'} />,
 				},
 			],
 			{
