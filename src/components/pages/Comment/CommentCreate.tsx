@@ -37,7 +37,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 	const timer = useRef<NodeJS.Timeout>();
 
 	const queryClient = useQueryClient();
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
 	const schema = useMemo(
 		() => ({
