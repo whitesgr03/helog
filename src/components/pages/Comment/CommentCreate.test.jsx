@@ -7,37 +7,39 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { CommentCreate } from './CommentCreate';
 import { Loading } from '../../utils/Loading';
 
 import { createComment } from '../../../utils/handleComment';
+import { useAppDataAPI } from '../App/AppContext';
 
-vi.mock('../../../components/utils/Loading');
+vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handleComment');
+vi.mock('../App/AppContext');
 
 describe('CommentCreate component', () => {
 	it('should render the username if the username state is provided', async () => {
-		const mockContext = {
-			user: {
+		const userData = {
+			data: {
 				username: 'example',
 			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -48,41 +50,43 @@ describe('CommentCreate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const username = screen.getByText(mockContext.user.username);
+		const username = screen.getByText(userData.data.username);
 
 		expect(username).toBeInTheDocument();
 	});
 	it('should change the comment field values if the comment field is entered', async () => {
 		const user = userEvent.setup();
-		const mockContext = {
-			user: {
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
 
 		const mockContent = '_changed';
 
+		const userData = {
+			data: {
+				username: 'example',
+			},
+		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -93,12 +97,14 @@ describe('CommentCreate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const commentField = screen.getByPlaceholderText('write a comment...');
@@ -107,26 +113,25 @@ describe('CommentCreate component', () => {
 
 		expect(commentField).toHaveValue(mockContent);
 	});
-	it('should render the cancel and comment buttons if the user is logged in and comment field is focused', async () => {
-		const mockContext = {
-			user: {
+	it('should render the cancel and comment buttons if the user data is provided and comment field is focused', async () => {
+		const userData = {
+			data: {
 				username: 'example',
 			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -137,12 +142,14 @@ describe('CommentCreate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const commentField = screen.getByPlaceholderText('write a comment...');
@@ -157,24 +164,24 @@ describe('CommentCreate component', () => {
 		expect(closeButton).toBeInTheDocument();
 		expect(commentButton).toBeInTheDocument();
 	});
-	it('should render an error alert and blur the comment field if the user is not logged in and comment field is focused', async () => {
-		const mockContext = {
-			user: null,
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
+	it('should render an error alert and blur the comment field if the user data is not provided and comment field is focused', async () => {
+		const userData = {
+			data: {
+				username: 'example',
+			},
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -185,12 +192,14 @@ describe('CommentCreate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const commentField = screen.getByPlaceholderText('write a comment...');
@@ -199,30 +208,29 @@ describe('CommentCreate component', () => {
 			commentField.focus();
 		});
 
-		expect(mockContext.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		expect(commentField).not.toHaveFocus();
 	});
 	it('should render an error field message if the field validation fails after submission', async () => {
 		const user = userEvent.setup();
-		const mockContext = {
-			user: {
+		const userData = {
+			data: {
 				username: 'example',
 			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
 		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -233,12 +241,14 @@ describe('CommentCreate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const commentField = screen.getByPlaceholderText('write a comment...');
@@ -257,27 +267,27 @@ describe('CommentCreate component', () => {
 	});
 	it('should validate each input after a failed submission', async () => {
 		const user = userEvent.setup();
-		const mockContext = {
-			user: {
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
 
 		const mockContent = '_changed';
 
+		const userData = {
+			data: {
+				username: 'example',
+			},
+		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -288,15 +298,17 @@ describe('CommentCreate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
-
 		const commentField = screen.getByPlaceholderText('write a comment...');
+
 		await waitFor(() => {
 			commentField.focus();
 		});
@@ -317,26 +329,7 @@ describe('CommentCreate component', () => {
 	});
 	it('should render an error field message if a new comment create fails', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				_id: '0',
-				comments: [
-					{
-						_id: '0',
-					},
-				],
-			},
-		};
 
-		mockProps.post.countComments = mockProps.post.comments.length;
-
-		const mockContext = {
-			user: {
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
 		const mockContent = '_changed';
 
 		const mockFetchResult = {
@@ -345,21 +338,28 @@ describe('CommentCreate component', () => {
 				content: 'error',
 			},
 		};
+		const userData = {
+			data: {
+				username: 'example',
+			},
+		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 
-		createComment.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(createComment).mockResolvedValue(mockFetchResult);
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate {...mockProps} />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -368,13 +368,16 @@ describe('CommentCreate component', () => {
 				},
 			},
 		);
+
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 		const commentField = screen.getByPlaceholderText('write a comment...');
 		await waitFor(() => {
@@ -399,46 +402,29 @@ describe('CommentCreate component', () => {
 	});
 	it('should render an error alert if a new comment create fails', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				_id: '0',
-				comments: [
-					{
-						_id: '0',
-					},
-				],
-			},
-		};
-
-		mockProps.post.countComments = mockProps.post.comments.length;
-
-		const mockContext = {
-			user: {
+		const mockContent = '_changed';
+		const userData = {
+			data: {
 				username: 'example',
 			},
+		};
+		const mockCustomHook = {
 			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
-		const mockContent = '_changed';
-
-		const mockFetchResult = {
-			success: false,
+			onModal: vi.fn(),
 		};
 
-		createComment.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(createComment).mockRejectedValue(Error());
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate {...mockProps} />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -447,14 +433,18 @@ describe('CommentCreate component', () => {
 				},
 			},
 		);
+
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
+
 		const commentField = screen.getByPlaceholderText('write a comment...');
 		await waitFor(() => {
 			commentField.focus();
@@ -467,51 +457,39 @@ describe('CommentCreate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(createComment).toBeCalledTimes(1);
-		expect(mockContext.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should create a new comment if the comment field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				_id: '0',
-				comments: [
-					{
-						_id: '0',
-					},
-				],
-			},
-			onUpdatePost: vi.fn(),
-		};
 
-		mockProps.post.countComments = mockProps.post.comments.length;
-
-		const mockContext = {
-			user: {
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-		};
 		const mockContent = '_changed';
 
 		const mockFetchResult = {
 			success: true,
 		};
+		const userData = {
+			data: {
+				username: 'example',
+			},
+		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 
-		createComment.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		vi.mocked(createComment).mockResolvedValue(mockFetchResult);
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate {...mockProps} />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -520,14 +498,18 @@ describe('CommentCreate component', () => {
 				},
 			},
 		);
+
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
+
 		const commentField = screen.getByPlaceholderText('write a comment...');
 		await waitFor(() => {
 			commentField.focus();
@@ -540,47 +522,35 @@ describe('CommentCreate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(createComment).toBeCalledTimes(1);
-		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
-		expect(mockContext.onAlert).toBeCalledTimes(1);
+		expect(createComment).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 
 		expect(submitButton).not.toBeInTheDocument();
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should revert the CommentCreate component to initial state if the cancel button is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				_id: '0',
-				comments: [
-					{
-						_id: '0',
-					},
-				],
-			},
-		};
 
-		mockProps.post.countComments = mockProps.post.comments.length;
-
-		const mockContext = {
-			user: {
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
 		const mockContent = '!@#';
 
+		const userData = {
+			data: {
+				username: 'example',
+			},
+		};
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], userData);
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <CommentCreate {...mockProps} />,
-						},
-					],
+					element: <CommentCreate postId={'1'} />,
 				},
 			],
 			{
@@ -589,14 +559,18 @@ describe('CommentCreate component', () => {
 				},
 			},
 		);
+
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
+
 		const commentField = screen.getByPlaceholderText('write a comment...');
 		await waitFor(() => {
 			commentField.focus();
