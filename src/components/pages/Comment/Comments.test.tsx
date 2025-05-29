@@ -14,7 +14,7 @@ import {
 	infiniteQueryOptions,
 } from '@tanstack/react-query';
 
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Comments } from './Comments';
 import { CommentDetail } from './CommentDetail';
