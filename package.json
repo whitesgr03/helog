@@ -8,8 +8,8 @@
 		"build": "tsc -b && vite build",
 		"test": "vitest",
 		"coverage": "vitest --coverage",
-		"test:e2e": "npx playwright test",
-		"test:ui": "npx playwright test --ui"
+		"teste2e": "npx playwright test",
+		"testui": "npx playwright test --ui"
 	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.74.4",
