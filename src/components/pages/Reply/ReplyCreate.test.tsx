@@ -7,7 +7,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { ReplyCreate } from './ReplyCreate';
 import { Loading } from '../../utils/Loading';
