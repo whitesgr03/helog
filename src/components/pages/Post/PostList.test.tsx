@@ -367,7 +367,7 @@ describe('PostList component', () => {
 			screen.getByRole('button', { name: 'Click here to show more posts' }),
 		);
 	});
-	it('should refetch next hundred posts, if the show more posts button is clicked and infinite fetching posts successful', async () => {
+	it('should refetch next posts, if the show more posts button is clicked and infinite fetching posts successful', async () => {
 		const mockFirstFetchData = {
 			data: {
 				posts: [
