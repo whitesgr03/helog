@@ -50,7 +50,7 @@ export const ReplyCreate = ({
 	const { postId } = useParams();
 	const queryClient = useQueryClient();
 
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
 	const schema = useMemo(
 		() => ({
