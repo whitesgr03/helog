@@ -7,11 +7,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { formatDistanceToNow } from 'date-fns';
 
-import {
-	QueryClient,
-	QueryClientProvider,
-	QueryCache,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { ReplyDetail } from './ReplyDetail';
@@ -557,7 +553,7 @@ describe('ReplyDetail component', () => {
 				child: [],
 				content: 'reply',
 				deleted: false,
-				updatedAt: new Date() + 5,
+				updatedAt: new Date(Date.now() + 5),
 				createdAt: new Date(),
 			},
 			onScroll: vi.fn(),
@@ -631,6 +627,13 @@ describe('ReplyDetail component', () => {
 				reply: {
 					author: { username: 'A replier' },
 					deleted: false,
+					_id: '0',
+					post: '',
+					parent: '',
+					child: [],
+					content: 'reply',
+					updatedAt: new Date(),
+					createdAt: new Date(),
 				},
 			},
 			onScroll: vi.fn(),
@@ -705,6 +708,13 @@ describe('ReplyDetail component', () => {
 				reply: {
 					author: { username: 'A replier' },
 					deleted: true,
+					_id: '0',
+					post: '',
+					parent: '',
+					child: [],
+					content: 'reply',
+					updatedAt: new Date(),
+					createdAt: new Date(),
 				},
 			},
 			onScroll: vi.fn(),
@@ -779,6 +789,13 @@ describe('ReplyDetail component', () => {
 				reply: {
 					author: { username: 'A replier' },
 					deleted: false,
+					_id: '0',
+					post: '',
+					parent: '',
+					child: [],
+					content: 'reply',
+					updatedAt: new Date(),
+					createdAt: new Date(),
 				},
 			},
 			onScroll: vi.fn(),
@@ -859,6 +876,13 @@ describe('ReplyDetail component', () => {
 				reply: {
 					author: { username: 'A replier' },
 					deleted: false,
+					_id: '0',
+					post: '',
+					parent: '',
+					child: [],
+					content: 'reply',
+					updatedAt: new Date(),
+					createdAt: new Date(),
 				},
 			},
 			onScroll: vi.fn(),
