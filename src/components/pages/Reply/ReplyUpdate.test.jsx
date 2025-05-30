@@ -6,42 +6,42 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
 
 import { ReplyUpdate } from './ReplyUpdate';
 import { Loading } from '../../utils/Loading';
 
 import { updateReply } from '../../../utils/handleReply';
+import { useAppDataAPI } from '../App/AppContext';
 
-vi.mock('../../../components/utils/Loading');
+vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handleReply');
+vi.mock('../App/AppContext');
 
 describe('ReplyUpdate component', () => {
 	it('should close this component if the cancel button is clicked', async () => {
 		const user = userEvent.setup();
+
 		const mockProps = {
-			reply: {
-				content: 'reply',
-			},
+			content: 'reply',
 			onCloseCommentBox: vi.fn(),
-			onUpdatePost: vi.fn(),
+			commentId: '1',
+			replyId: '1',
 		};
 
-		const mockContext = {
+		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -52,12 +52,14 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -68,30 +70,27 @@ describe('ReplyUpdate component', () => {
 	});
 	it('should change the reply field values if the reply field is entered', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			reply: {
-				content: 'reply',
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
 
 		const mockContent = '_changed';
+		const mockProps = {
+			content: 'reply',
+			onCloseCommentBox: vi.fn(),
+			commentId: '1',
+			replyId: '1',
+		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -102,44 +101,43 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const replyField = screen.getByDisplayValue(mockProps.reply.content);
+		const replyField = screen.getByDisplayValue(mockProps.content);
 
 		await user.type(replyField, mockContent);
 
-		expect(replyField).toHaveValue(`${mockProps.reply.content}${mockContent}`);
+		expect(replyField).toHaveValue(`${mockProps.content}${mockContent}`);
 	});
 	it('should render an error field message if the field validation fails after submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			reply: {
-				content: 'reply',
-			},
-			onUpdatePost: vi.fn(),
+			content: 'reply',
+			onCloseCommentBox: vi.fn(),
+			commentId: '1',
+			replyId: '1',
 		};
 
-		const mockContext = {
+		const mockCustomHook = {
 			onAlert: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -150,15 +148,17 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', { name: 'Update' });
+		const submitButton = screen.getByRole('button', { name: 'Save' });
 
 		await user.click(submitButton);
 
@@ -170,30 +170,27 @@ describe('ReplyUpdate component', () => {
 	});
 	it('should validate each input after a failed submission', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			reply: {
-				content: 'reply',
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
 
 		const mockContent = '_changed';
+		const mockProps = {
+			content: 'reply',
+			onCloseCommentBox: vi.fn(),
+			commentId: '1',
+			replyId: '1',
+		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -204,16 +201,18 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', { name: 'Update' });
-		const replyField = screen.getByDisplayValue(mockProps.reply.content);
+		const submitButton = screen.getByRole('button', { name: 'Save' });
+		const replyField = screen.getByDisplayValue(mockProps.content);
 		const labelElement = screen.getByTestId('label');
 
 		await user.click(submitButton);
@@ -230,41 +229,43 @@ describe('ReplyUpdate component', () => {
 	});
 	it('should render an error field message if the reply update fails', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			reply: {
-				_id: '0',
-				content: 'reply',
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
 
 		const mockFetchResult = {
 			success: false,
 			fields: {
-				content: 'error',
+				content: 'reply',
 			},
 		};
 
 		const mockContent = '_changed';
 
-		updateReply.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		const mockProps = {
+			content: 'reply',
+			onCloseCommentBox: vi.fn(),
+			commentId: '1',
+			replyId: '1',
+		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(updateReply).mockImplementationOnce(
+			() =>
+				new Promise(resolve => setTimeout(() => resolve(mockFetchResult), 300)),
+		);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -275,22 +276,26 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', { name: 'Update' });
-		const replyField = screen.getByDisplayValue(mockProps.reply.content);
+		const submitButton = screen.getByRole('button', { name: 'Save' });
+		const replyField = screen.getByDisplayValue(mockProps.content);
 		const labelElement = screen.getByTestId('label');
 
 		await user.type(replyField, mockContent);
-		user.click(submitButton);
+		await user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
+		await waitForElementToBeRemoved(() =>
+			screen.getByText('Loading component'),
+		);
 
 		const replyErrorMessageElement = screen.getByTestId('error-message');
 
@@ -299,42 +304,35 @@ describe('ReplyUpdate component', () => {
 		expect(replyErrorMessageElement).toHaveTextContent(
 			mockFetchResult.fields.content,
 		);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should render an error message alert if the reply update fails', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			reply: {
-				_id: '0',
-				content: 'reply',
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
-
-		const mockFetchResult = {
-			success: false,
-		};
 
 		const mockContent = '_changed';
+		const mockProps = {
+			content: 'reply',
+			onCloseCommentBox: vi.fn(),
+			commentId: '1',
+			replyId: '1',
+		};
 
-		updateReply.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 
+		vi.mocked(updateReply).mockRejectedValue(Error());
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -345,55 +343,28 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', { name: 'Update' });
-		const replyField = screen.getByDisplayValue(mockProps.reply.content);
+		const submitButton = screen.getByRole('button', { name: 'Save' });
+		const replyField = screen.getByDisplayValue(mockProps.content);
 
 		await user.type(replyField, mockContent);
 		user.click(submitButton);
-
 		const loadingComponent = await screen.findByText('Loading component');
-
 		expect(updateReply).toBeCalledTimes(1);
-		expect(mockContext.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should update the reply if the reply field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				_id: '0',
-				comments: [
-					{
-						_id: '0',
-						replies: [
-							{
-								_id: '0',
-								content: 'reply',
-							},
-						],
-					},
-				],
-			},
-			commentId: '0',
-			reply: {
-				_id: '0',
-				content: 'reply',
-			},
-			onCloseCommentBox: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
 
 		const mockFetchResult = {
 			success: true,
@@ -401,21 +372,34 @@ describe('ReplyUpdate component', () => {
 		};
 
 		const mockContent = '_changed';
+		const mockProps = {
+			content: 'reply',
+			onCloseCommentBox: vi.fn(),
+			commentId: '1',
+			replyId: '1',
+		};
 
-		updateReply.mockResolvedValueOnce(mockFetchResult);
-		Loading.mockImplementationOnce(() => <div>Loading component</div>);
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
 
+		vi.mocked(updateReply).mockResolvedValue(mockFetchResult);
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
+		const queryClient = new QueryClient();
+		queryClient.setQueryData(['replies', mockProps.commentId], {
+			pages: [{ data: [{ _id: mockProps.replId }] }],
+			pageParams: {},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyUpdate {...mockProps} />,
-						},
-					],
+					element: <ReplyUpdate {...mockProps} />,
 				},
 			],
 			{
@@ -426,16 +410,18 @@ describe('ReplyUpdate component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
-		const submitButton = screen.getByRole('button', { name: 'Update' });
-		const replyField = screen.getByDisplayValue(mockProps.reply.content);
+		const submitButton = screen.getByRole('button', { name: 'Save' });
+		const replyField = screen.getByDisplayValue(mockProps.content);
 
 		await user.type(replyField, mockContent);
 		user.click(submitButton);
@@ -443,8 +429,7 @@ describe('ReplyUpdate component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(updateReply).toBeCalledTimes(1);
-		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
-		expect(mockContext.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
