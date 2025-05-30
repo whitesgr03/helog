@@ -44,7 +44,7 @@ export const ReplyDetail = ({
 	const [showEditBox, setShowEditBox] = useState(false);
 
 	const { data: post } = useQuery(queryPostDetailOption(postId));
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
 	const isCommentOwner = user?.username === reply.author.username;
 	const isPostAuthor = post?.author.username === reply.author.username;
