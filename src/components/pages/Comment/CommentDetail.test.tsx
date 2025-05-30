@@ -12,7 +12,7 @@ import {
 	QueryClientProvider,
 	QueryCache,
 } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { CommentDetail } from './CommentDetail';
 
