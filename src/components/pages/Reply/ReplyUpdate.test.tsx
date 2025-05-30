@@ -7,7 +7,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { ReplyUpdate } from './ReplyUpdate';
 import { Loading } from '../../utils/Loading';
@@ -392,7 +392,7 @@ describe('ReplyUpdate component', () => {
 
 		const queryClient = new QueryClient();
 		queryClient.setQueryData(['replies', mockProps.commentId], {
-			pages: [{ data: [{ _id: mockProps.replId }] }],
+			pages: [{ data: [{ _id: mockProps.replyId }] }],
 			pageParams: {},
 		});
 		const router = createMemoryRouter(
