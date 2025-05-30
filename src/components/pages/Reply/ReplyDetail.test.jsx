@@ -7,58 +7,72 @@ import {
 import userEvent from '@testing-library/user-event';
 import { formatDistanceToNow } from 'date-fns';
 
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import {
+	QueryClient,
+	QueryClientProvider,
+	QueryCache,
+} from '@tanstack/react-query';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { ReplyDetail } from './ReplyDetail';
 
 import { ReplyCreate } from './ReplyCreate';
 import { ReplyDelete } from './ReplyDelete';
 import { ReplyUpdate } from './ReplyUpdate';
+import { useAppDataAPI } from '../App/AppContext';
 
-vi.mock('../../../components/pages/Reply/ReplyCreate');
-vi.mock('../../../components/pages/Reply/ReplyDelete');
-vi.mock('../../../components/pages/Reply/ReplyUpdate');
+vi.mock('./ReplyCreate');
+vi.mock('./ReplyDelete');
+vi.mock('./ReplyUpdate');
 vi.mock('date-fns');
+vi.mock('../App/AppContext');
 
 describe('ReplyDetail component', () => {
 	it('should render a string "deleted" as the reply username if the reply was deleted', async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'example' },
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: true,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
+			onScroll: vi.fn(),
 		};
-		const mockContext = {
-			user: {
-				isAdmin: false,
-				username: 'example',
-			},
+
+		const mockCustomHook = {
 			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
 
-		formatDistanceToNow.mockReturnValueOnce('');
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -69,12 +83,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const deletedReply = screen.getByText('[deleted]');
@@ -84,41 +100,48 @@ describe('ReplyDetail component', () => {
 	it('should render the reply data if the reply was not deleted', async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'example' },
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
+			onScroll: vi.fn(),
 		};
-		const mockContext = {
-			user: {
-				isAdmin: false,
-				username: 'example',
-			},
+
+		const mockCustomHook = {
 			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
 
-		formatDistanceToNow.mockReturnValueOnce('');
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -129,12 +152,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const index = screen.getByText(`[${mockProps.index + 1}]`);
@@ -155,39 +180,48 @@ describe('ReplyDetail component', () => {
 	it('should render the reply owner mark if the reply author is the currently logged in user', async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
-		};
-		const mockContext = {
-			user: {
-				isAdmin: false,
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onScroll: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -198,12 +232,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const containerElement = screen.getByTestId('container');
@@ -213,39 +249,48 @@ describe('ReplyDetail component', () => {
 	it('should render the post author mark if the reply author is the post author', async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'example' },
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'post author',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
-		};
-		const mockContext = {
-			user: {
-				isAdmin: false,
-				username: 'test',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onScroll: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -256,12 +301,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const containerElement = screen.getByTestId('container');
@@ -271,39 +318,49 @@ describe('ReplyDetail component', () => {
 	it('should render the edit and delete buttons if the currently logged in user is admin', async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'post author',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
-		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onScroll: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+				isAdmin: true,
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -314,12 +371,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 		const editButton = screen.getByTestId('edit-button');
 		const deleteButton = screen.getByTestId('delete-button');
@@ -330,42 +389,48 @@ describe('ReplyDetail component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
-		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onScroll: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -376,20 +441,22 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const deleteButton = screen.getByTestId('delete-button');
 
 		await user.click(deleteButton);
 
-		expect(mockContext.onActiveModal).toBeCalledTimes(1);
-		expect(mockContext.onActiveModal.mock.calls[0][0].component).toHaveProperty(
+		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			ReplyDelete,
 		);
@@ -398,44 +465,51 @@ describe('ReplyDetail component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
 				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
+			onScroll: vi.fn(),
 		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
+
+		const mockCustomHook = {
 			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+		vi.mocked(ReplyUpdate).mockImplementationOnce(() => (
+			<div>ReplyUpdate component</div>
+		));
 
-		ReplyUpdate.mockImplementationOnce(() => <div>ReplyUpdate component</div>);
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -446,12 +520,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const editButton = screen.getByTestId('edit-button');
@@ -466,47 +542,51 @@ describe('ReplyDetail component', () => {
 
 		expect(replyUpdateComponent).toBeInTheDocument();
 	});
-	it('should render the reply has been edited, if the reply creation data is not equal to update data', async () => {
+	it('should render the edited reply, if the reply created date is not equal to updated date', async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
-				updatedAt: new Date(Date.now() + 5),
+				updatedAt: new Date() + 5,
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 			},
+			onScroll: vi.fn(),
 		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
+
+		const mockCustomHook = {
 			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
 
-		formatDistanceToNow.mockReturnValueOnce('');
+		const queryClient = new QueryClient();
 
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -517,12 +597,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const dateTime = screen.getByText(`ago (edited)`);
@@ -532,46 +614,52 @@ describe('ReplyDetail component', () => {
 	it("should render the replier's username, if the replier is provided", async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
-				updatedAt: new Date(Date.now() + 5),
+				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 				reply: {
 					author: { username: 'A replier' },
 					deleted: false,
 				},
 			},
-		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onScroll: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -582,12 +670,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const replier = screen.getByText(
@@ -598,46 +688,52 @@ describe('ReplyDetail component', () => {
 	it(`should render a string "deleted" as the replier's username, if the replier's comment is deleted`, async () => {
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
-				updatedAt: new Date(Date.now() + 5),
+				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 				reply: {
 					author: { username: 'A replier' },
 					deleted: true,
 				},
 			},
-		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onScroll: vi.fn(),
 		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -648,12 +744,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const deletedReplier = screen.getByText('@deleted');
@@ -664,44 +762,54 @@ describe('ReplyDetail component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
-				updatedAt: new Date(Date.now() + 5),
+				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
+				reply: {
+					author: { username: 'A replier' },
+					deleted: false,
+				},
 			},
+			onScroll: vi.fn(),
 		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
+
+		const mockCustomHook = {
 			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
+			onModal: vi.fn(),
 		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+		vi.mocked(ReplyCreate).mockImplementationOnce(() => (
+			<div>ReplyCreate component</div>
+		));
+		const queryClient = new QueryClient();
 
-		ReplyCreate.mockImplementationOnce(() => <div>ReplyCreate component</div>);
-
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -712,12 +820,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const replyButton = screen.getByRole('button', { name: 'Reply' });
@@ -732,19 +842,20 @@ describe('ReplyDetail component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			index: 0,
-			post: {
-				author: { username: 'test' },
-			},
-			comment: {
-				_id: '0',
-			},
+			postId: '1',
+			commentId: '1',
 			reply: {
 				_id: '0',
+				author: {
+					username: 'self',
+				},
+				post: '',
+				parent: '',
+				child: [],
+				content: 'reply',
 				deleted: false,
-				updatedAt: new Date(Date.now() + 5),
+				updatedAt: new Date(),
 				createdAt: new Date(),
-				author: { username: 'example' },
-				content: 'content',
 				reply: {
 					author: { username: 'A replier' },
 					deleted: false,
@@ -752,27 +863,33 @@ describe('ReplyDetail component', () => {
 			},
 			onScroll: vi.fn(),
 		};
-		const mockContext = {
-			user: {
-				isAdmin: true,
-				username: 'example',
-			},
-			onAlert: vi.fn(),
-			onActiveModal: vi.fn(),
-			onUpdatePost: vi.fn(),
-		};
 
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(formatDistanceToNow).mockReturnValueOnce('');
+		vi.mocked(ReplyCreate).mockImplementationOnce(() => (
+			<div>ReplyCreate component</div>
+		));
+		const queryClient = new QueryClient();
+
+		queryClient.setQueryData(['userInfo'], {
+			data: {
+				username: 'self',
+			},
+		});
+		queryClient.setQueryData(['post', mockProps.postId], {
+			data: {
+				author: { username: 'post author' },
+			},
+		});
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: <ReplyDetail {...mockProps} />,
-						},
-					],
+					element: <ReplyDetail {...mockProps} />,
 				},
 			],
 			{
@@ -783,12 +900,14 @@ describe('ReplyDetail component', () => {
 		);
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
 		);
 
 		const repliedUserButton = screen.getByRole('button', {
