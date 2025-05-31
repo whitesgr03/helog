@@ -138,7 +138,7 @@ describe('Replies component', () => {
 			<>
 				<div>{reply.content}</div>
 				{onScroll && (
-					<button onClick={() => onScroll(reply.reply._id)}>
+					<button onClick={() => reply.reply && onScroll(reply.reply._id)}>
 						Scroll to target
 					</button>
 				)}
