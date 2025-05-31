@@ -15,11 +15,15 @@ describe('Error component', () => {
 			[
 				{
 					path: '/',
+					element: <div>Home page</div>,
+				},
+				{
+					path: '/error',
 					element: <Error {...mockProps} />,
 				},
 			],
 			{
-				initialEntries: ['/'],
+				initialEntries: ['/error'],
 				future: {
 					v7_relativeSplatPath: true,
 				},
@@ -39,6 +43,7 @@ describe('Error component', () => {
 
 		await user.click(link);
 
+		expect(screen.getByText('Home page')).toBeInTheDocument();
 		expect(mockProps.onReGetUser).toBeCalledTimes(1);
 	});
 	it('should render the "Go Back Previous Page" link if the "previousPath" state is provided', () => {
