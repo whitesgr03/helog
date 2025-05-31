@@ -1,7 +1,9 @@
 import { vi, describe, it, expect } from 'vitest';
+import { act } from 'react';
 import {
 	render,
 	screen,
+	waitFor,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -289,8 +291,25 @@ describe('ReplyCreate component', () => {
 
 		await user.type(replyField, mockContent);
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('error-message'));
+		await waitForElementToBeRemoved(() =>
+			screen.queryByTestId('error-message'),
+		);
+
 		expect(labelElement).not.toHaveClass(/error/);
+
+		vi.useFakeTimers();
+		user.clear(replyField);
+
+		act(() => {
+			vi.runAllTimers();
+		});
+
+		vi.useRealTimers();
+
+		await waitFor(() => {
+			expect(screen.getByTestId('label')).toHaveClass(/error/);
+			expect(screen.getByTestId('error-message')).toBeInTheDocument();
+		});
 	});
 	it(`should render an error field message if a new reply create fails`, async () => {
 		const user = userEvent.setup();
