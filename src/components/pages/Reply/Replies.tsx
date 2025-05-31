@@ -1,5 +1,5 @@
 // Packages
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -54,6 +54,7 @@ export const Replies = ({
 }: RepliesProps) => {
 	const repliesRef = useRef<HTMLDivElement[]>([]);
 	const waitForScrollRef = useRef<NodeJS.Timeout>();
+	const [shakeTargetId, setShakeTargetId] = useState('');
 
 	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
 		useInfiniteQuery({
@@ -67,24 +68,15 @@ export const Replies = ({
 
 	const handleScroll = (targetId: string) => {
 		const target = repliesRef.current.find(reply => reply.id === targetId);
-
 		const handleShake = () => {
 			clearTimeout(waitForScrollRef.current);
-
 			waitForScrollRef.current = setTimeout(() => {
-				target?.classList.add(styles.shake);
+				setShakeTargetId(targetId);
 				window.removeEventListener('scroll', handleShake);
 			}, 100);
 		};
 
-		const handleAnimationEnd = () => {
-			target?.classList.remove(styles.shake);
-			target?.removeEventListener('animationend', handleAnimationEnd);
-		};
-
 		window.addEventListener('scroll', handleShake);
-
-		target?.addEventListener('animationend', handleAnimationEnd);
 
 		target?.scrollIntoView({
 			behavior: 'smooth',
@@ -101,14 +93,16 @@ export const Replies = ({
 		<div className={styles.replies}>
 			<div className={styles.content}>
 				<ul>
-					{replies.slice(0, renderRepliesCount).map((reply, index) => (
+					{replies?.slice(0, renderRepliesCount).map((reply, index) => (
 						<div
 							key={reply._id}
 							id={reply._id}
 							ref={(element: HTMLDivElement) =>
 								(repliesRef.current[index] = element)
 							}
+							className={shakeTargetId === reply._id ? styles.shake : ''}
 							data-testid="reply"
+							onAnimationEnd={() => setShakeTargetId('')}
 						>
 							<ReplyDetail
 								index={index}
