@@ -185,8 +185,6 @@ describe('Comments component', () => {
 
 		await userEvent.setup().click(button);
 
-		screen.debug();
-
 		const headingElement = screen.getByRole('heading', { level: 3 });
 
 		expect(headingElement).toHaveTextContent(

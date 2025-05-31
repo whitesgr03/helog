@@ -12,7 +12,6 @@ import userEvent from '@testing-library/user-event';
 import {
 	QueryClientProvider,
 	QueryClient,
-	QueryCache,
 	infiniteQueryOptions,
 } from '@tanstack/react-query';
 
