@@ -1,534 +1,335 @@
 import { vi, describe, it, expect } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+	fireEvent,
+	waitFor,
+} from '@testing-library/react';
+import { act } from 'react';
 import userEvent from '@testing-library/user-event';
 
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import {
+	QueryClientProvider,
+	QueryClient,
+	QueryCache,
+	infiniteQueryOptions,
+} from '@tanstack/react-query';
 
 import { Replies } from './Replies';
 import { ReplyDetail } from './ReplyDetail';
 
 import { getReplies } from '../../../utils/handleReply';
+import { Loading } from '../../utils/Loading';
 
+import { infiniteQueryRepliesOption } from '../../../utils/queryOptions';
+
+vi.mock('../../../utils/queryOptions');
+vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handleReply');
-vi.mock('../../../components/pages/Reply/ReplyDetail');
+vi.mock('./ReplyDetail');
 
 describe('Replies component', () => {
-	it('should render the ReplyDetail component of array if the replies are provided', async () => {
-		const mockProps = {
-			post: {
-				comments: [
-					{
-						_id: '0',
-						replies: [
-							{
-								_id: '0',
-								reply: {
-									_id: '1',
-								},
-							},
-							{
-								_id: '1',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '2',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '3',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '4',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '5',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '6',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '7',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '8',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '9',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '10',
-								reply: {
-									_id: '0',
-								},
-							},
-						],
-						countReplies: 20,
-					},
-				],
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
-
-		ReplyDetail.mockImplementation(() => <div>ReplyDetail component</div>);
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: (
-								<Replies
-									post={mockProps.post}
-									comment={mockProps.post.comments[0]}
-									onUpdatePost={mockProps.onUpdatePost}
-								/>
-							),
-						},
-					],
-				},
-			],
+	it('should render the replies data', async () => {
+		const mockReplies = [
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				_id: '0',
+				content: 'reply1',
 			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
-
-		const replyDetailComponents = screen.getAllByText('ReplyDetail component');
-
-		const showMoreButton = screen.getByRole('button', {
-			name: 'Show more replies',
-		});
-
-		expect(replyDetailComponents.length).toBe(
-			mockProps.post.comments[0].replies.length,
-		);
-		expect(showMoreButton).toBeInTheDocument();
-	});
-	it('should render an error alert if getting more replies fails', async () => {
-		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				comments: [
-					{
-						_id: '0',
-						replies: [
-							{
-								_id: '0',
-								reply: {
-									_id: '1',
-								},
-							},
-							{
-								_id: '1',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '2',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '3',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '4',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '5',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '6',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '7',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '8',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '9',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '10',
-								reply: {
-									_id: '0',
-								},
-							},
-						],
-						countReplies: 20,
-					},
-				],
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
-
-		const mockResolve = {
-			success: false,
-		};
-
-		ReplyDetail.mockImplementation(() => <div>ReplyDetail component</div>);
-		getReplies.mockResolvedValueOnce(mockResolve);
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: (
-								<Replies
-									post={mockProps.post}
-									comment={mockProps.post.comments[0]}
-									onUpdatePost={mockProps.onUpdatePost}
-								/>
-							),
-						},
-					],
-				},
-			],
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				_id: '1',
+				content: 'reply2',
 			},
-		);
-
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
-
-		const showMoreButton = screen.getByRole('button', {
-			name: 'Show more replies',
-		});
-
-		user.click(showMoreButton);
-
-		await screen.findByTestId('loading-icon');
-
-		expect(getReplies).toBeCalledTimes(1);
-		expect(mockContext.onAlert).toBeCalledTimes(1);
-	});
-	it('should scroll to a specified reply element and shake it, if the shake target id is set', async () => {
-		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				comments: [
-					{
-						_id: '0',
-						replies: [
-							{
-								_id: '0',
-								reply: {
-									_id: '1',
-								},
-							},
-							{
-								_id: '1',
-								reply: {
-									_id: '0',
-								},
-							},
-						],
-						countReplies: 20,
-					},
-				],
+			{
+				_id: '2',
+				content: 'reply3',
 			},
-			onUpdatePost: vi.fn(),
+			{
+				_id: '3',
+				content: 'reply4',
+			},
+			{
+				_id: '4',
+				content: 'reply5',
+			},
+			{
+				_id: '5',
+				content: 'reply6',
+			},
+			{
+				_id: '6',
+				content: 'reply7',
+			},
+			{
+				_id: '7',
+				content: 'reply8',
+			},
+			{
+				_id: '8',
+				content: 'reply9',
+			},
+			{
+				_id: '9',
+				content: 'reply10',
+			},
+		];
+		let mockProps = {
+			postId: '1',
+			commentId: '1',
+			repliesCount: 0,
+			renderRepliesCount: 10,
+			onAddRenderRepliesCount: vi.fn(),
 		};
+		mockProps.repliesCount = mockReplies.length;
 
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
-
-		const mockScrollIntoView = vi.fn();
-
-		ReplyDetail.mockImplementation(({ onScroll, reply }) => (
-			<button onClick={() => onScroll(reply.reply._id)}>Scroll button</button>
+		vi.mocked(ReplyDetail).mockImplementation(({ reply }) => (
+			<li key={reply._id}>{reply.content}</li>
 		));
-		Element.prototype.scrollIntoView = mockScrollIntoView;
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: (
-								<Replies
-									post={mockProps.post}
-									comment={mockProps.post.comments[0]}
-									onUpdatePost={mockProps.onUpdatePost}
-								/>
-							),
-						},
-					],
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
+		vi.mocked(infiniteQueryRepliesOption).mockImplementation(
+			(commentId, repliesCount) =>
+				infiniteQueryOptions({
+					queryKey: ['replies', commentId],
+					queryFn: getReplies,
+					initialPageParam: 0,
+					getNextPageParam: (_lastPage, _allPages, lastPageParam) =>
+						repliesCount > lastPageParam + 10 ? lastPageParam + 10 : null,
+				}),
 		);
+		vi.mocked(getReplies).mockResolvedValueOnce({
+			data: mockReplies,
+		});
+		const queryClient = new QueryClient();
 
 		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
+			<QueryClientProvider client={queryClient}>
+				<Replies {...mockProps} />,
+			</QueryClientProvider>,
 		);
+
+		await waitFor(() => {
+			mockReplies.forEach(reply => {
+				expect(screen.getByText(reply.content)).toBeInTheDocument();
+			});
+		});
+	});
+	it('should scroll to a target reply, if the handleScroll is executed', async () => {
+		const user = userEvent.setup();
+		const mockReplies = [
+			{
+				_id: '0',
+				content: 'target',
+			},
+			{
+				_id: '1',
+				content: 'reply',
+				reply: { _id: '0' },
+			},
+		];
+		let mockProps = {
+			postId: '1',
+			commentId: '1',
+			repliesCount: 0,
+			renderRepliesCount: 10,
+			onAddRenderRepliesCount: vi.fn(),
+		};
+		mockProps.repliesCount = mockReplies.length;
+
+		vi.mocked(ReplyDetail).mockImplementation(({ reply, onScroll }) => (
+			<>
+				<div>{reply.content}</div>
+				{onScroll && (
+					<button onClick={() => onScroll(reply.reply._id)}>
+						Scroll to target
+					</button>
+				)}
+			</>
+		));
+		vi.mocked(infiniteQueryRepliesOption).mockImplementation(
+			(commentId, repliesCount) =>
+				infiniteQueryOptions({
+					queryKey: ['replies', commentId],
+					queryFn: getReplies,
+					initialPageParam: 0,
+					getNextPageParam: (_lastPage, _allPages, lastPageParam) =>
+						repliesCount > lastPageParam + 10 ? lastPageParam + 10 : null,
+				}),
+		);
+		vi.mocked(getReplies).mockResolvedValueOnce({
+			data: mockReplies,
+		});
+		window.HTMLElement.prototype.scrollIntoView = vi.fn();
+		const queryClient = new QueryClient();
+
+		render(
+			<QueryClientProvider client={queryClient}>
+				<Replies {...mockProps} />
+			</QueryClientProvider>,
+		);
+
+		const scrollButton = await screen.findByRole('button', {
+			name: 'Scroll to target',
+		});
+
+		await user.click(scrollButton);
+
+		vi.useFakeTimers();
+
+		fireEvent.scroll(window);
+
+		act(() => {
+			vi.runAllTimers();
+		});
+
+		vi.useRealTimers();
 
 		const replies = screen.getAllByTestId('reply');
 
-		const scrollButtons = screen.getAllByRole('button', {
-			name: 'Scroll button',
-		});
-
-		await user.click(scrollButtons[1]);
-
-		fireEvent.scroll(window, { target: { scrollY: 100 } });
-
-		await waitFor(() => {
-			expect(replies[0]).toHaveClass(/shake/);
-			fireEvent.animationEnd(replies[0]);
-			expect(replies[0]).not.toHaveClass(/shake/);
-		});
+		expect(replies[0]).toHaveClass(/shake/);
+		fireEvent.animationEnd(replies[0]);
+		expect(replies[0]).not.toHaveClass(/shake/);
 	});
-	it('should render the ten more replies if the show more replies button is clicked', async () => {
+	it('should fetch next replies if the show more replies button is clicked', async () => {
 		const user = userEvent.setup();
-		const mockProps = {
-			post: {
-				comments: [
-					{
-						_id: '0',
-						replies: [
-							{
-								_id: '0',
-								reply: {
-									_id: '1',
-								},
-							},
-							{
-								_id: '1',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '2',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '3',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '4',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '5',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '6',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '7',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '8',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '9',
-								reply: {
-									_id: '0',
-								},
-							},
-							{
-								_id: '10',
-								reply: {
-									_id: '0',
-								},
-							},
-						],
-						countReplies: 20,
-					},
-				],
-			},
-			onUpdatePost: vi.fn(),
-		};
-
-		const mockContext = {
-			onAlert: vi.fn(),
-		};
-
-		const mockResolve = {
-			success: true,
-			data: [
-				{ _id: '10' },
-				{ _id: '11' },
-				{ _id: '12' },
-				{ _id: '13' },
-				{ _id: '14' },
-				{ _id: '15' },
-				{ _id: '16' },
-				{ _id: '17' },
-				{ _id: '18' },
-				{ _id: '19' },
-			],
-		};
-
-		ReplyDetail.mockImplementation(() => <div>ReplyDetail component</div>);
-		getReplies.mockResolvedValueOnce(mockResolve);
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							index: true,
-							element: (
-								<Replies
-									post={mockProps.post}
-									comment={mockProps.post.comments[0]}
-									onUpdatePost={mockProps.onUpdatePost}
-								/>
-							),
-						},
-					],
-				},
-			],
+		const mockFirstFetchReplies = [
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				_id: '0',
+				content: 'reply1',
 			},
+			{
+				_id: '1',
+				content: 'reply2',
+			},
+			{
+				_id: '2',
+				content: 'reply3',
+			},
+			{
+				_id: '3',
+				content: 'reply4',
+			},
+			{
+				_id: '4',
+				content: 'reply5',
+			},
+			{
+				_id: '5',
+				content: 'reply6',
+			},
+			{
+				_id: '6',
+				content: 'reply7',
+			},
+			{
+				_id: '7',
+				content: 'reply8',
+			},
+			{
+				_id: '8',
+				content: 'reply9',
+			},
+			{
+				_id: '9',
+				content: 'reply10',
+			},
+		];
+		const mockNextFetchReplies = [
+			{
+				_id: '10',
+				content: 'reply11',
+			},
+			{
+				_id: '11',
+				content: 'reply12',
+			},
+			{
+				_id: '12',
+				content: 'reply13',
+			},
+			{
+				_id: '13',
+				content: 'reply14',
+			},
+			{
+				_id: '14',
+				content: 'reply15',
+			},
+		];
+		let mockProps = {
+			postId: '1',
+			commentId: '1',
+			repliesCount: 0,
+			renderRepliesCount: 10,
+			onAddRenderRepliesCount: vi.fn(),
+		};
+		mockProps.repliesCount =
+			mockFirstFetchReplies.length + mockNextFetchReplies.length;
+
+		vi.mocked(ReplyDetail).mockImplementation(({ reply }) => (
+			<li key={reply._id}>{reply.content}</li>
+		));
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(infiniteQueryRepliesOption).mockImplementation(
+			(commentId, repliesCount) =>
+				infiniteQueryOptions({
+					queryKey: ['replies', commentId],
+					queryFn: getReplies,
+					initialPageParam: 0,
+					getNextPageParam: (_lastPage, _allPages, lastPageParam) =>
+						repliesCount > lastPageParam + 10 ? lastPageParam + 10 : null,
+				}),
+		);
+		vi.mocked(getReplies)
+			.mockResolvedValueOnce({
+				data: mockFirstFetchReplies,
+			})
+			.mockImplementationOnce(
+				async () =>
+					await new Promise(resolve =>
+						setTimeout(
+							() =>
+								resolve({
+									data: mockNextFetchReplies,
+								}),
+							300,
+						),
+					),
+			);
+
+		const queryClient = new QueryClient();
+
+		const { rerender } = render(
+			<QueryClientProvider client={queryClient}>
+				<Replies {...mockProps} />,
+			</QueryClientProvider>,
 		);
 
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
-
-		const showMoreButton = screen.getByRole('button', {
+		const showMoreButton = await screen.findByRole('button', {
 			name: 'Show more replies',
 		});
 
-		user.click(showMoreButton);
+		mockFirstFetchReplies.forEach(reply => {
+			expect(screen.getByText(reply.content)).toBeInTheDocument();
+		});
 
-		const loadIcon = await screen.findByTestId('loading-icon');
+		await user.click(showMoreButton);
 
-		expect(getReplies).toBeCalledTimes(1);
-		expect(mockProps.onUpdatePost).toBeCalledTimes(1);
-		expect(
-			mockProps.onUpdatePost.mock.calls[0][0].newComments[0].replies,
-		).toHaveLength(mockProps.post.comments[0].replies.length + 10);
-		expect(loadIcon).not.toBeInTheDocument();
+		await waitForElementToBeRemoved(() =>
+			screen.queryByText('Loading component'),
+		);
+
+		mockProps.renderRepliesCount = 20;
+
+		rerender(
+			<QueryClientProvider client={queryClient}>
+				<Replies {...mockProps} />,
+			</QueryClientProvider>,
+		);
+
+		const mockFetchData = mockFirstFetchReplies.concat(mockNextFetchReplies);
+
+		mockFetchData.forEach(reply => {
+			expect(screen.getByText(reply.content)).toBeInTheDocument();
+		});
+		expect(mockProps.onAddRenderRepliesCount).toBeCalledTimes(1);
 	});
 });
