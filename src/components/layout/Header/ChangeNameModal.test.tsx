@@ -155,12 +155,13 @@ describe('ChangeNameModal component', () => {
 		);
 
 		const submitButton = screen.getByRole('button', { name: 'Save' });
-		const usernameField = screen.getByText('Change username');
+		const usernameField = screen.getByDisplayValue(mockProps.username);
+		const labelElement = screen.getByText('Change username');
 		const usernameErrorMessage = screen.getByText('Message placeholder');
 
 		await user.click(submitButton);
 
-		expect(usernameField).toHaveClass(/error/);
+		expect(labelElement).toHaveClass(/error/);
 		expect(usernameErrorMessage).toHaveTextContent(
 			'New username should be different from the old username',
 		);
@@ -168,7 +169,7 @@ describe('ChangeNameModal component', () => {
 		await user.type(usernameField, '_new');
 
 		await waitFor(() => {
-			expect(usernameField).not.toHaveClass(/error/);
+			expect(labelElement).not.toHaveClass(/error/);
 			expect(usernameErrorMessage).toHaveTextContent('Message placeholder');
 		});
 	});
