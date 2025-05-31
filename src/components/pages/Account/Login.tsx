@@ -16,7 +16,7 @@ import facebookIcon from '../../../assets/facebook.png';
 import { queryUserInfoOption } from '../../../utils/queryOptions';
 
 export const Login = () => {
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
 	const [loading, setLoading] = useState(false);
 

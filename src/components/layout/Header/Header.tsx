@@ -25,7 +25,7 @@ interface HeaderProps {
 export const Header = ({ darkTheme, onColorTheme }: HeaderProps) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
 	const handleActiveDropdown = () => setActiveDropdown(!activeDropdown);
 	const handleCloseDropdown = () => setActiveDropdown(false);

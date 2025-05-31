@@ -40,7 +40,7 @@ export const Dropdown = ({
 
 	const queryClient = useQueryClient();
 
-	const { data: user } = useQuery({ ...queryUserInfoOption, enabled: false });
+	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
