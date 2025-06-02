@@ -30,7 +30,7 @@ describe('DeleteModal component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(deleteUser).mockImplementationOnce(
 			async () =>
-				await new Promise((r, reject) =>
+				await new Promise((_r, reject) =>
 					setTimeout(() => {
 						reject(Error());
 					}, 100),
