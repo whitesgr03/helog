@@ -46,8 +46,8 @@ export const ReplyDetail = ({
 	const { data: post } = useQuery(queryPostDetailOption(postId));
 	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 
-	const isCommentOwner = user?.username === reply.author.username;
-	const isPostAuthor = post?.author.username === reply.author.username;
+	const isCommentOwner = user?.username === reply.author?.username;
+	const isPostAuthor = post?.author.username === reply.author?.username;
 
 	const handleShowEditBox = () => setShowEditBox(!showEditBox);
 	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
@@ -106,11 +106,11 @@ export const ReplyDetail = ({
 							<span>{`[${index + 1}]`}</span>
 							<div className={commentDetailStyles.avatar}>
 								{!reply.deleted && (
-									<span>{reply.author.username.charAt(0).toUpperCase()}</span>
+									<span>{reply.author?.username.charAt(0).toUpperCase()}</span>
 								)}
 							</div>
 							<span className={commentDetailStyles.username}>
-								{!reply.deleted ? reply.author.username : '[deleted]'}
+								{!reply.deleted ? reply.author?.username : '[deleted]'}
 							</span>
 						</div>
 						<div className={commentDetailStyles.time}>
@@ -139,7 +139,7 @@ export const ReplyDetail = ({
 							>
 								{reply.reply.deleted
 									? `@deleted`
-									: `@${reply.reply.author.username}`}
+									: `@${reply.reply.author?.username}`}
 							</button>
 						)}
 						<p>{reply.content}</p>

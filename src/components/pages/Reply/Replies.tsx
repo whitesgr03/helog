@@ -25,7 +25,7 @@ export interface Reply {
 	_id: string;
 	author: {
 		username: string;
-	};
+	} | null;
 	post: string;
 	parent: string;
 	child: string[];

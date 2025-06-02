@@ -69,8 +69,8 @@ export const CommentDetail = ({
 	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
 	const { data: post } = useQuery(queryPostDetailOption(postId));
 
-	const isCommentOwner = user?.username === comment.author.username;
-	const isPostAuthor = post?.author?.username === comment.author.username;
+	const isCommentOwner = user?.username === comment.author?.username;
+	const isPostAuthor = post?.author?.username === comment.author?.username;
 
 	const handleDelete = () => {
 		setShowEditBox(false);
@@ -130,11 +130,13 @@ export const CommentDetail = ({
 							<span>{`[${index + 1}]`}</span>
 							<div className={styles.avatar}>
 								{!comment.deleted && (
-									<span>{comment.author.username.charAt(0).toUpperCase()}</span>
+									<span>
+										{comment.author?.username.charAt(0).toUpperCase()}
+									</span>
 								)}
 							</div>
 							<span className={styles.username}>
-								{!comment.deleted ? comment.author.username : '[deleted]'}
+								{!comment.deleted ? comment.author?.username : '[deleted]'}
 							</span>
 						</div>
 						<div className={styles.time}>

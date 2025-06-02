@@ -21,7 +21,7 @@ export interface Comment {
 	_id: string;
 	author: {
 		username: string;
-	};
+	} | null;
 	post: string;
 	parent?: string;
 	child: string[];
