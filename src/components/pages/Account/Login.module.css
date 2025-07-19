@@ -30,33 +30,6 @@
 	overflow: hidden;
 }
 
-.federation-button {
-	display: flex;
-	column-gap: 10px;
-	justify-content: center;
-	align-items: center;
-	transition: transform 0.3s ease;
-	cursor: pointer;
-	border: 2px solid var(--light-scheme-color);
-	border-radius: 5px;
-	background-color: var(--dark-scheme-color-bgc);
-	padding: 10px;
-	width: 100%;
-	min-height: 45px;
-	color: var(--light-scheme-color);
-	white-space: nowrap;
-}
-
-.google {
-	width: var(--icon-size-desktop);
-	height: var(--icon-size-desktop);
-}
-
-.facebook {
-	width: var(--icon-size-desktop);
-	height: var(--icon-size-desktop);
-}
-
 /* Dark scheme classes */
 
 :global(.dark) .title {
@@ -69,27 +42,6 @@
 
 :global(.dark) .federation {
 	border-color: var(--dark-scheme-color);
-}
-
-:global(.dark) .federation-button {
-	border-width: 1px;
-	border-color: var(--dark-scheme-color);
-	background-color: var(--dark-scheme-google-bgc);
-	color: var(--dark-scheme-color);
-}
-
-/* Pseudo classes */
-
-.federation-button:active {
-	transform: scale(0.95) translateY(5px);
-}
-
-.federation-button:hover {
-	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
-}
-
-:global(.dark) .federation-button:hover {
-	background-color: rgba(var(--dark-scheme-color-rgb), 0.2);
 }
 
 @media (width >= 440px) {

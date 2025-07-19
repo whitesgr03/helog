@@ -7,8 +7,10 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Login } from './Login';
 import { Loading } from '../../utils/Loading';
+import { FederationButton } from './FederationButton';
 
 vi.mock('../../utils/Loading');
+vi.mock('./FederationButton');
 
 describe('Login component', () => {
 	it('should navigate to the "/" path if the user prop is provided', async () => {
@@ -52,19 +54,18 @@ describe('Login component', () => {
 
 		expect(homeComponent).toBeInTheDocument();
 	});
-	it('should login with google account if the "Sign in with Google" button is clicked', async () => {
+	it('should renders loading component if federation button is clicked', async () => {
 		const user = userEvent.setup();
 
-		const mockFn = vi.fn();
-
-		Object.defineProperty(window, 'location', {
-			value: {
-				assign: mockFn,
-			},
-		});
 		const queryClient = new QueryClient();
 		vi.mocked(Loading).mockImplementationOnce(() => (
 			<div>Loading component</div>
+		));
+		vi.mocked(FederationButton).mockImplementationOnce(({ handleLoading }) => (
+			<div>
+				<p>FederationButton component</p>
+				<button onClick={() => handleLoading(true)}>login</button>
+			</div>
 		));
 
 		const router = createMemoryRouter(
@@ -92,62 +93,10 @@ describe('Login component', () => {
 			</QueryClientProvider>,
 		);
 
-		const googleButton = screen.getByText('Sign in with Google');
+		const loginButton = screen.getByRole('button', { name: 'login' });
 
-		user.click(googleButton);
+		await user.click(loginButton);
 
-		await screen.findByText('Loading component');
-
-		expect(mockFn).toBeCalledTimes(1);
-		expect(mockFn.mock.calls[0][0]).toMatch(/google/);
-	});
-	it('should login with facebook account if "Sign in with Facebook" button is clicked', async () => {
-		const user = userEvent.setup();
-
-		const mockFn = vi.fn();
-
-		Object.defineProperty(window, 'location', {
-			value: {
-				assign: mockFn,
-			},
-		});
-
-		vi.mocked(Loading).mockImplementationOnce(() => (
-			<div>Loading component</div>
-		));
-		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Login />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
-			</QueryClientProvider>,
-		);
-
-		const googleButton = screen.getByText('Sign in with Facebook');
-
-		user.click(googleButton);
-
-		await screen.findByText('Loading component');
-
-		expect(mockFn).toBeCalledTimes(1);
-		expect(mockFn.mock.calls[0][0]).toMatch(/facebook/);
+		expect(screen.getByText('Loading component')).toBeInTheDocument();
 	});
 });
