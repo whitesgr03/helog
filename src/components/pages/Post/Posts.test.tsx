@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Posts } from './Posts';
-import { Item } from './Item';
+import { Item } from './PostItem';
 
 vi.mock('./Item');
 

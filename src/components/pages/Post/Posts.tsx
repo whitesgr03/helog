@@ -2,7 +2,7 @@
 import styles from './Posts.module.css';
 
 // Component
-import { Item } from './Item';
+import { PostItem } from './PostItem';
 
 export interface Post {
 	_id: string;
@@ -21,7 +21,7 @@ export const Posts = ({ posts }: { posts: Post[] }) => {
 			{posts.length > 0 ? (
 				<ul className={styles.posts}>
 					{posts.map((post, index) => (
-						<Item key={post._id} post={post} index={index} />
+						<PostItem key={post._id} post={post} index={index} />
 					))}
 				</ul>
 			) : (

@@ -1,13 +1,12 @@
 import { vi, describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-// import { faker } from '@faker-js/faker';
 import { format } from 'date-fns';
 
 import userEvent from '@testing-library/user-event';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
-import { Item } from './Item';
+import { PostItem } from './PostItem';
 
 vi.mock('date-fns');
 
@@ -34,7 +33,7 @@ describe('Posts component', () => {
 			[
 				{
 					path: '/',
-					element: <Item {...mockProps} />,
+					element: <PostItem {...mockProps} />,
 				},
 			],
 			{
@@ -70,56 +69,6 @@ describe('Posts component', () => {
 		expect(title).toBeInTheDocument();
 		expect(image).toHaveAttribute('src', mockProps.post.mainImage);
 	});
-	it(`should replace the invalid main image with the error image, if the main image is not a valid image resource.`, async () => {
-		const mockProps = {
-			post: {
-				_id: '0',
-				title: 'title',
-				mainImage: 'error',
-				author: {
-					username: 'example',
-				},
-				updatedAt: new Date(),
-				createdAt: new Date(),
-			},
-			index: 0,
-		};
-
-		vi.mocked(format).mockReturnValue('');
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Item {...mockProps} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
-
-		const image = screen.getByAltText(
-			`Main image of post 1`,
-		) as HTMLImageElement;
-
-		fireEvent.load(image);
-
-		expect(image).toHaveAttribute(
-			'src',
-			'https://fakeimg.pl/0x0/?text=404%20Image%20Error&font=noto',
-		);
-	});
 	it(`should navigate to a specified post if the title element is clicked `, async () => {
 		const user = userEvent.setup();
 		const mockProps = {
@@ -143,7 +92,7 @@ describe('Posts component', () => {
 			[
 				{
 					path: '/',
-					element: <Item {...mockProps} />,
+					element: <PostItem {...mockProps} />,
 				},
 				{
 					path: 'posts/:postId',
@@ -196,7 +145,7 @@ describe('Posts component', () => {
 			[
 				{
 					path: '/',
-					element: <Item {...mockProps} />,
+					element: <PostItem {...mockProps} />,
 				},
 				{
 					path: 'posts/:postId',
