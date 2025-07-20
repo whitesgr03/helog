@@ -49,12 +49,10 @@ export const Posts = () => {
 		},
 	});
 
-	const posts = data?.pages
-		.reduce(
-			(accumulator, current) => accumulator.concat(current.data.posts),
-			[],
-		)
-		.slice(0, renderPostsCount);
+	const posts = data?.pages.reduce(
+		(accumulator, current) => accumulator.concat(current.data.posts),
+		[],
+	);
 
 	useEffect(() => {
 		const renderNextPage = () => {
@@ -97,7 +95,7 @@ export const Posts = () => {
 			) : (
 				<>
 					<div className={styles.container} ref={postListRef}>
-						<PostList posts={posts} />
+						<PostList posts={posts.slice(0, renderPostsCount)} />
 					</div>
 					{isFetchingNextPage ? (
 						<Loading text={'Loading more posts ...'} />
