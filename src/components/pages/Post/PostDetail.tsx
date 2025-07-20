@@ -35,46 +35,46 @@ export const PostDetail = () => {
 	} = useQuery(queryPostDetailOption(postId));
 
 	useEffect(() => {
-		let editorContent = editorRef.current?.getContent() ?? '';
-		const imgs = editorContent?.match(/<img.+">/g) ?? [];
+		const checkEditorImages = async () => {
+			let editorContent = editorRef.current?.getContent() ?? '';
+			const editorImages = editorContent?.match(/<img.+">/g) ?? [];
 
-		const handleCheckContentImages = async () => {
-			const imageErrors = await Promise.all(
-				imgs.map(
-					img =>
-						new Promise(resolve => {
-							const [url = ''] = img.match(/(?<=src=")(.*?)(?=")/g) ?? [];
-							const [width = '350', height = '200'] =
-								img.match(/(?<=width:\s|height:\s).*?(?=px;)/g) ?? [];
+			const isErrorImage = (src: string) =>
+				new Promise(resolve => {
+					const newImage = new Image();
+					newImage.onerror = () => resolve(true);
+					newImage.onload = () =>
+						newImage.width <= 0 || newImage.height <= 0
+							? resolve(true)
+							: resolve(false);
+					newImage.src = src;
+				});
 
-							const image = new Image();
-							const handleError = () => {
-								const errorImageUrl = `https://fakeimg.pl/${width}x${height}/?text=404%20Image%20Error&font=noto`;
+			const replaceErrorImageToFakeImage = (
+				src: string,
+				width: string,
+				height: string,
+			) => {
+				const fakeImageUrl = `https://fakeimg.pl/${width}x${height}/?text=404%20Image%20Error&font=noto`;
 
-								editorContent = editorContent.replace(url, errorImageUrl);
-
-								resolve(true);
-							};
-							const handleLoad = () =>
-								image.width <= 0 || image.height <= 0
-									? handleError()
-									: resolve(false);
-							image.onerror = handleError;
-							image.onload = handleLoad;
-							image.src = url;
-						}),
-				),
-			);
-
-			Array.isArray(imageErrors) &&
-				imageErrors.find(error => error === true) &&
+				editorContent = editorContent.replace(src, fakeImageUrl);
 				editorRef.current?.setContent(editorContent);
+			};
 
-			setChecking(false);
+			for (const image of editorImages) {
+				const [src = ''] = image.match(/(?<=src=")(.*?)(?=")/g) ?? [];
+				const [width = '350', height = '200'] =
+					image.match(/(?<=width:\s|height:\s).*?(?=px;)/g) ?? [];
+
+				(await isErrorImage(src)) &&
+					replaceErrorImageToFakeImage(src, width, height);
+			}
+
+			setCheckingEditorImages(false);
 		};
 
-		!isPending && !contentEditorLoad && handleCheckContentImages();
-	}, [isPending, contentEditorLoad]);
+		!isPending && !editorLoading && checkEditorImages();
+	}, [isPending, editorLoading]);
 
 	return (
 		<>
