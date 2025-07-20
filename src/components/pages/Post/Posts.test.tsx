@@ -4,9 +4,9 @@ import { render, screen } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Posts } from './Posts';
-import { Item } from './PostItem';
+import { PostItem } from './PostItem';
 
-vi.mock('./Item');
+vi.mock('./PostItem');
 
 describe('Posts component', () => {
 	it(`should render no posts if the provided posts are empty`, () => {
@@ -68,7 +68,7 @@ describe('Posts component', () => {
 			],
 		};
 
-		vi.mocked(Item).mockImplementation(({ post }) => <div>{post.title}</div>);
+		vi.mocked(PostItem).mockImplementation(({ post }) => <div>{post.title}</div>);
 
 		const router = createMemoryRouter(
 			[
