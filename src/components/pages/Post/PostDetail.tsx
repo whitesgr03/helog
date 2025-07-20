@@ -20,8 +20,8 @@ import { queryPostDetailOption } from '../../../utils/queryOptions';
 
 export const PostDetail = () => {
 	const { postId = '' } = useParams() ?? {};
-	const [contentEditorLoad, setContentEditorLoad] = useState(true);
-	const [checking, setChecking] = useState(true);
+	const [editorLoading, setEditorLoading] = useState(true);
+	const [checkingEditorImages, setCheckingEditorImages] = useState(true);
 
 	const editorRef = useRef<TinyMCEEditor | null>(null);
 
@@ -91,11 +91,11 @@ export const PostDetail = () => {
 						/>
 					)
 				) : (
-					checking && <Loading text={'Loading post ...'} />
+					checkingEditorImages && <Loading text={'Loading post ...'} />
 				)}
 
 				<div
-					className={`${styles.container} ${checking ? styles.hide : ''}`}
+					className={`${styles.container} ${checkingEditorImages ? styles.hide : ''}`}
 					data-testid="container"
 				>
 					{post && (
@@ -131,7 +131,7 @@ export const PostDetail = () => {
 						initialValue={post?.content ?? ''}
 						onInit={(_evt, editor) => {
 							editorRef.current = editor;
-							setContentEditorLoad(false);
+							setEditorLoading(false);
 						}}
 						init={{
 							menubar: false,
@@ -144,7 +144,7 @@ export const PostDetail = () => {
 			</div>
 
 			{!isPending && !isError && (
-				<div className={`${checking ? styles.hide : ''}`}>
+				<div className={`${checkingEditorImages ? styles.hide : ''}`}>
 					<Comments postId={postId} />
 				</div>
 			)}
