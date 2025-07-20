@@ -1,55 +1,17 @@
-// Packages;
-import { useState } from 'react';
+// Packages
 import { Link } from 'react-router-dom';
-import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
 import styles from './Home.module.css';
 import imageStyles from '../../../styles/image.module.css';
-import buttonStyles from '../../../styles/button.module.css';
 
 // Components
-import { Posts } from '../Post/Posts';
-import { Loading } from '../../utils/Loading';
+import { LatestPosts } from './LatestPosts';
 
 // Variables
 import url from '../../../assets/hero.jpg';
 
-// Utils
-import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
-
-// Context
-import { useAppDataAPI } from '../App/AppContext';
-
 export const Home = () => {
-	const { onAlert } = useAppDataAPI();
-	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
-
-	const { isPending, isError, data, refetch } = useInfiniteQuery({
-		...infiniteQueryPostsOption(),
-		meta: {
-			errorAlert: () => {
-				isManuallyRefetch &&
-					onAlert([
-						{
-							message:
-								'Loading the posts has some errors occur, please try again later.',
-							error: true,
-							delay: 4000,
-						},
-					]);
-				setIsManuallyRefetch(false);
-			},
-		},
-	});
-
-	const posts = data?.pages[0].data.posts.slice(0, 4);
-
-	const handleManuallyRefetch = () => {
-		refetch();
-		setIsManuallyRefetch(true);
-	};
-
 	return (
 		<div className={styles.home}>
 			<div className={styles.container}>
@@ -80,21 +42,7 @@ export const Home = () => {
 					</Link>
 				</div>
 			</div>
-			<div className={styles['latest-posts']}>
-				<h2>Latest Posts</h2>
-				{isError && !posts ? (
-					<button
-						className={`${buttonStyles.content} ${buttonStyles.more}`}
-						onClick={handleManuallyRefetch}
-					>
-						Click here to load posts
-					</button>
-				) : isPending ? (
-					<Loading text={'Loading posts ...'} />
-				) : (
-					<Posts posts={posts} />
-				)}
-			</div>
+			<LatestPosts />
 		</div>
 	);
 };
