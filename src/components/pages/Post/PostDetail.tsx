@@ -13,6 +13,7 @@ import imageStyles from '../../../styles/image.module.css';
 // Components
 import { Loading } from '../../utils/Loading';
 import { Comments } from '../Comment/Comments';
+import { PostMainImage } from './PostMainImage';
 
 // Utils
 import { queryPostDetailOption } from '../../../utils/queryOptions';
@@ -21,9 +22,7 @@ export const PostDetail = () => {
 	const { postId = '' } = useParams() ?? {};
 	const [contentEditorLoad, setContentEditorLoad] = useState(true);
 	const [checking, setChecking] = useState(true);
-	const [errorMainImage, setErrorMainImage] = useState(false);
 
-	const imageContentRef = useRef<HTMLDivElement>(null);
 	const editorRef = useRef<TinyMCEEditor | null>(null);
 
 	const { pathname: previousPath } = useLocation();
@@ -34,16 +33,6 @@ export const PostDetail = () => {
 		data: post,
 		error,
 	} = useQuery(queryPostDetailOption(postId));
-
-	const { clientWidth = '350', clientHeight = '200' } =
-		imageContentRef.current ?? {};
-
-	const errorImageUrl = `https://fakeimg.pl/${clientWidth}x${clientHeight}/?text=404%20Error&font=noto`;
-
-	const handleError = () => setErrorMainImage(true);
-	const handleLoad = (e: React.SyntheticEvent<HTMLImageElement>) =>
-		(e.currentTarget.width <= 0 || e.currentTarget.height <= 0) &&
-		handleError();
 
 	useEffect(() => {
 		let editorContent = editorRef.current?.getContent() ?? '';
@@ -133,15 +122,7 @@ export const PostDetail = () => {
 							</div>
 
 							<div className={styles['image-wrap']}>
-								<div className={imageStyles.content} ref={imageContentRef}>
-									<img
-										title={post.title}
-										src={errorMainImage ? errorImageUrl : post.mainImage}
-										alt="Main image"
-										onError={handleError}
-										onLoad={handleLoad}
-									/>
-								</div>
+								<PostMainImage title={post.title} url={post.mainImage} />
 							</div>
 						</>
 					)}
