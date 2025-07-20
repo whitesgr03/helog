@@ -6,10 +6,10 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { PostMainImage } from './PostMainImage';
 
 describe('PostMainImage component', () => {
-	it(`should replace the invalid main image with the error image, if the main image is not a valid image resource.`, async () => {
+	it(`should replace the main image with the fake image, if the main image is not a valid resource.`, async () => {
 		const mockProps = {
 			url: 'error',
-			index: 0,
+			title: 'post',
 		};
 
 		const router = createMemoryRouter(
@@ -34,9 +34,7 @@ describe('PostMainImage component', () => {
 			/>,
 		);
 
-		const image = screen.getByAltText(
-			`Main image of post 1`,
-		) as HTMLImageElement;
+		const image = screen.getByAltText(mockProps.title) as HTMLImageElement;
 
 		fireEvent.load(image);
 

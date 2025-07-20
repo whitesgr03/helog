@@ -5,11 +5,11 @@ import { useState, useRef } from 'react';
 import imageStyles from '../../../styles/image.module.css';
 
 interface IPostMainImage {
+	title: string;
 	url: string;
-	index: number;
 }
 
-export const PostMainImage = ({ url, index }: IPostMainImage) => {
+export const PostMainImage = ({ url, title }: IPostMainImage) => {
 	const [error, setError] = useState(false);
 
 	const imageContentRef = useRef<HTMLDivElement>(null);
@@ -28,8 +28,9 @@ export const PostMainImage = ({ url, index }: IPostMainImage) => {
 	return (
 		<div className={imageStyles.content} ref={imageContentRef}>
 			<img
+				title={title}
 				src={error ? errorImageUrl : url}
-				alt={`Main image of post ${index + 1}`}
+				alt={title}
 				loading="lazy"
 				onError={handleError}
 				onLoad={handleLoad}

@@ -24,7 +24,7 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 		<>
 			{posts.length > 0 ? (
 				<ul className={styles.posts}>
-					{posts.map((post, index) => (
+					{posts.map(post => (
 						<li key={post._id}>
 							<div className={styles.info}>
 								<strong className={styles['date-time']}>
@@ -34,7 +34,7 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 							</div>
 
 							<Link to={`../posts/${post._id}`}>
-								<PostMainImage url={post.mainImage} index={index} />
+								<PostMainImage title={post.title} url={post.mainImage} />
 							</Link>
 
 							<Link to={`../posts/${post._id}`}>
