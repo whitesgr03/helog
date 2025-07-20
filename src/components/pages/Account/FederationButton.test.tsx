@@ -45,13 +45,16 @@ describe('Login component', () => {
 			/>,
 		);
 
-		const icon = screen.getByAltText(`${mockProps.provider} icon`);
+		const icon = screen.getByAltText(
+			`${mockProps.provider} icon`,
+		) as HTMLImageElement;
 
 		const loginButton = screen.getByText(`Sign in with ${mockProps.provider}`);
 		await user.click(loginButton);
 
-		expect(icon.src).toMatch(new RegExp(mockProps.url));
-		expect(mockProps.handleLoading).toBeCalledTimes(1).toBeCalledWith(true);
+		expect(icon.src).toMatch(new RegExp(mockProps.iconUrl));
+		expect(mockProps.handleLoading).toBeCalledTimes(1);
+		expect(mockProps.handleLoading).toBeCalledWith(true);
 		expect(mockFn).toBeCalledTimes(1);
 		expect(mockFn.mock.calls[0][0]).toMatch(new RegExp(mockProps.provider));
 	});
