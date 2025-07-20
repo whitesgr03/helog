@@ -85,14 +85,13 @@ export const Comments = ({ postId }: { postId: string }) => {
 		(accumulator, current) => accumulator.concat(current.data.comments),
 		[],
 	);
-
 	const handleManuallyRefetch = () => {
 		refetch();
 		setIsManuallyRefetch(true);
 	};
 
 	useEffect(() => {
-		const handleRenderNextPage = () => {
+		const renderNextPage = () => {
 			comments.length <= renderCommentsCount && fetchNextPage();
 			setRenderCommentsCount(value => value + 10);
 		};
@@ -103,7 +102,7 @@ export const Comments = ({ postId }: { postId: string }) => {
 			const isScrollToBottom =
 				targetRect && targetRect.bottom <= window.innerHeight;
 
-			!isFetchingNextPage && isScrollToBottom && handleRenderNextPage();
+			!isFetchingNextPage && isScrollToBottom && renderNextPage();
 		};
 		!isError &&
 			(comments?.length > renderCommentsCount || hasNextPage) &&

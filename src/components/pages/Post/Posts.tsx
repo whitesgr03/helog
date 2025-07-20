@@ -57,7 +57,7 @@ export const Posts = () => {
 		.slice(0, renderPostsCount);
 
 	useEffect(() => {
-		const handleRenderNextPage = () => {
+		const renderNextPage = () => {
 			posts.length <= renderPostsCount && fetchNextPage();
 			setRenderPostsCount(renderPostsCount + 10);
 		};
@@ -67,7 +67,7 @@ export const Posts = () => {
 			const isScrollToBottom =
 				targetRect && targetRect.bottom <= window.innerHeight;
 
-			!isFetchingNextPage && isScrollToBottom && handleRenderNextPage();
+			!isFetchingNextPage && isScrollToBottom && renderNextPage();
 		};
 
 		!isError &&
