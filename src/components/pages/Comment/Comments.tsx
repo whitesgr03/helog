@@ -135,37 +135,35 @@ export const Comments = ({ postId }: { postId: string }) => {
 						<CommentCreate postId={postId} />
 						<div className={styles.content}>
 							{comments.length ? (
-								<>
-									<ul ref={commentListRef}>
-										{comments
-											.slice(0, renderCommentsCount)
-											.map((comment, index) => (
-												<CommentDetail
-													key={comment._id}
-													index={index}
-													comment={comment}
-													postId={postId}
-												/>
-											))}
-									</ul>
-									{isFetchingNextPage ? (
-										<Loading text={'Loading more comments ...'} />
-									) : (
-										isFetchNextPageError && (
-											<button
-												className={`${buttonStyles.content} ${buttonStyles.more}`}
-												onClick={() => fetchNextPage()}
-											>
-												Click here to show more comments
-											</button>
-										)
-									)}
-								</>
+								<ul ref={commentListRef}>
+									{comments
+										.slice(0, renderCommentsCount)
+										.map((comment, index) => (
+											<CommentDetail
+												key={comment._id}
+												index={index}
+												comment={comment}
+												postId={postId}
+											/>
+										))}
+								</ul>
 							) : (
 								<p>There are not comments.</p>
 							)}
 						</div>
 					</div>
+					{isFetchingNextPage ? (
+						<Loading text={'Loading more comments ...'} />
+					) : (
+						isFetchNextPageError && (
+							<button
+								className={`${buttonStyles.content} ${buttonStyles.more}`}
+								onClick={() => fetchNextPage()}
+							>
+								Click here to show more comments
+							</button>
+						)
+					)}
 				</>
 			)}
 		</div>
