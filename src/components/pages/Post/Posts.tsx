@@ -4,11 +4,11 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
-import styles from './PostList.module.css';
+import styles from './Posts.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Components
-import { Posts } from './PostList';
+import { PostList } from './PostList';
 import { Loading } from '../../utils/Loading';
 
 // Utils
@@ -17,7 +17,7 @@ import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
-export const PostList = () => {
+export const Posts = () => {
 	const { onAlert } = useAppDataAPI();
 	const { pathname: previousPath } = useLocation();
 	const [renderPostsCount, setRenderPostsCount] = useState(10);
@@ -49,10 +49,12 @@ export const PostList = () => {
 		},
 	});
 
-	const posts = data?.pages.reduce(
-		(accumulator, current) => accumulator.concat(current.data.posts),
-		[],
-	);
+	const posts = data?.pages
+		.reduce(
+			(accumulator, current) => accumulator.concat(current.data.posts),
+			[],
+		)
+		.slice(0, renderPostsCount);
 
 	useEffect(() => {
 		const handleRenderNextPage = () => {
@@ -95,7 +97,7 @@ export const PostList = () => {
 			) : (
 				<>
 					<div className={styles.container} ref={postListRef}>
-						<Posts posts={posts.slice(0, renderPostsCount)} />
+						<PostList posts={posts} />
 					</div>
 					{isFetchingNextPage ? (
 						<Loading text={'Loading more posts ...'} />

@@ -14,16 +14,16 @@ import {
 } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
-import { PostList } from './Posts';
+import { Posts } from './Posts';
 
-import { Posts } from './PostList';
+import { PostList } from './PostList';
 import { Loading } from '../../utils/Loading';
 import { getPosts } from '../../../utils/handlePost';
 import { useAppDataAPI } from '../App/AppContext';
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 import userEvent from '@testing-library/user-event';
 
-vi.mock('./Posts');
+vi.mock('./PostList');
 vi.mock('../../../utils/handlePost');
 vi.mock('../../utils/Loading');
 vi.mock('../App/AppContext');
@@ -62,7 +62,7 @@ describe('PostList component', () => {
 			}),
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(Posts).mockImplementation(({ posts }) => (
+		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts).mockResolvedValue(mockData);
@@ -72,7 +72,7 @@ describe('PostList component', () => {
 			[
 				{
 					path: '/',
-					element: <PostList />,
+					element: <Posts />,
 				},
 			],
 			{
@@ -124,7 +124,7 @@ describe('PostList component', () => {
 			}),
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(Posts).mockImplementation(({ posts }) => (
+		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts).mockRejectedValue(Error());
@@ -140,7 +140,7 @@ describe('PostList component', () => {
 			[
 				{
 					path: '/',
-					element: <PostList />,
+					element: <Posts />,
 				},
 				{ path: '/error', element: <div>Error component</div> },
 			],
@@ -218,7 +218,7 @@ describe('PostList component', () => {
 			}),
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(Posts).mockImplementation(({ posts }) => (
+		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
@@ -230,7 +230,7 @@ describe('PostList component', () => {
 			[
 				{
 					path: '/',
-					element: <PostList />,
+					element: <Posts />,
 				},
 			],
 			{
@@ -308,7 +308,7 @@ describe('PostList component', () => {
 			}),
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(Posts).mockImplementation(({ posts }) => (
+		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
@@ -331,7 +331,7 @@ describe('PostList component', () => {
 			[
 				{
 					path: '/',
-					element: <PostList />,
+					element: <Posts />,
 				},
 			],
 			{
@@ -415,7 +415,7 @@ describe('PostList component', () => {
 			}),
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(Posts).mockImplementation(({ posts }) => (
+		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
@@ -434,7 +434,7 @@ describe('PostList component', () => {
 			[
 				{
 					path: '/',
-					element: <PostList />,
+					element: <Posts />,
 				},
 			],
 			{
@@ -513,7 +513,7 @@ describe('PostList component', () => {
 			}),
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(Posts).mockImplementation(({ posts }) => (
+		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
@@ -531,7 +531,7 @@ describe('PostList component', () => {
 			[
 				{
 					path: '/',
-					element: <PostList />,
+					element: <Posts />,
 				},
 			],
 			{
