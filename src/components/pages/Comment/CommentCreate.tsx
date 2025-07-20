@@ -84,7 +84,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const handleValidation = async () => {
+		const validationForm = async () => {
 			const validationResult = await verifySchema({ schema, data: formFields });
 			const handleInValid = () => {
 				setInputErrors(validationResult.fields);
@@ -97,7 +97,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 			validationResult.success ? handleValid() : handleInValid();
 		};
 
-		!isPending && user && (await handleValidation());
+		!isPending && user && (await validationForm());
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -123,7 +123,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 		!isEmpty(inputErrors) && setDebounce(true);
 	};
 
-	const triggerBlur = () => {
+	const blurAfterSendAlert = () => {
 		onAlert([
 			{
 				message: 'You need to be logged in to your account to post a comment.',
@@ -134,7 +134,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 		textbox.current?.blur();
 	};
 
-	const handleClose = () => {
+	const closeForm = () => {
 		textbox.current && (textbox.current.style.height = 'auto');
 		setShowSubmitButton(false);
 		setFormFields(defaultFields);
@@ -143,8 +143,8 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 	};
 
 	useEffect(() => {
-		debounce &&
-			(timer.current = setTimeout(async () => {
+		const handleInputDebounce = () => {
+			timer.current = setTimeout(async () => {
 				const validationResult = await verifySchema({
 					schema,
 					data: formFields,
@@ -152,8 +152,10 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 				validationResult.success
 					? setInputErrors({})
 					: setInputErrors(validationResult.fields);
-			}, 500));
+			}, 500);
+		};
 
+		debounce && handleInputDebounce();
 		return () => clearTimeout(timer.current);
 	}, [schema, debounce, formFields]);
 
@@ -179,7 +181,9 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 							name="content"
 							placeholder="write a comment..."
 							onChange={handleChange}
-							onFocus={() => (user ? setShowSubmitButton(true) : triggerBlur())}
+							onFocus={() =>
+								user ? setShowSubmitButton(true) : blurAfterSendAlert()
+							}
 							value={formFields.content}
 							ref={textbox}
 							rows={1}
@@ -200,7 +204,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 						<button
 							type="button"
 							className={`${commentBoxStyles['interactive-button']} ${buttonStyles.content} ${buttonStyles.cancel}`}
-							onClick={handleClose}
+							onClick={closeForm}
 						>
 							Cancel
 						</button>
