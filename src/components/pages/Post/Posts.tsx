@@ -84,7 +84,7 @@ export const Posts = () => {
 	]);
 
 	return (
-		<div className={styles['post-list']}>
+		<div className={styles.posts}>
 			{isError && !data?.pages.length ? (
 				<Navigate
 					to="/error"
