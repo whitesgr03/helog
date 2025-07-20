@@ -1,14 +1,16 @@
 import { vi, describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { format } from 'date-fns';
+
+import userEvent from '@testing-library/user-event';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
-import { Posts } from './PostList';
-import { PostItem } from './PostItem';
+import { PostList } from './PostList';
 
-vi.mock('./PostItem');
+vi.mock('date-fns');
 
-describe('Posts component', () => {
+describe('PostList component', () => {
 	it(`should render no posts if the provided posts are empty`, () => {
 		const mockProps = {
 			posts: [],
@@ -18,7 +20,7 @@ describe('Posts component', () => {
 			[
 				{
 					path: '/',
-					element: <Posts {...mockProps} />,
+					element: <PostList {...mockProps} />,
 				},
 			],
 			{
@@ -68,15 +70,11 @@ describe('Posts component', () => {
 			],
 		};
 
-		vi.mocked(PostItem).mockImplementation(({ post }) => (
-			<div>{post.title}</div>
-		));
-
 		const router = createMemoryRouter(
 			[
 				{
 					path: '/',
-					element: <Posts {...mockProps} />,
+					element: <PostList {...mockProps} />,
 				},
 			],
 			{
@@ -97,5 +95,113 @@ describe('Posts component', () => {
 		mockProps.posts.forEach(post => {
 			expect(screen.getByText(post.title)).toBeInTheDocument();
 		});
+	});
+	it(`should navigate to a specified post if the title element is clicked `, async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			posts: [
+				{
+					_id: '0',
+					title: 'title1',
+					mainImage: 'image1',
+					content: 'content1',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+					createdAt: new Date(),
+				},
+			],
+		};
+
+		vi.mocked(format).mockReturnValue('');
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <PostList {...mockProps} />,
+				},
+				{
+					path: 'posts/:postId',
+					element: <div>A specified post page</div>,
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const link = screen.getByRole('link', { name: mockProps.posts[0].title });
+
+		await user.click(link);
+
+		const postPage = screen.getByText('A specified post page');
+
+		expect(postPage).toBeInTheDocument();
+	});
+	it(`should navigate to a specified post if the main image element is clicked`, async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			posts: [
+				{
+					_id: '0',
+					title: 'title1',
+					mainImage: 'image1',
+					content: 'content1',
+					author: {
+						username: 'example',
+					},
+					updatedAt: new Date(),
+					createdAt: new Date(),
+				},
+			],
+		};
+
+		vi.mocked(format).mockReturnValue('');
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <PostList {...mockProps} />,
+				},
+				{
+					path: 'posts/:postId',
+					element: <div>A specified post page</div>,
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+		render(
+			<RouterProvider
+				router={router}
+				future={{
+					v7_startTransition: true,
+				}}
+			/>,
+		);
+
+		const image = screen.getByAltText(`Main image of post 1`);
+
+		await user.click(image);
+
+		const postPage = screen.getByText('A specified post page');
+
+		expect(postPage).toBeInTheDocument();
 	});
 });

@@ -1,10 +1,14 @@
+// Packages
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+
 // Styles
-import styles from './Posts.module.css';
+import styles from './PostList.module.css';
 
 // Component
-import { PostItem } from './PostItem';
+import { PostMainImage } from './PostMainImage';
 
-export interface Post {
+export interface PostData {
 	_id: string;
 	author: {
 		username: string;
@@ -15,13 +19,30 @@ export interface Post {
 	createdAt: Date;
 }
 
-export const Posts = ({ posts }: { posts: Post[] }) => {
+export const PostList = ({ posts }: { posts: PostData[] }) => {
 	return (
 		<>
 			{posts.length > 0 ? (
 				<ul className={styles.posts}>
 					{posts.map((post, index) => (
-						<PostItem key={post._id} post={post} index={index} />
+						<li key={post._id}>
+							<div className={styles.info}>
+								<strong className={styles['date-time']}>
+									{post.author.username}
+								</strong>
+								<em>{format(post.updatedAt, 'MMMM d, y')}</em>
+							</div>
+
+							<Link to={`../posts/${post._id}`}>
+								<PostMainImage url={post.mainImage} index={index} />
+							</Link>
+
+							<Link to={`../posts/${post._id}`}>
+								<h3 className={styles.title} title={post.title}>
+									{post.title}
+								</h3>
+							</Link>
+						</li>
 					))}
 				</ul>
 			) : (
