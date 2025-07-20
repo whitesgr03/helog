@@ -1,116 +1,32 @@
-// Modules
-import { useState, useRef, useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useInfiniteQuery } from '@tanstack/react-query';
-
 // Styles
-import styles from './PostList.module.css';
-import buttonStyles from '../../../styles/button.module.css';
+import styles from './Posts.module.css';
 
-// Components
-import { Posts } from './Posts';
-import { Loading } from '../../utils/Loading';
+// Component
+import { PostItem } from './PostItem';
 
-// Utils
-import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
+export interface Post {
+	_id: string;
+	author: {
+		username: string;
+	};
+	title: string;
+	mainImage: string;
+	updatedAt: Date;
+	createdAt: Date;
+}
 
-// Context
-import { useAppDataAPI } from '../App/AppContext';
-
-export const PostList = () => {
-	const { onAlert } = useAppDataAPI();
-	const { pathname: previousPath } = useLocation();
-	const [renderPostsCount, setRenderPostsCount] = useState(10);
-	const postListRef = useRef<HTMLDivElement>(null);
-
-	const {
-		isPending,
-		isError,
-		data,
-		fetchNextPage,
-		isFetchingNextPage,
-		isFetchNextPageError,
-		hasNextPage,
-	} = useInfiniteQuery({
-		...infiniteQueryPostsOption(),
-		refetchOnWindowFocus: true,
-		meta: {
-			errorAlert: () => {
-				hasNextPage &&
-					onAlert([
-						{
-							message:
-								'Loading the posts has some errors occur, please try again later.',
-							error: true,
-							delay: 4000,
-						},
-					]);
-			},
-		},
-	});
-
-	const posts = data?.pages.reduce(
-		(accumulator, current) => accumulator.concat(current.data.posts),
-		[],
-	);
-
-	useEffect(() => {
-		const handleRenderNextPage = () => {
-			posts.length <= renderPostsCount && fetchNextPage();
-			setRenderPostsCount(renderPostsCount + 10);
-		};
-		const handleScroll = async () => {
-			const targetRect = postListRef.current?.getBoundingClientRect();
-
-			const isScrollToBottom =
-				targetRect && targetRect.bottom <= window.innerHeight;
-
-			!isFetchingNextPage && isScrollToBottom && handleRenderNextPage();
-		};
-
-		!isError &&
-			(posts?.length > renderPostsCount || hasNextPage) &&
-			window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, [
-		isError,
-		posts,
-		renderPostsCount,
-		hasNextPage,
-		isFetchingNextPage,
-		fetchNextPage,
-	]);
-
+export const Posts = ({ posts }: { posts: Post[] }) => {
 	return (
-		<div className={styles['post-list']}>
-			{isError && !data?.pages.length ? (
-				<Navigate
-					to="/error"
-					state={{
-						previousPath,
-					}}
-				/>
-			) : isPending ? (
-				<Loading text="Loading Posts..." />
+		<>
+			{posts.length > 0 ? (
+				<ul className={styles.posts}>
+					{posts.map((post, index) => (
+						<PostItem key={post._id} post={post} index={index} />
+					))}
+				</ul>
 			) : (
-				<>
-					<div className={styles.container} ref={postListRef}>
-						<Posts posts={posts.slice(0, renderPostsCount)} />
-					</div>
-					{isFetchingNextPage ? (
-						<Loading text={'Loading more posts ...'} />
-					) : (
-						isFetchNextPageError && (
-							<button
-								className={`${buttonStyles.content} ${buttonStyles.more}`}
-								onClick={() => fetchNextPage()}
-							>
-								Click here to show more posts
-							</button>
-						)
-					)}
-				</>
+				<p className={styles['no-posts']}>There are not posts.</p>
 			)}
-		</div>
+		</>
 	);
 };
