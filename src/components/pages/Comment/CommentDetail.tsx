@@ -158,7 +158,7 @@ export const CommentDetail = ({
 					<p className={styles.content}>{comment.content}</p>
 				)}
 				<div
-					className={`${styles['content-bottom']} ${showReplyBox && styles['reply-active']}`}
+					className={`${styles['content-bottom']} ${showReplyBox ? styles['reply-active'] : ''}`}
 				>
 					{user && !comment.deleted && (
 						<>
