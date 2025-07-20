@@ -7,8 +7,10 @@ import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { PostList } from './PostList';
+import { PostMainImage } from './PostMainImage';
 
 vi.mock('date-fns');
+vi.mock('./PostMainImage');
 
 describe('PostList component', () => {
 	it(`should render no posts if the provided posts are empty`, () => {
@@ -96,7 +98,7 @@ describe('PostList component', () => {
 			expect(screen.getByText(post.title)).toBeInTheDocument();
 		});
 	});
-	it(`should navigate to a specified post if the title element is clicked `, async () => {
+	it(`should navigate to a specified post if the title link is clicked `, async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			posts: [
@@ -142,7 +144,9 @@ describe('PostList component', () => {
 			/>,
 		);
 
-		const link = screen.getByRole('link', { name: mockProps.posts[0].title });
+		const link = screen.getByRole('heading', {
+			name: mockProps.posts[0].title,
+		});
 
 		await user.click(link);
 
@@ -150,7 +154,7 @@ describe('PostList component', () => {
 
 		expect(postPage).toBeInTheDocument();
 	});
-	it(`should navigate to a specified post if the main image element is clicked`, async () => {
+	it(`should navigate to a specified post if the image link is clicked`, async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			posts: [
@@ -169,6 +173,9 @@ describe('PostList component', () => {
 		};
 
 		vi.mocked(format).mockReturnValue('');
+		vi.mocked(PostMainImage).mockImplementationOnce(() => (
+			<div>PostMainImage component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -196,9 +203,9 @@ describe('PostList component', () => {
 			/>,
 		);
 
-		const image = screen.getByAltText(`Main image of post 1`);
+		const element = screen.getByText('PostMainImage component');
 
-		await user.click(image);
+		await user.click(element);
 
 		const postPage = screen.getByText('A specified post page');
 
