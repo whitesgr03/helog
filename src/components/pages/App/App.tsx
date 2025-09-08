@@ -14,6 +14,7 @@ import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { Loading } from '../../utils/Loading';
 import { Error } from '../../utils/Error/Error';
+import { Offline } from '../../utils/Error/offline';
 
 // Utils
 import { queryUserInfoOption } from '../../../utils/queryOptions';
@@ -25,6 +26,7 @@ export type DarkTheme = boolean | null;
 
 export const App = () => {
 	const [darkTheme, setDarkTheme] = useState<DarkTheme>(null);
+	const [isOnline, setIsOnline] = useState(true);
 
 	const [searchParams] = useSearchParams();
 
@@ -57,6 +59,14 @@ export const App = () => {
 		darkTheme === null && getColorTheme();
 	}, [darkTheme, searchParams]);
 
+	useEffect(() => {
+		window.addEventListener('offline', () => {
+			setIsOnline(false);
+		});
+		window.addEventListener('online', () => {
+			setIsOnline(true);
+		});
+	}, []);
 	return (
 		<AppProvider>
 			<div
@@ -78,9 +88,7 @@ export const App = () => {
 							<Alert />
 						</div>
 						<div className={styles.container}>
-							<main>
-								<Outlet />
-							</main>
+							<main>{isOnline ? <Outlet /> : <Offline />}</main>
 							<Footer />
 						</div>
 					</>
