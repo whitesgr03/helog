@@ -23,7 +23,7 @@ import { Error as ErrorComponent } from '../../utils/Error/Error';
 import { Modal } from './Modal';
 import { Alert } from './Alert';
 import { Footer } from '../../layout/Footer/Footer';
-import { Offline } from '../../utils/Error/offline';
+import { Offline } from '../../utils/Error/Offline';
 
 import { queryUserInfoOption } from '../../../utils/queryOptions';
 

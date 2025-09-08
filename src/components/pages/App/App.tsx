@@ -14,7 +14,7 @@ import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { Loading } from '../../utils/Loading';
 import { Error } from '../../utils/Error/Error';
-import { Offline } from '../../utils/Error/offline';
+import { Offline } from '../../utils/Error/Offline';
 
 // Utils
 import { queryUserInfoOption } from '../../../utils/queryOptions';

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
-import { Offline } from './offline';
+import { Offline } from './Offline';
 
 describe('Offline component', () => {
 	it('should match snapshot', () => {
