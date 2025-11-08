@@ -74,7 +74,7 @@ export const App = () => {
 				data-testid="app"
 			>
 				<ScrollRestoration getKey={location => location.key} />
-				{isError && error.cause.status !== 404 ? (
+				{isError && error.cause.status !== 401 ? (
 					<Error onReGetUser={refetch} />
 				) : isPending ? (
 					<div className={styles.loading}>
