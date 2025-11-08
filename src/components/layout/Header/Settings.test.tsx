@@ -13,11 +13,10 @@ vi.mock('./ChangeNameModal');
 vi.mock('./DeleteModal');
 
 describe('Settings component', () => {
-	it('should render the user name, email and avatar, if the user prop is provided', () => {
+	it('should render the user name and avatar, if the user prop is provided', () => {
 		const mockProps = {
 			user: {
 				username: 'example',
-				email: 'example@gmail.com',
 				isAdmin: true,
 			},
 			onCloseDropdown: vi.fn(),
@@ -37,11 +36,9 @@ describe('Settings component', () => {
 			mockProps.user.username.charAt(0).toUpperCase(),
 		);
 		const username = screen.getByText(mockProps.user.username);
-		const email = screen.getByText(mockProps.user.email);
 
 		expect(avatar).toBeInTheDocument();
 		expect(username).toBeInTheDocument();
-		expect(email).toBeInTheDocument();
 	});
 	it('should close Settings component, if the close button is clicked', async () => {
 		const user = userEvent.setup();
