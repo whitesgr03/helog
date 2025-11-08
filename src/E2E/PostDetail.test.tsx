@@ -2,7 +2,13 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { format } from 'date-fns';
 
-const randomInteger = (min, max) =>
+interface createParagraphType {
+	line: number;
+	IMAGE_SIZES: { width: number; height: number }[];
+	error: boolean;
+}
+
+const randomInteger = (min: number, max: number) =>
 	Math.floor(Math.random() * (max - min + 1) + min);
 
 const IMAGE_SIZES = [
@@ -27,7 +33,11 @@ const posts = [
 	},
 ];
 
-const createParagraph = ({ line, IMAGE_SIZES, error }) => {
+const createParagraph = ({
+	line,
+	IMAGE_SIZES,
+	error,
+}: createParagraphType): string => {
 	let content = '';
 
 	for (let i = 0; i < line; i++) {
@@ -59,7 +69,7 @@ test.describe('PostDetail component', () => {
 				message: 'User could not been found.',
 			};
 			await route.fulfill({
-				status: 404,
+				status: 401,
 				json,
 			});
 		});
@@ -187,7 +197,7 @@ test.describe('PostDetail component', () => {
 		});
 		await page.goto(`./posts/${postId}`);
 
-		const img = page.getByAltText('Main image');
+		const img = page.getByAltText(posts[0].title);
 
 		await expect(img).toHaveAttribute('src', /fakeimg.pl/);
 	});
@@ -218,7 +228,7 @@ test.describe('PostDetail component', () => {
 			new RegExp(`Published in ${format(posts[0].createdAt, 'MMMM d, y')}`),
 		);
 		const postContent = page.getByText(mockContent);
-		const postMainImage = page.getByAltText('Main image');
+		const postMainImage = page.getByAltText(posts[0].title);
 
 		await expect(postTitle).toBeVisible();
 		await expect(username).toBeVisible();
