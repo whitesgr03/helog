@@ -12,7 +12,6 @@ import { useAppDataAPI } from '../../pages/App/AppContext';
 
 interface SettingsProps {
 	user: {
-		email: string;
 		username: string;
 		isAdmin: boolean;
 	};
@@ -63,10 +62,6 @@ export const Settings = ({
 							>
 								Change username
 							</button>
-						</li>
-						<li>
-							<strong className={styles.title}>Email</strong>
-							<span>{user.email}</span>
 						</li>
 						<li>
 							<strong className={styles.title}>Delete</strong>
