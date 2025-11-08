@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
@@ -121,10 +121,12 @@ export const Dropdown = ({
 							Logout
 						</button>
 					) : (
-						<Link to="../login" onClick={onCloseDropdown}>
+						<a
+							href={`${import.meta.env.VITE_RESOURCE_URL}/account/login?redirect_uri=${encodeURIComponent(import.meta.env.VITE_HELOG_URL)}&theme=${darkTheme}`}
+						>
 							<span className={`${imageStyles.icon} ${styles.login}`} />
 							Login
-						</Link>
+						</a>
 					)}
 				</li>
 			</ul>
