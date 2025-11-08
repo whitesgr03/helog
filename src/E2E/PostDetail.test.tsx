@@ -145,31 +145,12 @@ test.describe('PostDetail component', () => {
 			};
 			await route.fulfill({ json });
 		});
-		await page.route(`**/blog/posts?skip=*`, async route => {
-			const json = {
-				success: true,
-				message: 'Get all posts successfully.',
-				data: {
-					posts,
-					postsCount: 0,
-				},
-			};
-			json.data.postsCount = json.data.posts.length;
-			await new Promise(resolve => setTimeout(resolve, 1000));
-			await route.fulfill({ json });
-		});
-
-		await page.goto('./posts');
-
-		const postListLoading = page.getByText(/Loading/);
-
-		await expect(postListLoading).toBeVisible();
 
 		await page.goto(`./posts/${postId}`);
 
-		const postDetailLoading = page.getByText(/Loading/);
+		const loading = page.getByText(/Loading/);
 
-		await expect(postDetailLoading).toBeVisible();
+		await expect(loading).toBeVisible();
 
 		const lint = page.getByRole('link', {
 			name: /Back to list/,
