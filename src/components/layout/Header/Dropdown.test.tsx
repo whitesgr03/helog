@@ -78,7 +78,7 @@ describe('Dropdown component', () => {
 		expect(settingsBtn).toBeInTheDocument();
 		expect(logoutBtn).toBeInTheDocument();
 	});
-	it('should render the login button if the user data is not provided', () => {
+	it('should render the login link if the user data is not provided', () => {
 		const mockProps = {
 			darkTheme: false,
 			onColorTheme: vi.fn(),
@@ -270,57 +270,6 @@ describe('Dropdown component', () => {
 		await user.click(button);
 
 		expect(mockProps.onColorTheme).toBeCalledTimes(1);
-	});
-	it('should navigate to the "../login" path, if the login link is clicked', async () => {
-		const user = userEvent.setup();
-		const mockProps = {
-			darkTheme: false,
-			onColorTheme: vi.fn(),
-			onCloseDropdown: vi.fn(),
-		};
-		const mockCustomHook = {
-			onAlert: vi.fn(),
-			onModal: () => {},
-		};
-		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-
-		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-				{
-					path: '/login',
-					element: <div>Login component</div>,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
-			</QueryClientProvider>,
-		);
-
-		const button = screen.getByRole('link', { name: 'Login' });
-
-		await user.click(button);
-
-		const loginComponent = screen.getByText('Login component');
-
-		expect(loginComponent).toBeInTheDocument();
 	});
 	it('should navigate to the "/error" path if logout fails', async () => {
 		const user = userEvent.setup();
