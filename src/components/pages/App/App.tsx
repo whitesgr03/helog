@@ -60,6 +60,11 @@ export const App = () => {
 	}, [darkTheme, searchParams]);
 
 	useEffect(() => {
+		// Remove hash property (#_=_) from facebook login flow
+		if (window.location.hash === '#_=_') {
+			window.history.replaceState(null, '', window.location.pathname);
+		}
+
 		window.addEventListener('offline', () => {
 			setIsOnline(false);
 		});
