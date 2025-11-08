@@ -4,7 +4,6 @@ import { App } from './components/pages/App/App';
 import { Home } from './components/pages/Home/Home';
 import { Posts } from './components/pages/Post/Posts';
 
-import { Login } from './components/pages/Account/Login';
 import { PostDetail } from './components/pages/Post/PostDetail';
 
 import { Error } from './components/utils/Error/Error';
@@ -32,10 +31,6 @@ export const Router = () => (
 						{
 							path: 'posts/:postId',
 							element: <PostDetail />,
-						},
-						{
-							path: 'login',
-							element: <Login />,
 						},
 						{
 							path: '*',
