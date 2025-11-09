@@ -10,6 +10,7 @@
 	display: flex;
 	row-gap: 15px;
 	flex-direction: column;
+	width: 100%;
 }
 
 .hide {
