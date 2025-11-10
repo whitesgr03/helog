@@ -22,14 +22,13 @@ You can access posts or comment messages on the [Live Demo](https://helog.whites
 
 <details>
 
-- Login with Google and Facebook and the user needs to create a username when logging in for the first time.
+- Login with Google and Facebook.
 
-  <img src="https://i.imgur.com/wbg9E6S.png" alt="login page"/>
-  <img src="https://i.imgur.com/t71KYJN.png" alt="new user set username"/>
+  <img src="https://i.meee.com.tw/RSj66oD.png" alt="login page"/>
 
 - Change your username any time.
 
-   <img src="https://i.imgur.com/wsTuxzD.png" alt="setting modal"/>
+   <img src="https://i.meee.com.tw/j0ACmrX.png" alt="setting modal"/>
    <img src="https://i.imgur.com/K8QkIVB.png" alt="change username modal"/>
 
 - View the latest posts or all posts.
@@ -102,8 +101,6 @@ src/
 │     │         ├── Header.tsx
 │     │         └── Settings.tsx
 │     ├── pages/
-│     │    ├── Account/
-│     │    │    └── Login.tsx
 │     │    ├── App/
 │     │    │    ├── Alert.tsx
 │     │    │    ├── App.tsx
