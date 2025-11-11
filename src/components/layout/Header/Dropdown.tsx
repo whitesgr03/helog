@@ -122,7 +122,7 @@ export const Dropdown = ({
 						</button>
 					) : (
 						<a
-							href={`${import.meta.env.VITE_RESOURCE_URL}/account/login?redirect_uri=${encodeURIComponent(import.meta.env.VITE_HELOG_URL)}&theme=${darkTheme}`}
+							href={`${import.meta.env.VITE_RESOURCE_URL}/account/login`}
 						>
 							<span className={`${imageStyles.icon} ${styles.login}`} />
 							Login
