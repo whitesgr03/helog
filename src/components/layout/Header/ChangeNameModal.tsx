@@ -22,17 +22,17 @@ import { Loading } from '../../utils/Loading';
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
 interface ChangeNameModalProps {
-	username: string;
+	displayName: string;
 }
 
 interface inputErrors {
-	username?: string;
+	displayName?: string;
 }
 
-export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
+export const ChangeNameModal = ({ displayName }: ChangeNameModalProps) => {
 	const { onModal } = useAppDataAPI();
 	const [inputErrors, setInputErrors] = useState<inputErrors>({});
-	const [formFields, setFormFields] = useState({ username });
+	const [formFields, setFormFields] = useState({ displayName });
 	const [debounce, setDebounce] = useState(false);
 
 	const timer = useRef<NodeJS.Timeout>();
@@ -58,20 +58,20 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 
 	const schema = useMemo(
 		() => ({
-			username: string()
+			displayName: string()
 				.trim()
-				.max(30, ({ max }) => `Username must be less than ${max} long.`)
+				.max(30, ({ max }) => `Display name must be less than ${max} long.`)
 				.matches(
 					/^([a-zA-Z0-9](-|_|\s)?)*[a-zA-Z0-9]$/,
-					'Username must be alphanumeric.',
+					'Display name must be alphanumeric.',
 				)
 				.notOneOf(
-					[username],
-					'New username should be different from the old username.',
+					[displayName],
+					'New displayName should be different from the old displayName.',
 				)
-				.required('Username is required.'),
+				.required('Display name is required.'),
 		}),
-		[username],
+		[displayName],
 	);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -126,14 +126,14 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 				<div className={formStyles['label-wrap']}>
 					<label
 						htmlFor="changeUserName"
-						className={`${inputErrors?.username ? formStyles.error : ''}`}
+						className={`${inputErrors?.displayName ? formStyles.error : ''}`}
 					>
-						Change username
+						Change displayName
 						<input
 							id="changeUserName"
 							type="text"
-							name="username"
-							value={formFields.username}
+							name="displayName"
+							value={formFields.displayName}
 							onChange={handleChange}
 							spellCheck="false"
 							autoCapitalize="off"
@@ -143,7 +143,7 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 					</label>
 					<div>
 						<span className={`${imageStyles.icon} ${formStyles.alert}`} />
-						<span>{inputErrors.username ?? 'Message placeholder'}</span>
+						<span>{inputErrors.displayName ?? 'Message placeholder'}</span>
 					</div>
 				</div>
 

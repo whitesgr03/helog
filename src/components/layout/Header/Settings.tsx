@@ -12,7 +12,7 @@ import { useAppDataAPI } from '../../pages/App/AppContext';
 
 interface SettingsProps {
 	user: {
-		username: string;
+		displayName: string;
 		isAdmin: boolean;
 	};
 	onToggleSettingsMenu: () => void;
@@ -45,22 +45,24 @@ export const Settings = ({
 				<div className={styles.container}>
 					<div className={styles['avatar-wrap']}>
 						<div className={styles.avatar}>
-							{user.username.charAt(0).toUpperCase()}
+							{user.displayName.charAt(0).toUpperCase()}
 						</div>
 					</div>
 					<ul className={styles.list}>
 						<li>
-							<strong className={styles.title}>Username</strong>
-							{<span>{user.username}</span>}
+							<strong className={styles.title}>Display Name</strong>
+							{<span>{user.displayName}</span>}
 							<button
 								className={styles['change-btn']}
 								onClick={() =>
 									onModal({
-										component: <ChangeNameModal username={user.username} />,
+										component: (
+											<ChangeNameModal displayName={user.displayName} />
+										),
 									})
 								}
 							>
-								Change username
+								Change displayName
 							</button>
 						</li>
 						<li>

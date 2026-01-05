@@ -83,9 +83,9 @@ export const Dropdown = ({
 			{user && (
 				<div className={styles.profile}>
 					<div className={styles.avatar}>
-						{user.username.charAt(0).toUpperCase()}
+						{user.displayName.charAt(0).toUpperCase()}
 					</div>
-					<span title={user.username}>{user.username}</span>
+					<span title={user.displayName}>{user.displayName}</span>
 				</div>
 			)}
 			<ul>
@@ -121,9 +121,7 @@ export const Dropdown = ({
 							Logout
 						</button>
 					) : (
-						<a
-							href={`${import.meta.env.VITE_RESOURCE_URL}/account/login?redirect_uri=${encodeURIComponent(import.meta.env.VITE_HELOG_URL)}&theme=${darkTheme}`}
-						>
+						<a href={`${import.meta.env.VITE_HELOG_ACCOUNT_URL}/sign-in`}>
 							<span className={`${imageStyles.icon} ${styles.login}`} />
 							Login
 						</a>
