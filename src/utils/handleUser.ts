@@ -18,7 +18,7 @@ export const getUserInfo = async ({ signal }: QueryFunctionContext) => {
 	return await handleFetch(URL, options);
 };
 
-export const updateUserInfo = async (formFields: { displayName: string }) => {
+export const updateUserInfo = async (formFields: { username: string }) => {
 	const options: RequestInit = {
 		method: 'PATCH',
 		headers: {
