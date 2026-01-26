@@ -17,7 +17,7 @@ export default defineConfig({
 			'X-DNS-Prefetch-Control': 'off',
 			'Strict-Transport-Security':
 				'max-age=63072000; includeSubDomains preload',
-			'Content-Security-Policy-Report-Only': `default-src 'none'; connect-src 'self' localhost:3000 *.tiny.cloud; script-src 'self' *.tiny.cloud 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com/css2 *.tiny.cloud; font-src https:; img-src 'self' https: data:; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`,
+			'Content-Security-Policy-Report-Only': `default-src 'none'; connect-src 'self' localhost:4000 *.tiny.cloud; script-src 'self' *.tiny.cloud 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com/css2 *.tiny.cloud; font-src https:; img-src 'self' https: data:; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`,
 		},
 	},
 	test: {
