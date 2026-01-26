@@ -6,7 +6,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
 	plugins: [react()],
 	server: {
-		open: '/',
 		port: 9001,
 		headers: {
 			'X-Content-Type-Options': ' nosniff',
@@ -26,10 +25,7 @@ export default defineConfig({
 		environment: 'jsdom',
 		setupFiles: './src/setup.ts',
 		include: ['src/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
-		exclude: [
-      'src/**/delete_*.{test,spec}.?(c|m)[jt]s?(x)',
-			'src/E2E',
-		],
+		exclude: ['src/**/delete_*.{test,spec}.?(c|m)[jt]s?(x)', 'src/E2E'],
 		coverage: {
 			include: ['src/**'],
 			exclude: ['src/**/delete_**'],
