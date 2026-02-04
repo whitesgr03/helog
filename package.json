@@ -27,7 +27,7 @@
 		"@commitlint/cli": "^19.7.1",
 		"@commitlint/config-conventional": "^19.7.1",
 		"@faker-js/faker": "^9.4.0",
-		"@playwright/test": "^1.50.1",
+		"@playwright/test": "^1.56.1",
 		"@tanstack/eslint-plugin-query": "^5.73.3",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.6.3",
