@@ -56,7 +56,9 @@ export const Settings = ({
 								className={styles['change-btn']}
 								onClick={() =>
 									onModal({
-										component: <ChangeNameModal username={user.username} />,
+										component: (
+											<ChangeNameModal username={user.username} />
+										),
 									})
 								}
 							>

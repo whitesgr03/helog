@@ -121,9 +121,7 @@ export const Dropdown = ({
 							Logout
 						</button>
 					) : (
-						<a
-							href={`${import.meta.env.VITE_RESOURCE_URL}/account/login`}
-						>
+						<a href={`${import.meta.env.VITE_HELOG_ACCOUNT_URL}/sign-in`}>
 							<span className={`${imageStyles.icon} ${styles.login}`} />
 							Login
 						</a>
