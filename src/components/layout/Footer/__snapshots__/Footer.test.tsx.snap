@@ -3,29 +3,29 @@
 exports[`Footer component > should match snapshot 1`] = `
 <DocumentFragment>
   <footer
-    class="_footer_bef41e"
+    class="_footer_ab0a49"
   >
     <div
-      class="_container_bef41e"
+      class="_container_ab0a49"
     >
       <a
-        class="_link_bef41e"
+        class="_link_ab0a49"
         href="https://github.com/whitesgr03/helog"
       >
         <span
-          class="_icon_620964 _github_bef41e"
+          class="_icon_3ab4a4 _github_ab0a49"
         />
       </a>
       <address>
         <a
-          class="_link_bef41e"
+          class="_link_ab0a49"
           href="mailto:whitesgr03@gmail.com"
         >
           <span
-            class="_icon_620964 _email_bef41e"
+            class="_icon_3ab4a4 _email_ab0a49"
           />
           <em
-            class="_emphasis_bef41e"
+            class="_emphasis_ab0a49"
           >
             whitesgr03@gmail.com
           </em>
