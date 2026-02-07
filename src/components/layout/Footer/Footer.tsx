@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 // Styles
 import styles from './Footer.module.css';
 import imageStyles from '../../../styles/image.module.css';
@@ -16,7 +18,12 @@ export const Footer = () => {
 					</a>
 				</address>
 			</div>
-			<p>© 2025 Designed & coded by Weiss Bai</p>
+			<div className={styles.container}>
+				<p>© 2025 Designed & coded by Weiss Bai</p>
+				<Link to="/policies" className={styles.link}>
+					Privacy Policy
+				</Link>
+			</div>
 		</footer>
 	);
 };
