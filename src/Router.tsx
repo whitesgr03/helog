@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from './components/pages/App/App';
 import { Home } from './components/pages/Home/Home';
 import { Posts } from './components/pages/Post/Posts';
+import { Policies } from './components/layout/Footer/Policies';
 
 import { PostDetail } from './components/pages/Post/PostDetail';
 
@@ -31,6 +32,10 @@ export const Router = () => (
 						{
 							path: 'posts/:postId',
 							element: <PostDetail />,
+						},
+						{
+							path: 'policies',
+							element: <Policies />,
 						},
 						{
 							path: '*',
