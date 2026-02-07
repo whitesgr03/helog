@@ -55,6 +55,15 @@ export const Policies = () => {
 					as your email address.
 				</p>
 				<p>
+					Information from Single Sign On (SSO) authentication services. If you
+					decide to register for an account (or access your account) through an
+					authentication service (such as Google or Facebook as a Single Sign
+					On, also known as a SSO) ("Authentication Service"), we may collect
+					information from these third party services, consistent with your
+					privacy settings in your account with the relevant Authentication
+					Service.
+				</p>
+				<p>
 					We'll never sell your personal information to third parties, and we
 					won't use your name or company in marketing statements without your
 					permission either.
@@ -274,8 +283,9 @@ export const Policies = () => {
 					What happens when you delete content in your product accounts
 				</h2>
 				<p>
-					If you choose to trashed your account, your content will become
-					immediately inaccessible.
+					If you choose to trashed your account, your account and content will
+					become immediately inaccessible and revoke Helog's access to your
+					third party services information.
 				</p>
 				<h2 id="data-retention">Data retention</h2>
 				<p>
