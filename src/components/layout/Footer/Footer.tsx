@@ -18,8 +18,8 @@ export const Footer = () => {
 					</a>
 				</address>
 			</div>
-			<div className={styles.container}>
-				<p>© 2025 Designed & coded by Weiss Bai</p>
+			<div className={styles.bottom}>
+				<p>© 2026 Helog - </p>
 				<Link to="/policies" className={styles.link}>
 					Privacy Policy
 				</Link>
