@@ -2,12 +2,12 @@
 
 HeLog is a public blog built with React. Allows users to post and comment. Hosted on Vercel.
 
-![website screenshots](https://i.imgur.com/U824qto.png)
+![website screenshots](https://i.meee.com.tw/tmICN0D.png)
 
 ## Links
 
 - Live Demo: [https://helog.whitesgr03.me](https://helog.whitesgr03.me)
-- Backend Repository: [https://github.com/whitesgr03/helog](https://github.com/whitesgr03/helog)
+- Backend Repository: [https://github.com/whitesgr03/heLog-api](https://github.com/whitesgr03/heLog-api)
 
 ## Features:
 
@@ -22,24 +22,23 @@ You can access posts or comment messages on the [Live Demo](https://helog.whites
 
 <details>
 
-- Login with Google and Facebook.
+- Sign up and sign in with SSO (Google, Facebook) or your email address.
 
-  <img src="https://i.meee.com.tw/RSj66oD.png" alt="login page"/>
+  <img src="https://i.meee.com.tw/pkMFCg5.png" alt="login page"/>
 
 - Change your username any time.
 
-   <img src="https://i.meee.com.tw/j0ACmrX.png" alt="setting modal"/>
-   <img src="https://i.imgur.com/K8QkIVB.png" alt="change username modal"/>
+   <img src="https://i.meee.com.tw/GMSWzMP.png" alt="setting modal"/>
+   <img src="https://i.meee.com.tw/5rBPIBq.png" alt="change username modal"/>
 
 - View the latest posts or all posts.
 
-   <img src="https://i.imgur.com/FWEWSRL.png" alt="the latest posts">
-   <img src="https://i.imgur.com/8z2Hwik.png" alt="all posts">
+   <img src="https://i.meee.com.tw/UbbGiBo.png" alt="the latest posts">
+   <img src="https://i.meee.com.tw/l9uGZfX.png" alt="all posts">
 
 - Comment on a post or reply to another comment.
 
   <img src="https://i.imgur.com/gchHxcz.png" alt="comment on a post">
-  <img src="https://i.imgur.com/lcprzPo.png" alt="reply to another comment">
 
 - Update or delete your own comments.
 
@@ -50,7 +49,7 @@ You can access posts or comment messages on the [Live Demo](https://helog.whites
   <img src="https://i.imgur.com/sQuAtCM.png" alt="dashboard">
 
 - Create a new post using a template.
-  <img src="https://i.imgur.com/yFl8rRG.png" alt="create a new post">
+  <img src="https://i.meee.com.tw/gfXUFuJ.png" alt="create a new post">
 
 - Edit the specified post.
   <img src="https://i.imgur.com/QkDyQ8U.png" alt="update the specified post">
@@ -78,9 +77,9 @@ You can access posts or comment messages on the [Live Demo](https://helog.whites
 
 ## Additional info:
 
-- This project consists of a backend for API and two different front-ends for accessing and editing blog posts.
+- This project consists of a backend for API and three different front-ends for authentication, accessing and editing blog posts.
 
-- The backend's authentication is cookie-based to prevent the need to log in again when switching between two different front-ends.
+- The backend's authentication is cookie-based to prevent the need to log in again when switching between three different front-ends.
 
 ## Source folder structure
 
@@ -92,7 +91,8 @@ src/
 ├─── components/                        # Each React component is placed in a folder with its associated CSS modules and tests
 │     ├── layout/
 │     │    ├── Footer/
-│     │    │    └── Footer.tsx
+│     │    │    ├── Footer.tsx
+│     │    │    └── Policies.tsx
 │     │    │
 │     │    └── Header/
 │     │         ├── ChangNameModal.tsx
@@ -104,7 +104,7 @@ src/
 │     │    ├── App/
 │     │    │    ├── Alert.tsx
 │     │    │    ├── App.tsx
-│     │    │    ├── CreateUsername.tsx
+│     │    │    ├── AppContext.tsx
 │     │    │    └── Modal.tsx
 │     │    ├── Comment/
 │     │    │    ├── CommentCreate.tsx
@@ -113,10 +113,12 @@ src/
 │     │    │    ├── Comments.tsx
 │     │    │    └── CommentUpdate.tsx
 │     │    ├── Home/
-│     │    │    └── Home.tsx
+│     │    │    ├── Home.tsx
+│     │    │    └── LatestPosts.tsx
 │     │    ├── Post/
 │     │    │    ├── PostDetail.tsx
 │     │    │    ├── PostList.tsx
+│     │    │    ├── PostMainImage.tsx
 │     │    │    └── Posts.tsx
 │     │    └── Reply/
 │     │         ├── Replies.tsx
@@ -127,8 +129,11 @@ src/
 │     └── utils/
 │          ├── Error/
 │          │    ├── Error.tsx
-│          │    └── NotFound.tsx
+│          │    ├── NotFound.tsx
+│          │    └── Offline.tsx
 │          └── Loading.tsx
+│
+├─── E2E/                               # handle end-to-end testing
 │
 ├─── styles/                            # Generic CSS Modules
 │     ├── button.module.css
@@ -144,8 +149,6 @@ src/
 │     ├── handleUser.ts                 # Handle user info API
 │     ├── queryOptions.ts               # Handle react query caching and fetching options
 │     └── verifySchema.ts               # Handle yup package validation values
-│
-├─── E2E/                               # handle end-to-end testing
 │
 ├─── main.tsx
 └──  Router.tsx                         # React router config
