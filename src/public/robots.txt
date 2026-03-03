@@ -1,0 +1,5 @@
+
+User-agent: *
+allow: /
+Disallow: /policies/
+Disallow: /error/
