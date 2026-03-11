@@ -15,7 +15,7 @@ import { Settings } from './Settings.jsx';
 
 // Utils
 import { handleFetch } from '../../../utils/handleFetch.js';
-import { queryUserInfoOption } from '../../../utils/queryOptions.js';
+import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions.js';
 import { useAppDataAPI } from '../../pages/App/AppContext.js';
 
 // Variables
@@ -40,7 +40,7 @@ export const Dropdown = ({
 
 	const queryClient = useQueryClient();
 
-	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
+	const { data: user } = useQuery(queryUserInfoOptionForHeader());
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();

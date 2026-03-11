@@ -1,7 +1,17 @@
 import { vi, describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+	QueryClient,
+	QueryClientProvider,
+	queryOptions,
+} from '@tanstack/react-query';
+import { getUserInfo } from '../../../utils/handleUser';
+import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
@@ -9,11 +19,29 @@ import { Header } from './Header';
 import { Dropdown } from './Dropdown';
 
 vi.mock('./Dropdown');
+vi.mock('../../../utils/handleUser');
+vi.mock('../../../utils/queryOptions');
 
 describe('Header component', () => {
 	it('should navigate to the "../" path, if the HeLog link is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = { darkTheme: false, onColorTheme: () => {} };
+
+		vi.mocked(getUserInfo).mockResolvedValueOnce({
+			data: {
+				username: 'example',
+			},
+		});
+
+		vi.mocked(queryUserInfoOptionForHeader).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+				enabled: true,
+			}),
+		);
+
 		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
@@ -62,11 +90,20 @@ describe('Header component', () => {
 
 		const queryClient = new QueryClient();
 
-		queryClient.setQueryData(['userInfo'], {
+		vi.mocked(getUserInfo).mockResolvedValueOnce({
 			data: {
 				username: 'example',
 			},
 		});
+
+		vi.mocked(queryUserInfoOptionForHeader).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+				enabled: true,
+			}),
+		);
 
 		const router = createMemoryRouter(
 			[
@@ -92,6 +129,12 @@ describe('Header component', () => {
 			</QueryClientProvider>,
 		);
 
+		expect(screen.getByTestId('account-icon')).toHaveClass(/load/);
+
+		await waitForElementToBeRemoved(() =>
+			screen.getByRole('button', { name: 'Loading' }),
+		);
+
 		const element = screen.getByRole('link', { name: 'Write' });
 		expect(element).toBeInTheDocument();
 	});
@@ -100,6 +143,21 @@ describe('Header component', () => {
 			darkTheme: true,
 			onColorTheme: () => {},
 		};
+
+		vi.mocked(getUserInfo).mockResolvedValueOnce({
+			data: {
+				username: 'example',
+			},
+		});
+
+		vi.mocked(queryUserInfoOptionForHeader).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+				enabled: true,
+			}),
+		);
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -139,6 +197,21 @@ describe('Header component', () => {
 			darkTheme: false,
 			onColorTheme: vi.fn(),
 		};
+
+		vi.mocked(getUserInfo).mockResolvedValueOnce({
+			data: {
+				username: 'example',
+			},
+		});
+
+		vi.mocked(queryUserInfoOptionForHeader).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+				enabled: true,
+			}),
+		);
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -182,6 +255,21 @@ describe('Header component', () => {
 			onColorTheme: () => {},
 		};
 
+		vi.mocked(getUserInfo).mockResolvedValueOnce({
+			data: {
+				username: 'example',
+			},
+		});
+
+		vi.mocked(queryUserInfoOptionForHeader).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+				enabled: true,
+			}),
+		);
+
 		const queryClient = new QueryClient();
 
 		vi.mocked(Dropdown).mockImplementationOnce(() => (
@@ -211,6 +299,10 @@ describe('Header component', () => {
 					}}
 				/>
 			</QueryClientProvider>,
+		);
+
+		await waitForElementToBeRemoved(() =>
+			screen.getByRole('button', { name: 'Loading' }),
 		);
 
 		const accountButton = screen.getByRole('button', { name: 'Account' });
@@ -229,6 +321,21 @@ describe('Header component', () => {
 			darkTheme: false,
 			onColorTheme: () => {},
 		};
+		vi.mocked(getUserInfo).mockResolvedValueOnce({
+			data: {
+				username: 'example',
+			},
+		});
+
+		vi.mocked(queryUserInfoOptionForHeader).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+				enabled: true,
+			}),
+		);
+
 		const queryClient = new QueryClient();
 
 		vi.mocked(Dropdown).mockImplementationOnce(() => (
@@ -258,6 +365,10 @@ describe('Header component', () => {
 					}}
 				/>
 			</QueryClientProvider>,
+		);
+
+		await waitForElementToBeRemoved(() =>
+			screen.getByRole('button', { name: 'Loading' }),
 		);
 
 		const accountButton = screen.getByRole('button', { name: 'Account' });

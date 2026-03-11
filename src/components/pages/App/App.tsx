@@ -12,7 +12,6 @@ import { Header } from '../../layout/Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
 import { Alert } from './Alert';
 import { Modal } from './Modal';
-import { Loading } from '../../utils/Loading';
 import { Error } from '../../utils/Error/Error';
 import { Offline } from '../../utils/Error/Offline';
 
@@ -30,9 +29,7 @@ export const App = () => {
 
 	const [searchParams] = useSearchParams();
 
-	const { isPending, isError, error, refetch } = useQuery(
-		queryUserInfoOption(),
-	);
+	const { isError, error, refetch } = useQuery(queryUserInfoOption());
 
 	const handleColorTheme = () => {
 		setDarkTheme(!darkTheme);
@@ -81,10 +78,6 @@ export const App = () => {
 				<ScrollRestoration getKey={location => location.key} />
 				{isError && error.cause.status !== 401 ? (
 					<Error onReGetUser={refetch} />
-				) : isPending ? (
-					<div className={styles.loading}>
-						<Loading text={'Loading data ...'} />
-					</div>
 				) : (
 					<>
 						<Modal />

@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import styles from './Header.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 import imageStyles from '../../../styles/image.module.css';
+import loadStyles from '../../../components/utils/Loading.module.css';
 
 // Components
 import { Dropdown } from './Dropdown';
@@ -64,8 +65,11 @@ export const Header = ({ darkTheme, onColorTheme }: HeaderProps) => {
 						</li>
 						<li>
 							<button onClick={handleActiveDropdown}>
-								<span className={`${imageStyles.icon} ${styles.account}`} />
-								Account
+								<span
+									data-testid="account-icon"
+									className={`${imageStyles.icon} ${isLoading ? loadStyles.load : styles.account}`}
+								/>
+								{isLoading ? 'Loading' : 'Account'}
 							</button>
 						</li>
 					</ul>

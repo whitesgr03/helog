@@ -1,10 +1,5 @@
 import { vi, describe, it, expect, beforeAll } from 'vitest';
-import {
-	render,
-	screen,
-	waitFor,
-	waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
@@ -18,7 +13,6 @@ import {
 import { App } from './App';
 
 import { Header } from '../../layout/Header/Header';
-import { Loading } from '../../utils/Loading';
 import { Error as ErrorComponent } from '../../utils/Error/Error';
 import { Modal } from './Modal';
 import { Alert } from './Alert';
@@ -31,7 +25,6 @@ import { getUserInfo } from '../../../utils/handleUser';
 
 vi.mock('../../layout/Header/Header');
 vi.mock('../../../components/layout/Footer/Footer');
-vi.mock('../../utils/Loading');
 vi.mock('../../utils/Error/Error');
 vi.mock('../../utils/Error/Offline');
 vi.mock('../../../utils/handleUser');
@@ -51,7 +44,6 @@ describe('App component', () => {
 	it('should render the dark theme if browser prefers color scheme is dark.', async () => {
 		const mockFetchResult = {};
 
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(getUserInfo).mockResolvedValue(mockFetchResult);
 		vi.mocked(queryUserInfoOption).mockReturnValue(
 			queryOptions({
@@ -90,11 +82,7 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
-
-		const app = screen.getByTestId('app');
+		const app = await screen.findByTestId('app');
 
 		expect(app).toHaveClass(/dark/);
 		expect(mockMatchMedia).toBeCalledTimes(1);
@@ -103,7 +91,6 @@ describe('App component', () => {
 	it('should render the dark theme if the dark theme of localstorage is set.', async () => {
 		const mockFetchResult = {};
 
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(getUserInfo).mockResolvedValue(mockFetchResult);
 		vi.mocked(queryUserInfoOption).mockReturnValue(
 			queryOptions({
@@ -148,11 +135,7 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
-
-		const app = screen.getByTestId('app');
+		const app = await screen.findByTestId('app');
 
 		expect(app).toHaveClass(/dark/);
 		expect(localstorage.getItem).toBeCalledWith('darkTheme');
@@ -161,7 +144,6 @@ describe('App component', () => {
 	it('should render the dark theme if the dark theme of url search params is set.', async () => {
 		const mockFetchResult = {};
 
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(getUserInfo).mockResolvedValue(mockFetchResult);
 		vi.mocked(queryUserInfoOption).mockReturnValue(
 			queryOptions({
@@ -202,21 +184,16 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
-
-		const app = screen.getByTestId('app');
+		const app = await screen.findByTestId('app');
 
 		expect(app).toHaveClass(/dark/);
 	});
 	it('should render the Error component if fetching the user data fails and the retrieved response status is not 404', async () => {
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(ErrorComponent).mockImplementation(() => (
 			<div>Error component</div>
 		));
 		vi.mocked(getUserInfo).mockRejectedValue(
-			Error('', { cause: { status: 400 } }),
+			new Error('', { cause: { status: 400 } }),
 		);
 
 		vi.mocked(queryUserInfoOption).mockReturnValue(
@@ -258,16 +235,13 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
+		screen.debug();
 
-		const errorComponent = screen.getByText('Error component');
+		const errorComponent = await screen.findByText('Error component');
 
 		expect(errorComponent).toBeInTheDocument();
 	});
 	it('should render the main components if fetching the user data successful', async () => {
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Header).mockImplementation(() => <div>Header component</div>);
 		vi.mocked(Modal).mockImplementation(() => <div>Modal component</div>);
 		vi.mocked(Alert).mockImplementation(() => <div>Alert component</div>);
@@ -318,21 +292,18 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
-
-		expect(screen.getByText('Header component')).toBeInTheDocument();
-		expect(screen.getByText('Modal component')).toBeInTheDocument();
-		expect(screen.getByText('Alert component')).toBeInTheDocument();
-		expect(screen.getByText('Footer component')).toBeInTheDocument();
-		expect(screen.getByText('Children component')).toBeInTheDocument();
+		await waitFor(() => {
+			expect(screen.getByText('Header component')).toBeInTheDocument();
+			expect(screen.getByText('Modal component')).toBeInTheDocument();
+			expect(screen.getByText('Alert component')).toBeInTheDocument();
+			expect(screen.getByText('Footer component')).toBeInTheDocument();
+			expect(screen.getByText('Children component')).toBeInTheDocument();
+		});
 	});
 	it('should toggle the color theme if the switch is clicked in the Header component', async () => {
 		const user = userEvent.setup();
 		const mockDarkTheme = 'false';
 
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Header).mockImplementation(({ onColorTheme }) => (
 			<div>
 				<div>Header component</div>
@@ -380,9 +351,9 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
+		// await waitForElementToBeRemoved(() =>
+		// 	screen.getByText('Loading component'),
+		// );
 
 		const button = screen.getByRole('button', {
 			name: 'Switch color theme',
@@ -399,7 +370,6 @@ describe('App component', () => {
 		);
 	});
 	it('should detect offline state then online state', async () => {
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(Header).mockImplementation(() => <div>Header component</div>);
 		vi.mocked(Modal).mockImplementation(() => <div>Modal component</div>);
 		vi.mocked(Alert).mockImplementation(() => <div>Alert component</div>);
@@ -444,10 +414,6 @@ describe('App component', () => {
 					}}
 				/>
 			</QueryClientProvider>,
-		);
-
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
 		);
 
 		waitFor(() => {
