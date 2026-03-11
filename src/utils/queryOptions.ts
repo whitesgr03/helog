@@ -80,3 +80,9 @@ export const queryUserInfoOption = () =>
 		refetchOnReconnect: false,
 		select: response => response.data,
 	});
+
+export const queryUserInfoOptionForHeader = () =>
+	queryOptions({
+		...queryUserInfoOption(),
+		enabled: false,
+	});

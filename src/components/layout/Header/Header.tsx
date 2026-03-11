@@ -15,7 +15,7 @@ import { Dropdown } from './Dropdown';
 import { DarkTheme } from '../../pages/App/App';
 
 // Utils
-import { queryUserInfoOption } from '../../../utils/queryOptions';
+import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions';
 
 interface HeaderProps {
 	darkTheme: DarkTheme;
@@ -25,7 +25,7 @@ interface HeaderProps {
 export const Header = ({ darkTheme, onColorTheme }: HeaderProps) => {
 	const [activeDropdown, setActiveDropdown] = useState(false);
 
-	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
+	const { data: user, isLoading } = useQuery(queryUserInfoOptionForHeader());
 
 	const handleActiveDropdown = () => setActiveDropdown(!activeDropdown);
 	const handleCloseDropdown = () => setActiveDropdown(false);
