@@ -33,10 +33,10 @@ exports[`Footer component > should match snapshot 1`] = `
       </address>
     </div>
     <div
-      class="_container_ab0a49"
+      class="_bottom_ab0a49"
     >
       <p>
-        © 2025 Designed & coded by Weiss Bai
+        © 2026 Helog - 
       </p>
       <a
         class="_link_ab0a49"
