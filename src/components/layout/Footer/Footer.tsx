@@ -19,7 +19,7 @@ export const Footer = () => {
 				</address>
 			</div>
 			<div className={styles.bottom}>
-				<p>© 2026 Helog - </p>
+				<p>© {new Date().getFullYear()} Helog - </p>
 				<Link to="/policies" className={styles.link}>
 					Privacy Policy
 				</Link>
