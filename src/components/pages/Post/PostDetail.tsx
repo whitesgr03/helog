@@ -100,6 +100,11 @@ export const PostDetail = () => {
 				>
 					{post && (
 						<>
+							<title>{post.title}</title>
+							<meta
+								name="description"
+								content={`Written by ${post.author.username}, Published in ${post.updatedAt}, Summary: ${post.title}, 10 min read.`}
+							/>
 							<Link to="/posts" className={styles.link}>
 								<span
 									className={`${styles['left-arrow']} ${imageStyles.icon}`}

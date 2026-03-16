@@ -82,35 +82,42 @@ export const Posts = () => {
 	]);
 
 	return (
-		<div className={styles.posts}>
-			{isError && !data?.pages.length ? (
-				<Navigate
-					to="/error"
-					state={{
-						previousPath,
-					}}
-				/>
-			) : isPending ? (
-				<Loading text="Loading Posts..." />
-			) : (
-				<>
-					<div className={styles.container} ref={postListRef}>
-						<PostList posts={posts.slice(0, renderPostsCount)} />
-					</div>
-					{isFetchingNextPage ? (
-						<Loading text={'Loading more posts ...'} />
-					) : (
-						isFetchNextPageError && (
-							<button
-								className={`${buttonStyles.content} ${buttonStyles.more}`}
-								onClick={() => fetchNextPage()}
-							>
-								Click here to show more posts
-							</button>
-						)
-					)}
-				</>
-			)}
-		</div>
+		<>
+			<title>Helog - See today's top stories</title>
+			<meta
+				name="description"
+				content="Today's top content from hundreds of thousands of Helog."
+			/>
+			<div className={styles.posts}>
+				{isError && !data?.pages.length ? (
+					<Navigate
+						to="/error"
+						state={{
+							previousPath,
+						}}
+					/>
+				) : isPending ? (
+					<Loading text="Loading Posts..." />
+				) : (
+					<>
+						<div className={styles.container} ref={postListRef}>
+							<PostList posts={posts.slice(0, renderPostsCount)} />
+						</div>
+						{isFetchingNextPage ? (
+							<Loading text={'Loading more posts ...'} />
+						) : (
+							isFetchNextPageError && (
+								<button
+									className={`${buttonStyles.content} ${buttonStyles.more}`}
+									onClick={() => fetchNextPage()}
+								>
+									Click here to show more posts
+								</button>
+							)
+						)}
+					</>
+				)}
+			</div>
+		</>
 	);
 };
