@@ -3,3 +3,4 @@ User-agent: *
 allow: /
 Disallow: /policies/
 Disallow: /error/
+Disallow: /error/404
