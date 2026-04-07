@@ -1,6 +1,11 @@
 // Packages
 import { useState, useEffect } from 'react';
-import { Outlet, useSearchParams, ScrollRestoration } from 'react-router-dom';
+import {
+	Outlet,
+	useSearchParams,
+	ScrollRestoration,
+	useNavigation,
+} from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 // Styles
@@ -14,6 +19,7 @@ import { Alert } from './Alert';
 import { Modal } from './Modal';
 import { Error } from '../../utils/Error/Error';
 import { Offline } from '../../utils/Error/Offline';
+import { Loading } from '../../utils/Loading';
 
 // Utils
 import { queryUserInfoOption } from '../../../utils/queryOptions';
@@ -28,6 +34,7 @@ export const App = () => {
 	const [isOnline, setIsOnline] = useState(true);
 
 	const [searchParams] = useSearchParams();
+	const navigation = useNavigation();
 
 	const { isError, error, refetch } = useQuery(queryUserInfoOption());
 
@@ -86,7 +93,17 @@ export const App = () => {
 							<Alert />
 						</div>
 						<div className={styles.container}>
-							<main>{isOnline ? <Outlet /> : <Offline />}</main>
+							<main>
+								{isOnline ? (
+									navigation.state === 'loading' ? (
+										<Loading text="Loading ..." /> // react router nest lazy loading
+									) : (
+										<Outlet />
+									)
+								) : (
+									<Offline />
+								)}
+							</main>
 							<Footer />
 						</div>
 					</>

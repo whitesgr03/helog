@@ -1,8 +1,13 @@
 import { vi, describe, it, expect, beforeAll } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitFor,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter, Link } from 'react-router-dom';
 
 import {
 	QueryClient,
@@ -18,6 +23,7 @@ import { Modal } from './Modal';
 import { Alert } from './Alert';
 import { Footer } from '../../layout/Footer/Footer';
 import { Offline } from '../../utils/Error/Offline';
+import { Loading } from '../../utils/Loading';
 
 import { queryUserInfoOption } from '../../../utils/queryOptions';
 
@@ -32,6 +38,7 @@ vi.mock('../../../utils/queryOptions');
 vi.mock('./Modal');
 vi.mock('./Alert');
 vi.mock('../../layout/Footer/Footer');
+vi.mock('../../utils/Loading');
 
 describe('App component', () => {
 	beforeAll(() => {
@@ -235,8 +242,6 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		screen.debug();
-
 		const errorComponent = await screen.findByText('Error component');
 
 		expect(errorComponent).toBeInTheDocument();
@@ -397,6 +402,12 @@ describe('App component', () => {
 				{
 					path: '/',
 					element: <App />,
+					children: [
+						{
+							index: true,
+							element: <div>Component</div>,
+						},
+					],
 				},
 			],
 			{
@@ -416,15 +427,90 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		waitFor(() => {
-			const offlineEvent = new Event('offline');
-			const onlineEvent = new Event('online');
+		const offlineEvent = new Event('offline');
+		const onlineEvent = new Event('online');
 
+		expect(screen.getByText('Component')).toBeInTheDocument();
+
+		await waitFor(() => {
 			window.dispatchEvent(offlineEvent);
-			expect(screen.getByText('Offline component')).toBeInTheDocument();
-
-			window.dispatchEvent(onlineEvent);
-			expect(screen.getByText('Offline component')).not.toBeInTheDocument();
 		});
+
+		expect(screen.getByText('Offline component')).toBeInTheDocument();
+
+		await waitFor(() => {
+			window.dispatchEvent(onlineEvent);
+		});
+		expect(screen.getByText('Component')).toBeInTheDocument();
+	});
+	it('should render the Loading component if navigate to lazy routes', async () => {
+		const user = userEvent.setup();
+		vi.mocked(Header).mockImplementation(() => <div>Header component</div>);
+		vi.mocked(Modal).mockImplementation(() => <div>Modal component</div>);
+		vi.mocked(Alert).mockImplementation(() => <div>Alert component</div>);
+		vi.mocked(Footer).mockImplementation(() => <div>Footer component</div>);
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+
+		vi.mocked(getUserInfo).mockResolvedValue({ username: 'example' });
+		vi.mocked(queryUserInfoOption).mockReturnValue(
+			queryOptions({
+				queryKey: ['userInfo'],
+				queryFn: getUserInfo,
+				retry: false,
+			}),
+		);
+
+		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
+			matches: false,
+		} as MediaQueryList);
+		vi.spyOn(Storage.prototype, 'setItem');
+		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
+
+		const queryClient = new QueryClient();
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <App />,
+					children: [
+						{
+							index: true,
+							element: <Link to={'lazy'}>link</Link>,
+						},
+						{
+							path: 'lazy',
+							lazy: async () => {
+								await new Promise(resolve => setTimeout(resolve, 100));
+								return { Component: () => <div>Lazy component</div> };
+							},
+						},
+					],
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
+		);
+		render(
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
+		);
+
+		const link = screen.getByRole('link', { name: 'link' });
+		await user.click(link);
+
+		await waitForElementToBeRemoved(() =>
+			screen.queryByText('Loading component'),
+		);
+
+		expect(screen.getByText('Lazy component')).toBeInTheDocument();
 	});
 });
