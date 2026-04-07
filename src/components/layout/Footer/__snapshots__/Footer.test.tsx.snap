@@ -15,6 +15,11 @@ exports[`Footer component > should match snapshot 1`] = `
         <span
           class="_icon_3ab4a4 _github_ab0a49"
         />
+        <em
+          class="_emphasis_ab0a49"
+        >
+           Github repository
+        </em>
       </a>
       <address>
         <a
