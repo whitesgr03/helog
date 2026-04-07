@@ -27,60 +27,52 @@ export const Settings = ({
 	const { onModal } = useAppDataAPI();
 
 	return (
-		<div className={styles.settings}>
-			<div
-				className={styles['blur-background']}
+		<div className={`${styles.wrap} ${styles['wrap-border']}`}>
+			<button
+				type="button"
+				className={buttonStyles['close-btn']}
 				onClick={onToggleSettingsMenu}
-			/>
-			<div className={styles.wrap}>
-				<button
-					type="button"
-					className={buttonStyles['close-btn']}
-					onClick={onToggleSettingsMenu}
-					data-testid="close-btn"
-				>
-					<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
-				</button>
-				<div className={styles.header}>Settings</div>
-				<div className={styles.container}>
-					<div className={styles['avatar-wrap']}>
-						<div className={styles.avatar}>
-							{user.username.charAt(0).toUpperCase()}
-						</div>
+				data-testid="close-btn"
+			>
+				<span className={`${imageStyles.icon} ${buttonStyles.close}`} />
+			</button>
+			<div className={styles.header}>Settings</div>
+			<div className={styles.container}>
+				<div className={styles['avatar-wrap']}>
+					<div className={styles.avatar}>
+						{user.username.charAt(0).toUpperCase()}
 					</div>
-					<ul className={styles.list}>
-						<li>
-							<strong className={styles.title}>Username</strong>
-							{<span>{user.username}</span>}
-							<button
-								className={styles['change-btn']}
-								onClick={() =>
-									onModal({
-										component: <ChangeNameModal username={user.username} />,
-										clickBgToClose: false,
-									})
-								}
-							>
-								Change username
-							</button>
-						</li>
-						<li>
-							<strong className={styles.title}>Delete</strong>
-							<button
-								className={styles['delete-btn']}
-								onClick={() =>
-									onModal({
-										component: (
-											<DeleteModal onCloseDropdown={onCloseDropdown} />
-										),
-									})
-								}
-							>
-								Delete account
-							</button>
-						</li>
-					</ul>
 				</div>
+				<ul className={styles.list}>
+					<li>
+						<strong className={styles.title}>Username</strong>
+						{<span>{user.username}</span>}
+						<button
+							className={styles['change-btn']}
+							onClick={() =>
+								onModal({
+									component: <ChangeNameModal username={user.username} />,
+									clickBgToClose: false,
+								})
+							}
+						>
+							Change username
+						</button>
+					</li>
+					<li>
+						<strong className={styles.title}>Delete</strong>
+						<button
+							className={styles['delete-btn']}
+							onClick={() =>
+								onModal({
+									component: <DeleteModal onCloseDropdown={onCloseDropdown} />,
+								})
+							}
+						>
+							Delete account
+						</button>
+					</li>
+				</ul>
 			</div>
 		</div>
 	);

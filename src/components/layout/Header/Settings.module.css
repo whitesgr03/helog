@@ -9,6 +9,9 @@
 .wrap {
 	position: relative;
 	z-index: 2;
+}
+
+.wrap-border {
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 8px;
 	background-color: var(--light-scheme-layout-bgc);

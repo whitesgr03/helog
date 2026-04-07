@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SettingsLoading component > should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="_wrap_f81693"
+  >
+    <div
+      class="_loading_3e24df  _light_3e24df  "
+    >
+      Loading ...
+      <span
+        class="_icon_3ab4a4 _load_3e24df"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
