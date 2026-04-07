@@ -1,5 +1,5 @@
 // Packages
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
@@ -11,15 +11,15 @@ import imageStyles from '../../../styles/image.module.css';
 import loadingStyles from '../../utils/Loading.module.css';
 
 // Components
-import { Settings } from './Settings.jsx';
+import { SettingsLayout } from './SettingsLayout';
+import { SettingsLoading } from './SettingsLoading';
 
 // Utils
 import { handleFetch } from '../../../utils/handleFetch.js';
 import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions.js';
-import { useAppDataAPI } from '../../pages/App/AppContext.js';
 
-// Variables
-const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
+// Context
+import { useAppDataAPI } from '../../pages/App/AppContext';
 
 // Type
 import { DarkTheme } from '../../pages/App/App.js';
@@ -29,6 +29,13 @@ interface DropdownProps {
 	onColorTheme: () => void;
 	onCloseDropdown: () => void;
 }
+
+const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
+
+const Settings = lazy(async () => {
+	const { Settings } = await import('./Settings.tsx');
+	return { default: Settings };
+});
 
 export const Dropdown = ({
 	darkTheme,
@@ -129,11 +136,15 @@ export const Dropdown = ({
 				</li>
 			</ul>
 			{user && activeSettings && (
-				<Settings
-					onToggleSettingsMenu={handleToggleSettingsMenu}
-					onCloseDropdown={onCloseDropdown}
-					user={user}
-				/>
+				<SettingsLayout>
+					<Suspense fallback={<SettingsLoading />}>
+						<Settings
+							onToggleSettingsMenu={handleToggleSettingsMenu}
+							onCloseDropdown={onCloseDropdown}
+							user={user}
+						/>
+					</Suspense>
+				</SettingsLayout>
 			)}
 		</div>
 	);
