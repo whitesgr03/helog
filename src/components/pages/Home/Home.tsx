@@ -1,17 +1,26 @@
 // Packages
 import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { lazy, Suspense } from 'react';
 
 // Styles
 import styles from './Home.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
-// Components
-import { LatestPosts } from './LatestPosts';
-
-// Variables
+// Assets
 import url from '../../../assets/hero.jpg';
 
+// Components
+import { Loading } from '../../utils/Loading';
+
+// Lazy Components
+const LatestPosts = lazy(async () => {
+	const { LatestPosts } = await import('./LatestPosts.tsx');
+	return { default: LatestPosts };
+});
+
 export const Home = () => {
+	const isDesktopOrLaptop = useMediaQuery({ minWidth: 700 });
 	return (
 		<>
 			<title>Helog - A public blog for people to share any content</title>
@@ -48,7 +57,11 @@ export const Home = () => {
 						</Link>
 					</div>
 				</div>
-				<LatestPosts />
+				{isDesktopOrLaptop && (
+					<Suspense fallback={<Loading text={'Loading Posts ...'} />}>
+						<LatestPosts />
+					</Suspense>
+				)}
 			</div>
 		</>
 	);

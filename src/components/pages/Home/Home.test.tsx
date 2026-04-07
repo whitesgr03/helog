@@ -1,22 +1,33 @@
 import { vi, describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
+import { useMediaQuery } from 'react-responsive';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Home } from './Home';
 import { LatestPosts } from './LatestPosts';
+import { Loading } from '../../utils/Loading';
 
+vi.mock('../../utils/Loading');
 vi.mock('./LatestPosts');
 vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handlePost');
 vi.mock('../App/AppContext');
+vi.mock('react-responsive');
 
 describe('Home component', () => {
 	it('should render Posts component', async () => {
+		vi.mocked(useMediaQuery).mockReturnValueOnce(true);
+
 		vi.mocked(LatestPosts).mockImplementation(() => (
 			<div>LatestPosts component</div>
 		));
+
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 
 		const router = createMemoryRouter(
 			[
@@ -39,6 +50,10 @@ describe('Home component', () => {
 					v7_startTransition: true,
 				}}
 			/>,
+		);
+
+		await waitForElementToBeRemoved(() =>
+			screen.queryByText('Loading component'),
 		);
 
 		expect(screen.getByText('LatestPosts component')).toBeInTheDocument();
