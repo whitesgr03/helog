@@ -2,10 +2,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './components/pages/App/App';
 import { Home } from './components/pages/Home/Home';
-import { Posts } from './components/pages/Post/Posts';
-import { Policies } from './components/layout/Footer/Policies';
-
-import { PostDetail } from './components/pages/Post/PostDetail';
 
 import { Error } from './components/utils/Error/Error';
 import { NotFound } from './components/utils/Error/NotFound';
@@ -27,15 +23,30 @@ export const Router = () => (
 						},
 						{
 							path: 'posts',
-							element: <Posts />,
+							lazy: async () => {
+								const { Posts } = await import('./components/pages/Post/Posts');
+								return { Component: Posts };
+							},
 						},
 						{
 							path: 'posts/:postId',
-							element: <PostDetail />,
+							lazy: async () => {
+								const { PostDetail } = await import(
+									'./components/pages/Post/PostDetail'
+								);
+								return { Component: PostDetail };
+							},
 						},
 						{
 							path: 'policies',
-							element: <Policies />,
+							lazy: async () => {
+								const { Policies } = await import(
+									'./components/layout/Footer/Policies'
+								);
+								return {
+									Component: Policies,
+								};
+							},
 						},
 						{
 							path: '*',
