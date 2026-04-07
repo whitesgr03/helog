@@ -1,5 +1,5 @@
 // Modules
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -29,14 +29,14 @@ export const Posts = () => {
 		data,
 		fetchNextPage,
 		isFetchingNextPage,
-		isFetchNextPageError,
 		hasNextPage,
 	} = useInfiniteQuery({
 		...infiniteQueryPostsOption(),
 		refetchOnWindowFocus: true,
 		meta: {
 			errorAlert: () => {
-				hasNextPage &&
+				if (hasNextPage) {
+					setRenderPostsCount(renderPostsCount - 10);
 					onAlert([
 						{
 							message:
@@ -45,6 +45,7 @@ export const Posts = () => {
 							delay: 4000,
 						},
 					]);
+				}
 			},
 		},
 	});
@@ -53,33 +54,6 @@ export const Posts = () => {
 		(accumulator, current) => accumulator.concat(current.data.posts),
 		[],
 	);
-
-	useEffect(() => {
-		const renderNextPage = () => {
-			posts.length <= renderPostsCount && fetchNextPage();
-			setRenderPostsCount(renderPostsCount + 10);
-		};
-		const handleScroll = async () => {
-			const targetRect = postListRef.current?.getBoundingClientRect();
-
-			const isScrollToBottom =
-				targetRect && targetRect.bottom <= window.innerHeight;
-
-			!isFetchingNextPage && isScrollToBottom && renderNextPage();
-		};
-
-		!isError &&
-			(posts?.length > renderPostsCount || hasNextPage) &&
-			window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, [
-		isError,
-		posts,
-		renderPostsCount,
-		hasNextPage,
-		isFetchingNextPage,
-		fetchNextPage,
-	]);
 
 	return (
 		<>
@@ -105,13 +79,23 @@ export const Posts = () => {
 						</div>
 						{isFetchingNextPage ? (
 							<Loading text={'Loading more posts ...'} />
+						) : posts?.length > renderPostsCount ? (
+							<button
+								className={`${buttonStyles.content} ${buttonStyles.more}`}
+								onClick={() => setRenderPostsCount(renderPostsCount + 10)}
+							>
+								Click here to show more posts
+							</button>
 						) : (
-							isFetchNextPageError && (
+							hasNextPage && (
 								<button
 									className={`${buttonStyles.content} ${buttonStyles.more}`}
-									onClick={() => fetchNextPage()}
+									onClick={() => {
+										fetchNextPage();
+										setRenderPostsCount(renderPostsCount + 10);
+									}}
 								>
-									Click here to show more posts
+									Click here to load more posts
 								</button>
 							)
 						)}

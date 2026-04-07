@@ -2,7 +2,6 @@ import { vi, describe, it, expect } from 'vitest';
 import {
 	render,
 	screen,
-	fireEvent,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 
@@ -170,7 +169,8 @@ describe('PostList component', () => {
 
 		expect(errorComponent).toBeInTheDocument();
 	});
-	it('should fetch the next posts, if the user scroll to bottom of the Posts component and infinite fetching posts successful', async () => {
+	it('should displays the next 10 posts, if the user click the show more posts button', async () => {
+		const user = userEvent.setup();
 		const mockFirstFetchData = {
 			data: {
 				posts: [
@@ -184,22 +184,21 @@ describe('PostList component', () => {
 					{ title: 'post8' },
 					{ title: 'post9' },
 					{ title: 'post10' },
-				],
-				postsCount: 15,
-			},
-		};
-		const mockNextFetchData = {
-			data: {
-				posts: [
 					{ title: 'post11' },
 					{ title: 'post12' },
 					{ title: 'post13' },
 					{ title: 'post14' },
 					{ title: 'post15' },
+					{ title: 'post16' },
+					{ title: 'post17' },
+					{ title: 'post18' },
+					{ title: 'post19' },
+					{ title: 'post20' },
 				],
-				postsCount: 15,
+				postsCount: 20,
 			},
 		};
+
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
@@ -221,9 +220,7 @@ describe('PostList component', () => {
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
-		vi.mocked(getPosts)
-			.mockResolvedValueOnce(mockFirstFetchData)
-			.mockResolvedValueOnce(mockNextFetchData);
+		vi.mocked(getPosts).mockResolvedValueOnce(mockFirstFetchData);
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -255,119 +252,18 @@ describe('PostList component', () => {
 			screen.queryByText('Loading component'),
 		);
 
-		expect(screen.getAllByRole('listitem')).toHaveLength(
-			mockFirstFetchData.data.posts.length,
-		);
+		expect(screen.getAllByRole('listitem')).toHaveLength(10);
 
-		fireEvent.scroll(window);
+		const button = screen.getByRole('button', { name: /show more posts/ });
 
-		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
-		);
+		await user.click(button);
 
-		expect(getPosts).toBeCalledTimes(2);
-		expect(screen.getAllByRole('listitem')).toHaveLength(
-			mockFirstFetchData.data.posts.length +
-				mockNextFetchData.data.posts.length,
-		);
+		expect(getPosts).toBeCalledTimes(1);
+		expect(screen.getAllByRole('listitem')).toHaveLength(20);
 	});
-	it('should render the show more posts button, if the user scroll to bottom of the Posts component and infinite fetching posts fails', async () => {
-		const mockFirstFetchData = {
-			data: {
-				posts: [
-					{ title: 'post1' },
-					{ title: 'post2' },
-					{ title: 'post3' },
-					{ title: 'post4' },
-					{ title: 'post5' },
-					{ title: 'post6' },
-					{ title: 'post7' },
-					{ title: 'post8' },
-					{ title: 'post9' },
-					{ title: 'post10' },
-				],
-				postsCount: 15,
-			},
-		};
+	it('should fetches the next page, if the user click the load more posts button and infinite fetching posts successful', async () => {
+		const user = userEvent.setup();
 
-		const mockCustomHook = {
-			onAlert: vi.fn(),
-			onModal: vi.fn(),
-		};
-
-		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-		vi.mocked(infiniteQueryPostsOption).mockReturnValue(
-			infiniteQueryOptions({
-				queryKey: ['posts'],
-				queryFn: getPosts,
-				initialPageParam: 0,
-				getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-					lastPage.data.postsCount > lastPageParam + 10
-						? lastPageParam + 10
-						: null,
-			}),
-		);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
-		vi.mocked(PostList).mockImplementation(({ posts }) => (
-			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
-		));
-		vi.mocked(getPosts)
-			.mockResolvedValueOnce(mockFirstFetchData)
-			.mockRejectedValue(Error());
-
-		const queryClient = new QueryClient({
-			queryCache: new QueryCache({
-				onError: (_error, query) =>
-					typeof query.meta?.errorAlert === 'function' &&
-					query.meta.errorAlert(),
-			}),
-			defaultOptions: {
-				queries: {
-					retry: false,
-				},
-			},
-		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Posts />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
-		render(
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
-			</QueryClientProvider>,
-		);
-
-		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
-		);
-
-		fireEvent.scroll(window);
-
-		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
-		);
-
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(
-			screen.getByRole('button', { name: 'Click here to show more posts' }),
-		);
-	});
-	it('should refetch next posts, if the show more posts button is clicked and infinite fetching posts successful', async () => {
 		const mockFirstFetchData = {
 			data: {
 				posts: [
@@ -414,22 +310,23 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(Loading)
+			.mockImplementationOnce(() => <div>Initial fetching</div>)
+			.mockImplementationOnce(() => <div>Fetching next posts</div>);
+
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 		vi.mocked(getPosts)
 			.mockResolvedValueOnce(mockFirstFetchData)
-			.mockRejectedValueOnce(Error())
-			.mockResolvedValueOnce(mockNextFetchData);
+			.mockImplementationOnce(
+				async () =>
+					await new Promise(resolve =>
+						setTimeout(() => resolve(mockNextFetchData), 100),
+					),
+			);
 
-		const queryClient = new QueryClient({
-			defaultOptions: {
-				queries: {
-					retry: false,
-				},
-			},
-		});
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -456,27 +353,30 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('Initial fetching'),
 		);
 
-		fireEvent.scroll(window);
+		expect(screen.getAllByRole('listitem')).toHaveLength(
+			mockFirstFetchData.data.posts.length,
+		);
+
+		const button = screen.getByRole('button', { name: /load more posts/ });
+
+		await user.click(button);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('Fetching next posts'),
 		);
 
-		const button = screen.getByRole('button', {
-			name: 'Click here to show more posts',
-		});
-
-		await userEvent.setup().click(button);
-
+		expect(getPosts).toBeCalledTimes(2);
 		expect(screen.getAllByRole('listitem')).toHaveLength(
 			mockFirstFetchData.data.posts.length +
 				mockNextFetchData.data.posts.length,
 		);
 	});
-	it('should render the show more posts button, if the show more posts button is clicked and infinite fetching posts fails', async () => {
+	it('should renders the error alert, if the user click the load more posts button and infinite fetching posts fails', async () => {
+		const user = userEvent.setup();
+
 		const mockFirstFetchData = {
 			data: {
 				posts: [
@@ -499,6 +399,9 @@ describe('PostList component', () => {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
 		};
+		vi.mocked(getPosts)
+			.mockResolvedValueOnce(mockFirstFetchData)
+			.mockRejectedValueOnce(new Error('error'));
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(infiniteQueryPostsOption).mockReturnValue(
@@ -512,15 +415,21 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(Loading)
+			.mockImplementationOnce(() => <div>Initial fetching</div>)
+			.mockImplementationOnce(() => <div>Fetching next posts</div>);
+
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
-		vi.mocked(getPosts)
-			.mockResolvedValueOnce(mockFirstFetchData)
-			.mockRejectedValue(Error());
 
 		const queryClient = new QueryClient({
+			queryCache: new QueryCache({
+				onError: (_error, query) => {
+					typeof query.meta?.errorAlert === 'function' &&
+						query.meta.errorAlert();
+				},
+			}),
 			defaultOptions: {
 				queries: {
 					retry: false,
@@ -553,23 +462,17 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('Initial fetching'),
 		);
 
-		fireEvent.scroll(window);
-
-		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+		expect(screen.getAllByRole('listitem')).toHaveLength(
+			mockFirstFetchData.data.posts.length,
 		);
 
-		const button = screen.getByRole('button', {
-			name: 'Click here to show more posts',
-		});
+		const button = screen.getByRole('button', { name: /load more posts/ });
 
-		await userEvent.setup().click(button);
+		await user.click(button);
 
-		expect(
-			screen.getByRole('button', { name: 'Click here to show more posts' }),
-		);
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 	});
 });
