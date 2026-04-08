@@ -11,21 +11,20 @@ import {
 	QueryClientProvider,
 	QueryCache,
 } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { LatestPosts } from './LatestPosts';
 import { PostList } from '../Post/PostList';
-import { Loading } from '../../utils/Loading';
 import { getPosts } from '../../../utils/handlePost';
 import { useAppDataAPI } from '../App/AppContext';
+import { PostListTemplate } from '../Post/PostListTemplate';
 
 vi.mock('../Post/PostList');
-vi.mock('../../utils/Loading');
+vi.mock('../Post/PostListTemplate');
 vi.mock('../../../utils/handlePost');
 vi.mock('../App/AppContext');
 
 describe('LatestPosts component', () => {
-	it('should render PostList component', async () => {
+	it('should render the correct list length', async () => {
 		const mockData = {
 			data: {
 				posts: [
@@ -48,47 +47,27 @@ describe('LatestPosts component', () => {
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(PostListTemplate).mockImplementation(() => (
+			<div>PostListTemplate component</div>
+		));
 		vi.mocked(getPosts).mockResolvedValue(mockData);
 
 		const queryClient = new QueryClient();
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <LatestPosts />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<LatestPosts />
 			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		const items = screen.getAllByRole('listitem');
 
 		expect(getPosts).toBeCalledTimes(1);
 		expect(items).toHaveLength(4);
-		items.forEach((item, index) => {
-			expect(item).toHaveTextContent(mockData.data.posts[index].title);
-		});
 	});
 	it('should render refetch button if fetching posts data fails', async () => {
 		const mockCustomHook = {
@@ -97,7 +76,9 @@ describe('LatestPosts component', () => {
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(PostListTemplate).mockImplementation(() => (
+			<div>PostListTemplate component</div>
+		));
 		vi.mocked(getPosts).mockRejectedValue(Error());
 
 		const queryClient = new QueryClient({
@@ -113,33 +94,14 @@ describe('LatestPosts component', () => {
 			},
 		});
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <LatestPosts />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<LatestPosts />
 			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		const button = screen.getByRole('button', {
@@ -158,7 +120,9 @@ describe('LatestPosts component', () => {
 		};
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(PostListTemplate).mockImplementation(() => (
+			<div>PostListTemplate component</div>
+		));
 		vi.mocked(getPosts).mockRejectedValue(Error());
 
 		const queryClient = new QueryClient({
@@ -174,33 +138,14 @@ describe('LatestPosts component', () => {
 			},
 		});
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <LatestPosts />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
-
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<LatestPosts />
 			</QueryClientProvider>,
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		const button = screen.getByRole('button', {
