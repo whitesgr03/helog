@@ -11,7 +11,7 @@ import imageStyles from '../../../styles/image.module.css';
 import url from '../../../assets/hero.jpg';
 
 // Components
-import { Loading } from '../../utils/Loading';
+import { LatestPostsTemplate } from './LatestPostsTemplate.tsx';
 
 // Lazy Components
 const LatestPosts = lazy(async () => {
@@ -58,7 +58,7 @@ export const Home = () => {
 					</div>
 				</div>
 				{isDesktopOrLaptop && (
-					<Suspense fallback={<Loading text={'Loading Posts ...'} />}>
+					<Suspense fallback={<LatestPostsTemplate />}>
 						<LatestPosts />
 					</Suspense>
 				)}
