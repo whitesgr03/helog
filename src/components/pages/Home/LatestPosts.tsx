@@ -7,7 +7,7 @@ import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { PostList } from '../Post/PostList';
-import { Loading } from '../../utils/Loading';
+import { PostListTemplate } from '../Post/PostListTemplate';
 
 // Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
@@ -49,7 +49,7 @@ export const LatestPosts = () => {
 					Click here to load posts
 				</button>
 			) : isPending ? (
-				<Loading text={'Loading posts ...'} />
+				<PostListTemplate count={4} />
 			) : (
 				<PostList posts={posts} />
 			)}
