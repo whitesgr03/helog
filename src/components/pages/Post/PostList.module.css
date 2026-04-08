@@ -57,9 +57,6 @@
 }
 
 /* Pseudo classes */
-.post-list li a img:hover {
-	opacity: 0.8;
-}
 
 .title:hover {
 	text-decoration: underline;
