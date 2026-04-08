@@ -53,6 +53,23 @@ export const Posts = () => {
 		},
 	});
 
+	const handleFetchNextPosts = async () => {
+		const result = await fetchNextPage();
+		if (result.isSuccess) {
+			setRenderPostsCount(renderPostsCount + count);
+		}
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the posts has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
+	};
+
 	const posts = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data.posts),
 		[],
@@ -93,10 +110,7 @@ export const Posts = () => {
 							hasNextPage && (
 								<button
 									className={`${buttonStyles.content} ${buttonStyles.more}`}
-									onClick={() => {
-										fetchNextPage();
-										setRenderPostsCount(renderPostsCount + count);
-									}}
+									onClick={handleFetchNextPosts}
 								>
 									Click here to load more posts
 								</button>
