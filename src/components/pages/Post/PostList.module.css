@@ -53,18 +53,10 @@
 	height: 100%;
 }
 
-.no-post-list {
-	text-align: center;
-}
-
 /* Pseudo classes */
 
 .title:hover {
 	text-decoration: underline;
-}
-
-.empty-image-wrap:hover {
-	border-color: var(--light-scheme-color);
 }
 
 /* Dark scheme classes */
@@ -74,10 +66,6 @@
 
 :global(.dark) .title {
 	color: var(--dark-scheme-highlight);
-}
-
-:global(.dark) .empty-image-wrap:hover {
-	border-color: var(--dark-scheme-color);
 }
 
 @media (width >= 400px) {

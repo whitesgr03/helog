@@ -23,7 +23,7 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 	return (
 		<>
 			{posts.length > 0 ? (
-				<ul className={styles['post-list']}>
+				<ul>
 					{posts.map(post => (
 						<li className={styles.item} key={post._id}>
 							<div className={styles.info}>

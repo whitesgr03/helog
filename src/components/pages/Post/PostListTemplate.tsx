@@ -5,7 +5,7 @@ import skeleton from '../../../styles/skeleton.module.css';
 
 export const PostListTemplate = ({ count }: { count: number }) => {
 	return (
-		<ul className={`${styles['post-list']}`}>
+		<ul>
 			{[...Array(count).keys()].map(index => (
 				<li className={styles.item} key={index}>
 					<div className={styles.info}>
