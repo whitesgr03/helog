@@ -10,6 +10,7 @@ import buttonStyles from '../../../styles/button.module.css';
 // Components
 import { PostList } from './PostList';
 import { Loading } from '../../utils/Loading';
+import { PostListTemplate } from './PostListTemplate';
 
 // Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
@@ -17,10 +18,12 @@ import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
+const count = 10;
+
 export const Posts = () => {
 	const { onAlert } = useAppDataAPI();
 	const { pathname: previousPath } = useLocation();
-	const [renderPostsCount, setRenderPostsCount] = useState(10);
+	const [renderPostsCount, setRenderPostsCount] = useState(count);
 	const postListRef = useRef<HTMLDivElement>(null);
 
 	const {
@@ -36,7 +39,7 @@ export const Posts = () => {
 		meta: {
 			errorAlert: () => {
 				if (hasNextPage) {
-					setRenderPostsCount(renderPostsCount - 10);
+					setRenderPostsCount(renderPostsCount - count);
 					onAlert([
 						{
 							message:
@@ -71,7 +74,7 @@ export const Posts = () => {
 						}}
 					/>
 				) : isPending ? (
-					<Loading text="Loading Posts..." />
+					<PostListTemplate count={count} />
 				) : (
 					<>
 						<div className={styles.container} ref={postListRef}>
@@ -82,7 +85,7 @@ export const Posts = () => {
 						) : posts?.length > renderPostsCount ? (
 							<button
 								className={`${buttonStyles.content} ${buttonStyles.more}`}
-								onClick={() => setRenderPostsCount(renderPostsCount + 10)}
+								onClick={() => setRenderPostsCount(renderPostsCount + count)}
 							>
 								Click here to show more posts
 							</button>
@@ -92,7 +95,7 @@ export const Posts = () => {
 									className={`${buttonStyles.content} ${buttonStyles.more}`}
 									onClick={() => {
 										fetchNextPage();
-										setRenderPostsCount(renderPostsCount + 10);
+										setRenderPostsCount(renderPostsCount + count);
 									}}
 								>
 									Click here to load more posts

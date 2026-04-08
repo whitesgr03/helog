@@ -17,6 +17,7 @@ import { Posts } from './Posts';
 
 import { PostList } from './PostList';
 import { Loading } from '../../utils/Loading';
+import { PostListTemplate } from './PostListTemplate';
 import { getPosts } from '../../../utils/handlePost';
 import { useAppDataAPI } from '../App/AppContext';
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
@@ -27,6 +28,7 @@ vi.mock('../../../utils/handlePost');
 vi.mock('../../utils/Loading');
 vi.mock('../App/AppContext');
 vi.mock('../../../utils/queryOptions');
+vi.mock('./PostListTemplate');
 
 describe('PostList component', () => {
 	it('should render the posts data if the first of infinite fetching posts successful', async () => {
@@ -60,7 +62,9 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(PostListTemplate).mockImplementation(() => (
+			<div>PostListTemplate component</div>
+		));
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
@@ -93,7 +97,7 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		const items = screen.getAllByRole('listitem');
@@ -122,7 +126,9 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(PostListTemplate).mockImplementation(() => (
+			<div>PostListTemplate component</div>
+		));
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
@@ -162,7 +168,7 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		const errorComponent = screen.getByText('Error component');
@@ -216,7 +222,9 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(PostListTemplate).mockImplementation(() => (
+			<div>PostListTemplate component</div>
+		));
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
@@ -249,7 +257,7 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(10);
@@ -310,9 +318,13 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading)
-			.mockImplementationOnce(() => <div>Initial fetching</div>)
-			.mockImplementationOnce(() => <div>Fetching next posts</div>);
+		vi.mocked(PostListTemplate).mockImplementationOnce(() => (
+			<div>PostListTemplate component</div>
+		));
+
+		vi.mocked(Loading).mockImplementationOnce(() => (
+			<div>Loading component</div>
+		));
 
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
@@ -353,7 +365,7 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Initial fetching'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(
@@ -365,9 +377,8 @@ describe('PostList component', () => {
 		await user.click(button);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Fetching next posts'),
+			screen.queryByText('Loading component'),
 		);
-
 		expect(getPosts).toBeCalledTimes(2);
 		expect(screen.getAllByRole('listitem')).toHaveLength(
 			mockFirstFetchData.data.posts.length +
@@ -415,9 +426,9 @@ describe('PostList component', () => {
 						: null,
 			}),
 		);
-		vi.mocked(Loading)
-			.mockImplementationOnce(() => <div>Initial fetching</div>)
-			.mockImplementationOnce(() => <div>Fetching next posts</div>);
+		vi.mocked(PostListTemplate).mockImplementationOnce(() => (
+			<div>PostListTemplate component</div>
+		));
 
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
@@ -462,7 +473,7 @@ describe('PostList component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Initial fetching'),
+			screen.queryByText('PostListTemplate component'),
 		);
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(
