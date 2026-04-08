@@ -218,8 +218,6 @@ describe('Dropdown component', () => {
 
 		await user.click(settingBtn);
 
-		screen.debug();
-
 		const settingsComponent = screen.getByText('Settings component');
 
 		expect(settingsComponent).toBeInTheDocument();
