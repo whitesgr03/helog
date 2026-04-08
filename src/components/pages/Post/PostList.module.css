@@ -8,6 +8,7 @@
 .info {
 	display: flex;
 	column-gap: 15px;
+	justify-content: space-between;
 }
 
 .author {
