@@ -36,21 +36,6 @@ export const Posts = () => {
 	} = useInfiniteQuery({
 		...infiniteQueryPostsOption(),
 		refetchOnWindowFocus: true,
-		meta: {
-			errorAlert: () => {
-				if (hasNextPage) {
-					setRenderPostsCount(renderPostsCount - count);
-					onAlert([
-						{
-							message:
-								'Loading the posts has some errors occur, please try again later.',
-							error: true,
-							delay: 4000,
-						},
-					]);
-				}
-			},
-		},
 	});
 
 	const handleFetchNextPosts = async () => {
