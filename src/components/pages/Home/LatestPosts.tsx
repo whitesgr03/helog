@@ -40,9 +40,18 @@ export const LatestPosts = () => {
 
 	const posts = data?.pages[0].data.posts.slice(0, 4);
 
-	const handleManuallyRefetch = () => {
-		refetch();
-		setIsManuallyRefetch(true);
+	const handleManuallyRefetch = async () => {
+		const result = await refetch();
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the posts has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
 	};
 
 	return (
