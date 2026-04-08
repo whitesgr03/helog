@@ -27,10 +27,14 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 					{posts.map(post => (
 						<li key={post._id}>
 							<div className={styles.info}>
-								<strong className={styles['date-time']}>
-									{post.author.username}
-								</strong>
-								<em>{format(post.updatedAt, 'MMMM d, y')}</em>
+								<p>
+									<strong className={styles['date-time']}>
+										{post.author.username}
+									</strong>
+								</p>
+								<p>
+									<em>{format(post.updatedAt, 'MMMM d, y')}</em>
+								</p>
 							</div>
 
 							<Link to={`../posts/${post._id}`}>
