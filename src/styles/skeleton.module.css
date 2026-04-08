@@ -22,6 +22,7 @@
 	--loader-end-position: calc(100% + var(--loader-width) * 2);
 
 	animation: wave 1.5s infinite ease-out;
+	border-radius: 5px;
 	background-image: linear-gradient(
 		to right,
 		transparent,
@@ -43,4 +44,15 @@
 	100% {
 		background-position-x: var(--loader-end-position);
 	}
+}
+
+/* Dark scheme classes */
+:global(.dark) .loading {
+	background-image: linear-gradient(
+		to right,
+		transparent,
+		rgba(var(--dark-scheme-placeholder-rgb), 0.4) 50%,
+		transparent 100%
+	);
+	background-color: rgba(var(--dark-scheme-placeholder-rgb), 0.5);
 }
