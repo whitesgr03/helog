@@ -47,7 +47,7 @@ export const LatestPosts = () => {
 
 	return (
 		<div className={styles['latest-posts']}>
-			<h2>Latest Posts</h2>
+			<h2 className={styles['headline']}>Latest Posts</h2>
 			{isError && !posts ? (
 				<button
 					className={`${buttonStyles.content} ${buttonStyles.more}`}
