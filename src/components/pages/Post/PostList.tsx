@@ -25,14 +25,12 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 			{posts.length > 0 ? (
 				<ul className={styles['post-list']}>
 					{posts.map(post => (
-						<li key={post._id}>
+						<li className={styles.item} key={post._id}>
 							<div className={styles.info}>
-								<p>
-									<strong className={styles['date-time']}>
-										{post.author.username}
-									</strong>
+								<p className={styles.author}>
+									<strong>{post.author.username}</strong>
 								</p>
-								<p>
+								<p className={styles['date-time']}>
 									<em>{format(post.updatedAt, 'MMMM d, y')}</em>
 								</p>
 							</div>
