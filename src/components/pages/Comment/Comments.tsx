@@ -125,6 +125,15 @@ export const Comments = ({ postId }: { postId: string }) => {
 					</div>
 					{isFetchingNextPage ? (
 						<Loading text={'Loading more comments ...'} />
+					) : comments?.length > renderCommentsCount ? (
+						<button
+							className={`${buttonStyles.content} ${buttonStyles.more}`}
+							onClick={() =>
+								setRenderCommentsCount(renderCommentsCount + count)
+							}
+						>
+							Click here to show more comments
+						</button>
 					) : (
 						isFetchNextPageError && (
 							<button
