@@ -26,6 +26,7 @@
 	position: relative;
 	flex: 1 1 100%;
 	flex-direction: column;
+	justify-content: center;
 }
 
 .app main {
