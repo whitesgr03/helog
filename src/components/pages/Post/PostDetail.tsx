@@ -78,75 +78,79 @@ export const PostDetail = () => {
 
 	return (
 		<>
-			<div id="post-detail" className={styles['post-detail']}>
-				{isError ? (
-					error.cause.status === 404 ? (
-						<Navigate to="/error/404" />
-					) : (
-						<Navigate
-							to="/error"
-							state={{
-								previousPath,
-							}}
-						/>
-					)
+			{isError ? (
+				error.cause.status === 404 ? (
+					<Navigate to="/error/404" />
 				) : (
-					checkingEditorImages && <Loading text={'Loading post ...'} />
-				)}
-
-				<div
-					className={`${styles.container} ${checkingEditorImages ? styles.hide : ''}`}
-					data-testid="container"
-				>
-					{post && (
-						<>
-							<title>{post.title}</title>
-							<meta
-								name="description"
-								content={`Written by ${post.author.username}, Published in ${post.updatedAt}, Summary: ${post.title}, 10 min read.`}
-							/>
-							<Link to="/posts" className={styles.link}>
-								<span
-									className={`${styles['left-arrow']} ${imageStyles.icon}`}
-								/>
-								Back to list
-							</Link>
-
-							<h2 className={styles.title} title={post.title}>
-								{post.title}
-							</h2>
-
-							<div className={styles['published-date']}>
-								<strong>{post.author.username}</strong>
-
-								<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
-								{new Date(post.createdAt).getDate() !==
-									new Date(post.updatedAt).getDate() && (
-									<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
-								)}
-							</div>
-
-							<div className={styles['image-wrap']}>
-								<PostMainImage title={post.title} url={post.mainImage} />
-							</div>
-						</>
-					)}
-					<Editor
-						id="editor-content"
-						initialValue={post?.content ?? ''}
-						onInit={(_evt, editor) => {
-							editorRef.current = editor;
-							setEditorLoading(false);
-						}}
-						init={{
-							menubar: false,
-							toolbar: false,
-							inline: true,
-							plugins: 'codesample',
+					<Navigate
+						to="/error"
+						state={{
+							previousPath,
 						}}
 					/>
+				)
+			) : (
+				<div id="post-detail" className={styles['post-detail']}>
+					{editorLoading ? (
+						<Loading text={'Formatting Text ...'} />
+					) : (
+						checkingEditorImages && <Loading text={'Optimizing images ...'} />
+					)}
+
+					<div
+						className={`${styles.container} ${checkingEditorImages ? styles.hide : ''}`}
+						data-testid="container"
+					>
+						{post && (
+							<>
+								<title>{post.title}</title>
+								<meta
+									name="description"
+									content={`Written by ${post.author.username}, Published in ${post.updatedAt}, Summary: ${post.title}, 10 min read.`}
+								/>
+								<Link to="/posts" className={styles.link}>
+									<span
+										className={`${styles['left-arrow']} ${imageStyles.icon}`}
+									/>
+									Back to list
+								</Link>
+
+								<h2 className={styles.title} title={post.title}>
+									{post.title}
+								</h2>
+
+								<div className={styles['published-date']}>
+									<strong>{post.author.username}</strong>
+
+									<em>{`Published in ${format(post.createdAt, 'MMMM d, y')}`}</em>
+									{new Date(post.createdAt).getDate() !==
+										new Date(post.updatedAt).getDate() && (
+										<em>{`Edited in ${format(post.updatedAt, 'MMMM d, y')}`}</em>
+									)}
+								</div>
+
+								<div className={styles['image-wrap']}>
+									<PostMainImage title={post.title} url={post.mainImage} />
+								</div>
+							</>
+						)}
+						<Editor
+							id="editor-content"
+							initialValue={post?.content ?? ''}
+							onInit={(_evt, editor) => {
+								editorRef.current = editor;
+								setEditorLoading(false);
+							}}
+							init={{
+								menubar: false,
+								toolbar: false,
+								inline: true,
+								plugins: 'codesample',
+							}}
+						/>
+					</div>
 				</div>
-			</div>
+			)}
 
 			{!isPending && !isError && (
 				<div className={`${checkingEditorImages ? styles.hide : ''}`}>
