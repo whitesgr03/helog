@@ -48,7 +48,7 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 					))}
 				</ul>
 			) : (
-				<p className={styles['no-posts']}>There are not posts.</p>
+				<p>There are not posts.</p>
 			)}
 		</>
 	);
