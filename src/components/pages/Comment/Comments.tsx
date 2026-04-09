@@ -45,10 +45,11 @@ export interface CommentData {
 	pageParams: number[];
 }
 
+const count = 25;
+
 export const Comments = ({ postId }: { postId: string }) => {
 	const { onAlert } = useAppDataAPI();
-	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
-	const [renderCommentsCount, setRenderCommentsCount] = useState(10);
+	const [renderCommentsCount, setRenderCommentsCount] = useState(count);
 
 	const {
 		isPending,
@@ -57,25 +58,8 @@ export const Comments = ({ postId }: { postId: string }) => {
 		refetch,
 		fetchNextPage,
 		isFetchingNextPage,
-		isFetchNextPageError,
 		hasNextPage,
-	} = useInfiniteQuery({
-		...infiniteQueryCommentsOption(postId),
-		meta: {
-			errorAlert: () => {
-				(isManuallyRefetch || hasNextPage) &&
-					onAlert([
-						{
-							message:
-								'Loading the comments has some errors occur, please try again later.',
-							error: true,
-							delay: 4000,
-						},
-					]);
-				isManuallyRefetch && setIsManuallyRefetch(false);
-			},
-		},
-	});
+	} = useInfiniteQuery(infiniteQueryCommentsOption(postId));
 
 	const commentAndReplyCounts = data?.pages.at(-1).data.commentAndReplyCounts;
 
@@ -83,9 +67,36 @@ export const Comments = ({ postId }: { postId: string }) => {
 		(accumulator, current) => accumulator.concat(current.data.comments),
 		[],
 	);
-	const handleManuallyRefetch = () => {
-		refetch();
-		setIsManuallyRefetch(true);
+
+	const handleManualRefetch = async () => {
+		const result = await refetch();
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the comments has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
+	};
+
+	const handleFetchingNextComments = async () => {
+		const result = await fetchNextPage();
+		if (result.isSuccess) {
+			setRenderCommentsCount(renderCommentsCount + count);
+		}
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the comments has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
 	};
 
 	return (
@@ -93,7 +104,7 @@ export const Comments = ({ postId }: { postId: string }) => {
 			{isError && !data?.pages.length ? (
 				<button
 					className={`${buttonStyles.content} ${buttonStyles.more}`}
-					onClick={handleManuallyRefetch}
+					onClick={handleManualRefetch}
 				>
 					Click here to load comments
 				</button>
@@ -135,12 +146,12 @@ export const Comments = ({ postId }: { postId: string }) => {
 							Click here to show more comments
 						</button>
 					) : (
-						isFetchNextPageError && (
+						hasNextPage && (
 							<button
 								className={`${buttonStyles.content} ${buttonStyles.more}`}
-								onClick={() => fetchNextPage()}
+								onClick={handleFetchingNextComments}
 							>
-								Click here to show more comments
+								Click here to load more comments
 							</button>
 						)
 					)}
