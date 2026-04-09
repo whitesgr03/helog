@@ -424,6 +424,7 @@ describe('PostList component', () => {
 					lastPage.data.postsCount > lastPageParam + 10
 						? lastPageParam + 10
 						: null,
+				retry: false,
 			}),
 		);
 		vi.mocked(PostListTemplate).mockImplementationOnce(() => (
@@ -434,19 +435,7 @@ describe('PostList component', () => {
 			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
 		));
 
-		const queryClient = new QueryClient({
-			queryCache: new QueryCache({
-				onError: (_error, query) => {
-					typeof query.meta?.errorAlert === 'function' &&
-						query.meta.errorAlert();
-				},
-			}),
-			defaultOptions: {
-				queries: {
-					retry: false,
-				},
-			},
-		});
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
