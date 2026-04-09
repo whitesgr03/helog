@@ -1,5 +1,5 @@
 // Packages
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -50,8 +50,6 @@ export const Comments = ({ postId }: { postId: string }) => {
 	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 	const [renderCommentsCount, setRenderCommentsCount] = useState(10);
 
-	const commentListRef = useRef<HTMLUListElement>(null);
-
 	const {
 		isPending,
 		isError,
@@ -90,33 +88,6 @@ export const Comments = ({ postId }: { postId: string }) => {
 		setIsManuallyRefetch(true);
 	};
 
-	useEffect(() => {
-		const renderNextPage = () => {
-			comments.length <= renderCommentsCount && fetchNextPage();
-			setRenderCommentsCount(value => value + 10);
-		};
-
-		const handleScroll = async () => {
-			const targetRect = commentListRef.current?.getBoundingClientRect();
-
-			const isScrollToBottom =
-				targetRect && targetRect.bottom <= window.innerHeight;
-
-			!isFetchingNextPage && isScrollToBottom && renderNextPage();
-		};
-		!isError &&
-			(comments?.length > renderCommentsCount || hasNextPage) &&
-			window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, [
-		isError,
-		comments,
-		renderCommentsCount,
-		hasNextPage,
-		isFetchingNextPage,
-		fetchNextPage,
-	]);
-
 	return (
 		<div className={styles.comments}>
 			{isError && !data?.pages.length ? (
@@ -135,7 +106,7 @@ export const Comments = ({ postId }: { postId: string }) => {
 						<CommentCreate postId={postId} />
 						<div className={styles.content}>
 							{comments.length ? (
-								<ul ref={commentListRef}>
+								<ul>
 									{comments
 										.slice(0, renderCommentsCount)
 										.map((comment, index) => (
