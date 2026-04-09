@@ -1,5 +1,5 @@
 // Modules
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -24,7 +24,6 @@ export const Posts = () => {
 	const { onAlert } = useAppDataAPI();
 	const { pathname: previousPath } = useLocation();
 	const [renderPostsCount, setRenderPostsCount] = useState(count);
-	const postListRef = useRef<HTMLDivElement>(null);
 
 	const {
 		isPending,
