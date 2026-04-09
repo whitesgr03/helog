@@ -67,43 +67,43 @@ export const Posts = () => {
 				name="description"
 				content="Today's top content from hundreds of thousands of Helog."
 			/>
-			<div className={styles.posts}>
-				{isError && !data?.pages.length ? (
-					<Navigate
-						to="/error"
-						state={{
-							previousPath,
-						}}
-					/>
-				) : isPending ? (
-					<PostListTemplate count={count} />
-				) : (
-					<>
-						<div className={styles.container} ref={postListRef}>
+			{isError && !data?.pages.length ? (
+				<Navigate
+					to="/error"
+					state={{
+						previousPath,
+					}}
+				/>
+			) : (
+				<div className={styles.posts}>
+					<div className={styles.container}>
+						{isPending ? (
+							<PostListTemplate count={count} />
+						) : (
 							<PostList posts={posts.slice(0, renderPostsCount)} />
-						</div>
-						{isFetchingNextPage ? (
-							<Loading text={'Loading more posts ...'} />
-						) : posts?.length > renderPostsCount ? (
+						)}
+					</div>
+					{isFetchingNextPage ? (
+						<Loading text={'Loading more posts ...'} />
+					) : posts?.length > renderPostsCount ? (
+						<button
+							className={`${buttonStyles.content} ${buttonStyles.more}`}
+							onClick={() => setRenderPostsCount(renderPostsCount + count)}
+						>
+							Click here to show more posts
+						</button>
+					) : (
+						hasNextPage && (
 							<button
 								className={`${buttonStyles.content} ${buttonStyles.more}`}
-								onClick={() => setRenderPostsCount(renderPostsCount + count)}
+								onClick={handleFetchNextPosts}
 							>
-								Click here to show more posts
+								Click here to load more posts
 							</button>
-						) : (
-							hasNextPage && (
-								<button
-									className={`${buttonStyles.content} ${buttonStyles.more}`}
-									onClick={handleFetchNextPosts}
-								>
-									Click here to load more posts
-								</button>
-							)
-						)}
-					</>
-				)}
-			</div>
+						)
+					)}
+				</div>
+			)}
 		</>
 	);
 };
