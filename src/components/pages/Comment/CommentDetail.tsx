@@ -69,8 +69,7 @@ export const CommentDetail = ({
 		});
 	};
 
-	const handleShowReplies = async () =>
-		!isLoading && setShowReplies(!showReplies);
+	const handleShowReplies = () => setShowReplies(!showReplies);
 	const handleShowEditBox = () => setShowEditBox(!showEditBox);
 	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
 	const handleAddingRepliesCount = () =>
@@ -202,11 +201,12 @@ export const CommentDetail = ({
 						<>
 							<button
 								className={styles['reply-list-btn']}
-								onClick={handleShowReplies}
+								onClick={!replies ? handleManualRefetch : handleShowReplies}
+								disabled={isLoading}
 								data-testid="reply-icon"
 							>
 								<span
-									className={`${showReplies && replies ? styles.active : ''} ${styles['reply-list-icon']} ${imageStyles.icon}`}
+									className={`${showReplies ? styles.active : ''} ${styles['reply-list-icon']} ${imageStyles.icon}`}
 								/>
 								{isLoading ? (
 									<span
@@ -221,7 +221,7 @@ export const CommentDetail = ({
 					)}
 				</div>
 			</div>
-			{showReplies && replies && (
+			{showReplies && (
 				<Replies
 					postId={postId}
 					repliesCount={comment.child.length}
