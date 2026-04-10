@@ -18,7 +18,8 @@ interface RepliesProps {
 	postId: string;
 	repliesCount: number;
 	renderRepliesCount: number;
-	onAddRenderRepliesCount: () => void;
+	onAddingRepliesCount: () => void;
+	onFetchingNextReplies: () => void;
 }
 
 export interface Reply {
@@ -50,16 +51,16 @@ export const Replies = ({
 	commentId,
 	repliesCount,
 	renderRepliesCount,
-	onAddRenderRepliesCount,
+	onAddingRepliesCount,
+	onFetchingNextReplies,
 }: RepliesProps) => {
 	const repliesRef = useRef<HTMLDivElement[]>([]);
 	const waitForScrollRef = useRef<NodeJS.Timeout>();
 	const [shakeTargetId, setShakeTargetId] = useState('');
 
-	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
-		useInfiniteQuery({
-			...infiniteQueryRepliesOption(commentId, repliesCount),
-		});
+	const { data, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
+		...infiniteQueryRepliesOption(commentId, repliesCount),
+	});
 
 	const replies: Reply[] = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data),
@@ -82,11 +83,6 @@ export const Replies = ({
 			behavior: 'smooth',
 			block: 'center',
 		});
-	};
-
-	const handleRenderNextPage = () => {
-		replies.length <= renderRepliesCount && fetchNextPage();
-		onAddRenderRepliesCount();
 	};
 
 	return (
@@ -116,13 +112,20 @@ export const Replies = ({
 				</ul>
 				{isFetchingNextPage ? (
 					<Loading text={'Loading more replies ...'} />
+				) : replies?.length > renderRepliesCount ? (
+					<button
+						className={`${buttonStyles.content} ${buttonStyles.more}`}
+						onClick={onAddingRepliesCount}
+					>
+						Click here to show more replies
+					</button>
 				) : (
-					(replies?.length > renderRepliesCount || hasNextPage) && (
+					hasNextPage && (
 						<button
 							className={`${buttonStyles.content} ${buttonStyles.more}`}
-							onClick={handleRenderNextPage}
+							onClick={onFetchingNextReplies}
 						>
-							Show more replies
+							Click here to load more replies
 						</button>
 					)
 				)}
