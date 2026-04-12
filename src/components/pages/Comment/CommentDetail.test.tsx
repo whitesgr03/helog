@@ -670,7 +670,7 @@ describe('CommentDetail component', () => {
 
 		expect(replyCreateComponent).toBeInTheDocument();
 	});
-	it('should fetch the comment replies successful, if the reply icon button is clicked', async () => {
+	it('should render the comment replies if the reply button is clicked and the fetch is successful', async () => {
 		const user = userEvent.setup();
 		const mockResolve = {
 			success: true,
@@ -749,7 +749,7 @@ describe('CommentDetail component', () => {
 		expect(getReplies).toBeCalledTimes(1);
 		expect(screen.getByText('Replies component')).toBeInTheDocument();
 	});
-	it('should add the state of renderRepliesCount value, if onAddRenderRepliesCount method is executed', async () => {
+	it('should add the state of renderRepliesCount value, if onAddingRepliesCount method is executed', async () => {
 		const user = userEvent.setup();
 		const mockResolve = {
 			success: true,
@@ -776,16 +776,14 @@ describe('CommentDetail component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(getReplies).mockImplementationOnce(
-			() => new Promise(resolve => setTimeout(() => resolve(mockResolve), 300)),
-		);
+		vi.mocked(getReplies).mockResolvedValueOnce(mockResolve);
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(formatDistanceToNow).mockReturnValue('');
 		vi.mocked(Replies).mockImplementation(
-			({ renderRepliesCount, onAddRenderRepliesCount }) => (
+			({ renderRepliesCount, onAddingRepliesCount }) => (
 				<div>
 					<div>Replies count: {renderRepliesCount}</div>
-					<button onClick={onAddRenderRepliesCount}>Add count</button>
+					<button onClick={onAddingRepliesCount}>Add count</button>
 				</div>
 			),
 		);
@@ -830,19 +828,17 @@ describe('CommentDetail component', () => {
 
 		await user.click(replyButton);
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading-icon'));
+		expect(screen.getByText(`Replies count: 25`)).toBeInTheDocument();
 
 		const replyComponentButton = screen.getByRole('button', {
 			name: 'Add count',
 		});
 
-		expect(screen.getByText(`Replies count: 10`)).toBeInTheDocument();
-
 		await user.click(replyComponentButton);
 
-		expect(screen.getByText(`Replies count: 20`)).toBeInTheDocument();
+		expect(screen.getByText(`Replies count: 50`)).toBeInTheDocument();
 	});
-	it('should render an error alert if the reply icon button is clicked and fetching the comment replies fails', async () => {
+	it('should render an error alert if the reply button is clicked and the fetch failed', async () => {
 		const user = userEvent.setup();
 
 		const mockProps = {
@@ -865,9 +861,7 @@ describe('CommentDetail component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(getReplies).mockImplementationOnce(
-			() => new Promise((_r, reject) => setTimeout(() => reject(Error()), 300)),
-		);
+		vi.mocked(getReplies).mockRejectedValueOnce(new Error());
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(formatDistanceToNow).mockReturnValue('');
 
@@ -921,8 +915,6 @@ describe('CommentDetail component', () => {
 		const replyButton = screen.getByTestId('reply-icon');
 
 		await user.click(replyButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading-icon'));
 
 		expect(getReplies).toBeCalledTimes(1);
 		expect(mockCustomHook.onAlert).toBeCalledTimes(1);

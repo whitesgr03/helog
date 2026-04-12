@@ -2,7 +2,6 @@ import { vi, describe, it, expect } from 'vitest';
 import {
 	render,
 	screen,
-	fireEvent,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 
@@ -300,33 +299,13 @@ describe('Comments component', () => {
 		vi.mocked(CommentDetail).mockImplementation(({ comment }) => (
 			<li>{comment.content}</li>
 		));
-		vi.mocked(getComments)
-			.mockResolvedValueOnce(mockFetchData)
-			.mockRejectedValueOnce(Error());
+		vi.mocked(getComments).mockResolvedValueOnce(mockFetchData);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Comments postId={'1'} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<Comments postId={'1'} />,
 			</QueryClientProvider>,
 		);
 

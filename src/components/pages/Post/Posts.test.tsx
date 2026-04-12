@@ -385,7 +385,7 @@ describe('PostList component', () => {
 				mockNextFetchData.data.posts.length,
 		);
 	});
-	it('should renders the error alert, if the user click the load more posts button and infinite fetching posts fails', async () => {
+	it('should renders an error alert, if the user click the load more posts button and infinite fetching posts fails', async () => {
 		const user = userEvent.setup();
 
 		const mockFirstFetchData = {
