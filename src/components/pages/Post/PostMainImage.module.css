@@ -1,0 +1,4 @@
+/* Pseudo classes */
+.image:hover {
+	opacity: 0.8;
+}

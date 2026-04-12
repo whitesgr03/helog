@@ -2,6 +2,10 @@
 	display: none;
 }
 
+.headline {
+  align-self: flex-start;
+}
+
 @media (width >= 700px) {
 	.latest-posts {
 		display: flex;

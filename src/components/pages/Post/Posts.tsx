@@ -1,5 +1,5 @@
 // Modules
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -10,6 +10,7 @@ import buttonStyles from '../../../styles/button.module.css';
 // Components
 import { PostList } from './PostList';
 import { Loading } from '../../utils/Loading';
+import { PostListTemplate } from './PostListTemplate';
 
 // Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
@@ -17,11 +18,12 @@ import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
+const count = 10;
+
 export const Posts = () => {
 	const { onAlert } = useAppDataAPI();
 	const { pathname: previousPath } = useLocation();
-	const [renderPostsCount, setRenderPostsCount] = useState(10);
-	const postListRef = useRef<HTMLDivElement>(null);
+	const [renderPostsCount, setRenderPostsCount] = useState(count);
 
 	const {
 		isPending,
@@ -29,57 +31,33 @@ export const Posts = () => {
 		data,
 		fetchNextPage,
 		isFetchingNextPage,
-		isFetchNextPageError,
 		hasNextPage,
 	} = useInfiniteQuery({
 		...infiniteQueryPostsOption(),
 		refetchOnWindowFocus: true,
-		meta: {
-			errorAlert: () => {
-				hasNextPage &&
-					onAlert([
-						{
-							message:
-								'Loading the posts has some errors occur, please try again later.',
-							error: true,
-							delay: 4000,
-						},
-					]);
-			},
-		},
 	});
+
+	const handleFetchNextPosts = async () => {
+		const result = await fetchNextPage();
+		if (result.isSuccess) {
+			setRenderPostsCount(renderPostsCount + count);
+		}
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the posts has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
+	};
 
 	const posts = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data.posts),
 		[],
 	);
-
-	useEffect(() => {
-		const renderNextPage = () => {
-			posts.length <= renderPostsCount && fetchNextPage();
-			setRenderPostsCount(renderPostsCount + 10);
-		};
-		const handleScroll = async () => {
-			const targetRect = postListRef.current?.getBoundingClientRect();
-
-			const isScrollToBottom =
-				targetRect && targetRect.bottom <= window.innerHeight;
-
-			!isFetchingNextPage && isScrollToBottom && renderNextPage();
-		};
-
-		!isError &&
-			(posts?.length > renderPostsCount || hasNextPage) &&
-			window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, [
-		isError,
-		posts,
-		renderPostsCount,
-		hasNextPage,
-		isFetchingNextPage,
-		fetchNextPage,
-	]);
 
 	return (
 		<>
@@ -88,36 +66,43 @@ export const Posts = () => {
 				name="description"
 				content="Today's top content from hundreds of thousands of Helog."
 			/>
-			<div className={styles.posts}>
-				{isError && !data?.pages.length ? (
-					<Navigate
-						to="/error"
-						state={{
-							previousPath,
-						}}
-					/>
-				) : isPending ? (
-					<Loading text="Loading Posts..." />
-				) : (
-					<>
-						<div className={styles.container} ref={postListRef}>
-							<PostList posts={posts.slice(0, renderPostsCount)} />
-						</div>
-						{isFetchingNextPage ? (
-							<Loading text={'Loading more posts ...'} />
+			{isError && !data?.pages.length ? (
+				<Navigate
+					to="/error"
+					state={{
+						previousPath,
+					}}
+				/>
+			) : (
+				<div className={styles.posts}>
+					<div className={styles.container}>
+						{isPending ? (
+							<PostListTemplate count={count} />
 						) : (
-							isFetchNextPageError && (
-								<button
-									className={`${buttonStyles.content} ${buttonStyles.more}`}
-									onClick={() => fetchNextPage()}
-								>
-									Click here to show more posts
-								</button>
-							)
+							<PostList posts={posts.slice(0, renderPostsCount)} />
 						)}
-					</>
-				)}
-			</div>
+					</div>
+					{isFetchingNextPage ? (
+						<Loading text={'Loading more posts ...'} />
+					) : posts?.length > renderPostsCount ? (
+						<button
+							className={`${buttonStyles.content} ${buttonStyles.more}`}
+							onClick={() => setRenderPostsCount(renderPostsCount + count)}
+						>
+							Click here to show more posts
+						</button>
+					) : (
+						hasNextPage && (
+							<button
+								className={`${buttonStyles.content} ${buttonStyles.more}`}
+								onClick={handleFetchNextPosts}
+							>
+								Click here to load more posts
+							</button>
+						)
+					)}
+				</div>
+			)}
 		</>
 	);
 };

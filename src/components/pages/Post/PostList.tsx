@@ -23,14 +23,16 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 	return (
 		<>
 			{posts.length > 0 ? (
-				<ul className={styles['post-list']}>
+				<ul>
 					{posts.map(post => (
-						<li key={post._id}>
+						<li className={styles.item} key={post._id}>
 							<div className={styles.info}>
-								<strong className={styles['date-time']}>
-									{post.author.username}
-								</strong>
-								<em>{format(post.updatedAt, 'MMMM d, y')}</em>
+								<p className={styles.author}>
+									<strong>{post.author.username}</strong>
+								</p>
+								<p className={styles['date-time']}>
+									<em>{format(post.updatedAt, 'MMMM d, y')}</em>
+								</p>
 							</div>
 
 							<Link to={`../posts/${post._id}`}>
@@ -46,7 +48,7 @@ export const PostList = ({ posts }: { posts: PostData[] }) => {
 					))}
 				</ul>
 			) : (
-				<p className={styles['no-posts']}>There are not posts.</p>
+				<p>There are not posts.</p>
 			)}
 		</>
 	);

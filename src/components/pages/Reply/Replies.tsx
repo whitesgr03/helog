@@ -13,12 +13,15 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { infiniteQueryRepliesOption } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 interface RepliesProps {
 	commentId: string;
 	postId: string;
 	repliesCount: number;
 	renderRepliesCount: number;
-	onAddRenderRepliesCount: () => void;
+	onAddingRepliesCount: () => void;
 }
 
 export interface Reply {
@@ -50,22 +53,19 @@ export const Replies = ({
 	commentId,
 	repliesCount,
 	renderRepliesCount,
-	onAddRenderRepliesCount,
+	onAddingRepliesCount,
 }: RepliesProps) => {
+	const { onAlert } = useAppDataAPI();
 	const repliesRef = useRef<HTMLDivElement[]>([]);
 	const waitForScrollRef = useRef<NodeJS.Timeout>();
 	const [shakeTargetId, setShakeTargetId] = useState('');
 
 	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
-		useInfiniteQuery({
-			...infiniteQueryRepliesOption(commentId, repliesCount),
-		});
-
+		useInfiniteQuery(infiniteQueryRepliesOption(commentId, repliesCount));
 	const replies: Reply[] = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data),
 		[],
 	);
-
 	const handleScroll = (targetId: string) => {
 		const target = repliesRef.current.find(reply => reply.id === targetId);
 		const handleShake = () => {
@@ -84,9 +84,23 @@ export const Replies = ({
 		});
 	};
 
-	const handleRenderNextPage = () => {
-		replies.length <= renderRepliesCount && fetchNextPage();
-		onAddRenderRepliesCount();
+	const handleFetchingNextReplies = async () => {
+		const result = await fetchNextPage();
+
+		if (result.isSuccess) {
+			onAddingRepliesCount();
+		}
+
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the replies has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
 	};
 
 	return (
@@ -116,13 +130,20 @@ export const Replies = ({
 				</ul>
 				{isFetchingNextPage ? (
 					<Loading text={'Loading more replies ...'} />
+				) : replies?.length > renderRepliesCount ? (
+					<button
+						className={`${buttonStyles.content} ${buttonStyles.more}`}
+						onClick={onAddingRepliesCount}
+					>
+						Click here to show more replies
+					</button>
 				) : (
-					(replies?.length > renderRepliesCount || hasNextPage) && (
+					hasNextPage && (
 						<button
 							className={`${buttonStyles.content} ${buttonStyles.more}`}
-							onClick={handleRenderNextPage}
+							onClick={handleFetchingNextReplies}
 						>
-							Show more replies
+							Click here to load more replies
 						</button>
 					)
 				)}

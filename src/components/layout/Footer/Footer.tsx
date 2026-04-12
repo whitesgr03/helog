@@ -10,7 +10,7 @@ export const Footer = () => {
 			<div className={styles.container}>
 				<a href="https://github.com/whitesgr03/helog" className={styles.link}>
 					<span className={`${imageStyles.icon} ${styles.github}`} />
-					<em className={styles.emphasis}>Github repository</em>
+					<em className={styles.emphasis}>Github</em>
 				</a>
 				<address>
 					<a href="mailto:whitesgr03@gmail.com" className={styles.link}>

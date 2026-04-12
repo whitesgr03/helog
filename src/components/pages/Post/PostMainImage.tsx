@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 
 // Styles
+import styles from './PostMainImage.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
 interface IPostMainImage {
@@ -29,6 +30,7 @@ export const PostMainImage = ({ url, title }: IPostMainImage) => {
 		<div className={imageStyles.content} ref={imageContentRef}>
 			<img
 				title={title}
+				className={styles.image}
 				src={error ? errorImageUrl : url}
 				alt={title}
 				loading="lazy"

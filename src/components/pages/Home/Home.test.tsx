@@ -10,24 +10,25 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
 import { Home } from './Home';
 import { LatestPosts } from './LatestPosts';
-import { Loading } from '../../utils/Loading';
+import { LatestPostsTemplate } from './LatestPostsTemplate';
 
-vi.mock('../../utils/Loading');
 vi.mock('./LatestPosts');
-vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handlePost');
 vi.mock('../App/AppContext');
 vi.mock('react-responsive');
+vi.mock('./LatestPostsTemplate');
 
 describe('Home component', () => {
-	it('should render Posts component', async () => {
+	it('should render LatestPosts component', async () => {
 		vi.mocked(useMediaQuery).mockReturnValueOnce(true);
 
 		vi.mocked(LatestPosts).mockImplementation(() => (
 			<div>LatestPosts component</div>
 		));
 
-		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(LatestPostsTemplate).mockImplementation(() => (
+			<div>LatestPostsTemplate component</div>
+		));
 
 		const router = createMemoryRouter(
 			[
@@ -53,7 +54,7 @@ describe('Home component', () => {
 		);
 
 		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
+			screen.queryByText('LatestPostsTemplate component'),
 		);
 
 		expect(screen.getByText('LatestPosts component')).toBeInTheDocument();

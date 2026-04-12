@@ -2,7 +2,6 @@ import { vi, describe, it, expect } from 'vitest';
 import {
 	render,
 	screen,
-	fireEvent,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 
@@ -34,7 +33,7 @@ vi.mock('../App/AppContext');
 vi.mock('../../../utils/queryOptions');
 
 describe('Comments component', () => {
-	it(`should render a load comments button if fetch first comments fails`, async () => {
+	it(`should render the refetching button if fetch comments fails`, async () => {
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
@@ -98,7 +97,7 @@ describe('Comments component', () => {
 		expect(getComments).toBeCalledTimes(1);
 		expect(button).toBeInTheDocument();
 	});
-	it('should refetch first comments, if the load comments button is clicked and fetching comments successful', async () => {
+	it('should refetch comments, if the refetching button is clicked and fetch comments successful', async () => {
 		let mockFetchData = {
 			data: {
 				comments: [
@@ -195,7 +194,7 @@ describe('Comments component', () => {
 			expect(screen.getByText(comment.content)).toBeInTheDocument();
 		});
 	});
-	it('should render an error alert if the load comments button is clicked and fetching comments fails', async () => {
+	it('should render an error alert if the refetching button is clicked and fetch comments fails', async () => {
 		const mockCustomHook = {
 			onAlert: vi.fn(),
 			onModal: vi.fn(),
@@ -266,22 +265,16 @@ describe('Comments component', () => {
 		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 		expect(getComments).toBeCalledTimes(2);
 	});
-	it('should render the show more comments button, if the user scroll to bottom of the Comments component and fetching next comments fails', async () => {
-		let mockFetchData = {
+	it('should render the more comments, if the user click the show more comments button', async () => {
+		const user = userEvent.setup();
+
+		const mockFetchData = {
 			data: {
-				comments: [
-					{ _id: '0', content: 'comment1' },
-					{ _id: '1', content: 'comment2' },
-					{ _id: '2', content: 'comment3' },
-					{ _id: '3', content: 'comment4' },
-					{ _id: '4', content: 'comment5' },
-					{ _id: '5', content: 'comment6' },
-					{ _id: '6', content: 'comment7' },
-					{ _id: '7', content: 'comment8' },
-					{ _id: '8', content: 'comment9' },
-					{ _id: '9', content: 'comment10' },
-				],
-				commentsCount: 15,
+				comments: [...Array(50).keys()].map(index => ({
+					_id: index,
+					content: `comment${index + 1}`,
+				})),
+				commentsCount: 50,
 			},
 		};
 
@@ -293,7 +286,7 @@ describe('Comments component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(infiniteQueryCommentsOption).mockImplementation(postId =>
 			infiniteQueryOptions({
-				queryKey: ['posts', postId],
+				queryKey: ['comments', postId],
 				queryFn: getComments,
 				initialPageParam: 0,
 				getNextPageParam: (lastPage, _allPages, lastPageParam) =>
@@ -304,46 +297,15 @@ describe('Comments component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(CommentDetail).mockImplementation(({ comment }) => (
-			<div>{comment.content}</div>
+			<li>{comment.content}</li>
 		));
-		vi.mocked(getComments)
-			.mockResolvedValueOnce(mockFetchData)
-			.mockRejectedValueOnce(Error());
+		vi.mocked(getComments).mockResolvedValueOnce(mockFetchData);
 
-		const queryClient = new QueryClient({
-			queryCache: new QueryCache({
-				onError: (_error, query) =>
-					typeof query.meta?.errorAlert === 'function' &&
-					query.meta.errorAlert(),
-			}),
-			defaultOptions: {
-				queries: {
-					retry: false,
-				},
-			},
-		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Comments postId={'1'} />,
-				},
-			],
-			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
-			},
-		);
+		const queryClient = new QueryClient();
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<Comments postId={'1'} />,
 			</QueryClientProvider>,
 		);
 
@@ -351,18 +313,16 @@ describe('Comments component', () => {
 			screen.queryByText('Loading component'),
 		);
 
-		fireEvent.scroll(window);
+		const button = screen.getByRole('button', { name: /show more comments/ });
 
-		await waitForElementToBeRemoved(() =>
-			screen.queryByText('Loading component'),
-		);
+		await user.click(button);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(
-			screen.getByRole('button', { name: 'Click here to show more comments' }),
-		);
+		expect(getComments).toBeCalledTimes(1);
+		expect(screen.getAllByRole('listitem')).toHaveLength(50);
 	});
-	it('should refetch next comments, if the show more comments button is clicked and fetching next comments successful', async () => {
+	it('should fetches next comments, if the load more comments button is clicked and fetching next comments successful', async () => {
+		const user = userEvent.setup();
+
 		const mockFirstFetchData = {
 			data: {
 				comments: [
@@ -412,25 +372,18 @@ describe('Comments component', () => {
 		);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(CommentDetail).mockImplementation(({ comment }) => (
-			<div>{comment.content}</div>
+			<li>{comment.content}</li>
 		));
 		vi.mocked(getComments)
 			.mockResolvedValueOnce(mockFirstFetchData)
-			.mockRejectedValueOnce(Error())
-			.mockResolvedValueOnce(mockNextFetchData);
+			.mockImplementationOnce(
+				async () =>
+					await new Promise(resolve =>
+						setTimeout(() => resolve(mockNextFetchData), 100),
+					),
+			);
 
-		const queryClient = new QueryClient({
-			queryCache: new QueryCache({
-				onError: (_error, query) =>
-					typeof query.meta?.errorAlert === 'function' &&
-					query.meta.errorAlert(),
-			}),
-			defaultOptions: {
-				queries: {
-					retry: false,
-				},
-			},
-		});
+		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
 				{
@@ -460,25 +413,102 @@ describe('Comments component', () => {
 			screen.queryByText('Loading component'),
 		);
 
-		fireEvent.scroll(window);
+		const button = screen.getByRole('button', { name: /load more comments/ });
+
+		await user.click(button);
 
 		await waitForElementToBeRemoved(() =>
 			screen.queryByText('Loading component'),
 		);
 
-		const button = screen.getByRole('button', {
-			name: 'Click here to show more comments',
-		});
+		expect(getComments).toBeCalledTimes(2);
+		expect(screen.getAllByRole('listitem')).toHaveLength(
+			mockFirstFetchData.data.commentsCount,
+		);
+	});
+	it('should renders the error alert, if the load more comments button is clicked and fetching next comments successful', async () => {
+		const user = userEvent.setup();
 
-		await userEvent.setup().click(button);
+		const mockFirstFetchData = {
+			data: {
+				comments: [
+					{ _id: '0', content: 'comment1' },
+					{ _id: '1', content: 'comment2' },
+					{ _id: '2', content: 'comment3' },
+					{ _id: '3', content: 'comment4' },
+					{ _id: '4', content: 'comment5' },
+					{ _id: '5', content: 'comment6' },
+					{ _id: '6', content: 'comment7' },
+					{ _id: '7', content: 'comment8' },
+					{ _id: '8', content: 'comment9' },
+					{ _id: '9', content: 'comment10' },
+				],
+				commentsCount: 15,
+			},
+		};
 
-		const mockFetchData = mockFirstFetchData.data.comments.concat(
-			mockNextFetchData.data.comments,
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: vi.fn(),
+		};
+
+		vi.mocked(getComments)
+			.mockResolvedValueOnce(mockFirstFetchData)
+			.mockRejectedValueOnce(new Error('error'));
+
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(infiniteQueryCommentsOption).mockImplementation(postId =>
+			infiniteQueryOptions({
+				queryKey: ['comments', postId],
+				queryFn: getComments,
+				initialPageParam: 0,
+				getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+					lastPage.data.commentsCount > lastPageParam + 10
+						? lastPageParam + 10
+						: null,
+				retry: false,
+			}),
+		);
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(CommentDetail).mockImplementation(({ comment }) => (
+			<li>{comment.content}</li>
+		));
+
+		const queryClient = new QueryClient();
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/',
+					element: <Comments postId={'1'} />,
+				},
+			],
+			{
+				future: {
+					v7_relativeSplatPath: true,
+				},
+			},
 		);
 
-		mockFetchData.forEach(comment => {
-			expect(screen.getByText(comment.content)).toBeInTheDocument();
-		});
+		render(
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</QueryClientProvider>,
+		);
+
+		await waitForElementToBeRemoved(() =>
+			screen.queryByText('Loading component'),
+		);
+
+		const button = screen.getByRole('button', { name: /load more comments/ });
+
+		await user.click(button);
+
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 	});
 	it(`should render no comments if the fetching comments are empty`, async () => {
 		let mockFetchData = {
@@ -496,7 +526,7 @@ describe('Comments component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(infiniteQueryCommentsOption).mockImplementation(postId =>
 			infiniteQueryOptions({
-				queryKey: ['posts', postId],
+				queryKey: ['comments', postId],
 				queryFn: getComments,
 				initialPageParam: 0,
 				getNextPageParam: (lastPage, _allPages, lastPageParam) =>

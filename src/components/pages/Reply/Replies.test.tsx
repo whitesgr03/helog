@@ -4,7 +4,6 @@ import {
 	screen,
 	waitForElementToBeRemoved,
 	fireEvent,
-	waitFor,
 } from '@testing-library/react';
 import { act } from 'react';
 import userEvent from '@testing-library/user-event';
@@ -22,7 +21,9 @@ import { getReplies } from '../../../utils/handleReply';
 import { Loading } from '../../utils/Loading';
 
 import { infiniteQueryRepliesOption } from '../../../utils/queryOptions';
+import { useAppDataAPI } from '../App/AppContext';
 
+vi.mock('../App/AppContext');
 vi.mock('../../../utils/queryOptions');
 vi.mock('../../utils/Loading');
 vi.mock('../../../utils/handleReply');
@@ -30,56 +31,27 @@ vi.mock('./ReplyDetail');
 
 describe('Replies component', () => {
 	it('should render the replies data', async () => {
-		const mockReplies = [
-			{
-				_id: '0',
-				content: 'reply1',
-			},
-			{
-				_id: '1',
-				content: 'reply2',
-			},
-			{
-				_id: '2',
-				content: 'reply3',
-			},
-			{
-				_id: '3',
-				content: 'reply4',
-			},
-			{
-				_id: '4',
-				content: 'reply5',
-			},
-			{
-				_id: '5',
-				content: 'reply6',
-			},
-			{
-				_id: '6',
-				content: 'reply7',
-			},
-			{
-				_id: '7',
-				content: 'reply8',
-			},
-			{
-				_id: '8',
-				content: 'reply9',
-			},
-			{
-				_id: '9',
-				content: 'reply10',
-			},
-		];
+		const mockReplies = {
+			data: [...Array(10).keys()].map(index => ({
+				_id: index,
+				content: `reply${index + 1}`,
+			})),
+		};
+
 		let mockProps = {
 			postId: '1',
 			commentId: '1',
-			repliesCount: 0,
+			repliesCount: 10,
 			renderRepliesCount: 10,
-			onAddRenderRepliesCount: vi.fn(),
+			onAddingRepliesCount: vi.fn(),
 		};
-		mockProps.repliesCount = mockReplies.length;
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: () => {},
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		vi.mocked(ReplyDetail).mockImplementation(({ reply }) => (
 			<li key={reply._id}>{reply.content}</li>
@@ -94,22 +66,18 @@ describe('Replies component', () => {
 						repliesCount > lastPageParam + 10 ? lastPageParam + 10 : null,
 				}),
 		);
-		vi.mocked(getReplies).mockResolvedValueOnce({
-			data: mockReplies,
-		});
+		vi.mocked(getReplies).mockResolvedValueOnce(mockReplies);
 		const queryClient = new QueryClient();
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<Replies {...mockProps} />,
+				<Replies {...mockProps} />
 			</QueryClientProvider>,
 		);
 
-		await waitFor(() => {
-			mockReplies.forEach(reply => {
-				expect(screen.getByText(reply.content)).toBeInTheDocument();
-			});
-		});
+		const items = await screen.findAllByRole('listitem');
+
+		expect(items).toHaveLength(10);
 	});
 	it('should scroll to a target reply, if the handleScroll is executed', async () => {
 		const user = userEvent.setup();
@@ -124,14 +92,22 @@ describe('Replies component', () => {
 				reply: { _id: '0' },
 			},
 		];
+
 		let mockProps = {
 			postId: '1',
 			commentId: '1',
 			repliesCount: 0,
 			renderRepliesCount: 10,
-			onAddRenderRepliesCount: vi.fn(),
+			onAddingRepliesCount: vi.fn(),
 		};
 		mockProps.repliesCount = mockReplies.length;
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: () => {},
+		};
+
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		vi.mocked(ReplyDetail).mockImplementation(({ reply, onScroll }) => (
 			<>
@@ -187,81 +163,90 @@ describe('Replies component', () => {
 		fireEvent.animationEnd(replies[0]);
 		expect(replies[0]).not.toHaveClass(/shake/);
 	});
-	it('should fetch next replies if the show more replies button is clicked', async () => {
+	it('should render the more replies if the show more replies button is clicked', async () => {
 		const user = userEvent.setup();
-		const mockFirstFetchReplies = [
-			{
-				_id: '0',
-				content: 'reply1',
-			},
-			{
-				_id: '1',
-				content: 'reply2',
-			},
-			{
-				_id: '2',
-				content: 'reply3',
-			},
-			{
-				_id: '3',
-				content: 'reply4',
-			},
-			{
-				_id: '4',
-				content: 'reply5',
-			},
-			{
-				_id: '5',
-				content: 'reply6',
-			},
-			{
-				_id: '6',
-				content: 'reply7',
-			},
-			{
-				_id: '7',
-				content: 'reply8',
-			},
-			{
-				_id: '8',
-				content: 'reply9',
-			},
-			{
-				_id: '9',
-				content: 'reply10',
-			},
-		];
-		const mockNextFetchReplies = [
-			{
-				_id: '10',
-				content: 'reply11',
-			},
-			{
-				_id: '11',
-				content: 'reply12',
-			},
-			{
-				_id: '12',
-				content: 'reply13',
-			},
-			{
-				_id: '13',
-				content: 'reply14',
-			},
-			{
-				_id: '14',
-				content: 'reply15',
-			},
-		];
+
+		const mockReplies = {
+			data: [...Array(20).keys()].map(index => ({
+				_id: index,
+				content: `reply${index + 1}`,
+			})),
+		};
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: () => {},
+		};
+
 		let mockProps = {
 			postId: '1',
 			commentId: '1',
-			repliesCount: 0,
+			repliesCount: 20,
 			renderRepliesCount: 10,
-			onAddRenderRepliesCount: vi.fn(),
+			onAddingRepliesCount: vi.fn(),
 		};
-		mockProps.repliesCount =
-			mockFirstFetchReplies.length + mockNextFetchReplies.length;
+		vi.mocked(ReplyDetail).mockImplementation(({ reply }) => (
+			<li key={reply._id}>{reply.content}</li>
+		));
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+		vi.mocked(infiniteQueryRepliesOption).mockImplementation(
+			(commentId, repliesCount) =>
+				infiniteQueryOptions({
+					queryKey: ['replies', commentId],
+					queryFn: getReplies,
+					initialPageParam: 0,
+					getNextPageParam: (_lastPage, _allPages, lastPageParam) =>
+						repliesCount > lastPageParam + 10 ? lastPageParam + 10 : null,
+				}),
+		);
+		vi.mocked(getReplies).mockResolvedValue(mockReplies);
+
+		const queryClient = new QueryClient();
+
+		render(
+			<QueryClientProvider client={queryClient}>
+				<Replies {...mockProps} />
+			</QueryClientProvider>,
+		);
+
+		const button = await screen.findByRole('button', {
+			name: /show more replies/,
+		});
+
+		await user.click(button);
+
+		expect(mockProps.onAddingRepliesCount).toBeCalledTimes(1);
+	});
+	it('should load next replies if the load more replies button is clicked', async () => {
+		const user = userEvent.setup();
+
+		const mockReplies = {
+			data: [...Array(10).keys()].map(index => ({
+				_id: index,
+				content: `reply${index + 1}`,
+			})),
+		};
+
+		const mockNextFetchData = {
+			data: [...Array(10).keys()].map(index => ({
+				_id: index + 10,
+				content: `reply${index + 11}`,
+			})),
+		};
+
+		let mockProps = {
+			postId: '1',
+			commentId: '1',
+			repliesCount: 20,
+			renderRepliesCount: 10,
+			onAddingRepliesCount: vi.fn(),
+		};
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: () => {},
+		};
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		vi.mocked(ReplyDetail).mockImplementation(({ reply }) => (
 			<li key={reply._id}>{reply.content}</li>
@@ -278,57 +263,93 @@ describe('Replies component', () => {
 				}),
 		);
 		vi.mocked(getReplies)
-			.mockResolvedValueOnce({
-				data: mockFirstFetchReplies,
-			})
+			.mockResolvedValueOnce(mockReplies)
 			.mockImplementationOnce(
 				async () =>
 					await new Promise(resolve =>
-						setTimeout(
-							() =>
-								resolve({
-									data: mockNextFetchReplies,
-								}),
-							300,
-						),
+						setTimeout(() => resolve(mockNextFetchData), 100),
 					),
 			);
 
 		const queryClient = new QueryClient();
 
-		const { rerender } = render(
+		render(
 			<QueryClientProvider client={queryClient}>
-				<Replies {...mockProps} />,
+				<Replies {...mockProps} />
 			</QueryClientProvider>,
 		);
 
-		const showMoreButton = await screen.findByRole('button', {
-			name: 'Show more replies',
+		const button = await screen.findByRole('button', {
+			name: /load more replies/,
 		});
 
-		mockFirstFetchReplies.forEach(reply => {
-			expect(screen.getByText(reply.content)).toBeInTheDocument();
-		});
-
-		await user.click(showMoreButton);
+		await user.click(button);
 
 		await waitForElementToBeRemoved(() =>
 			screen.queryByText('Loading component'),
 		);
 
-		mockProps.renderRepliesCount = 20;
+		expect(mockProps.onAddingRepliesCount).toBeCalledTimes(1);
+	});
+	it('should render an error alert if load next replies fails', async () => {
+		const user = userEvent.setup();
 
-		rerender(
+		const mockReplies = {
+			data: [...Array(10).keys()].map(index => ({
+				_id: index,
+				content: `reply${index + 1}`,
+			})),
+		};
+
+		let mockProps = {
+			postId: '1',
+			commentId: '1',
+			repliesCount: 20,
+			renderRepliesCount: 10,
+			onAddingRepliesCount: vi.fn(),
+		};
+
+		const mockCustomHook = {
+			onAlert: vi.fn(),
+			onModal: () => {},
+		};
+
+		vi.mocked(getReplies)
+			.mockResolvedValueOnce(mockReplies)
+			.mockRejectedValueOnce(new Error('error'));
+
+		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
+
+		vi.mocked(ReplyDetail).mockImplementation(({ reply }) => (
+			<li key={reply._id}>{reply.content}</li>
+		));
+		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
+		vi.mocked(infiniteQueryRepliesOption).mockImplementation(
+			(commentId, repliesCount) =>
+				infiniteQueryOptions({
+					queryKey: ['replies', commentId],
+					queryFn: getReplies,
+					initialPageParam: 0,
+					getNextPageParam: (_lastPage, _allPages, lastPageParam) =>
+						repliesCount > lastPageParam + 10 ? lastPageParam + 10 : null,
+					retry: false,
+				}),
+		);
+
+		const queryClient = new QueryClient();
+
+		render(
 			<QueryClientProvider client={queryClient}>
-				<Replies {...mockProps} />,
+				<Replies {...mockProps} />
 			</QueryClientProvider>,
 		);
 
-		const mockFetchData = mockFirstFetchReplies.concat(mockNextFetchReplies);
-
-		mockFetchData.forEach(reply => {
-			expect(screen.getByText(reply.content)).toBeInTheDocument();
+		const button = await screen.findByRole('button', {
+			name: /load more replies/,
 		});
-		expect(mockProps.onAddRenderRepliesCount).toBeCalledTimes(1);
+
+		await user.click(button);
+
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 	});
 });

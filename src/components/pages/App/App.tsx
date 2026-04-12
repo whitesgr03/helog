@@ -93,18 +93,14 @@ export const App = () => {
 							<Alert />
 						</div>
 						<div className={styles.container}>
-							<main>
-								{isOnline ? (
-									navigation.state === 'loading' ? (
-										<Loading text="Loading ..." /> // react router nest lazy loading
-									) : (
-										<Outlet />
-									)
-								) : (
-									<Offline />
-								)}
-							</main>
-							<Footer />
+							{navigation.state === 'loading' ? (
+								<Loading text="Loading Page ..." /> // react router nest lazy loading
+							) : (
+								<>
+									<main>{isOnline ? <Outlet /> : <Offline />}</main>
+									<Footer />
+								</>
+							)}
 						</div>
 					</>
 				)}

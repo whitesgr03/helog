@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer component > should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="_latest-posts_6d2bd6"
+  >
+    <h2
+      class="_headline_6d2bd6 _loading_9e5b7c"
+    >
+      Latest Posts
+    </h2>
+    <div>
+      PostListTemplate component
+    </div>
+  </div>
+</DocumentFragment>
+`;

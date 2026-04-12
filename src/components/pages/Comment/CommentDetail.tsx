@@ -32,6 +32,8 @@ interface CommentDetailProps {
 	postId: string;
 }
 
+const count = 25;
+
 export const CommentDetail = ({
 	index,
 	comment,
@@ -41,29 +43,15 @@ export const CommentDetail = ({
 	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyBox, setShowReplyBox] = useState(false);
 	const [showEditBox, setShowEditBox] = useState(false);
-	const [renderRepliesCount, setRenderRepliesCount] = useState(10);
+	const [renderRepliesCount, setRenderRepliesCount] = useState(count);
 
 	const {
 		data: replies,
-		isPending,
-		isFetching,
+		refetch,
+		isLoading,
 	} = useInfiniteQuery({
 		...infiniteQueryRepliesOption(comment._id, comment.child.length),
-		meta: {
-			errorAlert: () => {
-				onAlert([
-					{
-						message:
-							'Loading the replies has some errors occur, please try again later.',
-						error: true,
-						delay: 4000,
-					},
-				]);
-
-				isPending && setShowReplies(false);
-			},
-		},
-		enabled: showReplies,
+		enabled: false,
 	});
 
 	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
@@ -80,12 +68,26 @@ export const CommentDetail = ({
 		});
 	};
 
-	const handleShowReplies = async () =>
-		!isFetching && setShowReplies(!showReplies);
+	const handleShowReplies = () => setShowReplies(!showReplies);
 	const handleShowEditBox = () => setShowEditBox(!showEditBox);
 	const handleShowReplyBox = () => setShowReplyBox(!showReplyBox);
-	const handleAddRenderRepliesCount = () =>
-		setRenderRepliesCount(renderRepliesCount + 10);
+	const handleAddingRepliesCount = () =>
+		setRenderRepliesCount(renderRepliesCount + count);
+
+	const handleManualRefetch = async () => {
+		const result = await refetch();
+		if (result.isSuccess) setShowReplies(true);
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the replies has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
+	};
 
 	return (
 		<li>
@@ -181,13 +183,14 @@ export const CommentDetail = ({
 						<>
 							<button
 								className={styles['reply-list-btn']}
-								onClick={handleShowReplies}
+								onClick={!replies ? handleManualRefetch : handleShowReplies}
+								disabled={isLoading}
 								data-testid="reply-icon"
 							>
 								<span
-									className={`${showReplies && replies ? styles.active : ''} ${styles['reply-list-icon']} ${imageStyles.icon}`}
+									className={`${showReplies ? styles.active : ''} ${styles['reply-list-icon']} ${imageStyles.icon}`}
 								/>
-								{isFetching ? (
+								{isLoading ? (
 									<span
 										className={`${imageStyles.icon} ${buttonStyles['load']}`}
 										data-testid="loading-icon"
@@ -200,13 +203,13 @@ export const CommentDetail = ({
 					)}
 				</div>
 			</div>
-			{showReplies && replies && (
+			{showReplies && (
 				<Replies
 					postId={postId}
 					repliesCount={comment.child.length}
 					commentId={comment._id}
 					renderRepliesCount={renderRepliesCount}
-					onAddRenderRepliesCount={handleAddRenderRepliesCount}
+					onAddingRepliesCount={handleAddingRepliesCount}
 				/>
 			)}
 		</li>

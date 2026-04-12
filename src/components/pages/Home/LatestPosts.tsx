@@ -1,5 +1,4 @@
 // Packages
-import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles
@@ -8,7 +7,7 @@ import buttonStyles from '../../../styles/button.module.css';
 
 // Components
 import { PostList } from '../Post/PostList';
-import { Loading } from '../../utils/Loading';
+import { PostListTemplate } from '../Post/PostListTemplate';
 
 // Utils
 import { infiniteQueryPostsOption } from '../../../utils/queryOptions';
@@ -18,36 +17,30 @@ import { useAppDataAPI } from '../App/AppContext';
 
 export const LatestPosts = () => {
 	const { onAlert } = useAppDataAPI();
-	const [isManuallyRefetch, setIsManuallyRefetch] = useState(false);
 
-	const { isPending, isError, data, refetch } = useInfiniteQuery({
-		...infiniteQueryPostsOption(),
-		meta: {
-			errorAlert: () => {
-				isManuallyRefetch &&
-					onAlert([
-						{
-							message:
-								'Loading the posts has some errors occur, please try again later.',
-							error: true,
-							delay: 4000,
-						},
-					]);
-				setIsManuallyRefetch(false);
-			},
-		},
-	});
+	const { isPending, isError, data, refetch } = useInfiniteQuery(
+		infiniteQueryPostsOption(),
+	);
 
 	const posts = data?.pages[0].data.posts.slice(0, 4);
 
-	const handleManuallyRefetch = () => {
-		refetch();
-		setIsManuallyRefetch(true);
+	const handleManuallyRefetch = async () => {
+		const result = await refetch();
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the posts has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
 	};
 
 	return (
 		<div className={styles['latest-posts']}>
-			<h2>Latest Posts</h2>
+			<h2 className={styles['headline']}>Latest Posts</h2>
 			{isError && !posts ? (
 				<button
 					className={`${buttonStyles.content} ${buttonStyles.more}`}
@@ -56,7 +49,7 @@ export const LatestPosts = () => {
 					Click here to load posts
 				</button>
 			) : isPending ? (
-				<Loading text={'Loading posts ...'} />
+				<PostListTemplate count={4} />
 			) : (
 				<PostList posts={posts} />
 			)}
