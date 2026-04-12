@@ -8,7 +8,6 @@ import {
 import {
 	QueryClient,
 	QueryClientProvider,
-	QueryCache,
 	infiniteQueryOptions,
 } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
