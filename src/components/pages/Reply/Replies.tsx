@@ -13,13 +13,15 @@ import { Loading } from '../../utils/Loading';
 // Utils
 import { infiniteQueryRepliesOption } from '../../../utils/queryOptions';
 
+// Context
+import { useAppDataAPI } from '../App/AppContext';
+
 interface RepliesProps {
 	commentId: string;
 	postId: string;
 	repliesCount: number;
 	renderRepliesCount: number;
 	onAddingRepliesCount: () => void;
-	onFetchingNextReplies: () => void;
 }
 
 export interface Reply {
@@ -52,21 +54,18 @@ export const Replies = ({
 	repliesCount,
 	renderRepliesCount,
 	onAddingRepliesCount,
-	onFetchingNextReplies,
 }: RepliesProps) => {
+	const { onAlert } = useAppDataAPI();
 	const repliesRef = useRef<HTMLDivElement[]>([]);
 	const waitForScrollRef = useRef<NodeJS.Timeout>();
 	const [shakeTargetId, setShakeTargetId] = useState('');
 
-	const { data, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-		...infiniteQueryRepliesOption(commentId, repliesCount),
-	});
-
+	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+		useInfiniteQuery(infiniteQueryRepliesOption(commentId, repliesCount));
 	const replies: Reply[] = data?.pages.reduce(
 		(accumulator, current) => accumulator.concat(current.data),
 		[],
 	);
-
 	const handleScroll = (targetId: string) => {
 		const target = repliesRef.current.find(reply => reply.id === targetId);
 		const handleShake = () => {
@@ -83,6 +82,25 @@ export const Replies = ({
 			behavior: 'smooth',
 			block: 'center',
 		});
+	};
+
+	const handleFetchingNextReplies = async () => {
+		const result = await fetchNextPage();
+
+		if (result.isSuccess) {
+			onAddingRepliesCount();
+		}
+
+		if (result.isError) {
+			onAlert([
+				{
+					message:
+						'Loading the replies has some errors occur, please try again later.',
+					error: true,
+					delay: 4000,
+				},
+			]);
+		}
 	};
 
 	return (
@@ -123,7 +141,7 @@ export const Replies = ({
 					hasNextPage && (
 						<button
 							className={`${buttonStyles.content} ${buttonStyles.more}`}
-							onClick={onFetchingNextReplies}
+							onClick={handleFetchingNextReplies}
 						>
 							Click here to load more replies
 						</button>

@@ -48,7 +48,6 @@ export const CommentDetail = ({
 	const {
 		data: replies,
 		refetch,
-		fetchNextPage,
 		isLoading,
 	} = useInfiniteQuery({
 		...infiniteQueryRepliesOption(comment._id, comment.child.length),
@@ -78,23 +77,6 @@ export const CommentDetail = ({
 	const handleManualRefetch = async () => {
 		const result = await refetch();
 		if (result.isSuccess) setShowReplies(true);
-		if (result.isError) {
-			onAlert([
-				{
-					message:
-						'Loading the replies has some errors occur, please try again later.',
-					error: true,
-					delay: 4000,
-				},
-			]);
-		}
-	};
-
-	const handleFetchingNextReplies = async () => {
-		const result = await fetchNextPage();
-		if (result.isSuccess) {
-			handleAddingRepliesCount();
-		}
 		if (result.isError) {
 			onAlert([
 				{
@@ -228,7 +210,6 @@ export const CommentDetail = ({
 					commentId={comment._id}
 					renderRepliesCount={renderRepliesCount}
 					onAddingRepliesCount={handleAddingRepliesCount}
-					onFetchingNextReplies={handleFetchingNextReplies}
 				/>
 			)}
 		</li>
