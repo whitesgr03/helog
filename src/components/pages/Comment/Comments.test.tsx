@@ -426,7 +426,7 @@ describe('Comments component', () => {
 			mockFirstFetchData.data.commentsCount,
 		);
 	});
-	it('should renders the error alert, if the load more comments button is clicked and fetching next comments successful', async () => {
+	it('should renders the error alert, if the load more comments button is clicked and fetching next comments fails', async () => {
 		const user = userEvent.setup();
 
 		const mockFirstFetchData = {
