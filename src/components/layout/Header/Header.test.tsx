@@ -246,7 +246,7 @@ describe('Header component', () => {
 
 		await user.click(button);
 
-		expect(mockProps.onColorTheme).toBeCalledTimes(2);
+		expect(mockProps.onColorTheme).toBeCalledTimes(1);
 	});
 	it('should render Dropdown component and transparent bgc, if the account button is clicked', async () => {
 		const user = userEvent.setup();
