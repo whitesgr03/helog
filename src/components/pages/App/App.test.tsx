@@ -60,9 +60,13 @@ describe('App component', () => {
 			}),
 		);
 
-		const mockMatchMedia = vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: true,
-		} as MediaQueryList);
+		vi.stubGlobal(
+			'matchMedia',
+			vi.fn(() => ({
+				matches: true,
+			})),
+		);
+
 		const queryClient = new QueryClient();
 
 		const router = createMemoryRouter(
@@ -92,8 +96,8 @@ describe('App component', () => {
 		const app = await screen.findByTestId('app');
 
 		expect(app).toHaveClass(/dark/);
-		expect(mockMatchMedia).toBeCalledTimes(1);
-		expect(mockMatchMedia).toBeCalledWith('(prefers-color-scheme: dark)');
+		expect(matchMedia).toHaveBeenCalledTimes(1);
+		expect(matchMedia).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
 	});
 	it('should render the dark theme if the dark theme of localstorage is set.', async () => {
 		const mockFetchResult = {};
@@ -107,16 +111,18 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
+		vi.stubGlobal(
+			'matchMedia',
+			vi.fn(() => ({
+				matches: false,
+			})),
+		);
 
-		const localstorage = {
-			setItem: vi.spyOn(Storage.prototype, 'setItem'),
-			getItem: vi
-				.spyOn(Storage.prototype, 'getItem')
-				.mockReturnValueOnce('true'),
-		};
+		vi.stubGlobal('localStorage', {
+			setItem: vi.fn(),
+			getItem: vi.fn(() => 'true'),
+		});
+
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
 			[
@@ -145,8 +151,8 @@ describe('App component', () => {
 		const app = await screen.findByTestId('app');
 
 		expect(app).toHaveClass(/dark/);
-		expect(localstorage.getItem).toBeCalledWith('darkTheme');
-		expect(localstorage.setItem).toBeCalledWith('darkTheme', 'true');
+		expect(localStorage.getItem).toHaveBeenCalledWith('darkTheme');
+		expect(localStorage.setItem).toHaveBeenCalledWith('darkTheme', 'true');
 	});
 	it('should render the dark theme if the dark theme of url search params is set.', async () => {
 		const mockFetchResult = {};
@@ -160,9 +166,8 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
+		vi.stubGlobal('matchMedia', () => {});
+
 		vi.spyOn(Storage.prototype, 'setItem');
 		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
 		const queryClient = new QueryClient();
@@ -211,11 +216,7 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
-		vi.spyOn(Storage.prototype, 'setItem');
-		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
+		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -260,11 +261,7 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
-		vi.spyOn(Storage.prototype, 'setItem');
-		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
+		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -307,7 +304,6 @@ describe('App component', () => {
 	});
 	it('should toggle the color theme if the switch is clicked in the Header component', async () => {
 		const user = userEvent.setup();
-		const mockDarkTheme = 'false';
 
 		vi.mocked(Header).mockImplementation(({ onColorTheme }) => (
 			<div>
@@ -324,12 +320,17 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
+		vi.stubGlobal(
+			'matchMedia',
+			vi.fn(() => ({
+				matches: false,
+			})),
+		);
 
-		const mockLocalStorageSetItem = vi.spyOn(Storage.prototype, 'setItem');
-		vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(mockDarkTheme);
+		vi.stubGlobal('localStorage', {
+			setItem: vi.fn(),
+			getItem: vi.fn(() => null),
+		});
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -356,10 +357,6 @@ describe('App component', () => {
 			</QueryClientProvider>,
 		);
 
-		// await waitForElementToBeRemoved(() =>
-		// 	screen.getByText('Loading component'),
-		// );
-
 		const button = screen.getByRole('button', {
 			name: 'Switch color theme',
 		});
@@ -369,10 +366,7 @@ describe('App component', () => {
 		const app = screen.getByTestId('app');
 
 		expect(app).toHaveClass(/dark/);
-		expect(mockLocalStorageSetItem).toBeCalledWith(
-			'darkTheme',
-			JSON.stringify(!mockDarkTheme),
-		);
+		expect(localStorage.setItem).toHaveBeenCalledWith('darkTheme', 'true');
 	});
 	it('should detect offline state then online state', async () => {
 		vi.mocked(Header).mockImplementation(() => <div>Header component</div>);
@@ -390,11 +384,7 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
-		vi.spyOn(Storage.prototype, 'setItem');
-		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
+		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
@@ -460,11 +450,7 @@ describe('App component', () => {
 			}),
 		);
 
-		vi.spyOn(window, 'matchMedia').mockReturnValueOnce({
-			matches: false,
-		} as MediaQueryList);
-		vi.spyOn(Storage.prototype, 'setItem');
-		vi.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce('false');
+		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
 		const router = createMemoryRouter(
