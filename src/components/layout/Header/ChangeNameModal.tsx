@@ -35,7 +35,7 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
 
-	const timer = useRef<NodeJS.Timeout>();
+	const timer = useRef<ReturnType<typeof setTimeout>>();
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
