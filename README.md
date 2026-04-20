@@ -1,5 +1,7 @@
 # HeLog
 
+[![Build Status](https://github.com/whitesgr03/helog/actions/workflows/ci-pipeline.yml/badge.svg)](https://github.com/whitesgr03/helog/actions/workflows/ci-pipeline.yml)
+
 HeLog is a public blog built with React. Allows users to post and comment. Hosted on Vercel.
 
 ![website screenshots](https://i.meee.com.tw/tmICN0D.png)
