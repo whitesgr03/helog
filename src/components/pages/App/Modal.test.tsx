@@ -48,7 +48,7 @@ describe('Modal component', () => {
 
 		await user.click(closeButton);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 
 		mockModalData.component = mockCustomHook.onModal.mock.calls[0][0].component;
 
@@ -77,7 +77,7 @@ describe('Modal component', () => {
 
 		await user.click(model);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 
 		mockModalData.component = mockCustomHook.onModal.mock.calls[0][0].component;
 

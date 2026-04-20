@@ -66,7 +66,7 @@ describe('LatestPosts component', () => {
 
 		const items = screen.getAllByRole('listitem');
 
-		expect(getPosts).toBeCalledTimes(1);
+		expect(getPosts).toHaveBeenCalledTimes(1);
 		expect(items).toHaveLength(4);
 	});
 	it('should render refetch button if fetching posts data fails', async () => {
@@ -108,7 +108,7 @@ describe('LatestPosts component', () => {
 			name: 'Click here to load posts',
 		});
 
-		expect(getPosts).toBeCalledTimes(1);
+		expect(getPosts).toHaveBeenCalledTimes(1);
 		expect(button).toBeInTheDocument();
 	});
 	it('should render an error alert if refetch button is clicked.', async () => {
@@ -154,6 +154,6 @@ describe('LatestPosts component', () => {
 
 		await user.click(button);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 });

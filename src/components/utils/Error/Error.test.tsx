@@ -44,7 +44,7 @@ describe('Error component', () => {
 		await user.click(link);
 
 		expect(screen.getByText('Home page')).toBeInTheDocument();
-		expect(mockProps.onReGetUser).toBeCalledTimes(1);
+		expect(mockProps.onReGetUser).toHaveBeenCalledTimes(1);
 	});
 	it('should render the "Go Back Previous Page" link if the "previousPath" state is provided', () => {
 		const mockState = {

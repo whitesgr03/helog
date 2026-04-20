@@ -451,7 +451,7 @@ describe('ReplyDetail component', () => {
 
 		await user.click(deleteButton);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			ReplyDelete,
@@ -940,7 +940,7 @@ describe('ReplyDetail component', () => {
 
 		await user.click(repliedUserButton);
 
-		expect(mockProps.onScroll).toBeCalledTimes(1);
-		expect(mockProps.onScroll).toBeCalledWith(mockProps.reply.reply._id);
+		expect(mockProps.onScroll).toHaveBeenCalledTimes(1);
+		expect(mockProps.onScroll).toHaveBeenCalledWith(mockProps.reply.reply._id);
 	});
 });

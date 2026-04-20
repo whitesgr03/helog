@@ -172,7 +172,7 @@ describe('ReplyCreate component', () => {
 
 		await user.click(cancelButton);
 
-		expect(mockProps.onShowReplyBox).toBeCalledTimes(1);
+		expect(mockProps.onShowReplyBox).toHaveBeenCalledTimes(1);
 	});
 	it('should render an error field message if the field validation fails after submission', async () => {
 		const user = userEvent.setup();
@@ -387,7 +387,7 @@ describe('ReplyCreate component', () => {
 
 		const replyErrorMessageElement = screen.getByTestId('error-message');
 
-		expect(createReply).toBeCalledTimes(1);
+		expect(createReply).toHaveBeenCalledTimes(1);
 		expect(labelElement).toHaveClass(/error/);
 		expect(replyErrorMessageElement).toHaveTextContent(
 			mockFetchResult.fields.content,
@@ -451,8 +451,8 @@ describe('ReplyCreate component', () => {
 		await user.type(replyField, mockContent);
 		await user.click(submitButton);
 
-		expect(createReply).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(createReply).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 	it('should create a new reply if the reply field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -525,8 +525,8 @@ describe('ReplyCreate component', () => {
 		await user.type(replyField, mockContent);
 		await user.click(submitButton);
 
-		expect(createReply).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(mockProps.onShowReplyBox).toBeCalledTimes(1);
+		expect(createReply).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
+		expect(mockProps.onShowReplyBox).toHaveBeenCalledTimes(1);
 	});
 });

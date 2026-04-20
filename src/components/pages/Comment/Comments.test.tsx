@@ -94,7 +94,7 @@ describe('Comments component', () => {
 			name: 'Click here to load comments',
 		});
 
-		expect(getComments).toBeCalledTimes(1);
+		expect(getComments).toHaveBeenCalledTimes(1);
 		expect(button).toBeInTheDocument();
 	});
 	it('should refetch comments, if the refetching button is clicked and fetch comments successful', async () => {
@@ -262,8 +262,8 @@ describe('Comments component', () => {
 
 		await userEvent.setup().click(button);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(getComments).toBeCalledTimes(2);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
+		expect(getComments).toHaveBeenCalledTimes(2);
 	});
 	it('should render the more comments, if the user click the show more comments button', async () => {
 		const user = userEvent.setup();
@@ -317,7 +317,7 @@ describe('Comments component', () => {
 
 		await user.click(button);
 
-		expect(getComments).toBeCalledTimes(1);
+		expect(getComments).toHaveBeenCalledTimes(1);
 		expect(screen.getAllByRole('listitem')).toHaveLength(50);
 	});
 	it('should fetches next comments, if the load more comments button is clicked and fetching next comments successful', async () => {
@@ -421,7 +421,7 @@ describe('Comments component', () => {
 			screen.queryByText('Loading component'),
 		);
 
-		expect(getComments).toBeCalledTimes(2);
+		expect(getComments).toHaveBeenCalledTimes(2);
 		expect(screen.getAllByRole('listitem')).toHaveLength(
 			mockFirstFetchData.data.commentsCount,
 		);
@@ -508,7 +508,7 @@ describe('Comments component', () => {
 
 		await user.click(button);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 	it(`should render no comments if the fetching comments are empty`, async () => {
 		let mockFetchData = {

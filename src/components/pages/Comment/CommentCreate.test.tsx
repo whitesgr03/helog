@@ -204,7 +204,7 @@ describe('CommentCreate component', () => {
 			commentField.focus();
 		});
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 		expect(commentField).not.toHaveFocus();
 	});
 	it('should render an error field message if the field validation fails after submission', async () => {
@@ -403,7 +403,7 @@ describe('CommentCreate component', () => {
 		const labelElement = screen.getByTestId('label');
 		const commentErrorMessageElement = screen.getByTestId('error-message');
 
-		expect(createComment).toBeCalledTimes(1);
+		expect(createComment).toHaveBeenCalledTimes(1);
 		expect(labelElement).toHaveClass(/error/);
 		expect(commentErrorMessageElement).toHaveTextContent(
 			mockFetchResult.fields.content,
@@ -471,8 +471,8 @@ describe('CommentCreate component', () => {
 			screen.getByText('Loading component'),
 		);
 
-		expect(createComment).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(createComment).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 	it('should create a new comment if the comment field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -535,9 +535,9 @@ describe('CommentCreate component', () => {
 
 		const loadingComponent = await screen.findByText('Loading component');
 
-		expect(createComment).toBeCalledTimes(1);
-		expect(createComment).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(createComment).toHaveBeenCalledTimes(1);
+		expect(createComment).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 
 		expect(submitButton).not.toBeInTheDocument();
 		expect(loadingComponent).not.toBeInTheDocument();

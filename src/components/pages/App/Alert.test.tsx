@@ -69,8 +69,8 @@ describe('Alert component', () => {
 		expect(message).toHaveTextContent(mockAlertData[0].message);
 
 		await waitFor(() => {
-			expect(mockCustomHook.onAlert).toBeCalledWith([]);
-			expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+			expect(mockCustomHook.onAlert).toHaveBeenCalledWith([]);
+			expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 			mockAlertData.pop();
 		});
 
@@ -102,17 +102,17 @@ describe('Alert component', () => {
 
 		user.hover(message);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(0);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(0);
 
 		user.hover(alert);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(0);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(0);
 
 		user.unhover(alert);
 
 		await waitFor(() => {
-			expect(mockCustomHook.onAlert).toBeCalledWith([]);
-			expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+			expect(mockCustomHook.onAlert).toHaveBeenCalledWith([]);
+			expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 		});
 	});
 	it(`should render the second alert message if a second alert message is added`, async () => {
@@ -146,8 +146,8 @@ describe('Alert component', () => {
 		fireEvent.transitionEnd(alert);
 
 		await waitFor(() => {
-			expect(mockCustomHook.onAlert).toBeCalledWith([mockAlertData[1]]);
-			expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+			expect(mockCustomHook.onAlert).toHaveBeenCalledWith([mockAlertData[1]]);
+			expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 		});
 	});
 });

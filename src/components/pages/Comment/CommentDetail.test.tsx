@@ -516,7 +516,7 @@ describe('CommentDetail component', () => {
 
 		await user.click(deleteButton);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			CommentDelete,
@@ -746,7 +746,7 @@ describe('CommentDetail component', () => {
 
 		await waitForElementToBeRemoved(() => screen.getByTestId('loading-icon'));
 
-		expect(getReplies).toBeCalledTimes(1);
+		expect(getReplies).toHaveBeenCalledTimes(1);
 		expect(screen.getByText('Replies component')).toBeInTheDocument();
 	});
 	it('should add the state of renderRepliesCount value, if onAddingRepliesCount method is executed', async () => {
@@ -916,7 +916,7 @@ describe('CommentDetail component', () => {
 
 		await user.click(replyButton);
 
-		expect(getReplies).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(getReplies).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 });

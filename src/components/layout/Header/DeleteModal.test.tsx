@@ -77,7 +77,7 @@ describe('DeleteModal component', () => {
 
 		const errorComponent = await screen.findByText('Error component');
 
-		expect(deleteUser).toBeCalledTimes(1);
+		expect(deleteUser).toHaveBeenCalledTimes(1);
 		expect(errorComponent).toBeInTheDocument();
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
@@ -123,7 +123,7 @@ describe('DeleteModal component', () => {
 
 		await user.click(closeButton);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 	});
 	it('should delete the user if delete button is clicked', async () => {
 		const user = userEvent.setup();
@@ -180,10 +180,10 @@ describe('DeleteModal component', () => {
 
 		await user.click(deleteButton);
 
-		expect(deleteUser).toBeCalledTimes(1);
-		expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
-		expect(mockCustomHook.onModal).toBeCalledTimes(2);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(deleteUser).toHaveBeenCalledTimes(1);
+		expect(mockProps.onCloseDropdown).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(2);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 		expect(queryClient.getQueryData(['userInfo'])).toBeUndefined();
 	});
 });

@@ -269,7 +269,7 @@ describe('Dropdown component', () => {
 
 		await user.click(button);
 
-		expect(mockProps.onColorTheme).toBeCalledTimes(1);
+		expect(mockProps.onColorTheme).toHaveBeenCalledTimes(1);
 	});
 	it('should navigate to the "/error" path if logout fails', async () => {
 		const user = userEvent.setup();
@@ -401,7 +401,7 @@ describe('Dropdown component', () => {
 		const loginLink = await screen.findByRole('link', { name: 'Login' });
 
 		expect(loginLink).toBeInTheDocument();
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(mockProps.onCloseDropdown).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
+		expect(mockProps.onCloseDropdown).toHaveBeenCalledTimes(1);
 	});
 });

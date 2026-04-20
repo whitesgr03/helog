@@ -66,7 +66,7 @@ describe('CommentUpdate component', () => {
 
 		await user.click(cancelButton);
 
-		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
+		expect(mockProps.onCloseCommentBox).toHaveBeenCalledTimes(1);
 	});
 	it('should change the comment field values if the comment field is entered', async () => {
 		const user = userEvent.setup();
@@ -306,7 +306,7 @@ describe('CommentUpdate component', () => {
 
 		const commentErrorMessageElement = screen.getByTestId('error-message');
 
-		expect(updateComment).toBeCalledTimes(1);
+		expect(updateComment).toHaveBeenCalledTimes(1);
 		expect(labelElement).toHaveClass(/error/);
 		expect(commentErrorMessageElement).toHaveTextContent(
 			mockResolve.fields.content,
@@ -371,8 +371,8 @@ describe('CommentUpdate component', () => {
 			screen.getByText('Loading component'),
 		);
 
-		expect(updateComment).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(updateComment).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 	it('should update the comment if the comment field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -437,8 +437,8 @@ describe('CommentUpdate component', () => {
 		await user.type(commentField, mockContent);
 		await user.click(submitButton);
 
-		expect(updateComment).toBeCalledTimes(1);
-		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(updateComment).toHaveBeenCalledTimes(1);
+		expect(mockProps.onCloseCommentBox).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 });

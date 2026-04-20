@@ -215,7 +215,7 @@ describe('Replies component', () => {
 
 		await user.click(button);
 
-		expect(mockProps.onAddingRepliesCount).toBeCalledTimes(1);
+		expect(mockProps.onAddingRepliesCount).toHaveBeenCalledTimes(1);
 	});
 	it('should load next replies if the load more replies button is clicked', async () => {
 		const user = userEvent.setup();
@@ -289,7 +289,7 @@ describe('Replies component', () => {
 			screen.queryByText('Loading component'),
 		);
 
-		expect(mockProps.onAddingRepliesCount).toBeCalledTimes(1);
+		expect(mockProps.onAddingRepliesCount).toHaveBeenCalledTimes(1);
 	});
 	it('should render an error alert if load next replies fails', async () => {
 		const user = userEvent.setup();
@@ -350,6 +350,6 @@ describe('Replies component', () => {
 
 		await user.click(button);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 });

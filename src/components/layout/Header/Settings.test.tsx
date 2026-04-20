@@ -64,7 +64,7 @@ describe('Settings component', () => {
 
 		await user.click(closeButton);
 
-		expect(mockProps.onToggleSettingsMenu).toBeCalledTimes(1);
+		expect(mockProps.onToggleSettingsMenu).toHaveBeenCalledTimes(1);
 	});
 	it('should active ChangeNameModal component, if the change username button is clicked', async () => {
 		const user = userEvent.setup();
@@ -92,7 +92,7 @@ describe('Settings component', () => {
 
 		await user.click(changeNameBtn);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			ChangeNameModal,
@@ -124,7 +124,7 @@ describe('Settings component', () => {
 
 		await user.click(changeNameBtn);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onModal.mock.calls[0][0].component).toHaveProperty(
 			'type',
 			DeleteModal,

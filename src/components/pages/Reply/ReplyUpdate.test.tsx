@@ -68,7 +68,7 @@ describe('ReplyUpdate component', () => {
 
 		await user.click(cancelButton);
 
-		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
+		expect(mockProps.onCloseCommentBox).toHaveBeenCalledTimes(1);
 	});
 	it('should change the reply field values if the reply field is entered', async () => {
 		const user = userEvent.setup();
@@ -315,7 +315,7 @@ describe('ReplyUpdate component', () => {
 
 		const replyErrorMessageElement = screen.getByTestId('error-message');
 
-		expect(updateReply).toBeCalledTimes(1);
+		expect(updateReply).toHaveBeenCalledTimes(1);
 		expect(labelElement).toHaveClass(/error/);
 		expect(replyErrorMessageElement).toHaveTextContent(
 			mockFetchResult.fields.content,
@@ -375,8 +375,8 @@ describe('ReplyUpdate component', () => {
 		await user.type(replyField, mockContent);
 		user.click(submitButton);
 		const loadingComponent = await screen.findByText('Loading component');
-		expect(updateReply).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(updateReply).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should update the reply if the reply field successfully validates after user submission', async () => {
@@ -444,9 +444,9 @@ describe('ReplyUpdate component', () => {
 
 		const loadingComponent = await screen.findByText('Loading component');
 
-		expect(updateReply).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(mockProps.onCloseCommentBox).toBeCalledTimes(1);
+		expect(updateReply).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
+		expect(mockProps.onCloseCommentBox).toHaveBeenCalledTimes(1);
 		expect(loadingComponent).not.toBeInTheDocument();
 	});
 });

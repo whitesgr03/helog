@@ -295,7 +295,7 @@ describe('ChangeNameModal component', () => {
 		const loadingComponent = await screen.findByText('Loading component');
 
 		expect(loadingComponent).toBeInTheDocument();
-		expect(updateUserInfo).toBeCalledTimes(1);
+		expect(updateUserInfo).toHaveBeenCalledTimes(1);
 
 		await waitForElementToBeRemoved(() =>
 			screen.queryByText('Loading component'),
@@ -361,7 +361,7 @@ describe('ChangeNameModal component', () => {
 		const errorMessage = screen.getByText('Error page');
 
 		expect(errorMessage).toBeInTheDocument();
-		expect(updateUserInfo).toBeCalledTimes(1);
+		expect(updateUserInfo).toHaveBeenCalledTimes(1);
 	});
 	it('should update the username if the username field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -417,8 +417,8 @@ describe('ChangeNameModal component', () => {
 		await user.type(usernameField, '_new');
 		await user.click(submitButton);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
-		expect(updateUserInfo).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
+		expect(updateUserInfo).toHaveBeenCalledTimes(1);
 		expect(queryClient.getQueryData(['userInfo'])).toEqual(mockFetchResult);
 	});
 });

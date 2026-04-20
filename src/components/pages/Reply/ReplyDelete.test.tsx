@@ -54,9 +54,9 @@ describe('ReplyDelete component', () => {
 			screen.getByText('Loading component'),
 		);
 
-		expect(deleteReply).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(mockCustomHook.onModal).toBeCalledTimes(2);
+		expect(deleteReply).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(2);
 	});
 	it('should close modal if the cancel button is clicked', async () => {
 		const user = userEvent.setup();
@@ -83,7 +83,7 @@ describe('ReplyDelete component', () => {
 
 		await user.click(closeButton);
 
-		expect(mockCustomHook.onModal).toBeCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(1);
 	});
 	it('should delete a reply if the delete button is clicked', async () => {
 		const user = userEvent.setup();
@@ -132,9 +132,9 @@ describe('ReplyDelete component', () => {
 			screen.getByText('Loading component'),
 		);
 
-		expect(deleteReply).toBeCalledTimes(1);
-		expect(deleteReply).toBeCalledTimes(1);
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
-		expect(mockCustomHook.onModal).toBeCalledTimes(2);
+		expect(deleteReply).toHaveBeenCalledTimes(1);
+		expect(deleteReply).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
+		expect(mockCustomHook.onModal).toHaveBeenCalledTimes(2);
 	});
 });

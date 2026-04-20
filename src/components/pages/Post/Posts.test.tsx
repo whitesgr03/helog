@@ -101,7 +101,7 @@ describe('PostList component', () => {
 
 		const items = screen.getAllByRole('listitem');
 
-		expect(getPosts).toBeCalledTimes(1);
+		expect(getPosts).toHaveBeenCalledTimes(1);
 		expect(items).toHaveLength(mockData.data.postsCount);
 		items.forEach((item, index) => {
 			expect(item).toHaveTextContent(mockData.data.posts[index].title);
@@ -265,7 +265,7 @@ describe('PostList component', () => {
 
 		await user.click(button);
 
-		expect(getPosts).toBeCalledTimes(1);
+		expect(getPosts).toHaveBeenCalledTimes(1);
 		expect(screen.getAllByRole('listitem')).toHaveLength(20);
 	});
 	it('should fetches the next page, if the user click the load more posts button and infinite fetching posts successful', async () => {
@@ -378,7 +378,7 @@ describe('PostList component', () => {
 		await waitForElementToBeRemoved(() =>
 			screen.queryByText('Loading component'),
 		);
-		expect(getPosts).toBeCalledTimes(2);
+		expect(getPosts).toHaveBeenCalledTimes(2);
 		expect(screen.getAllByRole('listitem')).toHaveLength(
 			mockFirstFetchData.data.posts.length +
 				mockNextFetchData.data.posts.length,
@@ -472,6 +472,6 @@ describe('PostList component', () => {
 
 		await user.click(button);
 
-		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
+		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
 });
