@@ -49,6 +49,7 @@ export default defineConfig(({ mode }) => {
 				include: ['src/**/*.ts?(x)'],
 				exclude: ['src/**/delete_*'],
 			},
+			clearMocks: true,
 		},
 	};
 });
