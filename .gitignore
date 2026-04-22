@@ -47,3 +47,5 @@ delete_*
 
 
 *.tsbuildinfo
+
+wrangler*
