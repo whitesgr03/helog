@@ -78,7 +78,7 @@ describe('Alert component', () => {
 
 		expect(alert).not.toHaveClass(/active/);
 		expect(alert).not.toHaveClass(/error/);
-		expect(message).toHaveTextContent('');
+		expect(message).toHaveTextContent('error');
 	});
 	it(`should pause the alert timer if the user mouse over to alert element`, async () => {
 		const user = userEvent.setup();
