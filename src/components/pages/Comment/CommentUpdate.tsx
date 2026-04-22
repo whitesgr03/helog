@@ -44,7 +44,7 @@ export const CommentUpdate = ({
 	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef<HTMLTextAreaElement>(null);
-	const timer = useRef<NodeJS.Timeout>();
+	const timer = useRef<ReturnType<typeof setTimeout>>();
 
 	const { postId } = useParams();
 

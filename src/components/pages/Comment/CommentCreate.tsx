@@ -34,7 +34,7 @@ export const CommentCreate = ({ postId }: { postId: string }) => {
 	const [showSubmitButton, setShowSubmitButton] = useState(false);
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef<HTMLTextAreaElement>(null);
-	const timer = useRef<NodeJS.Timeout>();
+	const timer = useRef<ReturnType<typeof setTimeout>>();
 
 	const queryClient = useQueryClient();
 	const { data: user } = useQuery({ ...queryUserInfoOption(), enabled: false });
