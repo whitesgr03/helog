@@ -57,7 +57,7 @@ export const Replies = ({
 }: RepliesProps) => {
 	const { onAlert } = useAppDataAPI();
 	const repliesRef = useRef<HTMLDivElement[]>([]);
-	const waitForScrollRef = useRef<NodeJS.Timeout>();
+	const waitForScrollRef = useRef<ReturnType<typeof setTimeout>>();
 	const [shakeTargetId, setShakeTargetId] = useState('');
 
 	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
