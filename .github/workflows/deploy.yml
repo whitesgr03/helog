@@ -26,6 +26,10 @@ jobs:
 
       - name: Build production
         run: npm run build
+        env:
+          VITE_RESOURCE_URL: ${{ vars.RESOURCE_URL }}
+          VITE_HELOG_EDITOR_URL: ${{ vars.HELOG_EDITOR_URL }}
+          VITE_HELOG_ACCOUNT_URL: ${{ vars.HELOG_ACCOUNT_URL }}
       
       - name: Deploy production to cloudflare
         uses: cloudflare/wrangler-action@v3
