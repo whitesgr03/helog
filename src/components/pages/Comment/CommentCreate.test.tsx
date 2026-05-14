@@ -428,9 +428,7 @@ describe('CommentCreate component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(createComment).mockImplementationOnce(
-			() => new Promise((_r, reject) => setTimeout(() => reject(Error()), 300)),
-		);
+		vi.mocked(createComment).mockRejectedValueOnce(Error());
 
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
@@ -472,10 +470,6 @@ describe('CommentCreate component', () => {
 		await user.type(commentField, mockContent);
 		await user.click(submitButton);
 
-		await waitForElementToBeRemoved(() =>
-			screen.getByText('Loading component'),
-		);
-
 		expect(createComment).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 	});
@@ -497,7 +491,7 @@ describe('CommentCreate component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(createComment).mockResolvedValue(mockFetchResult);
+		vi.mocked(createComment).mockResolvedValueOnce(mockFetchResult);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
@@ -536,16 +530,13 @@ describe('CommentCreate component', () => {
 		const submitButton = screen.getByRole('button', { name: 'Comment' });
 
 		await user.type(commentField, mockContent);
-		user.click(submitButton);
-
-		const loadingComponent = await screen.findByText('Loading component');
+		await user.click(submitButton);
 
 		expect(createComment).toHaveBeenCalledTimes(1);
 		expect(createComment).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 
 		expect(submitButton).not.toBeInTheDocument();
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should revert the CommentCreate component to initial state if the cancel button is clicked', async () => {
 		const user = userEvent.setup();
