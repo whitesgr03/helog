@@ -111,9 +111,9 @@ export const Replies = ({
 						<div
 							key={reply._id}
 							id={reply._id}
-							ref={(element: HTMLDivElement) =>
-								(repliesRef.current[index] = element)
-							}
+							ref={(element: HTMLDivElement) => {
+								repliesRef.current[index] = element;
+							}}
 							className={shakeTargetId === reply._id ? styles.shake : ''}
 							data-testid="reply"
 							onAnimationEnd={() => setShakeTargetId('')}

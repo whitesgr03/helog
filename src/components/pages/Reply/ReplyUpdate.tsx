@@ -102,7 +102,7 @@ export const ReplyUpdate = ({
 		},
 	});
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const handleValidation = async () => {
