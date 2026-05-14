@@ -358,7 +358,11 @@ describe('CommentCreate component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(createComment).mockResolvedValue(mockFetchResult);
+		vi.mocked(createComment).mockImplementationOnce(
+			() =>
+				new Promise(resolve => setTimeout(() => resolve(mockFetchResult), 100)),
+		);
+
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
@@ -396,9 +400,11 @@ describe('CommentCreate component', () => {
 		const submitButton = screen.getByRole('button', { name: 'Comment' });
 
 		await user.type(commentField, mockContent);
-		user.click(submitButton);
+		await user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
+		await waitForElementToBeRemoved(() =>
+			screen.getByText('Loading component'),
+		);
 
 		const labelElement = screen.getByTestId('label');
 		const commentErrorMessageElement = screen.getByTestId('error-message');
@@ -408,7 +414,6 @@ describe('CommentCreate component', () => {
 		expect(commentErrorMessageElement).toHaveTextContent(
 			mockFetchResult.fields.content,
 		);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should render an error alert if a new comment create fails', async () => {
 		const user = userEvent.setup();

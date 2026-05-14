@@ -253,7 +253,9 @@ describe('CommentUpdate component', () => {
 
 		const mockContent = '_changed';
 
-		vi.mocked(updateComment).mockResolvedValueOnce(mockResolve);
+		vi.mocked(updateComment).mockImplementationOnce(
+			() => new Promise(resolve => setTimeout(() => resolve(mockResolve), 100)),
+		);
 		vi.mocked(Loading).mockImplementationOnce(() => (
 			<div>Loading component</div>
 		));
@@ -300,9 +302,11 @@ describe('CommentUpdate component', () => {
 		const labelElement = screen.getByTestId('label');
 
 		await user.type(commentField, mockContent);
-		user.click(submitButton);
+		await user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
+		await waitForElementToBeRemoved(() =>
+			screen.getByText('Loading component'),
+		);
 
 		const commentErrorMessageElement = screen.getByTestId('error-message');
 
@@ -311,7 +315,6 @@ describe('CommentUpdate component', () => {
 		expect(commentErrorMessageElement).toHaveTextContent(
 			mockResolve.fields.content,
 		);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should render an error message alert if the comment update fails', async () => {
 		const user = userEvent.setup();
