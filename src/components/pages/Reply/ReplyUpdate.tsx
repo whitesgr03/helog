@@ -21,7 +21,7 @@ import { verifySchema } from '../../../utils/verifySchema';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { ReplyData } from './Replies';
+import { type ReplyData } from './Replies';
 
 interface ReplyUpdateProps {
 	commentId: string;

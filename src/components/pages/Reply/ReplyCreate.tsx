@@ -22,7 +22,7 @@ import { queryUserInfoOption } from '../../../utils/queryOptions';
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
-import { CommentData } from '../Comment/Comments';
+import { type CommentData } from '../Comment/Comments';
 
 interface ReplyCreateProps {
 	commentId: string;

@@ -22,7 +22,7 @@ import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions.js';
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
 // Type
-import { DarkTheme } from '../../pages/App/App.js';
+import { type DarkTheme } from '../../pages/App/App.js';
 
 interface DropdownProps {
 	darkTheme: DarkTheme;

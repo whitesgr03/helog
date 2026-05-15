@@ -22,7 +22,7 @@ import { verifySchema } from '../../../utils/verifySchema';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { Comment, CommentData } from './Comments';
+import type { Comment, CommentData } from './Comments';
 
 interface inputErrors {
 	content?: string;

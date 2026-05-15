@@ -24,7 +24,7 @@ import {
 // Context
 import { useAppDataAPI } from '../App/AppContext';
 
-import { Comment } from './Comments';
+import { type Comment } from './Comments';
 
 interface CommentDetailProps {
 	index: number;

@@ -16,7 +16,7 @@ import { Loading } from '../../utils/Loading';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { CommentData } from './Comments';
+import { type CommentData } from './Comments';
 
 export const CommentDelete = ({ commentId }: { commentId: string }) => {
 	const { postId } = useParams();

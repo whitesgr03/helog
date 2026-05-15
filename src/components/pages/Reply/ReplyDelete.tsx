@@ -15,7 +15,7 @@ import { Loading } from '../../utils/Loading';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { ReplyData } from './Replies';
+import { type ReplyData } from './Replies';
 
 interface ReplyDeleteProps {
 	commentId: string;
