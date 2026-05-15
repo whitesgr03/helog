@@ -24,9 +24,9 @@
 
 .title {
 	display: -webkit-box;
-	color: var(--light-scheme-highlight);
 	-webkit-line-clamp: 3;
 	line-clamp: 3;
+	color: var(--light-scheme-highlight);
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
