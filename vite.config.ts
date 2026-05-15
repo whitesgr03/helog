@@ -1,5 +1,4 @@
 /// <reference types="vitest/config" />
-// Reference the test property
 
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -10,7 +9,7 @@ export default defineConfig(({ mode }) => {
 	return {
 		plugins: [react()],
 		preview: {
-			port: Number(env.PORT),
+			port: Number(env.PORT) || 9001,
 			headers: {
 				'X-Content-Type-Options': 'nosniff',
 				'Cross-Origin-Embedder-Policy': 'credentialless',
@@ -25,7 +24,7 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		server: {
-			port: Number(env.PORT),
+			port: Number(env.PORT) || 9001,
 			headers: {
 				'X-Content-Type-Options': 'nosniff',
 				'Cross-Origin-Embedder-Policy': 'credentialless',
