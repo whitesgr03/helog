@@ -10,7 +10,7 @@ import {
 	QueryClientProvider,
 	infiniteQueryOptions,
 } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { Posts } from './Posts';
 
@@ -65,33 +65,25 @@ describe('PostList component', () => {
 			<div>PostListTemplate component</div>
 		));
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
-			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
+			<ul>
+				{posts?.map(post => (
+					<li key={post.title}>{post.title}</li>
+				))}
+			</ul>
 		));
 		vi.mocked(getPosts).mockResolvedValue(mockData);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Posts />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Posts />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -129,7 +121,11 @@ describe('PostList component', () => {
 			<div>PostListTemplate component</div>
 		));
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
-			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
+			<ul>
+				{posts?.map(post => (
+					<li key={post.title}>{post.title}</li>
+				))}
+			</ul>
 		));
 		vi.mocked(getPosts).mockRejectedValue(Error());
 
@@ -140,29 +136,17 @@ describe('PostList component', () => {
 				},
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Posts />,
-				},
-				{ path: '/error', element: <div>Error component</div> },
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Posts />,
 			},
-		);
+			{ path: '/error', element: <div>Error component</div> },
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -225,33 +209,25 @@ describe('PostList component', () => {
 			<div>PostListTemplate component</div>
 		));
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
-			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
+			<ul>
+				{posts?.map(post => (
+					<li key={post.title}>{post.title}</li>
+				))}
+			</ul>
 		));
 		vi.mocked(getPosts).mockResolvedValueOnce(mockFirstFetchData);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Posts />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Posts />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -326,7 +302,11 @@ describe('PostList component', () => {
 		));
 
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
-			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
+			<ul>
+				{posts?.map(post => (
+					<li key={post.title}>{post.title}</li>
+				))}
+			</ul>
 		));
 		vi.mocked(getPosts)
 			.mockResolvedValueOnce(mockFirstFetchData)
@@ -338,28 +318,16 @@ describe('PostList component', () => {
 			);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Posts />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Posts />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -431,32 +399,24 @@ describe('PostList component', () => {
 		));
 
 		vi.mocked(PostList).mockImplementation(({ posts }) => (
-			<ul>{posts?.map(post => <li key={post.title}>{post.title}</li>)}</ul>
+			<ul>
+				{posts?.map(post => (
+					<li key={post.title}>{post.title}</li>
+				))}
+			</ul>
 		));
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Posts />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Posts />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

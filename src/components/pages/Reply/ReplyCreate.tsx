@@ -1,6 +1,6 @@
 // Packages
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';

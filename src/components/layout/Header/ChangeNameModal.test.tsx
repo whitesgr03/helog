@@ -8,7 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { ChangeNameModal } from './ChangeNameModal';
 import { Loading } from '../../utils/Loading';
@@ -34,28 +34,16 @@ describe('ChangeNameModal component', () => {
 		const queryClient = new QueryClient();
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -81,28 +69,16 @@ describe('ChangeNameModal component', () => {
 		const queryClient = new QueryClient();
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -129,28 +105,16 @@ describe('ChangeNameModal component', () => {
 		const queryClient = new QueryClient();
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -185,28 +149,16 @@ describe('ChangeNameModal component', () => {
 		const queryClient = new QueryClient();
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -259,28 +211,16 @@ describe('ChangeNameModal component', () => {
 			<div>Loading component</div>
 		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -323,32 +263,20 @@ describe('ChangeNameModal component', () => {
 			<div>Loading component</div>
 		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-				{
-					path: '/error',
-					element: <div>Error page</div>,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+			{
+				path: '/error',
+				element: <div>Error page</div>,
+			},
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -386,28 +314,16 @@ describe('ChangeNameModal component', () => {
 			<div>Loading component</div>
 		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ChangeNameModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ChangeNameModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

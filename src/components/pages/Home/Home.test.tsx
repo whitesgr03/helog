@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useMediaQuery } from 'react-responsive';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { Home } from './Home';
 import { LatestPosts } from './LatestPosts';
@@ -30,28 +30,14 @@ describe('Home component', () => {
 			<div>LatestPostsTemplate component</div>
 		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Home />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Home />,
 			},
-		);
+		]);
 
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<RouterProvider router={router} />);
 
 		await waitForElementToBeRemoved(() =>
 			screen.queryByText('LatestPostsTemplate component'),
@@ -61,32 +47,18 @@ describe('Home component', () => {
 	});
 	it('should navigate to the "../posts" path, if the all posts link is clicked', async () => {
 		const user = userEvent.setup();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Home />,
-				},
-				{
-					path: '/posts',
-					element: <div>Posts component</div>,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Home />,
 			},
-		);
+			{
+				path: '/posts',
+				element: <div>Posts component</div>,
+			},
+		]);
 
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<RouterProvider router={router} />);
 
 		const link = screen.getByRole('link', { name: 'All Posts' });
 

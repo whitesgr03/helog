@@ -26,6 +26,7 @@ exports[`Offline component > should match snapshot 1`] = `
     </div>
     <a
       class="_link_574b05"
+      data-discover="true"
       href="/"
     >
       Back to Home Page

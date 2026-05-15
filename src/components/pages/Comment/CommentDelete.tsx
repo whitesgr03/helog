@@ -1,6 +1,6 @@
 // Packages
 import { useMutation } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 // Styles
 import headerDeleteModelStyles from '../../layout/Header/DeleteModal.module.css';

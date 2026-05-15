@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { RouterProvider, createMemoryRouter, Link } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter, Link } from 'react-router';
 
 import {
 	QueryClient,
@@ -69,27 +69,15 @@ describe('App component', () => {
 
 		const queryClient = new QueryClient();
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -124,27 +112,15 @@ describe('App component', () => {
 		});
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -180,19 +156,11 @@ describe('App component', () => {
 			],
 			{
 				initialEntries: ['/?theme=true'],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -219,27 +187,15 @@ describe('App component', () => {
 		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -264,33 +220,21 @@ describe('App component', () => {
 		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-					children: [
-						{
-							index: true,
-							element: <div>Children component</div>,
-						},
-					],
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
+				children: [
+					{
+						index: true,
+						element: <div>Children component</div>,
+					},
+				],
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -333,27 +277,15 @@ describe('App component', () => {
 		});
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -387,33 +319,21 @@ describe('App component', () => {
 		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-					children: [
-						{
-							index: true,
-							element: <div>Component</div>,
-						},
-					],
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
+				children: [
+					{
+						index: true,
+						element: <div>Component</div>,
+					},
+				],
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -453,40 +373,28 @@ describe('App component', () => {
 		vi.stubGlobal('matchMedia', () => {});
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <App />,
-					children: [
-						{
-							index: true,
-							element: <Link to={'lazy'}>link</Link>,
-						},
-						{
-							path: 'lazy',
-							lazy: async () => {
-								await new Promise(resolve => setTimeout(resolve, 100));
-								return { Component: () => <div>Lazy component</div> };
-							},
-						},
-					],
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <App />,
+				children: [
+					{
+						index: true,
+						element: <Link to={'lazy'}>link</Link>,
+					},
+					{
+						path: 'lazy',
+						lazy: async () => {
+							await new Promise(resolve => setTimeout(resolve, 100));
+							return { Component: () => <div>Lazy component</div> };
+						},
+					},
+				],
 			},
-		);
+		]);
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

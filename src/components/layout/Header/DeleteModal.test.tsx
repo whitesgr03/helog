@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { DeleteModal } from './DeleteModal';
 import { Loading } from '../../utils/Loading';
@@ -40,32 +40,20 @@ describe('DeleteModal component', () => {
 			<div>Loading component</div>
 		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <DeleteModal {...mockProps} />,
-				},
-				{
-					path: '/error',
-					element: <div>Error component</div>,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <DeleteModal {...mockProps} />,
 			},
-		);
+			{
+				path: '/error',
+				element: <div>Error component</div>,
+			},
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -94,28 +82,16 @@ describe('DeleteModal component', () => {
 
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <DeleteModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <DeleteModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -151,28 +127,16 @@ describe('DeleteModal component', () => {
 
 		vi.mocked(deleteUser).mockResolvedValueOnce(mockFetchResult);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <DeleteModal {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <DeleteModal {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

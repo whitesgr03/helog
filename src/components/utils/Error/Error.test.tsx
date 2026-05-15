@@ -1,6 +1,6 @@
 import { expect, describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { RouterProvider, createMemoryRouter, Navigate } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter, Navigate } from 'react-router';
 import { Error } from './Error';
 import userEvent from '@testing-library/user-event';
 
@@ -24,20 +24,10 @@ describe('Error component', () => {
 			],
 			{
 				initialEntries: ['/error'],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<RouterProvider router={router} />);
 
 		const link = screen.getByRole('link', { name: 'Back to Home Page' });
 
@@ -64,20 +54,10 @@ describe('Error component', () => {
 			],
 			{
 				initialEntries: ['/'],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		render(<RouterProvider router={router} />);
 
 		const element = screen.getByRole('link', { name: 'Go Back Previous Page' });
 

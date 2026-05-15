@@ -9,7 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { CommentCreate } from './CommentCreate';
 import { Loading } from '../../utils/Loading';
@@ -36,28 +36,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -83,28 +71,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -128,28 +104,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -173,28 +137,16 @@ describe('CommentCreate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		const queryClient = new QueryClient();
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -222,28 +174,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -279,28 +219,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 		const commentField = screen.getByPlaceholderText('write a comment...');
@@ -369,28 +297,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 		const commentField = screen.getByPlaceholderText('write a comment...');
@@ -436,28 +352,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -498,28 +402,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -556,28 +448,16 @@ describe('CommentCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentCreate postId={'1'} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentCreate postId={'1'} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

@@ -7,7 +7,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { CommentDelete } from './CommentDelete';
 import { Loading } from '../../utils/Loading';
@@ -51,20 +51,12 @@ describe('CommentDelete component', () => {
 			],
 			{
 				initialEntries: [`/${postId}`],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -114,20 +106,12 @@ describe('CommentDelete component', () => {
 			],
 			{
 				initialEntries: [`/${postId}`],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -165,20 +149,12 @@ describe('CommentDelete component', () => {
 			],
 			{
 				initialEntries: [`/${postId}`],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
