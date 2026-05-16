@@ -29,10 +29,10 @@
 		var(--light-scheme-hero-bgc) 50%,
 		transparent 100%
 	);
+	background-position-x: var(--loader-start-position);
 	background-size: var(--loader-width) 100%;
 	background-repeat: no-repeat;
 	background-color: rgba(var(--light-scheme-hero-bgc-rgb), 0.6);
-	background-position-x: var(--loader-start-position);
 	color: transparent;
 }
 

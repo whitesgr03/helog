@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import { Alert } from './Alert';
 import { useAlert, useAppDataAPI } from './AppContext';
-import { State } from './AppContext';
+import { type State } from './AppContext';
 
 vi.mock('./AppContext');
 

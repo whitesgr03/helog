@@ -45,6 +45,7 @@ exports[`Footer component > should match snapshot 1`] = `
       </p>
       <a
         class="_link_ab0a49"
+        data-discover="true"
         href="/policies"
       >
         Privacy Policy

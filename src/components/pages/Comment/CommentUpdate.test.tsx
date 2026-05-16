@@ -9,7 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { CommentUpdate } from './CommentUpdate';
 import { Loading } from '../../utils/Loading';
@@ -37,28 +37,16 @@ describe('CommentUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -87,28 +75,16 @@ describe('CommentUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -134,28 +110,16 @@ describe('CommentUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -186,28 +150,16 @@ describe('CommentUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -253,7 +205,9 @@ describe('CommentUpdate component', () => {
 
 		const mockContent = '_changed';
 
-		vi.mocked(updateComment).mockResolvedValueOnce(mockResolve);
+		vi.mocked(updateComment).mockImplementationOnce(
+			() => new Promise(resolve => setTimeout(() => resolve(mockResolve), 100)),
+		);
 		vi.mocked(Loading).mockImplementationOnce(() => (
 			<div>Loading component</div>
 		));
@@ -270,28 +224,16 @@ describe('CommentUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -300,9 +242,11 @@ describe('CommentUpdate component', () => {
 		const labelElement = screen.getByTestId('label');
 
 		await user.type(commentField, mockContent);
-		user.click(submitButton);
+		await user.click(submitButton);
 
-		const loadingComponent = await screen.findByText('Loading component');
+		await waitForElementToBeRemoved(() =>
+			screen.getByText('Loading component'),
+		);
 
 		const commentErrorMessageElement = screen.getByTestId('error-message');
 
@@ -311,7 +255,6 @@ describe('CommentUpdate component', () => {
 		expect(commentErrorMessageElement).toHaveTextContent(
 			mockResolve.fields.content,
 		);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should render an error message alert if the comment update fails', async () => {
 		const user = userEvent.setup();
@@ -336,28 +279,16 @@ describe('CommentUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -414,20 +345,12 @@ describe('CommentUpdate component', () => {
 			],
 			{
 				initialEntries: [`/post/${postId}`],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

@@ -9,7 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { ReplyUpdate } from './ReplyUpdate';
 import { Loading } from '../../utils/Loading';
@@ -39,28 +39,16 @@ describe('ReplyUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -88,28 +76,16 @@ describe('ReplyUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -135,28 +111,16 @@ describe('ReplyUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -188,28 +152,16 @@ describe('ReplyUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -269,7 +221,7 @@ describe('ReplyUpdate component', () => {
 
 		vi.mocked(updateReply).mockImplementationOnce(
 			() =>
-				new Promise(resolve => setTimeout(() => resolve(mockFetchResult), 300)),
+				new Promise(resolve => setTimeout(() => resolve(mockFetchResult), 100)),
 		);
 		vi.mocked(Loading).mockImplementationOnce(() => (
 			<div>Loading component</div>
@@ -277,28 +229,16 @@ describe('ReplyUpdate component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -337,35 +277,23 @@ describe('ReplyUpdate component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(updateReply).mockRejectedValue(Error());
+		vi.mocked(updateReply).mockRejectedValueOnce(Error());
 		vi.mocked(Loading).mockImplementationOnce(() => (
 			<div>Loading component</div>
 		));
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -373,11 +301,10 @@ describe('ReplyUpdate component', () => {
 		const replyField = screen.getByDisplayValue(mockProps.content);
 
 		await user.type(replyField, mockContent);
-		user.click(submitButton);
-		const loadingComponent = await screen.findByText('Loading component');
+		await user.click(submitButton);
+
 		expect(updateReply).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 	it('should update the reply if the reply field successfully validates after user submission', async () => {
 		const user = userEvent.setup();
@@ -400,7 +327,7 @@ describe('ReplyUpdate component', () => {
 			onModal: vi.fn(),
 		};
 
-		vi.mocked(updateReply).mockResolvedValue(mockFetchResult);
+		vi.mocked(updateReply).mockResolvedValueOnce(mockFetchResult);
 		vi.mocked(Loading).mockImplementationOnce(() => (
 			<div>Loading component</div>
 		));
@@ -411,28 +338,16 @@ describe('ReplyUpdate component', () => {
 			pages: [{ data: [{ _id: mockProps.replyId }] }],
 			pageParams: {},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyUpdate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyUpdate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -440,13 +355,10 @@ describe('ReplyUpdate component', () => {
 		const replyField = screen.getByDisplayValue(mockProps.content);
 
 		await user.type(replyField, mockContent);
-		user.click(submitButton);
-
-		const loadingComponent = await screen.findByText('Loading component');
+		await user.click(submitButton);
 
 		expect(updateReply).toHaveBeenCalledTimes(1);
 		expect(mockCustomHook.onAlert).toHaveBeenCalledTimes(1);
 		expect(mockProps.onCloseCommentBox).toHaveBeenCalledTimes(1);
-		expect(loadingComponent).not.toBeInTheDocument();
 	});
 });

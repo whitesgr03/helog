@@ -9,7 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { ReplyCreate } from './ReplyCreate';
 import { Loading } from '../../utils/Loading';
@@ -41,28 +41,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 		const username = screen.getByText(userData.data.username);
@@ -91,28 +79,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -143,28 +119,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -195,28 +159,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -252,28 +204,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -347,28 +287,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -419,28 +347,16 @@ describe('ReplyCreate component', () => {
 		const queryClient = new QueryClient();
 
 		queryClient.setQueryData(['userInfo'], userData);
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <ReplyCreate {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <ReplyCreate {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -498,23 +414,14 @@ describe('ReplyCreate component', () => {
 					element: <ReplyCreate {...mockProps} />,
 				},
 			],
-
 			{
 				initialEntries: [`/${postId}`],
-				future: {
-					v7_relativeSplatPath: true,
-				},
 			},
 		);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

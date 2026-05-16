@@ -22,7 +22,7 @@ import {
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { Reply } from './Replies';
+import { type Reply } from './Replies';
 
 interface ReplyDetailProps {
 	index: number;

@@ -1,34 +1,20 @@
 import { expect, describe, it } from 'vitest';
 import { render } from '@testing-library/react';
 
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { NotFound } from './NotFound';
 
 describe('NotFound component', () => {
 	it('should match snapshot', () => {
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <NotFound />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <NotFound />,
 			},
-		);
+		]);
 
-		const { asFragment } = render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		const { asFragment } = render(<RouterProvider router={router} />);
 
 		const actual = asFragment();
 

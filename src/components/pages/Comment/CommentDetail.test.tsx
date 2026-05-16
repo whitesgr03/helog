@@ -12,7 +12,7 @@ import {
 	QueryClientProvider,
 	QueryCache,
 } from '@tanstack/react-query';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { CommentDetail } from './CommentDetail';
 
@@ -68,28 +68,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post author' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -132,28 +120,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post author' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -212,28 +188,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post author' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -276,28 +240,16 @@ describe('CommentDetail component', () => {
 				author: { username: mockProps.comment.author.username },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -341,28 +293,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'admin' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 		const editButton = screen.getByTestId('edit-button');
@@ -410,28 +350,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -487,28 +415,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -560,28 +476,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -637,28 +541,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -715,28 +607,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -799,28 +679,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -887,28 +755,16 @@ describe('CommentDetail component', () => {
 				author: { username: 'post user' },
 			},
 		});
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <CommentDetail {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <CommentDetail {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

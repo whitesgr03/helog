@@ -1,6 +1,6 @@
 // Packages
 import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 // Styles
 import styles from './PostList.module.css';

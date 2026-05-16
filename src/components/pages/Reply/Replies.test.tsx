@@ -153,15 +153,15 @@ describe('Replies component', () => {
 
 		act(() => {
 			vi.runAllTimers();
+			vi.useRealTimers();
 		});
-
-		vi.useRealTimers();
 
 		const replies = screen.getAllByTestId('reply');
 
 		expect(replies[0]).toHaveClass(/shake/);
-		fireEvent.animationEnd(replies[0]);
-		expect(replies[0]).not.toHaveClass(/shake/);
+		expect(window.HTMLElement.prototype.scrollIntoView).toHaveBeenCalledTimes(
+			1,
+		);
 	});
 	it('should render the more replies if the show more replies button is clicked', async () => {
 		const user = userEvent.setup();

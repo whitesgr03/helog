@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 
 // Styles
@@ -13,7 +13,7 @@ import loadStyles from '../../../components/utils/Loading.module.css';
 import { Dropdown } from './Dropdown';
 
 // Type
-import { DarkTheme } from '../../pages/App/App';
+import { type DarkTheme } from '../../pages/App/App';
 
 // Utils
 import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions';

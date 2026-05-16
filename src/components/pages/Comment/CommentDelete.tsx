@@ -1,6 +1,6 @@
 // Packages
 import { useMutation } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 // Styles
 import headerDeleteModelStyles from '../../layout/Header/DeleteModal.module.css';
@@ -16,7 +16,7 @@ import { Loading } from '../../utils/Loading';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { CommentData } from './Comments';
+import { type CommentData } from './Comments';
 
 export const CommentDelete = ({ commentId }: { commentId: string }) => {
 	const { postId } = useParams();

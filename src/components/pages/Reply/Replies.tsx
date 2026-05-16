@@ -57,7 +57,7 @@ export const Replies = ({
 }: RepliesProps) => {
 	const { onAlert } = useAppDataAPI();
 	const repliesRef = useRef<HTMLDivElement[]>([]);
-	const waitForScrollRef = useRef<ReturnType<typeof setTimeout>>();
+	const waitForScrollRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const [shakeTargetId, setShakeTargetId] = useState('');
 
 	const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
@@ -111,9 +111,9 @@ export const Replies = ({
 						<div
 							key={reply._id}
 							id={reply._id}
-							ref={(element: HTMLDivElement) =>
-								(repliesRef.current[index] = element)
-							}
+							ref={(element: HTMLDivElement) => {
+								repliesRef.current[index] = element;
+							}}
 							className={shakeTargetId === reply._id ? styles.shake : ''}
 							data-testid="reply"
 							onAnimationEnd={() => setShakeTargetId('')}

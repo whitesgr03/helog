@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 import userEvent from '@testing-library/user-event';
 
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { PostList } from './PostList';
 import { PostMainImage } from './PostMainImage';
@@ -18,27 +18,13 @@ describe('PostList component', () => {
 			posts: [],
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <PostList {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <PostList {...mockProps} />,
 			},
-		);
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		]);
+		render(<RouterProvider router={router} />);
 
 		const noPosts = screen.getByText('There are not posts.');
 
@@ -72,27 +58,13 @@ describe('PostList component', () => {
 			],
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <PostList {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <PostList {...mockProps} />,
 			},
-		);
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		]);
+		render(<RouterProvider router={router} />);
 
 		mockProps.posts.forEach(post => {
 			expect(screen.getByText(post.title)).toBeInTheDocument();
@@ -118,31 +90,17 @@ describe('PostList component', () => {
 
 		vi.mocked(format).mockReturnValue('');
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <PostList {...mockProps} />,
-				},
-				{
-					path: 'posts/:postId',
-					element: <div>A specified post page</div>,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <PostList {...mockProps} />,
 			},
-		);
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+			{
+				path: 'posts/:postId',
+				element: <div>A specified post page</div>,
+			},
+		]);
+		render(<RouterProvider router={router} />);
 
 		const link = screen.getByRole('heading', {
 			name: mockProps.posts[0].title,
@@ -177,31 +135,17 @@ describe('PostList component', () => {
 			<div>PostMainImage component</div>
 		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <PostList {...mockProps} />,
-				},
-				{
-					path: 'posts/:postId',
-					element: <div>A specified post page</div>,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <PostList {...mockProps} />,
 			},
-		);
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+			{
+				path: 'posts/:postId',
+				element: <div>A specified post page</div>,
+			},
+		]);
+		render(<RouterProvider router={router} />);
 
 		const element = screen.getByText('PostMainImage component');
 

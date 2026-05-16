@@ -11,7 +11,7 @@ export const Alert = () => {
 	const alert = useAlert();
 	const { onAlert } = useAppDataAPI();
 	const [pause, setPause] = useState(false);
-	const timer = useRef<ReturnType<typeof setTimeout>>();
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const startTime = useRef(0);
 	const remainingTime = useRef(0);
 

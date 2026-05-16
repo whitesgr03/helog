@@ -1,6 +1,6 @@
 // Packages
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation } from '@tanstack/react-query';
@@ -35,7 +35,7 @@ export const ChangeNameModal = ({ username }: ChangeNameModalProps) => {
 	const [formFields, setFormFields] = useState({ username });
 	const [debounce, setDebounce] = useState(false);
 
-	const timer = useRef<ReturnType<typeof setTimeout>>();
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 

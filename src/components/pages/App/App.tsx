@@ -5,7 +5,7 @@ import {
 	useSearchParams,
 	ScrollRestoration,
 	useNavigation,
-} from 'react-router-dom';
+} from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 
 // Styles

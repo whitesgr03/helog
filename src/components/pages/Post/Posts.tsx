@@ -1,6 +1,6 @@
 // Modules
 import { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // Styles

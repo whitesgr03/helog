@@ -1,7 +1,7 @@
 import {
 	createContext,
 	useContext,
-	ReactNode,
+	type ReactNode,
 	useReducer,
 	useMemo,
 } from 'react';
@@ -54,7 +54,11 @@ export const useAlert = () => useContext(AlertContext);
 export const useModal = () => useContext(ModalContext);
 export const useAppDataAPI = () => useContext(AppDataAPIContext);
 
-export const AppProvider = ({ children }: { children: React.ReactElement }) => {
+export const AppProvider = ({
+	children,
+}: {
+	children: React.ReactElement<any>;
+}) => {
 	const [state, dispatch] = useReducer(reducer, initialData);
 
 	const api = useMemo(

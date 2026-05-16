@@ -1,9 +1,8 @@
 // Packages
 import { useEffect, useState, useRef } from 'react';
-import { useParams, Link, Navigate, useLocation } from 'react-router-dom';
+import { useParams, Link, Navigate, useLocation } from 'react-router';
 import { format } from 'date-fns';
 import { Editor } from '@tinymce/tinymce-react';
-import { Editor as TinyMCEEditor } from 'tinymce';
 import { useQuery } from '@tanstack/react-query';
 
 // Styles
@@ -23,7 +22,7 @@ export const PostDetail = () => {
 	const [editorLoading, setEditorLoading] = useState(true);
 	const [checkingEditorImages, setCheckingEditorImages] = useState(true);
 
-	const editorRef = useRef<TinyMCEEditor | null>(null);
+	const editorRef = useRef<Editor['editor']>(null);
 
 	const { pathname: previousPath } = useLocation();
 

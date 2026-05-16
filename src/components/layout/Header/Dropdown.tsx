@@ -1,6 +1,6 @@
 // Packages
 import { useState, lazy, Suspense } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 
@@ -22,7 +22,7 @@ import { queryUserInfoOptionForHeader } from '../../../utils/queryOptions.js';
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
 // Type
-import { DarkTheme } from '../../pages/App/App.js';
+import { type DarkTheme } from '../../pages/App/App.js';
 
 interface DropdownProps {
 	darkTheme: DarkTheme;

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { PostMainImage } from './PostMainImage';
 
@@ -12,27 +12,13 @@ describe('PostMainImage component', () => {
 			title: 'post',
 		};
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <PostMainImage {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <PostMainImage {...mockProps} />,
 			},
-		);
-		render(
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>,
-		);
+		]);
+		render(<RouterProvider router={router} />);
 
 		const image = screen.getByAltText(mockProps.title) as HTMLImageElement;
 

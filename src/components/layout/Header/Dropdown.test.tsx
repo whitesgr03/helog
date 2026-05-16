@@ -1,18 +1,27 @@
 import { vi, describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitFor,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import { Dropdown } from './Dropdown';
 import { Settings } from './Settings';
+import { SettingsLoading } from './SettingsLoading';
+import { SettingsLayout } from './SettingsLayout';
 
 import { useAppDataAPI } from '../../pages/App/AppContext';
 
 import { handleFetch } from '../../../utils/handleFetch';
 
 vi.mock('./Settings');
+vi.mock('./SettingsLoading');
+vi.mock('./SettingsLayout');
 
 vi.mock('../../../utils/handleFetch');
 vi.mock('../../pages/App/AppContext');
@@ -41,28 +50,16 @@ describe('Dropdown component', () => {
 
 		queryClient.setQueryData(['userInfo'], mockUserInfo);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -92,28 +89,16 @@ describe('Dropdown component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -135,28 +120,16 @@ describe('Dropdown component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -188,29 +161,23 @@ describe('Dropdown component', () => {
 		vi.mocked(Settings).mockImplementationOnce(() => (
 			<div>Settings component</div>
 		));
+		vi.mocked(SettingsLoading).mockImplementationOnce(() => (
+			<div>SettingsLoading component</div>
+		));
+		vi.mocked(SettingsLayout).mockImplementationOnce(({ children }) => (
+			<div>{children}</div>
+		));
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -218,9 +185,11 @@ describe('Dropdown component', () => {
 
 		await user.click(settingBtn);
 
-		const settingsComponent = screen.getByText('Settings component');
+		await waitForElementToBeRemoved(() =>
+			screen.getByText('SettingsLoading component'),
+		);
 
-		expect(settingsComponent).toBeInTheDocument();
+		expect(screen.getByText('Settings component')).toBeInTheDocument();
 	});
 	it('should switch color theme, if the color theme button is clicked', async () => {
 		const user = userEvent.setup();
@@ -237,28 +206,16 @@ describe('Dropdown component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 
 		const queryClient = new QueryClient();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -293,32 +250,20 @@ describe('Dropdown component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(handleFetch).mockRejectedValueOnce(Error());
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-				{
-					path: '/error',
-					element: <div>Error component</div>,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+			{
+				path: '/error',
+				element: <div>Error component</div>,
+			},
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 
@@ -362,28 +307,16 @@ describe('Dropdown component', () => {
 				),
 		);
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Dropdown {...mockProps} />,
-				},
-			],
+		const router = createMemoryRouter([
 			{
-				future: {
-					v7_relativeSplatPath: true,
-				},
+				path: '/',
+				element: <Dropdown {...mockProps} />,
 			},
-		);
+		]);
 
 		render(
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					future={{
-						v7_startTransition: true,
-					}}
-				/>
+				<RouterProvider router={router} />
 			</QueryClientProvider>,
 		);
 

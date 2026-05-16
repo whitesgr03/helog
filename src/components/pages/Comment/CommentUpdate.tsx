@@ -1,6 +1,6 @@
 // Packages
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { string } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ import { verifySchema } from '../../../utils/verifySchema';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { Comment, CommentData } from './Comments';
+import type { Comment, CommentData } from './Comments';
 
 interface inputErrors {
 	content?: string;
@@ -44,7 +44,7 @@ export const CommentUpdate = ({
 	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef<HTMLTextAreaElement>(null);
-	const timer = useRef<ReturnType<typeof setTimeout>>();
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	const { postId } = useParams();
 

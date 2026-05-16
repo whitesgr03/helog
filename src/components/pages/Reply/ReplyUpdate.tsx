@@ -21,7 +21,7 @@ import { verifySchema } from '../../../utils/verifySchema';
 import { useAppDataAPI } from '../App/AppContext';
 
 // Type
-import { ReplyData } from './Replies';
+import { type ReplyData } from './Replies';
 
 interface ReplyUpdateProps {
 	commentId: string;
@@ -45,7 +45,7 @@ export const ReplyUpdate = ({
 	const [formFields, setFormFields] = useState({ content });
 	const [debounce, setDebounce] = useState(false);
 	const textbox = useRef<HTMLTextAreaElement>(null);
-	const timer = useRef<ReturnType<typeof setTimeout>>();
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	const schema = useMemo(
 		() => ({
@@ -102,7 +102,7 @@ export const ReplyUpdate = ({
 		},
 	});
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const handleValidation = async () => {

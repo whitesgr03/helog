@@ -3,7 +3,7 @@
 }
 
 .headline {
-  align-self: flex-start;
+	align-self: flex-start;
 }
 
 @media (width >= 700px) {
