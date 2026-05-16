@@ -1,5 +1,5 @@
-// Packages
-import { ReactNode } from 'react';
+// Types
+import { type ReactNode } from 'react';
 
 // Styles
 import styles from './Settings.module.css';
